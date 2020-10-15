@@ -60,6 +60,13 @@ void Window::destroy()
 }
 
 
+void Window::swapBuffers()
+{
+   if (m_wnd)
+      glfwSwapBuffers(m_wnd);
+}
+
+
 bool Window::shouldClose() const
 {
    if (m_wnd)

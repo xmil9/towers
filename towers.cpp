@@ -110,7 +110,7 @@ static int setupShaders()
 }
 
 
-static void processInput(GLFWwindow* /*wnd*/)
+static void processInput(glfwutil::Window& /*wnd*/)
 {
    glfwPollEvents();
 }
@@ -121,7 +121,7 @@ static void updateState()
 }
 
 
-static void render(GLFWwindow* wnd)
+static void render(glfwutil::Window& wnd)
 {
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    
@@ -132,7 +132,7 @@ static void render(GLFWwindow* wnd)
    glBindVertexArray(vao);
    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-   glfwSwapBuffers(wnd);
+   wnd.swapBuffers();
 }
 
 
@@ -161,9 +161,9 @@ int main()
 
    while (!wnd.shouldClose())
    {
-      processInput(wnd.handle());
+      processInput(wnd);
       updateState();
-      render(wnd.handle());
+      render(wnd);
    }
 
    glDeleteVertexArrays(1, &vao);

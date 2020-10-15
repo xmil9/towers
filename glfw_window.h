@@ -26,6 +26,7 @@ class Window
    GlfwErr create(int width, int height, const Utf8Char* title);
    void destroy();
    GLFWwindow* handle();
+   void swapBuffers();
 
    bool shouldClose() const;
    void setShouldClose(bool close);
