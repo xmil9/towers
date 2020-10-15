@@ -22,6 +22,8 @@ class Window
 
    Window& operator=(const Window&) = delete;
    Window& operator=(Window&&) = default;
+   explicit operator bool() const { return m_wnd != nullptr; }
+   bool operator!() const { return !operator bool(); }
 
    GlfwErr create(int width, int height, const Utf8Char* title);
    void destroy();
