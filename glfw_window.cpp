@@ -84,12 +84,28 @@ void Window::onWindowResized(int width, int height)
 void Window::setupCallbacks()
 {
    setSelf(m_wnd, this);
-   glfwSetWindowSizeCallback(m_wnd, windowResizedCallback);
-   glfwSetWindowCloseCallback(m_wnd, windowClosedCallback);
+   glfwSetWindowPosCallback(m_wnd, windowPosCallback);
+   glfwSetWindowSizeCallback(m_wnd, windowSizeCallback);
+   glfwSetWindowCloseCallback(m_wnd, windowCloseCallback);
+   glfwSetWindowRefreshCallback(m_wnd, windowRefreshCallback);
+   glfwSetWindowFocusCallback(m_wnd, windowFocusCallback);
+   glfwSetWindowIconifyCallback(m_wnd, windowIconifyCallback);
+   glfwSetWindowMaximizeCallback(m_wnd, windowMaximizeCallback);
+   glfwSetFramebufferSizeCallback(m_wnd, framebufferSizeCallback);
+   glfwSetWindowContentScaleCallback(m_wnd, windowContentScaleCallback);
 }
 
 
-void Window::windowResizedCallback(GLFWwindow* wnd, int width, int height)
+void Window::windowPosCallback(GLFWwindow* wnd, int xpos, int ypos)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowMoved(xpos, ypos);
+}
+
+
+void Window::windowSizeCallback(GLFWwindow* wnd, int width, int height)
 {
    Window* self = getSelf(wnd);
    assert(self);
@@ -98,12 +114,66 @@ void Window::windowResizedCallback(GLFWwindow* wnd, int width, int height)
 }
 
 
-void Window::windowClosedCallback(GLFWwindow* wnd)
+void Window::windowCloseCallback(GLFWwindow* wnd)
 {
    Window* self = getSelf(wnd);
    assert(self);
    if (self)
       self->onWindowClosed();
+}
+
+
+void Window::windowRefreshCallback(GLFWwindow* wnd)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowRefreshed();
+}
+
+
+void Window::windowFocusCallback(GLFWwindow* wnd, int focused)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowFocusChanged(focused);
+}
+
+
+void Window::windowIconifyCallback(GLFWwindow* wnd, int iconified)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowIconifyChanged(iconified);
+}
+
+
+void Window::windowMaximizeCallback(GLFWwindow* wnd, int maximized)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowMaximizeChanged(maximized);
+}
+
+
+void Window::framebufferSizeCallback(GLFWwindow* wnd, int width, int height)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onFramebufferResized(width, height);
+}
+
+
+void Window::windowContentScaleCallback(GLFWwindow* wnd, float xscale, float yscale)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowContentScaled(xscale, yscale);
 }
 
 } // namespace glfwutil

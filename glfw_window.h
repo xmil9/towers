@@ -14,7 +14,7 @@ namespace glfwutil
 
 class Window
 {
-public:
+ public:
    Window() = default;
    virtual ~Window();
    Window(const Window&) = delete;
@@ -30,16 +30,30 @@ public:
    bool shouldClose() const;
    void setShouldClose(bool close);
 
-protected:
+ protected:
+   virtual void onWindowMoved(int /*xpos*/, int /*ypos*/) {}
    virtual void onWindowResized(int width, int height);
    virtual void onWindowClosed() {}
+   virtual void onWindowRefreshed() {}
+   virtual void onWindowFocusChanged(int /*focused*/) {}
+   virtual void onWindowIconifyChanged(int /*iconified*/) {}
+   virtual void onWindowMaximizeChanged(int /*maximized*/) {}
+   virtual void onFramebufferResized(int /*width*/, int /*height*/) {}
+   virtual void onWindowContentScaled(float /*xscale*/, float /*yscale*/) {}
 
-private:
+ private:
    void setupCallbacks();
-   static void windowResizedCallback(GLFWwindow* wnd, int width, int height);
-   static void windowClosedCallback(GLFWwindow* wnd);
+   static void windowPosCallback(GLFWwindow* wnd, int xpos, int ypos);
+   static void windowSizeCallback(GLFWwindow* wnd, int width, int height);
+   static void windowCloseCallback(GLFWwindow* wnd);
+   static void windowRefreshCallback(GLFWwindow* wnd);
+   static void windowFocusCallback(GLFWwindow* wnd, int focused);
+   static void windowIconifyCallback(GLFWwindow* wnd, int iconified);
+   static void windowMaximizeCallback(GLFWwindow* wnd, int maximized);
+   static void framebufferSizeCallback(GLFWwindow* wnd, int width, int height);
+   static void windowContentScaleCallback(GLFWwindow* wnd, float xscale, float yscale);
 
-private:
+ private:
    GLFWwindow* m_wnd = nullptr;
 };
 
