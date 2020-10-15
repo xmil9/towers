@@ -1,5 +1,6 @@
 #include "glfw_lib.h"
 #include "glfw_window.h"
+#include "shader.h"
 #include <cassert>
 #include <cstdlib>
 
@@ -66,33 +67,23 @@ static int setupShaders()
    int success;
    char infoLog[512];
 
-   unsigned int vs = glCreateShader(GL_VERTEX_SHADER);
-   glShaderSource(vs, 1, &vertexShaderCode, nullptr);
-   glCompileShader(vs);
-   glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
-   if (!success)
-   {
-      glGetShaderInfoLog(vs, 512, nullptr, infoLog);
-      assert(false && "Vertex shader failed to compile.");
-      assert(false && infoLog);
+   glutil::Shader vs{GL_VERTEX_SHADER};
+   if (!vs.create())
       return -1;
-   }
+   vs.setSource(vertexShaderCode);
+   if (!vs.compile())
+      return -1;
 
-   unsigned int fs = glCreateShader(GL_FRAGMENT_SHADER);
-   glShaderSource(fs, 1, &fragmentShaderCode, nullptr);
-   glCompileShader(fs);
-   glGetShaderiv(fs, GL_COMPILE_STATUS, &success);
-   if (!success)
-   {
-      glGetShaderInfoLog(fs, 512, nullptr, infoLog);
-      assert(false && "Fragment shader failed to compile.");
-      assert(false && infoLog);
+   glutil::Shader fs{GL_FRAGMENT_SHADER};
+   if (!fs.create())
       return -1;
-   }
+   fs.setSource(fragmentShaderCode);
+   if (!fs.compile())
+      return -1;
 
    unsigned int progr = glCreateProgram();
-   glAttachShader(progr, vs);
-   glAttachShader(progr, fs);
+   glAttachShader(progr, vs.id());
+   glAttachShader(progr, fs.id());
    glLinkProgram(progr);
    glGetProgramiv(progr, GL_LINK_STATUS, &success);
    if (!success)
@@ -102,9 +93,6 @@ static int setupShaders()
       assert(false && infoLog);
       return -1;
    }
-
-   glDeleteShader(vs);
-   glDeleteShader(fs);
 
    return progr;
 }

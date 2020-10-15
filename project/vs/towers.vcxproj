@@ -152,12 +152,14 @@
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
     <ClCompile Include="..\..\glfw_window.cpp" />
+    <ClCompile Include="..\..\shader.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\glfw_types.h" />
     <ClInclude Include="..\..\glfw_lib.h" />
     <ClInclude Include="..\..\glfw_window.h" />
+    <ClInclude Include="..\..\shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
