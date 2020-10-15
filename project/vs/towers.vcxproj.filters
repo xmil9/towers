@@ -3,12 +3,32 @@
   <ItemGroup>
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c">
-      <Filter>glad</Filter>
+      <Filter>Glad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\glfw_lib.cpp">
+      <Filter>Glfw Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\glfw_window.cpp">
+      <Filter>Glfw Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="glad">
+    <Filter Include="Glfw Utilities">
+      <UniqueIdentifier>{afc1cc97-7a35-4d4b-8969-73c54d9bdb8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Glad">
       <UniqueIdentifier>{e3626774-826b-4350-8f5e-5eb4e04c0390}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\glfw_lib.h">
+      <Filter>Glfw Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\glfw_window.h">
+      <Filter>Glfw Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\glfw_types.h">
+      <Filter>Glfw Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
