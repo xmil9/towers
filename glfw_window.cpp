@@ -37,10 +37,25 @@ Window::~Window()
 }
 
 
+Window::Window(Window&& other)
+   : m_wnd{other.m_wnd}
+{
+   other.m_wnd = nullptr;
+}
+
+
+Window& Window::operator=(Window&& other)
+{
+   destroy();
+   m_wnd = other.m_wnd;
+   other.m_wnd = nullptr;
+   return *this;
+}
+
+
 GlfwErr Window::create(int width, int height, const Utf8Char* title)
 {
-   if (m_wnd)
-      destroy();
+   destroy();
 
    m_wnd = glfwCreateWindow(width, height, title, nullptr, nullptr);
    if (m_wnd)

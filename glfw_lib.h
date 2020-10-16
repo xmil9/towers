@@ -6,6 +6,7 @@
 #include "glad/glad.h" // glad must be included before anything else opengl related.
 #include "glfw/glfw3.h"
 #include "glfw_types.h"
+#include <utility>
 
 
 namespace glfwutil
@@ -25,13 +26,20 @@ public:
    GlfwLib(ContextVersion ver, int profile);
    ~GlfwLib();
    GlfwLib(const GlfwLib&) = delete;
-   GlfwLib(GlfwLib&&) = default;
+   GlfwLib(GlfwLib&& other);
 
    GlfwLib& operator=(const GlfwLib&) = delete;
-   GlfwLib& operator=(GlfwLib&&) = default;
+   GlfwLib& operator=(GlfwLib&& other);
 
    GlfwErr init();
    void terminate();
+
+   friend inline void swap(GlfwLib& a, GlfwLib& b)
+   {
+      std::swap(a.m_ver, b.m_ver);
+      std::swap(a.m_profile, b.m_profile);
+      std::swap(a.m_terminate, b.m_terminate);
+   }
 
 private:
    void setHints();

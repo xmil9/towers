@@ -19,8 +19,24 @@ GlfwLib::GlfwLib(ContextVersion ver, int profile)
 
 GlfwLib::~GlfwLib()
 {
-   if (m_terminate)
-      terminate();
+   terminate();
+}
+
+
+GlfwLib::GlfwLib(GlfwLib&& other)
+{
+   swap(*this, other);
+}
+
+
+GlfwLib& GlfwLib::operator=(GlfwLib&& other)
+{
+   terminate();
+   m_ver = other.m_ver;
+   m_profile = other.m_profile;
+   m_terminate = other.m_terminate;
+   other.m_terminate = false;
+   return *this;
 }
 
 
@@ -37,7 +53,11 @@ GlfwErr GlfwLib::init()
 
 void GlfwLib::terminate()
 {
-   glfwTerminate();
+   if (m_terminate)
+   {
+      glfwTerminate();
+      m_terminate = false;
+   }
 }
 
 

@@ -18,16 +18,16 @@ class Window
    Window() = default;
    virtual ~Window();
    Window(const Window&) = delete;
-   Window(Window&&) = default;
+   Window(Window&& other);
 
    Window& operator=(const Window&) = delete;
-   Window& operator=(Window&&) = default;
+   Window& operator=(Window&& other);
    explicit operator bool() const { return m_wnd != nullptr; }
    bool operator!() const { return !operator bool(); }
 
    GlfwErr create(int width, int height, const Utf8Char* title);
    void destroy();
-   GLFWwindow* handle();
+   GLFWwindow* handle() { return m_wnd; }
    void swapBuffers();
 
    bool shouldClose() const;
@@ -59,11 +59,5 @@ class Window
  private:
    GLFWwindow* m_wnd = nullptr;
 };
-
-
-inline GLFWwindow* Window::handle()
-{
-   return m_wnd;
-}
 
 } // namespace glfwutil
