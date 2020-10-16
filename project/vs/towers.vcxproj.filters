@@ -11,7 +11,10 @@
     <ClCompile Include="..\..\glfw_window.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\shader.cpp">
+    <ClCompile Include="..\..\gl_shader.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gl_program.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,7 +39,13 @@
     <ClInclude Include="..\..\glfw_types.h">
       <Filter>Glfw Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\shader.h">
+    <ClInclude Include="..\..\gl_program.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gl_shader.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gl_types.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>

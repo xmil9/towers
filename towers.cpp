@@ -1,8 +1,10 @@
+#include "gl_program.h"
+#include "gl_shader.h"
 #include "glfw_lib.h"
 #include "glfw_window.h"
-#include "shader.h"
 #include <cassert>
 #include <cstdlib>
+#include <utility>
 
 
 static float vertices[] = {
@@ -34,7 +36,7 @@ static const char* fragmentShaderCode = "#version 330 core\n"
                                         "{\n"
                                         "  fragColor = vec4(0.2f, 0.5f, 1.0f, 1.0f);\n"
                                         "}\0";
-static int shaderProg;
+static glutil::Program prog;
 
 
 static void setupData()
@@ -62,39 +64,30 @@ static void setupData()
 }
 
 
-static int setupShaders()
+static glutil::Program setupShaders()
 {
-   int success;
-   char infoLog[512];
+   bool ok = true;
 
-   glutil::Shader vs{GL_VERTEX_SHADER};
-   if (!vs.create())
-      return -1;
-   vs.setSource(vertexShaderCode);
-   if (!vs.compile())
-      return -1;
+   glutil::Shader vs{glutil::makeVertexShader(vertexShaderCode)};
+   ok = vs.compile();
 
-   glutil::Shader fs{GL_FRAGMENT_SHADER};
-   if (!fs.create())
-      return -1;
-   fs.setSource(fragmentShaderCode);
-   if (!fs.compile())
-      return -1;
+   glutil::Shader fs{glutil::makeFragmentShader(fragmentShaderCode)};
+   if (ok)
+      ok = fs.compile();
 
-   unsigned int progr = glCreateProgram();
-   glAttachShader(progr, vs.id());
-   glAttachShader(progr, fs.id());
-   glLinkProgram(progr);
-   glGetProgramiv(progr, GL_LINK_STATUS, &success);
-   if (!success)
+   glutil::Program shaderProg;
+   if (ok)
+      ok = shaderProg.create();
+   if (ok)
    {
-      glGetProgramInfoLog(progr, 512, NULL, infoLog);
-      assert(false && "Shader program failed to link.");
-      assert(false && infoLog);
-      return -1;
+      shaderProg.attachShader(vs);
+      shaderProg.attachShader(fs);
+      ok = shaderProg.link();
    }
 
-   return progr;
+   if (!ok)
+      shaderProg.destroy();
+   return shaderProg;
 }
 
 
@@ -116,7 +109,7 @@ static void render(glfwutil::Window& wnd)
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT);
 
-   glUseProgram(shaderProg);
+   prog.use();
    glBindVertexArray(vao);
    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -141,8 +134,8 @@ int main()
    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
       return EXIT_FAILURE;
 
-   shaderProg = setupShaders();
-   if (shaderProg == -1)
+   prog = std::move(setupShaders());
+   if (!prog)
       return EXIT_FAILURE;
 
    setupData();
@@ -156,7 +149,6 @@ int main()
 
    glDeleteVertexArrays(1, &vao);
    glDeleteBuffers(1, &vbo);
-   glDeleteProgram(shaderProg);
 
    return EXIT_SUCCESS;
 }
