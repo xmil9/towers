@@ -1,5 +1,6 @@
 #include "gl_program.h"
 #include "gl_shader.h"
+#include "gl_vertex_array.h"
 #include "glfw_lib.h"
 #include "glfw_window.h"
 #include <cassert>
@@ -21,7 +22,7 @@ static unsigned int indices[] = {
    0, 2, 1,
    // Triangle 2
    1, 2, 3};
-static unsigned int vao;
+static glutil::VertexArray vao;
 static unsigned int vbo;
 static unsigned int ebo;
 static const char* vertexShaderCode = "#version 330 core\n"
@@ -41,11 +42,11 @@ static glutil::Program prog;
 
 static void setupData()
 {
-   glGenVertexArrays(1, &vao);
+   vao.create();
    glGenBuffers(1, &vbo);
    glGenBuffers(1, &ebo);
 
-   glBindVertexArray(vao);
+   vao.bind();
 
    glBindBuffer(GL_ARRAY_BUFFER, vbo);
    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -58,7 +59,7 @@ static void setupData()
    glEnableVertexAttribArray(0);
 
    // Unbind buffers.
-   glBindVertexArray(0);
+   vao.unbind();
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -110,7 +111,7 @@ static void render(glfwutil::Window& wnd)
    glClear(GL_COLOR_BUFFER_BIT);
 
    prog.use();
-   glBindVertexArray(vao);
+   vao.bind();
    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
    wnd.swapBuffers();
@@ -147,7 +148,7 @@ int main()
       render(wnd);
    }
 
-   glDeleteVertexArrays(1, &vao);
+   vao.destroy();
    glDeleteBuffers(1, &vbo);
 
    return EXIT_SUCCESS;

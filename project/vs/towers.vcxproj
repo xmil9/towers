@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\gl_program.cpp" />
     <ClCompile Include="..\..\gl_shader.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
+    <ClCompile Include="..\..\gl_vertex_array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\glfw_types.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="..\..\gl_program.h" />
     <ClInclude Include="..\..\gl_shader.h" />
     <ClInclude Include="..\..\gl_types.h" />
+    <ClInclude Include="..\..\gl_vertex_array.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
