@@ -16,6 +16,7 @@ class Shader
 {
  public:
    Shader() = default;
+   explicit Shader(GlId id);
    ~Shader();
    Shader(const Shader&) = delete;
    Shader(Shader&& other);
@@ -28,7 +29,7 @@ class Shader
    GlId id() const { return m_id; }
    bool create(GLenum shaderType);
    void destroy();
-   void attach(GlId shaderId);
+   void attach(GlId id);
    GlId detach();
    bool compile();
 

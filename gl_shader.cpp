@@ -25,6 +25,12 @@ namespace glutil
 {
 ///////////////////
 
+Shader::Shader(GlId id)
+   : m_id{id}
+{
+}
+
+
 Shader::~Shader()
 {
    destroy();
@@ -64,10 +70,10 @@ void Shader::destroy()
 }
 
 
-void Shader::attach(GlId shaderId)
+void Shader::attach(GlId id)
 {
    destroy();
-   m_id = shaderId;
+   m_id = id;
 }
 
 
