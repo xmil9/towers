@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
+#include "gl_object.h"
 #include "gl_types.h"
 #include <utility>
 
@@ -12,34 +13,38 @@ namespace glutil
 {
 ///////////////////
 
-class Buffer
+class Buffer : public Object<Buffer>
 {
+   friend class Object<Buffer>;
+
  public:
    Buffer() = default;
    explicit Buffer(GlId id);
-   ~Buffer();
+   ~Buffer() = default;
    Buffer(const Buffer&) = delete;
-   Buffer(Buffer&& other);
+   Buffer(Buffer&& other) = default;
 
    Buffer& operator=(const Buffer&) = delete;
-   Buffer& operator=(Buffer&& other);
-   explicit operator bool() const { return m_id != 0; }
-   bool operator!() const { return !operator bool(); }
+   Buffer& operator=(Buffer&& other) = default;
 
-   GlId id() const { return m_id; }
-   bool create();
-   void destroy();
-   void attach(GlId id);
-   GlId detach();
    void bind(GLenum target);
    // Unbinds currently bound buffer for the given target.
    static void unbind(GLenum target);
    void setData(GLenum target, GLsizeiptr size, const void* data, GLenum usage);
 
-   friend inline void swap(Buffer& a, Buffer& b) { std::swap(a.m_id, b.m_id); }
+   friend inline void swap(Buffer& a, Buffer& b)
+   {
+      swap(static_cast<Object<Buffer>&>(a), static_cast<Object<Buffer>&>(b));
+   }
 
  private:
-   GlId m_id = 0;
+    GlId create_();
+    void destroy_(GlId id);
 };
+
+
+inline Buffer::Buffer(GlId id) : Object<Buffer>{id}
+{
+}
 
 } // namespace glutil
