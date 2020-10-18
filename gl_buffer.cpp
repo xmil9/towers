@@ -3,7 +3,6 @@
 // MIT license
 //
 #include "gl_buffer.h"
-#include <cassert>
 
 
 namespace glutil

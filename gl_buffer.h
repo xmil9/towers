@@ -38,8 +38,9 @@ class Buffer : public Object<Buffer>
    }
 
  private:
-    GlId create_();
-    void destroy_(GlId id);
+   // Interface required by Object.
+   GlId create_();
+   void destroy_(GlId id);
 };
 
 
