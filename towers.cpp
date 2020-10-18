@@ -1,3 +1,5 @@
+#include "gl_buffer.h"
+#include "gl_data_format.h"
 #include "gl_program.h"
 #include "gl_shader.h"
 #include "gl_vertex_array.h"
@@ -7,8 +9,9 @@
 #include <cstdlib>
 #include <utility>
 
+constexpr glfwutil::GlfwLib::ContextVersion OpenGLVersion{4, 6};
 
-static float vertices[] = {
+static float positions[] = {
    // Top
    0.0f, 0.6f, 0.0f,
    // Left
@@ -17,21 +20,22 @@ static float vertices[] = {
    0.6f, 0.0f, 0.0f,
    // Bottom
    0.0f, -0.6f, 0.0f};
+static glutil::DataFormat posFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr};
 static unsigned int indices[] = {
    // Triangle 1
    0, 2, 1,
    // Triangle 2
    1, 2, 3};
 static glutil::VertexArray vao;
-static unsigned int vbo;
-static unsigned int ebo;
-static const char* vertexShaderCode = "#version 330 core\n"
+static glutil::Buffer vbo;
+static glutil::Buffer ebo;
+static const char* vertexShaderCode = "#version 460 core\n"
                                       "layout (location = 0) in vec3 pos;\n"
                                       "void main()\n"
                                       "{\n"
                                       "  gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);\n"
                                       "}\0";
-static const char* fragmentShaderCode = "#version 330 core\n"
+static const char* fragmentShaderCode = "#version 460 core\n"
                                         "out vec4 fragColor;\n"
                                         "void main()\n"
                                         "{\n"
@@ -43,25 +47,25 @@ static glutil::Program prog;
 static void setupData()
 {
    vao.create();
-   glGenBuffers(1, &vbo);
-   glGenBuffers(1, &ebo);
+   vbo.create();
+   ebo.create();
 
    vao.bind();
 
-   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+   vbo.bind(GL_ARRAY_BUFFER);
+   vbo.setData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+   ebo.bind(GL_ELEMENT_ARRAY_BUFFER);
+   ebo.setData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-   // The first argument has to match the 'location' value in the vertex shader code.
-   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-   glEnableVertexAttribArray(0);
+   // The attribute index has to match the 'location' value in the vertex shader code.
+   constexpr GLuint posAttribIdx = 0;
+   vao.setAttribFormat(posAttribIdx, posFormat);
+   vao.enableAttrib(posAttribIdx);
 
    // Unbind buffers.
    vao.unbind();
-   glBindBuffer(GL_ARRAY_BUFFER, 0);
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+   vbo.unbind(GL_ARRAY_BUFFER);
+   ebo.unbind(GL_ELEMENT_ARRAY_BUFFER);
 }
 
 
@@ -106,7 +110,7 @@ static void updateState()
 static void render(glfwutil::Window& wnd)
 {
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-   
+
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT);
 
@@ -120,7 +124,7 @@ static void render(glfwutil::Window& wnd)
 
 int main()
 {
-   glfwutil::GlfwLib glfw{{3, 3}, GLFW_OPENGL_CORE_PROFILE};
+   glfwutil::GlfwLib glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE};
    glfwutil::GlfwErr err = glfw.init();
    if (err)
       return EXIT_FAILURE;
@@ -149,7 +153,8 @@ int main()
    }
 
    vao.destroy();
-   glDeleteBuffers(1, &vbo);
+   vbo.destroy();
+   ebo.destroy();
 
    return EXIT_SUCCESS;
 }

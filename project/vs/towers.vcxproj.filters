@@ -20,6 +20,9 @@
     <ClCompile Include="..\..\gl_vertex_array.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gl_buffer.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -52,6 +55,12 @@
       <Filter>Gl Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gl_vertex_array.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gl_buffer.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gl_data_format.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>

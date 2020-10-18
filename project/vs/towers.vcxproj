@@ -152,6 +152,7 @@
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
     <ClCompile Include="..\..\glfw_window.cpp" />
+    <ClCompile Include="..\..\gl_buffer.cpp" />
     <ClCompile Include="..\..\gl_program.cpp" />
     <ClCompile Include="..\..\gl_shader.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
@@ -161,6 +162,8 @@
     <ClInclude Include="..\..\glfw_types.h" />
     <ClInclude Include="..\..\glfw_lib.h" />
     <ClInclude Include="..\..\glfw_window.h" />
+    <ClInclude Include="..\..\gl_buffer.h" />
+    <ClInclude Include="..\..\gl_data_format.h" />
     <ClInclude Include="..\..\gl_program.h" />
     <ClInclude Include="..\..\gl_shader.h" />
     <ClInclude Include="..\..\gl_types.h" />
