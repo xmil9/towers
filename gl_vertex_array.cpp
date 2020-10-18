@@ -4,76 +4,16 @@
 //
 #include "gl_vertex_array.h"
 #include "gl_data_format.h"
-#include <cassert>
 
 
 namespace glutil
 {
 ///////////////////
 
-VertexArray::VertexArray(GlId id) : m_id{id}
-{
-}
-
-
-VertexArray::~VertexArray()
-{
-   destroy();
-}
-
-
-VertexArray::VertexArray(VertexArray&& other)
-{
-   swap(*this, other);
-}
-
-
-VertexArray& VertexArray::operator=(VertexArray&& other)
-{
-   destroy();
-   swap(*this, other);
-   return *this;
-}
-
-
-bool VertexArray::create()
-{
-   assert(m_id == 0);
-   if (m_id == 0)
-      glGenVertexArrays(1, &m_id);
-   return m_id != 0;
-}
-
-
-void VertexArray::destroy()
-{
-   if (m_id != 0)
-   {
-      glDeleteVertexArrays(1, &m_id);
-      m_id = 0;
-   }
-}
-
-
-void VertexArray::attach(GlId id)
-{
-   destroy();
-   m_id = id;
-}
-
-
-GlId VertexArray::detach()
-{
-   GlId id = m_id;
-   m_id = 0;
-   return id;
-}
-
-
 void VertexArray::bind()
 {
-   if (m_id != 0)
-      glBindVertexArray(m_id);
+   if (hasId())
+      glBindVertexArray(id());
 }
 
 
@@ -119,6 +59,20 @@ void VertexArray::enableAttrib(GLuint attribIdx)
 void VertexArray::disableAttrib(GLuint attribIdx)
 {
    glDisableVertexAttribArray(attribIdx);
+}
+
+
+GlId VertexArray::create_()
+{
+   GlId id;
+   glGenVertexArrays(1, &id);
+   return id;
+}
+
+
+void VertexArray::destroy_(GlId id)
+{
+   glDeleteVertexArrays(1, &id);
 }
 
 } // namespace glutil

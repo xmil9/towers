@@ -4,10 +4,14 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
+#include "gl_object.h"
 #include "gl_types.h"
 #include <utility>
 
-namespace glutil { struct DataFormat; }
+namespace glutil
+{
+struct DataFormat;
+}
 
 
 namespace glutil
@@ -21,25 +25,20 @@ namespace glutil
 // Vertex array are useful to group all data needed to render shapes and
 // to active/deactivate it collectively.
 // Static member functions operate on the currently bound vertex array.
-class VertexArray
+class VertexArray : public Object<VertexArray>
 {
+   friend class Object<VertexArray>;
+
  public:
    VertexArray() = default;
    explicit VertexArray(GlId id);
-   ~VertexArray();
+   ~VertexArray() = default;
    VertexArray(const VertexArray&) = delete;
-   VertexArray(VertexArray&& other);
+   VertexArray(VertexArray&& other) = default;
 
    VertexArray& operator=(const VertexArray&) = delete;
-   VertexArray& operator=(VertexArray&& other);
-   explicit operator bool() const { return m_id != 0; }
-   bool operator!() const { return !operator bool(); }
+   VertexArray& operator=(VertexArray&& other) = default;
 
-   GlId id() const { return m_id; }
-   bool create();
-   void destroy();
-   void attach(GlId id);
-   GlId detach();
    void bind();
    static void unbind();
    static void setAttribFormat(GLuint attribIdx, const DataFormat& format);
@@ -48,10 +47,20 @@ class VertexArray
    static void enableAttrib(GLuint attribIdx);
    static void disableAttrib(GLuint attribIdx);
 
-   friend inline void swap(VertexArray& a, VertexArray& b) { std::swap(a.m_id, b.m_id); }
+   friend inline void swap(VertexArray& a, VertexArray& b)
+   {
+      swap(static_cast<Object<VertexArray>&>(a), static_cast<Object<VertexArray>&>(b));
+   }
 
  private:
-   GlId m_id = 0;
+   // Interface required by Object.
+   GlId create_();
+   void destroy_(GlId id);
 };
+
+
+inline VertexArray::VertexArray(GlId id) : Object<VertexArray>{id}
+{
+}
 
 } // namespace glutil
