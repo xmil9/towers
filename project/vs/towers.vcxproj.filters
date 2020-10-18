@@ -63,5 +63,8 @@
     <ClInclude Include="..\..\gl_data_format.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\gl_object.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
