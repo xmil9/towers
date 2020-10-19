@@ -69,6 +69,13 @@ static void setupData()
 }
 
 
+static void setupRendering()
+{
+   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+}
+
+
 static glutil::Program setupShaders()
 {
    bool ok = true;
@@ -109,14 +116,11 @@ static void updateState()
 
 static void render(glfwutil::Window& wnd)
 {
-   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-   glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
    glClear(GL_COLOR_BUFFER_BIT);
 
    prog.use();
    vao.bind();
-   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
    wnd.swapBuffers();
 }
@@ -142,8 +146,8 @@ int main()
    prog = std::move(setupShaders());
    if (!prog)
       return EXIT_FAILURE;
-
    setupData();
+   setupRendering();
 
    while (!wnd.shouldClose())
    {
