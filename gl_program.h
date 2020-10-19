@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
+#include "gl_object.h"
 #include "gl_types.h"
 #include <utility>
 
@@ -14,22 +15,20 @@ namespace glutil
 {
 ///////////////////
 
-class Program
+class Program : public Object<Program>
 {
+   friend class Object<Program>;
+
  public:
    Program() = default;
-   ~Program();
+   explicit Program(GlId id);
+   ~Program() = default;
    Program(const Program&) = delete;
-   Program(Program&& other);
+   Program(Program&& other) = default;
 
    Program& operator=(const Program&) = delete;
-   Program& operator=(Program&& other);
-   explicit operator bool() const { return m_id != 0; }
-   bool operator!() const { return !operator bool(); }
+   Program& operator=(Program&& other) = default;
 
-   GlId id() const { return m_id; }
-   bool create();
-   void destroy();
    void attachShader(const Shader& shader);
    void detachShader(const Shader& shader);
    bool link();
@@ -37,11 +36,18 @@ class Program
 
    friend inline void swap(Program& a, Program& b)
    {
-      std::swap(a.m_id, b.m_id);
+      swap(static_cast<Object<Program>&>(a), static_cast<Object<Program>&>(b));
    }
 
  private:
-   GlId m_id = 0;
+   // Interface required by Object.
+   GlId create_();
+   void destroy_(GlId id);
 };
+
+
+inline Program::Program(GlId id) : Object<Program>{id}
+{
+}
 
 } // namespace glutil

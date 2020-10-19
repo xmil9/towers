@@ -11,67 +11,28 @@ namespace glutil
 {
 ///////////////////
 
-Program::~Program()
-{
-   destroy();
-}
-
-
-Program::Program(Program&& other)
-{
-   swap(*this, other);
-}
-
-
-Program& Program::operator=(Program&& other)
-{
-   destroy();
-   swap(*this, other);
-   return *this;
-}
-
-
-bool Program::create()
-{
-   assert(m_id == 0);
-   if (m_id == 0)
-      m_id = glCreateProgram();
-   return m_id != 0;
-}
-
-
-void Program::destroy()
-{
-   if (m_id != 0)
-   {
-      glDeleteProgram(m_id);
-      m_id = 0;
-   }
-}
-
-
 void Program::attachShader(const Shader& shader)
 {
-   if (m_id != 0)
-      glAttachShader(m_id, shader.id());
+   if (hasId())
+      glAttachShader(id(), shader.id());
 }
 
 
 void Program::detachShader(const Shader& shader)
 {
-   if (m_id != 0)
-      glDetachShader(m_id, shader.id());
+   if (hasId())
+      glDetachShader(id(), shader.id());
 }
 
 
 bool Program::link()
 {
-   if (m_id != 0)
+   if (hasId())
    {
-      glLinkProgram(m_id);
+      glLinkProgram(id());
 
       GLint success = GL_FALSE;
-      glGetProgramiv(m_id, GL_LINK_STATUS, &success);
+      glGetProgramiv(id(), GL_LINK_STATUS, &success);
       return success == GL_TRUE;
    }
    return false;
@@ -80,8 +41,20 @@ bool Program::link()
 
 void Program::use()
 {
-   if (m_id != 0)
-      glUseProgram(m_id);
+   if (hasId())
+      glUseProgram(id());
+}
+
+
+GlId Program::create_()
+{
+   return glCreateProgram();
+}
+
+
+void Program::destroy_(GlId id)
+{
+   glDeleteProgram(id);
 }
 
 } // namespace glutil
