@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
+#include "gl_object.h"
 #include "gl_types.h"
 #include <utility>
 
@@ -12,38 +13,45 @@ namespace glutil
 {
 ///////////////////
 
-class Shader
+class Shader : public Object<Shader>
 {
+   friend class Object<Shader>;
+
  public:
    Shader() = default;
    explicit Shader(GlId id);
-   ~Shader();
+   ~Shader() = default;
    Shader(const Shader&) = delete;
-   Shader(Shader&& other);
+   Shader(Shader&& other) = default;
 
    Shader& operator=(const Shader&) = delete;
-   Shader& operator=(Shader&& other);
-   explicit operator bool() const { return m_id != 0; }
-   bool operator!() const { return !operator bool(); }
+   Shader& operator=(Shader&& other) = default;
 
-   GlId id() const { return m_id; }
    bool create(GLenum shaderType);
-   void destroy();
-   void attach(GlId id);
-   GlId detach();
    bool compile();
-
    void setSource(const GLchar* code) { setSource(1, &code, nullptr); }
    void setSource(GLsizei count, const GLchar** code, const GLint* length);
 
    friend inline void swap(Shader& a, Shader& b)
    {
-      std::swap(a.m_id, b.m_id);
+      swap(static_cast<Object<Shader>&>(a), static_cast<Object<Shader>&>(b));
    }
 
  private:
-   GlId m_id = 0;
+   // Hide from public access because a special overload should be used instead.
+   using Object<Shader>::create;
+
+ private:
+   // Interface required by Object.
+   // Note that the other required member function create_() will never be called
+   // because a special overload for creating shader objects is used.
+   void destroy_(GlId id);
 };
+
+
+inline Shader::Shader(GlId id) : Object<Shader>{id}
+{
+}
 
 
 ///////////////////
