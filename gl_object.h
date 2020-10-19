@@ -44,6 +44,7 @@ template <typename GlType> class Object
    Object& operator=(const Object&) = delete;
    Object& operator=(Object&& other);
 
+   void setId(GlId id) { m_id = id; }
    friend inline void swap(Object& a, Object& b) { std::swap(a.m_id, b.m_id); }
 
  private:
