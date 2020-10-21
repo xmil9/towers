@@ -29,18 +29,6 @@ static unsigned int indices[] = {
 static glutil::VertexArray vao;
 static glutil::Buffer vbo;
 static glutil::Buffer ebo;
-static const char* vertexShaderCode = "#version 460 core\n"
-                                      "layout (location = 0) in vec3 pos;\n"
-                                      "void main()\n"
-                                      "{\n"
-                                      "  gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);\n"
-                                      "}\0";
-static const char* fragmentShaderCode = "#version 460 core\n"
-                                        "out vec4 fragColor;\n"
-                                        "void main()\n"
-                                        "{\n"
-                                        "  fragColor = vec4(0.2f, 0.5f, 1.0f, 1.0f);\n"
-                                        "}\0";
 static glutil::Program prog;
 
 
@@ -80,10 +68,12 @@ static glutil::Program setupShaders()
 {
    bool ok = true;
 
-   glutil::Shader vs{glutil::makeVertexShader(vertexShaderCode)};
+   glutil::Shader vs{
+      glutil::makeVertexShader(std::filesystem::path{"D:\\Projects\\towers\\towers.vs"})};
    ok = vs.compile();
 
-   glutil::Shader fs{glutil::makeFragmentShader(fragmentShaderCode)};
+   glutil::Shader fs{glutil::makeFragmentShader(
+      std::filesystem::path{"D:\\Projects\\towers\\towers.fs"})};
    if (ok)
       ok = fs.compile();
 

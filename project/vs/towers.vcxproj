@@ -170,6 +170,10 @@
     <ClInclude Include="..\..\gl_types.h" />
     <ClInclude Include="..\..\gl_vertex_array.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\towers.fs" />
+    <None Include="..\..\towers.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

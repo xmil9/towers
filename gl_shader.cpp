@@ -20,6 +20,15 @@ glutil::Shader makeShader(GLenum shaderType, const GLchar* code)
    return s;
 }
 
+
+glutil::Shader makeShader(GLenum shaderType, const std::filesystem::path& codeFile)
+{
+   glutil::Shader s;
+   if (s.create(shaderType))
+      s.loadSource(codeFile);
+   return s;
+}
+
 } // namespace
 
 
@@ -88,9 +97,21 @@ Shader makeVertexShader(const GLchar* code)
 }
 
 
+Shader makeVertexShader(const std::filesystem::path& codeFile)
+{
+   return makeShader(GL_VERTEX_SHADER, codeFile);
+}
+
+
 Shader makeFragmentShader(const GLchar* code)
 {
    return makeShader(GL_FRAGMENT_SHADER, code);
+}
+
+
+Shader makeFragmentShader(const std::filesystem::path& codeFile)
+{
+   return makeShader(GL_FRAGMENT_SHADER, codeFile);
 }
 
 } // namespace glutil

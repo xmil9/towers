@@ -67,4 +67,8 @@
       <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\towers.vs" />
+    <None Include="..\..\towers.fs" />
+  </ItemGroup>
 </Project>

@@ -59,6 +59,8 @@ inline Shader::Shader(GlId id) : Object<Shader>{id}
 ///////////////////
 
 Shader makeVertexShader(const GLchar* code);
+Shader makeVertexShader(const std::filesystem::path& codeFile);
 Shader makeFragmentShader(const GLchar* code);
+Shader makeFragmentShader(const std::filesystem::path& codeFile);
 
 } // namespace glutil
