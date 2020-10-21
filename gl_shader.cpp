@@ -4,6 +4,8 @@
 //
 #include "gl_shader.h"
 #include <cassert>
+#include <fstream>
+#include <sstream>
 
 
 namespace
@@ -37,6 +39,27 @@ bool Shader::create(GLenum shaderType)
 }
 
 
+void Shader::setSource(GLsizei count, const GLchar** code, const GLint* length)
+{
+   if (hasId())
+      glShaderSource(id(), count, code, length);
+}
+
+
+bool Shader::loadSource(const std::filesystem::path& path)
+{
+   if (!hasId())
+      return false;
+
+   std::ifstream fileStream{path.c_str()};
+   std::stringstream buffer;
+   buffer << fileStream.rdbuf();
+
+   setSource(buffer.str().c_str());
+   return true;
+}
+
+
 bool Shader::compile()
 {
    if (hasId())
@@ -48,13 +71,6 @@ bool Shader::compile()
       return success == GL_TRUE;
    }
    return false;
-}
-
-
-void Shader::setSource(GLsizei count, const GLchar** code, const GLint* length)
-{
-   if (hasId())
-      glShaderSource(id(), count, code, length);
 }
 
 
