@@ -5,6 +5,7 @@
 #include "gl_vertex_array.h"
 #include "glfw_lib.h"
 #include "glfw_window.h"
+#include "essentutils/filesys.h"
 #include <cassert>
 #include <cstdlib>
 #include <utility>
@@ -66,14 +67,14 @@ static void setupRendering()
 
 static glutil::Program setupShaders()
 {
-   bool ok = true;
+   const std::filesystem::path appPath = sutil::appDirectory();
+   bool ok = !appPath.empty();
 
-   glutil::Shader vs{
-      glutil::makeVertexShader(std::filesystem::path{"D:\\Projects\\towers\\towers.vs"})};
-   ok = vs.compile();
+   glutil::Shader vs{glutil::makeVertexShader(appPath / "towers.vs")};
+   if (ok)
+      ok = vs.compile();
 
-   glutil::Shader fs{glutil::makeFragmentShader(
-      std::filesystem::path{"D:\\Projects\\towers\\towers.fs"})};
+   glutil::Shader fs{glutil::makeFragmentShader(appPath / "towers.fs")};
    if (ok)
       ok = fs.compile();
 
