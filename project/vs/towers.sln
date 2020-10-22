@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "towers", "towers.vcxproj", "{8EC59D1E-1623-4DC5-B444-49267F41FC7C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "essentutils", "..\..\deps\essentutils\project\vs\essentutils.vcxproj", "{1C70FF5C-CDC9-426E-9C6A-922919183BAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{8EC59D1E-1623-4DC5-B444-49267F41FC7C}.Release|x64.Build.0 = Release|x64
 		{8EC59D1E-1623-4DC5-B444-49267F41FC7C}.Release|x86.ActiveCfg = Release|Win32
 		{8EC59D1E-1623-4DC5-B444-49267F41FC7C}.Release|x86.Build.0 = Release|Win32
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Debug|x64.ActiveCfg = Debug Lib|x64
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Debug|x64.Build.0 = Debug Lib|x64
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Debug|x86.ActiveCfg = Debug DLL|Win32
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Debug|x86.Build.0 = Debug DLL|Win32
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Release|x64.ActiveCfg = Release Lib|x64
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Release|x64.Build.0 = Release Lib|x64
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Release|x86.ActiveCfg = Release Lib|Win32
+		{1C70FF5C-CDC9-426E-9C6A-922919183BAB}.Release|x86.Build.0 = Release Lib|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
