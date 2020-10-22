@@ -39,6 +39,19 @@ bool Program::link()
 }
 
 
+std::string Program::linkLog() const
+{
+   if (!hasId())
+      return "";
+
+   GLint logLen = 0;
+   glGetProgramiv(id(), GL_INFO_LOG_LENGTH, &logLen);
+   std::string log(logLen, 0);
+   glGetProgramInfoLog(id(), logLen, nullptr, log.data());
+   return log;
+}
+
+
 void Program::use()
 {
    if (hasId())

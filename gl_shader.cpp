@@ -83,6 +83,19 @@ bool Shader::compile()
 }
 
 
+std::string Shader::compileLog() const
+{
+   if (!hasId())
+      return "";
+
+   GLint logLen = 0;
+   glGetShaderiv(id(), GL_INFO_LOG_LENGTH, &logLen);
+   std::string log(logLen, 0);
+   glGetShaderInfoLog(id(), logLen, nullptr, log.data());
+   return log;
+}
+
+
 void Shader::destroy_(GlId id)
 {
    glDeleteShader(id);

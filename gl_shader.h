@@ -7,6 +7,7 @@
 #include "gl_object.h"
 #include "gl_types.h"
 #include <filesystem>
+#include <string>
 #include <utility>
 
 
@@ -33,6 +34,7 @@ class Shader : public Object<Shader>
    void setSource(GLsizei count, const GLchar** code, const GLint* length);
    bool loadSource(const std::filesystem::path& path);
    bool compile();
+   std::string compileLog() const;
 
    friend inline void swap(Shader& a, Shader& b)
    {
