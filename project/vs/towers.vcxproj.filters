@@ -23,6 +23,9 @@
     <ClCompile Include="..\..\gl_buffer.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\deps\stb\stb_image.cpp">
+      <Filter>Stb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -33,6 +36,9 @@
     </Filter>
     <Filter Include="Gl Utilities">
       <UniqueIdentifier>{83b7ab7a-7ef2-4e24-bee1-513529922f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stb">
+      <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="..\..\gl_object.h">
       <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\deps\stb\stb_image.h">
+      <Filter>Stb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

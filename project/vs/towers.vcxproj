@@ -158,6 +158,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
+    <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
     <ClCompile Include="..\..\glfw_window.cpp" />
     <ClCompile Include="..\..\gl_buffer.cpp" />
@@ -167,6 +168,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\gl_vertex_array.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\glfw_types.h" />
     <ClInclude Include="..\..\glfw_lib.h" />
     <ClInclude Include="..\..\glfw_window.h" />
