@@ -6,10 +6,10 @@
 #include "glad/glad.h" // glad must be included before anything else opengl related.
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
-using GlId = GLuint;
+using ObjId = GLuint;
 
-} // namespace glutil
+} // namespace gll

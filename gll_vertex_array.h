@@ -4,17 +4,16 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
-#include "gl_object.h"
-#include "gl_types.h"
+#include "gll_object.h"
 #include <utility>
 
-namespace glutil
+namespace gll
 {
 struct DataFormat;
 }
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -31,7 +30,7 @@ class VertexArray : public Object<VertexArray>
 
  public:
    VertexArray() = default;
-   explicit VertexArray(GlId id);
+   explicit VertexArray(ObjId id);
    ~VertexArray() = default;
    VertexArray(const VertexArray&) = delete;
    VertexArray(VertexArray&& other) = default;
@@ -54,13 +53,13 @@ class VertexArray : public Object<VertexArray>
 
  private:
    // Interface required by Object.
-   GlId create_();
-   void destroy_(GlId id);
+   ObjId create_();
+   void destroy_(ObjId id);
 };
 
 
-inline VertexArray::VertexArray(GlId id) : Object<VertexArray>{id}
+inline VertexArray::VertexArray(ObjId id) : Object<VertexArray>{id}
 {
 }
 
-} // namespace glutil
+} // namespace gll

@@ -4,22 +4,22 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
-#include "gl_types.h"
+#include "gll_types.h"
 #include <cassert>
 #include <type_traits>
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
 // Base class for OpenGL objects. Manages creation and deletion of objects.
 // Uses CRTP.
 // Derived classes have to implement:
-// - GlId create() member function
-// - void destroy(GlId id) member function
+// - ObjId create() member function
+// - void destroy(ObjId id) member function
 // - void swap(Derived& a, Derived& b) free function
-template <typename GlType> class Object
+template <typename Derived> class Object
 {
  public:
    ~Object();
@@ -28,90 +28,90 @@ template <typename GlType> class Object
    bool operator!() const { return !operator bool(); }
 
    bool hasId() const { return m_id != 0; }
-   GlId id() const { return m_id; }
+   ObjId id() const { return m_id; }
    bool create();
    void destroy();
-   void attach(GlId id);
-   GlId detach();
+   void attach(ObjId id);
+   ObjId detach();
 
  protected:
    // Only allowed to be used through derivation.
    Object() = default;
-   Object(GlId id);
+   Object(ObjId id);
    Object(const Object&) = delete;
    Object(Object&& other);
 
    Object& operator=(const Object&) = delete;
    Object& operator=(Object&& other);
 
-   void setId(GlId id) { m_id = id; }
+   void setId(ObjId id) { m_id = id; }
    friend inline void swap(Object& a, Object& b) { std::swap(a.m_id, b.m_id); }
 
  private:
-   GlType& GetGlType() { return static_cast<GlType&>(*this); }
-   const GlType& GetGlType() const { return static_cast<const GlType&>(*this); }
+   Derived& GetDerived() { return static_cast<Derived&>(*this); }
+   const Derived& GetDerived() const { return static_cast<const Derived&>(*this); }
 
  private:
-   GlId m_id = 0;
+   ObjId m_id = 0;
 };
 
 
-template <typename GlType> Object<GlType>::Object(GlId id) : m_id{id}
+template <typename Derived> Object<Derived>::Object(ObjId id) : m_id{id}
 {
 }
 
 
-template <typename GlType> Object<GlType>::~Object()
+template <typename Derived> Object<Derived>::~Object()
 {
    destroy();
 }
 
 
-template <typename GlType> Object<GlType>::Object(Object&& other)
+template <typename Derived> Object<Derived>::Object(Object&& other)
 {
-   swap(GetGlType(), other.GetGlType());
+   swap(GetDerived(), other.GetDerived());
 }
 
 
-template <typename GlType> Object<GlType>& Object<GlType>::operator=(Object&& other)
+template <typename Derived> Object<Derived>& Object<Derived>::operator=(Object&& other)
 {
    destroy();
-   swap(GetGlType(), other.GetGlType());
+   swap(GetDerived(), other.GetDerived());
    return *this;
 }
 
 
-template <typename GlType> bool Object<GlType>::create()
+template <typename Derived> bool Object<Derived>::create()
 {
    assert(!hasId());
    if (!hasId())
-      m_id = GetGlType().create_();
+      m_id = GetDerived().create_();
    return hasId();
 }
 
 
-template <typename GlType> void Object<GlType>::destroy()
+template <typename Derived> void Object<Derived>::destroy()
 {
    if (hasId())
    {
-      GetGlType().destroy_(m_id);
+      GetDerived().destroy_(m_id);
       m_id = 0;
    }
 }
 
 
-template <typename GlType> void Object<GlType>::attach(GlId id)
+template <typename Derived> void Object<Derived>::attach(ObjId id)
 {
    destroy();
    m_id = id;
 }
 
 
-template <typename GlType> GlId Object<GlType>::detach()
+template <typename Derived> ObjId Object<Derived>::detach()
 {
-   GlId id = m_id;
+   ObjId id = m_id;
    m_id = 0;
    return id;
 }
 
-} // namespace glutil
+} // namespace gll

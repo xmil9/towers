@@ -161,25 +161,25 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
     <ClCompile Include="..\..\glfw_window.cpp" />
-    <ClCompile Include="..\..\gl_buffer.cpp" />
-    <ClCompile Include="..\..\gl_program.cpp" />
-    <ClCompile Include="..\..\gl_shader.cpp" />
+    <ClCompile Include="..\..\gll_buffer.cpp" />
+    <ClCompile Include="..\..\gll_program.cpp" />
+    <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
-    <ClCompile Include="..\..\gl_vertex_array.cpp" />
+    <ClCompile Include="..\..\gll_vertex_array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\glfw_types.h" />
     <ClInclude Include="..\..\glfw_lib.h" />
     <ClInclude Include="..\..\glfw_window.h" />
-    <ClInclude Include="..\..\gl_buffer.h" />
-    <ClInclude Include="..\..\gl_data_format.h" />
-    <ClInclude Include="..\..\gl_object.h" />
-    <ClInclude Include="..\..\gl_program.h" />
-    <ClInclude Include="..\..\gl_shader.h" />
-    <ClInclude Include="..\..\gl_types.h" />
-    <ClInclude Include="..\..\gl_uniform.h" />
-    <ClInclude Include="..\..\gl_vertex_array.h" />
+    <ClInclude Include="..\..\gll_buffer.h" />
+    <ClInclude Include="..\..\gll_data_format.h" />
+    <ClInclude Include="..\..\gll_object.h" />
+    <ClInclude Include="..\..\gll_program.h" />
+    <ClInclude Include="..\..\gll_shader.h" />
+    <ClInclude Include="..\..\gll_types.h" />
+    <ClInclude Include="..\..\gll_uniform.h" />
+    <ClInclude Include="..\..\gll_vertex_array.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.fs" />

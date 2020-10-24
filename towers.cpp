@@ -1,11 +1,11 @@
-#include "gl_buffer.h"
-#include "gl_data_format.h"
-#include "gl_program.h"
-#include "gl_shader.h"
-#include "gl_uniform.h"
-#include "gl_vertex_array.h"
 #include "glfw_lib.h"
 #include "glfw_window.h"
+#include "gll_buffer.h"
+#include "gll_data_format.h"
+#include "gll_program.h"
+#include "gll_shader.h"
+#include "gll_uniform.h"
+#include "gll_vertex_array.h"
 #include "essentutils/filesys.h"
 #include <cassert>
 #include <cstdlib>
@@ -22,8 +22,8 @@ static float positions[] = {
    0.6f, 0.0f, 0.0f,
    // Bottom
    0.0f, -0.6f, 0.0f};
-static constexpr glutil::DataFormat posFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
-                                                 nullptr};
+static constexpr gll::DataFormat posFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+                                              nullptr};
 
 static unsigned int indices[] = {
    // Triangle 1
@@ -40,14 +40,14 @@ static float colors[] = {
    0.6f, 0.0f, 0.0f, 1.0f,
    // Bottom
    0.0f, -0.6f, 0.0f, 1.0f};
-static constexpr glutil::DataFormat colorFormat = {4, GL_FLOAT, GL_FALSE,
-                                                   4 * sizeof(float), nullptr};
+static constexpr gll::DataFormat colorFormat = {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
+                                                nullptr};
 
-static glutil::VertexArray vao;
-static glutil::Buffer posBuf;
-static glutil::Buffer colorBuf;
-static glutil::Buffer elemBuf;
-static glutil::Program prog;
+static gll::VertexArray vao;
+static gll::Buffer posBuf;
+static gll::Buffer colorBuf;
+static gll::Buffer elemBuf;
+static gll::Program prog;
 
 
 static void setupData()
@@ -78,8 +78,8 @@ static void setupData()
    // Unbind vao first to stop "recording" information in it.
    vao.unbind();
    // Unbind each buffer type from global state.
-   glutil::Buffer::unbind(GL_ARRAY_BUFFER);
-   glutil::Buffer::unbind(GL_ELEMENT_ARRAY_BUFFER);
+   gll::Buffer::unbind(GL_ARRAY_BUFFER);
+   gll::Buffer::unbind(GL_ELEMENT_ARRAY_BUFFER);
 }
 
 
@@ -91,20 +91,20 @@ static void setupRendering()
 }
 
 
-static glutil::Program setupShaders()
+static gll::Program setupShaders()
 {
    const std::filesystem::path appPath = sutil::appDirectory();
    bool ok = !appPath.empty();
 
-   glutil::Shader vs{glutil::makeVertexShader(appPath / "towers.vs")};
+   gll::Shader vs{gll::makeVertexShader(appPath / "towers.vs")};
    if (ok)
       ok = vs.compile();
 
-   glutil::Shader fs{glutil::makeFragmentShader(appPath / "towers.fs")};
+   gll::Shader fs{gll::makeFragmentShader(appPath / "towers.fs")};
    if (ok)
       ok = fs.compile();
 
-   glutil::Program shaderProg;
+   gll::Program shaderProg;
    if (ok)
       ok = shaderProg.create();
    if (ok)
@@ -139,7 +139,7 @@ static void render(glfwutil::Window& wnd)
 
    // const float time = static_cast<float>(glfwGetTime());
    // const float green = sin(time) / 2.0f + 0.5f;
-   // glutil::Uniform color = prog.uniform("color");
+   // gll::Uniform color = prog.uniform("color");
    // color.setValue(glm::vec4(0.0f, green, 0.0f, 1.0f));
 
    vao.bind();

@@ -4,14 +4,13 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
-#include "gl_object.h"
-#include "gl_types.h"
+#include "gll_object.h"
 #include <filesystem>
 #include <string>
 #include <utility>
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -21,7 +20,7 @@ class Shader : public Object<Shader>
 
  public:
    Shader() = default;
-   explicit Shader(GlId id);
+   explicit Shader(ObjId id);
    ~Shader() = default;
    Shader(const Shader&) = delete;
    Shader(Shader&& other) = default;
@@ -49,11 +48,11 @@ class Shader : public Object<Shader>
    // Interface required by Object.
    // Note that the other required member function create_() will never be called
    // because a special overload for creating shader objects is used.
-   void destroy_(GlId id);
+   void destroy_(ObjId id);
 };
 
 
-inline Shader::Shader(GlId id) : Object<Shader>{id}
+inline Shader::Shader(ObjId id) : Object<Shader>{id}
 {
 }
 
@@ -65,4 +64,4 @@ Shader makeVertexShader(const std::filesystem::path& codeFile);
 Shader makeFragmentShader(const GLchar* code);
 Shader makeFragmentShader(const std::filesystem::path& codeFile);
 
-} // namespace glutil
+} // namespace gll

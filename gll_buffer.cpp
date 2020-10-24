@@ -2,10 +2,10 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "gl_buffer.h"
+#include "gll_buffer.h"
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -29,17 +29,17 @@ void Buffer::setData(GLenum target, GLsizeiptr size, const void* data, GLenum us
 }
 
 
-GlId Buffer::create_()
+ObjId Buffer::create_()
 {
-   GlId id;
+   ObjId id;
    glGenBuffers(1, &id);
    return id;
 }
 
 
-void Buffer::destroy_(GlId id)
+void Buffer::destroy_(ObjId id)
 {
    glDeleteBuffers(1, &id);
 }
 
-} // namespace glutil
+} // namespace gll

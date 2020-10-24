@@ -4,16 +4,18 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
-#include "gl_object.h"
-#include "gl_types.h"
-#include "gl_uniform.h"
+#include "gll_object.h"
+#include "gll_uniform.h"
 #include <string>
 #include <utility>
 
-namespace glutil { class Shader; }
+namespace gll
+{
+class Shader;
+}
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -23,7 +25,7 @@ class Program : public Object<Program>
 
  public:
    Program() = default;
-   explicit Program(GlId id);
+   explicit Program(ObjId id);
    ~Program() = default;
    Program(const Program&) = delete;
    Program(Program&& other) = default;
@@ -37,7 +39,7 @@ class Program : public Object<Program>
    std::string linkLog() const;
    void use();
    // The program must be successully linked to access uniforms.
-   Uniform uniform(const GLchar *name) const;
+   Uniform uniform(const GLchar* name) const;
 
    friend inline void swap(Program& a, Program& b)
    {
@@ -46,13 +48,13 @@ class Program : public Object<Program>
 
  private:
    // Interface required by Object.
-   GlId create_();
-   void destroy_(GlId id);
+   ObjId create_();
+   void destroy_(ObjId id);
 };
 
 
-inline Program::Program(GlId id) : Object<Program>{id}
+inline Program::Program(ObjId id) : Object<Program>{id}
 {
 }
 
-} // namespace glutil
+} // namespace gll

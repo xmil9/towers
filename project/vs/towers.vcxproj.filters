@@ -11,20 +11,20 @@
     <ClCompile Include="..\..\glfw_window.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gl_shader.cpp">
-      <Filter>Gl Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gl_program.cpp">
-      <Filter>Gl Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gl_vertex_array.cpp">
-      <Filter>Gl Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gl_buffer.cpp">
-      <Filter>Gl Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Stb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gll_buffer.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gll_shader.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gll_program.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gll_vertex_array.cpp">
+      <Filter>Gl Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,31 +51,31 @@
     <ClInclude Include="..\..\glfw_types.h">
       <Filter>Glfw Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gl_program.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gl_shader.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gl_types.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gl_vertex_array.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gl_buffer.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gl_data_format.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gl_object.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Stb</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gl_uniform.h">
+    <ClInclude Include="..\..\gll_types.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_object.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_data_format.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_buffer.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_shader.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_program.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_uniform.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_vertex_array.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>

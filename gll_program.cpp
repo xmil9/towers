@@ -2,12 +2,12 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "gl_program.h"
-#include "gl_shader.h"
+#include "gll_program.h"
+#include "gll_shader.h"
 #include <cassert>
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -59,7 +59,7 @@ void Program::use()
 }
 
 
-Uniform Program::uniform(const GLchar *name) const
+Uniform Program::uniform(const GLchar* name) const
 {
    if (!hasId())
       return {};
@@ -72,15 +72,15 @@ Uniform Program::uniform(const GLchar *name) const
 }
 
 
-GlId Program::create_()
+ObjId Program::create_()
 {
    return glCreateProgram();
 }
 
 
-void Program::destroy_(GlId id)
+void Program::destroy_(ObjId id)
 {
    glDeleteProgram(id);
 }
 
-} // namespace glutil
+} // namespace gll

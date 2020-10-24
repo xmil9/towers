@@ -2,7 +2,7 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "gl_shader.h"
+#include "gll_shader.h"
 #include <cassert>
 #include <fstream>
 #include <sstream>
@@ -12,18 +12,18 @@ namespace
 {
 ///////////////////
 
-glutil::Shader makeShader(GLenum shaderType, const GLchar* code)
+gll::Shader makeShader(GLenum shaderType, const GLchar* code)
 {
-   glutil::Shader s;
+   gll::Shader s;
    if (s.create(shaderType))
       s.setSource(code);
    return s;
 }
 
 
-glutil::Shader makeShader(GLenum shaderType, const std::filesystem::path& codeFile)
+gll::Shader makeShader(GLenum shaderType, const std::filesystem::path& codeFile)
 {
-   glutil::Shader s;
+   gll::Shader s;
    if (s.create(shaderType))
       s.loadSource(codeFile);
    return s;
@@ -32,7 +32,7 @@ glutil::Shader makeShader(GLenum shaderType, const std::filesystem::path& codeFi
 } // namespace
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -41,7 +41,7 @@ bool Shader::create(GLenum shaderType)
    assert(!hasId());
    if (!hasId())
    {
-      GlId id = glCreateShader(shaderType);
+      ObjId id = glCreateShader(shaderType);
       setId(id);
    }
    return hasId();
@@ -96,7 +96,7 @@ std::string Shader::compileLog() const
 }
 
 
-void Shader::destroy_(GlId id)
+void Shader::destroy_(ObjId id)
 {
    glDeleteShader(id);
 }
@@ -127,4 +127,4 @@ Shader makeFragmentShader(const std::filesystem::path& codeFile)
    return makeShader(GL_FRAGMENT_SHADER, codeFile);
 }
 
-} // namespace glutil
+} // namespace gll

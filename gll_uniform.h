@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
-#include "gl_types.h"
+#include "gll_types.h"
 #include "essentutils/type_traits_util.h"
 #ifdef HAVE_GLM
 #include "glm/vec2.hpp"
@@ -16,29 +16,29 @@
 #include <utility>
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
 // Overloads for getting uniform values.
 // They are used as helper functions but could be useful by themselves.
 
-inline void getUniformValues(GlId program, GLint location, GLsizei count, GLfloat* vals)
+inline void getUniformValues(ObjId program, GLint location, GLsizei count, GLfloat* vals)
 {
    glGetnUniformfv(program, location, count * sizeof(GLfloat), vals);
 }
 
-inline void getUniformValues(GlId program, GLint location, GLsizei count, GLdouble* vals)
+inline void getUniformValues(ObjId program, GLint location, GLsizei count, GLdouble* vals)
 {
    glGetnUniformdv(program, location, count * sizeof(GLdouble), vals);
 }
 
-inline void getUniformValues(GlId program, GLint location, GLsizei count, GLint* vals)
+inline void getUniformValues(ObjId program, GLint location, GLsizei count, GLint* vals)
 {
    glGetnUniformiv(program, location, count * sizeof(GLint), vals);
 }
 
-inline void getUniformValues(GlId program, GLint location, GLsizei count, GLuint* vals)
+inline void getUniformValues(ObjId program, GLint location, GLsizei count, GLuint* vals)
 {
    glGetnUniformuiv(program, location, count * sizeof(GLuint), vals);
 }
@@ -92,7 +92,7 @@ class Uniform
 {
  public:
    Uniform() = default;
-   Uniform(GlId program, GLint location);
+   Uniform(ObjId program, GLint location);
    ~Uniform() = default;
    Uniform(const Uniform&) = default;
    Uniform(Uniform&& other) = default;
@@ -100,7 +100,7 @@ class Uniform
    Uniform& operator=(const Uniform&) = default;
    Uniform& operator=(Uniform&& other) = default;
 
-   GlId programId() const { return m_program; }
+   ObjId programId() const { return m_program; }
    GLint location() const { return m_location; }
    explicit operator bool() const { return hasLocation(); }
    bool operator!() const { return !operator bool(); }
@@ -127,14 +127,14 @@ class Uniform
  private:
    // The program id is not used for setting values. Value setters operate on the
    // currently active program.
-   GlId m_program = 0;
+   ObjId m_program = 0;
    GLint m_location = -1;
 };
 
 
 ///////////////////
 
-inline Uniform::Uniform(GlId program, GLint location)
+inline Uniform::Uniform(ObjId program, GLint location)
 : m_program{program}, m_location{location}
 {
 }
@@ -201,4 +201,4 @@ template <typename T> void Uniform::setValue(const T& val)
       setUniformValue(m_location, val);
 }
 
-} // namespace glutil
+} // namespace gll

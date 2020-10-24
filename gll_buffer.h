@@ -4,12 +4,11 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
-#include "gl_object.h"
-#include "gl_types.h"
+#include "gll_object.h"
 #include <utility>
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -19,7 +18,7 @@ class Buffer : public Object<Buffer>
 
  public:
    Buffer() = default;
-   explicit Buffer(GlId id);
+   explicit Buffer(ObjId id);
    ~Buffer() = default;
    Buffer(const Buffer&) = delete;
    Buffer(Buffer&& other) = default;
@@ -40,13 +39,13 @@ class Buffer : public Object<Buffer>
 
  private:
    // Interface required by Object.
-   GlId create_();
-   void destroy_(GlId id);
+   ObjId create_();
+   void destroy_(ObjId id);
 };
 
 
-inline Buffer::Buffer(GlId id) : Object<Buffer>{id}
+inline Buffer::Buffer(ObjId id) : Object<Buffer>{id}
 {
 }
 
-} // namespace glutil
+} // namespace gll

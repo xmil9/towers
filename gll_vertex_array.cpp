@@ -2,11 +2,11 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "gl_vertex_array.h"
-#include "gl_data_format.h"
+#include "gll_vertex_array.h"
+#include "gll_data_format.h"
 
 
-namespace glutil
+namespace gll
 {
 ///////////////////
 
@@ -62,17 +62,17 @@ void VertexArray::disableAttrib(GLuint attribIdx)
 }
 
 
-GlId VertexArray::create_()
+ObjId VertexArray::create_()
 {
-   GlId id;
+   ObjId id;
    glGenVertexArrays(1, &id);
    return id;
 }
 
 
-void VertexArray::destroy_(GlId id)
+void VertexArray::destroy_(ObjId id)
 {
    glDeleteVertexArrays(1, &id);
 }
 
-} // namespace glutil
+} // namespace gll
