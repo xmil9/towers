@@ -66,21 +66,21 @@ template <typename T> void setUniformValue(GLint location, const T& val)
    else if constexpr (std::is_same_v<T, glm::dvec2>)
       glUniform2d(location, val[0], val[1]);
    else if constexpr (std::is_same_v<T, glm::vec3>)
-      glUniform2f(location, val[0], val[1], val[2]);
+      glUniform3f(location, val[0], val[1], val[2]);
    else if constexpr (std::is_same_v<T, glm::ivec3> || std::is_same_v<T, glm::bvec3>)
-      glUniform2i(location, val[0], val[1], val[2]);
+      glUniform3i(location, val[0], val[1], val[2]);
    else if constexpr (std::is_same_v<T, glm::uvec3>)
-      glUniform2ui(location, val[0], val[1], val[2]);
+      glUniform3ui(location, val[0], val[1], val[2]);
    else if constexpr (std::is_same_v<T, glm::dvec3>)
-      glUniform2d(location, val[0], val[1], val[2]);
+      glUniform3d(location, val[0], val[1], val[2]);
    else if constexpr (std::is_same_v<T, glm::vec4>)
-      glUniform2f(location, val[0], val[1], val[2], val[3]);
+      glUniform4f(location, val[0], val[1], val[2], val[3]);
    else if constexpr (std::is_same_v<T, glm::ivec4> || std::is_same_v<T, glm::bvec4>)
-      glUniform2i(location, val[0], val[1], val[2], val[3]);
+      glUniform4i(location, val[0], val[1], val[2], val[3]);
    else if constexpr (std::is_same_v<T, glm::uvec4>)
-      glUniform2ui(location, val[0], val[1], val[2], val[3]);
+      glUniform4ui(location, val[0], val[1], val[2], val[3]);
    else if constexpr (std::is_same_v<T, glm::dvec4>)
-      glUniform2d(location, val[0], val[1], val[2], val[3]);
+      glUniform4d(location, val[0], val[1], val[2], val[3]);
    else
       static_assert(false, "Invalid value type.");
 }
@@ -122,7 +122,7 @@ class Uniform
    }
 
  private:
-   bool hasLocation() const { return m_location != 0; }
+   bool hasLocation() const { return m_location != -1; }
 
  private:
    // The program id is not used for setting values. Value setters operate on the
