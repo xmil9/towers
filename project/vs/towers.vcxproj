@@ -164,6 +164,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\gll_buffer.cpp" />
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
+    <ClCompile Include="..\..\gll_texture.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\gll_object.h" />
     <ClInclude Include="..\..\gll_program.h" />
     <ClInclude Include="..\..\gll_shader.h" />
+    <ClInclude Include="..\..\gll_texture.h" />
     <ClInclude Include="..\..\gll_types.h" />
     <ClInclude Include="..\..\gll_uniform.h" />
     <ClInclude Include="..\..\gll_vertex_array.h" />

@@ -26,6 +26,9 @@
     <ClCompile Include="..\..\glfwl_window.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gll_texture.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="..\..\glfwl_window.h">
       <Filter>Glfw Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_texture.h">
+      <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
