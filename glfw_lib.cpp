@@ -2,12 +2,12 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "glfw_lib.h"
+#include "glfwl_lib.h"
 #include "glfw/glfw3.h"
 #include <utility>
 
 
-namespace glfwutil
+namespace glfwl
 {
 ///////////////////
 
@@ -72,4 +72,4 @@ void GlfwLib::setHints()
 #endif
 }
 
-} // namespace glfwutil
+} // namespace glfwl

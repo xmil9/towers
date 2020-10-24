@@ -1,5 +1,5 @@
-#include "glfw_lib.h"
-#include "glfw_window.h"
+#include "glfwl_lib.h"
+#include "glfwl_window.h"
 #include "gll_buffer.h"
 #include "gll_data_format.h"
 #include "gll_program.h"
@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <utility>
 
-constexpr glfwutil::GlfwLib::ContextVersion OpenGLVersion{4, 6};
+constexpr glfwl::GlfwLib::ContextVersion OpenGLVersion{4, 6};
 
 static float positions[] = {
    // Top
@@ -120,7 +120,7 @@ static gll::Program setupShaders()
 }
 
 
-static void processInput(glfwutil::Window& /*wnd*/)
+static void processInput(glfwl::Window& /*wnd*/)
 {
    glfwPollEvents();
 }
@@ -131,7 +131,7 @@ static void updateState()
 }
 
 
-static void render(glfwutil::Window& wnd)
+static void render(glfwl::Window& wnd)
 {
    glClear(GL_COLOR_BUFFER_BIT);
 
@@ -153,12 +153,12 @@ static void render(glfwutil::Window& wnd)
 
 int main()
 {
-   glfwutil::GlfwLib glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE};
-   glfwutil::GlfwErr err = glfw.init();
+   glfwl::GlfwLib glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE};
+   glfwl::GlfwErr err = glfw.init();
    if (err)
       return EXIT_FAILURE;
 
-   glfwutil::Window wnd;
+   glfwl::Window wnd;
    err = wnd.create(800, 600, "towers");
    if (err)
       return EXIT_FAILURE;

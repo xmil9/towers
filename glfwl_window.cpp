@@ -2,10 +2,10 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "glfw_window.h"
+#include "glfwl_window.h"
 #include <cassert>
 
-using namespace glfwutil;
+using namespace glfwl;
 
 
 
@@ -27,7 +27,7 @@ Window* getSelf(GLFWwindow* wnd)
 } // namespace
 
 
-namespace glfwutil
+namespace glfwl
 {
 ///////////////////
 
@@ -198,4 +198,4 @@ void Window::windowContentScaleCallback(GLFWwindow* wnd, float xscale, float ysc
       self->onWindowContentScaled(xscale, yscale);
 }
 
-} // namespace glfwutil
+} // namespace glfwl

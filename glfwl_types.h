@@ -5,11 +5,11 @@
 #pragma once
 
 
-namespace glfwutil
+namespace glfwl
 {
 ///////////////////
 
 using GlfwErr = int;
 using Utf8Char = char;
 
-} // namespace glfwutil
+} // namespace glfwl

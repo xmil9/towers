@@ -160,7 +160,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
-    <ClCompile Include="..\..\glfw_window.cpp" />
+    <ClCompile Include="..\..\glfwl_window.cpp" />
     <ClCompile Include="..\..\gll_buffer.cpp" />
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
@@ -169,9 +169,9 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
-    <ClInclude Include="..\..\glfw_types.h" />
-    <ClInclude Include="..\..\glfw_lib.h" />
-    <ClInclude Include="..\..\glfw_window.h" />
+    <ClInclude Include="..\..\glfwl_types.h" />
+    <ClInclude Include="..\..\glfwl_lib.h" />
+    <ClInclude Include="..\..\glfwl_window.h" />
     <ClInclude Include="..\..\gll_buffer.h" />
     <ClInclude Include="..\..\gll_data_format.h" />
     <ClInclude Include="..\..\gll_object.h" />
