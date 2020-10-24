@@ -110,7 +110,9 @@ class Uniform
    // - float, int unsigned int, double, bool
    // - glm::vec2|3|4, glm::ivec2|3|4, glm::uvec2|3|4, glm::dvec2|3|4, glm::bvec2|3|4
    template <typename T> T value() const;
-   // Sets value of uniform.
+   // Sets value of uniform. Same types as for getting a value.
+   // The uniform's program must be active ('use' must have been called on it) in order to
+   // set a uniform's value.
    template <typename T> void setValue(const T& val);
 
    friend inline void swap(Uniform& a, Uniform& b)
