@@ -75,6 +75,9 @@
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Stb</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\gl_uniform.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.vs" />
