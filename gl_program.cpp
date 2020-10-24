@@ -59,6 +59,19 @@ void Program::use()
 }
 
 
+Uniform Program::uniform(const GLchar *name) const
+{
+   if (hasId())
+      return {};
+
+   const GLint loc = glGetUniformLocation(id(), name);
+   if (loc == -1)
+      return {};
+
+   return Uniform{id(), loc};
+}
+
+
 GlId Program::create_()
 {
    return glCreateProgram();

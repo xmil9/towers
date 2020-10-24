@@ -6,6 +6,7 @@
 #include "glad/glad.h" // glad must be included before anything else opengl related.
 #include "gl_object.h"
 #include "gl_types.h"
+#include "gl_uniform.h"
 #include <string>
 #include <utility>
 
@@ -35,6 +36,8 @@ class Program : public Object<Program>
    bool link();
    std::string linkLog() const;
    void use();
+   // The program must be successully linked to access uniforms.
+   Uniform uniform(const GLchar *name) const;
 
    friend inline void swap(Program& a, Program& b)
    {
