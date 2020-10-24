@@ -30,6 +30,7 @@ class Buffer : public Object<Buffer>
    void bind(GLenum target);
    // Unbinds currently bound buffer for the given target.
    static void unbind(GLenum target);
+   // Buffer needs to be active/bound in order to set data.
    void setData(GLenum target, GLsizeiptr size, const void* data, GLenum usage);
 
    friend inline void swap(Buffer& a, Buffer& b)
