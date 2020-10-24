@@ -5,7 +5,6 @@
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
 #include "gll_object.h"
-#include <utility>
 
 
 namespace gll
