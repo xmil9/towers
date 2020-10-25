@@ -40,6 +40,9 @@ class Program : public Object<Program>
    void use();
    // The program must be successully linked to access uniforms.
    Uniform uniform(const GLchar* name) const;
+   // Set the texture sampler to use a texture bound to the unit with the given index.
+   // Program must be in-use.
+   void setTextureUnit(const GLchar* samplerName, GLint unitIdx);
 
    friend inline void swap(Program& a, Program& b)
    {

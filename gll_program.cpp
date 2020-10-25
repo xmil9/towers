@@ -72,6 +72,17 @@ Uniform Program::uniform(const GLchar* name) const
 }
 
 
+void Program::setTextureUnit(const GLchar* samplerName, GLint unitIdx)
+{
+   if (!hasId())
+      return;
+   
+   // Program need to be in-use!
+   gll::Uniform sampler = uniform(samplerName);
+   sampler.setValue(unitIdx);
+}
+
+
 ObjId Program::create_()
 {
    return glCreateProgram();
