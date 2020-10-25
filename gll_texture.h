@@ -33,8 +33,8 @@ class Texture2D : public Object<Texture2D>
    void setData(GLint level, GLint internalFormat, GLsizei width, GLsizei height,
                 GLenum format, GLenum type, const void* data);
    // Loads texture from file and then sets the data.
-   bool loadData(const std::filesystem::path& texFile, GLint level, GLint internalFormat,
-                 GLenum format, GLenum type);
+   bool loadData(const std::filesystem::path& texFile, bool flipVert, GLint level,
+                 GLint internalFormat, GLenum format, GLenum type);
    void generateMipmap();
    // Sets wrapping policy for x- and y-direction:
    // - GL_REPEAT (default), GL_MIRRORED_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER

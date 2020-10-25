@@ -32,11 +32,14 @@ void Texture2D::setData(GLint level, GLint internalFormat, GLsizei width, GLsize
 }
 
 
-bool Texture2D::loadData(const std::filesystem::path& texFile, GLint level,
+bool Texture2D::loadData(const std::filesystem::path& texFile, bool flipVert, GLint level,
                          GLint internalFormat, GLenum format, GLenum type)
 {
    if (!hasId())
       return false;
+
+   if (flipVert)
+      stbi_set_flip_vertically_on_load(true);
 
    int width = 0;
    int height = 0;
