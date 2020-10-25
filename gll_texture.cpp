@@ -47,6 +47,8 @@ bool Texture2D::loadData(const std::filesystem::path& texFile, GLint level,
       return false;
 
    setData(level, internalFormat, width, height, format, type, data);
+
+   stbi_image_free(data);
    return true;
 }
 
