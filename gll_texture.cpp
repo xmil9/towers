@@ -58,6 +58,30 @@ void Texture2D::generateMipmap()
 }
 
 
+void Texture2D::setWrapPolicy(GLint xPolicy, GLint yPolicy)
+{
+   if (!hasId())
+      return;
+
+   if (xPolicy != -1)
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, xPolicy);
+   if (yPolicy != -1)
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, yPolicy);
+}
+
+
+void Texture2D::setScaleFiltering(GLint minifyFilter, GLint magnifyFilter)
+{
+   if (!hasId())
+      return;
+
+   if (minifyFilter != -1)
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minifyFilter);
+   if (magnifyFilter != -1)
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magnifyFilter);
+}
+
+
 ObjId Texture2D::create_()
 {
    ObjId id;

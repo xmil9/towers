@@ -32,9 +32,18 @@ class Texture2D : public Object<Texture2D>
    // Buffer needs to be active/bound in order to set data.
    void setData(GLint level, GLint internalFormat, GLsizei width, GLsizei height,
                 GLenum format, GLenum type, const void* data);
+   // Loads texture from file and then sets the data.
    bool loadData(const std::filesystem::path& texFile, GLint level, GLint internalFormat,
                  GLenum format, GLenum type);
    void generateMipmap();
+   // Sets wrapping policy for x- and y-direction:
+   // - GL_REPEAT (default), GL_MIRRORED_REPEAT, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER
+   // - '-1' for unchanged (when only changing one option)
+   void setWrapPolicy(GLint xPolicy, GLint yPolicy);
+   // Sets filtering for scaling the texture:
+   // - GL_NEAREST (default), GL_LINEAR
+   // - '-1' for unchanged (when only changing one option)
+   void setScaleFiltering(GLint minifyFilter, GLint magnifyFilter);
 
    friend inline void swap(Texture2D& a, Texture2D& b)
    {
