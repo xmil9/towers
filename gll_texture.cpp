@@ -51,6 +51,13 @@ bool Texture2D::loadData(const std::filesystem::path& texFile, GLint level,
 }
 
 
+void Texture2D::generateMipmap()
+{
+   if (hasId())
+      glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+
 ObjId Texture2D::create_()
 {
    ObjId id;

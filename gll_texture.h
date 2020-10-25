@@ -34,6 +34,7 @@ class Texture2D : public Object<Texture2D>
                 GLenum format, GLenum type, const void* data);
    bool loadData(const std::filesystem::path& texFile, GLint level, GLint internalFormat,
                  GLenum format, GLenum type);
+   void generateMipmap();
 
    friend inline void swap(Texture2D& a, Texture2D& b)
    {
