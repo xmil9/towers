@@ -4,6 +4,7 @@
 #include "gll_data_format.h"
 #include "gll_program.h"
 #include "gll_shader.h"
+#include "gll_texture.h"
 #include "gll_uniform.h"
 #include "gll_vertex_array.h"
 #include "essentutils/filesys.h"
@@ -14,13 +15,13 @@
 constexpr glfwl::GlfwLib::ContextVersion OpenGLVersion{4, 6};
 
 static float positions[] = {
-   // Top
+   // Top vertex
    0.0f, 0.6f, 0.0f,
-   // Left
+   // Left vertex
    -0.6f, 0.0f, 0.0f,
-   // Right
+   // Right vertex
    0.6f, 0.0f, 0.0f,
-   // Bottom
+   // Bottom vertex
    0.0f, -0.6f, 0.0f};
 static constexpr gll::DataFormat posFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                                               nullptr};
@@ -32,20 +33,37 @@ static unsigned int indices[] = {
    1, 2, 3};
 
 static float colors[] = {
-   // Top
+   // Top vertex
    0.0f, 0.6f, 0.0f, 1.0f,
-   // Left
+   // Left vertex
    -0.6f, 0.0f, 0.0f, 1.0f,
-   // Right
+   // Right vertex
    0.6f, 0.0f, 0.0f, 1.0f,
-   // Bottom
+   // Bottom vertex
    0.0f, -0.6f, 0.0f, 1.0f};
 static constexpr gll::DataFormat colorFormat = {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
+                                                nullptr};
+
+
+// Texture coord system:
+// (0, 0) left-bottom
+// (1, 1) right-top
+static float texCoords[] = {
+   // Top vertex
+   0.0f, 1.0f,
+   // Left vertex
+   0.0f, 0.0f,
+   // Right vertex
+   1.0f, 1.0f,
+   // Bottom vertex
+   1.0f, 0.0f};
+static constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
                                                 nullptr};
 
 static gll::VertexArray vao;
 static gll::Buffer posBuf;
 static gll::Buffer colorBuf;
+static gll::Texture2D tex;
 static gll::Buffer elemBuf;
 static gll::Program prog;
 
@@ -71,6 +89,19 @@ static void setupData()
    vao.setAttribFormat(colorAttribIdx, colorFormat);
    vao.enableAttrib(colorAttribIdx);
 
+   const std::filesystem::path appPath = sutil::appDirectory();
+   if (!appPath.empty())
+   {
+      tex.create();
+      tex.bind();
+      tex.loadData(appPath / "red_marble.png", 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
+      tex.generateMipmap();
+      // The attribute index has to match the 'location' value in the vertex shader code.
+      constexpr GLuint texCoordAttribIdx = 2;
+      vao.setAttribFormat(texCoordAttribIdx, texCoordFormat);
+      vao.enableAttrib(texCoordAttribIdx);
+   }
+
    elemBuf.create();
    elemBuf.bind(GL_ELEMENT_ARRAY_BUFFER);
    elemBuf.setData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -80,6 +111,7 @@ static void setupData()
    // Unbind each buffer type from global state.
    gll::Buffer::unbind(GL_ARRAY_BUFFER);
    gll::Buffer::unbind(GL_ELEMENT_ARRAY_BUFFER);
+   gll::Texture2D::unbind();
 }
 
 
@@ -142,10 +174,12 @@ static void render(glfwl::Window& wnd)
    // gll::Uniform color = prog.uniform("color");
    // color.setValue(glm::vec4(0.0f, green, 0.0f, 1.0f));
 
+   tex.bind();
    vao.bind();
    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(std::size(indices)), GL_UNSIGNED_INT,
                   nullptr);
    vao.unbind();
+   tex.unbind();
 
    wnd.swapBuffers();
 }
@@ -184,6 +218,7 @@ int main()
    vao.destroy();
    posBuf.destroy();
    colorBuf.destroy();
+   tex.destroy();
    elemBuf.destroy();
 
    return EXIT_SUCCESS;
