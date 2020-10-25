@@ -15,57 +15,78 @@
 constexpr glfwl::GlfwLib::ContextVersion OpenGLVersion{4, 6};
 
 static float positions[] = {
-   // Top vertex
-   0.0f, 0.6f, 0.0f,
-   // Left vertex
-   -0.6f, 0.0f, 0.0f,
-   // Right vertex
-   0.6f, 0.0f, 0.0f,
-   // Bottom vertex
-   0.0f, -0.6f, 0.0f};
+   // Left-top vertex
+   -0.6f, 0.6f, 0.0f,
+   // Right-top vertex
+   0.6f, 0.6f, 0.0f,
+   // Right-bottom vertex
+   0.6f, -0.6f, 0.0f,
+   // Left-bottom vertex
+   -0.6f, -0.6f, 0.0f};
 static constexpr gll::DataFormat posFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                                               nullptr};
 
 static unsigned int indices[] = {
    // Triangle 1
-   0, 2, 1,
+   0, 1, 2,
    // Triangle 2
-   1, 2, 3};
+   2, 3, 0};
 
 static float colors[] = {
-   // Top vertex
+   // Left-top vertex
    0.0f, 0.6f, 0.0f, 1.0f,
-   // Left vertex
+   // Right-top vertex
    -0.6f, 0.0f, 0.0f, 1.0f,
-   // Right vertex
+   // Right-bottom vertex
    0.6f, 0.0f, 0.0f, 1.0f,
-   // Bottom vertex
+   // Left-bottom vertex
    0.0f, -0.6f, 0.0f, 1.0f};
 static constexpr gll::DataFormat colorFormat = {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
                                                 nullptr};
-
 
 // Texture coord system:
 // (0, 0) left-bottom
 // (1, 1) right-top
 static float texCoords[] = {
-   // Top vertex
+   // Left-top vertex
    0.0f, 1.0f,
-   // Left vertex
-   0.0f, 0.0f,
-   // Right vertex
+   // Right-top vertex
    1.0f, 1.0f,
-   // Bottom vertex
-   1.0f, 0.0f};
-static constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
-                                                nullptr};
+   // Right-bottom vertex
+   1.0f, 0.0f,
+   // Left-bottom vertex
+   0.0f, 0.0f};
+static constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE,
+                                                   2 * sizeof(float), nullptr};
 
 static gll::VertexArray vao;
 static gll::Buffer posBuf;
 static gll::Buffer colorBuf;
+static gll::Buffer texCoordBuf;
 static gll::Texture2D tex;
 static gll::Buffer elemBuf;
 static gll::Program prog;
+
+
+static bool setupTextures()
+{
+   const std::filesystem::path appPath = sutil::appDirectory();
+   if (appPath.empty())
+      return false;
+
+   tex.create();
+   tex.bind();
+   tex.setWrapPolicy(GL_REPEAT, GL_REPEAT);
+   tex.setScaleFiltering(GL_NEAREST, GL_NEAREST);
+   tex.loadData(appPath / "directions.png", true, 0, GL_RGB, GL_RGBA,
+                  GL_UNSIGNED_BYTE);
+   tex.generateMipmap();
+
+   prog.use();
+   prog.setTextureUnit("texSampler", 0);
+
+   return true;
+}
 
 
 static void setupData()
@@ -89,18 +110,13 @@ static void setupData()
    vao.setAttribFormat(colorAttribIdx, colorFormat);
    vao.enableAttrib(colorAttribIdx);
 
-   const std::filesystem::path appPath = sutil::appDirectory();
-   if (!appPath.empty())
-   {
-      tex.create();
-      tex.bind();
-      tex.loadData(appPath / "red_marble.png", 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
-      tex.generateMipmap();
-      // The attribute index has to match the 'location' value in the vertex shader code.
-      constexpr GLuint texCoordAttribIdx = 2;
-      vao.setAttribFormat(texCoordAttribIdx, texCoordFormat);
-      vao.enableAttrib(texCoordAttribIdx);
-   }
+   texCoordBuf.create();
+   texCoordBuf.bind(GL_ARRAY_BUFFER);
+   texCoordBuf.setData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+   // The attribute index has to match the 'location' value in the vertex shader code.
+   constexpr GLuint texCoordAttribIdx = 2;
+   vao.setAttribFormat(texCoordAttribIdx, texCoordFormat);
+   vao.enableAttrib(texCoordAttribIdx);
 
    elemBuf.create();
    elemBuf.bind(GL_ELEMENT_ARRAY_BUFFER);
@@ -167,14 +183,11 @@ static void render(glfwl::Window& wnd)
 {
    glClear(GL_COLOR_BUFFER_BIT);
 
+   glActiveTexture(GL_TEXTURE0);
+   tex.bind();
+
    prog.use();
 
-   // const float time = static_cast<float>(glfwGetTime());
-   // const float green = sin(time) / 2.0f + 0.5f;
-   // gll::Uniform color = prog.uniform("color");
-   // color.setValue(glm::vec4(0.0f, green, 0.0f, 1.0f));
-
-   tex.bind();
    vao.bind();
    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(std::size(indices)), GL_UNSIGNED_INT,
                   nullptr);
@@ -193,7 +206,7 @@ int main()
       return EXIT_FAILURE;
 
    glfwl::Window wnd;
-   err = wnd.create(800, 600, "towers");
+   err = wnd.create(800, 800, "towers");
    if (err)
       return EXIT_FAILURE;
 
@@ -204,6 +217,8 @@ int main()
 
    prog = std::move(setupShaders());
    if (!prog)
+      return EXIT_FAILURE;
+   if (!setupTextures())
       return EXIT_FAILURE;
    setupData();
    setupRendering();
@@ -218,6 +233,7 @@ int main()
    vao.destroy();
    posBuf.destroy();
    colorBuf.destroy();
+   texCoordBuf.destroy();
    tex.destroy();
    elemBuf.destroy();
 
