@@ -64,6 +64,7 @@ static gll::Buffer posBuf;
 static gll::Buffer colorBuf;
 static gll::Buffer texCoordBuf;
 static gll::Texture2D tex;
+static gll::Texture2D tex2;
 static gll::Buffer elemBuf;
 static gll::Program prog;
 
@@ -82,8 +83,17 @@ static bool setupTextures()
                   GL_UNSIGNED_BYTE);
    tex.generateMipmap();
 
+   tex2.create();
+   tex2.bind();
+   tex2.setWrapPolicy(GL_REPEAT, GL_REPEAT);
+   tex2.setScaleFiltering(GL_NEAREST, GL_NEAREST);
+   tex2.loadData(appPath / "red_marble.png", true, 0, GL_RGB, GL_RGBA,
+                  GL_UNSIGNED_BYTE);
+   tex2.generateMipmap();
+
    prog.use();
    prog.setTextureUnit("texSampler", 0);
+   prog.setTextureUnit("texSampler2", 1);
 
    return true;
 }
@@ -185,14 +195,17 @@ static void render(glfwl::Window& wnd)
 
    glActiveTexture(GL_TEXTURE0);
    tex.bind();
+   glActiveTexture(GL_TEXTURE1);
+   tex2.bind();
 
    prog.use();
-
    vao.bind();
+   
    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(std::size(indices)), GL_UNSIGNED_INT,
                   nullptr);
-   vao.unbind();
-   tex.unbind();
+
+   gll::VertexArray::unbind();
+   gll::Texture2D::unbind();
 
    wnd.swapBuffers();
 }
