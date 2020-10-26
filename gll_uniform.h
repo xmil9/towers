@@ -7,6 +7,8 @@
 #include "gll_types.h"
 #include "essentutils/type_traits_util.h"
 #ifdef HAVE_GLM
+#include "glm/gtc/type_ptr.hpp"
+#include "glm/matrix.hpp"
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
@@ -14,7 +16,6 @@
 #include <array>
 #include <type_traits>
 #include <utility>
-
 
 namespace gll
 {
@@ -44,9 +45,8 @@ inline void getUniformValues(ObjId program, GLint location, GLsizei count, GLuin
 }
 
 
-// Overloads for setting uniform values.
-// They are used as helper functions but could be useful by themselves.
-
+// Sets uniform values.
+// Used as helper function but could be useful by itself.
 template <typename T> void setUniformValue(GLint location, const T& val)
 {
    if constexpr (std::is_same_v<T, GLfloat>)
@@ -81,6 +81,18 @@ template <typename T> void setUniformValue(GLint location, const T& val)
       glUniform4ui(location, val[0], val[1], val[2], val[3]);
    else if constexpr (std::is_same_v<T, glm::dvec4>)
       glUniform4d(location, val[0], val[1], val[2], val[3]);
+   else if constexpr (std::is_same_v<T, glm::mat2>)
+      glUniformMatrix2fv(location, 1, GL_FALSE, glm::value_ptr(val));
+   else if constexpr (std::is_same_v<T, glm::dmat2>)
+      glUniformMatrix2dv(location, 1, GL_FALSE, glm::value_ptr(val));
+   else if constexpr (std::is_same_v<T, glm::mat3>)
+      glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(val));
+   else if constexpr (std::is_same_v<T, glm::dmat3>)
+      glUniformMatrix3dv(location, 1, GL_FALSE, glm::value_ptr(val));
+   else if constexpr (std::is_same_v<T, glm::mat4>)
+      glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(val));
+   else if constexpr (std::is_same_v<T, glm::dmat4>)
+      glUniformMatrix4dv(location, 1, GL_FALSE, glm::value_ptr(val));
    else
       static_assert(false, "Invalid value type.");
 }
@@ -109,6 +121,7 @@ class Uniform
    // T can be:
    // - float, int unsigned int, double, bool
    // - glm::vec2|3|4, glm::ivec2|3|4, glm::uvec2|3|4, glm::dvec2|3|4, glm::bvec2|3|4
+   // - glm::mat2|3|4, glm::dmat2|3|4
    template <typename T> T value() const;
    // Sets value of uniform. Same types as for getting a value.
    // The uniform's program must be active ('use' must have been called on it) in order to
@@ -144,6 +157,8 @@ template <typename T> T Uniform::value() const
 {
    if (!hasLocation())
       return {};
+
+#pragma warning(disable : 4201)
 
    if constexpr (sutil::isOneOf_v<T, GLfloat, GLint, GLuint, GLdouble, bool>)
    {
@@ -187,11 +202,43 @@ template <typename T> T Uniform::value() const
       getUniformValues(m_program, m_location, 4, vals.data());
       return T(vals[0], vals[1], vals[2], vals[3]);
    }
+   else if (std::is_same_v<T, glm::mat2> || std::is_same_v<T, glm::dmat2>)
+   {
+      using GlValue = typename T::value_type;
+      std::array<GlValue, 4> vals;
+      getUniformValues(m_program, m_location, 4, vals.data());
+      // getUniformValues() fills the data in column-major order. Pass values to the ctor
+      // appropriately.
+      return T(vals[0], vals[2], vals[1], vals[3]);
+   }
+   else if (std::is_same_v<T, glm::mat3> || std::is_same_v<T, glm::dmat3>)
+   {
+      using GlValue = typename T::value_type;
+      std::array<GlValue, 9> vals;
+      getUniformValues(m_program, m_location, 9, vals.data());
+      // getUniformValues() fills the data in column-major order. Pass values to the ctor
+      // appropriately.
+      return T(vals[0], vals[3], vals[6], vals[1], vals[4], vals[7], vals[2], vals[5],
+               vals[7]);
+   }
+   else if (std::is_same_v<T, glm::mat4> || std::is_same_v<T, glm::dmat4>)
+   {
+      using GlValue = typename T::value_type;
+      std::array<GlValue, 16> vals;
+      getUniformValues(m_program, m_location, 16, vals.data());
+      // getUniformValues() fills the data in column-major order. Pass values to the ctor
+      // appropriately.
+      return T(vals[0], vals[4], vals[8], vals[12], vals[1], vals[5], vals[9], vals[13],
+               vals[2], vals[6], vals[10], vals[14], vals[3], vals[7], vals[11],
+               vals[15]);
+   }
 #endif
    else
    {
       static_assert(false, "Unexpected uniform value type.");
    }
+
+#pragma warning(default : 4201)
 }
 
 
