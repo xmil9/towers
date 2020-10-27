@@ -68,6 +68,18 @@ static gll::Texture2D tex2;
 static gll::Buffer elemBuf;
 static gll::Program prog;
 
+// Sequence of coord tranformations:
+// obj space -> world space -> view/camera space -> clip space -> screen space
+//
+// Matrix to transform object coords to world coords.
+static glm::mat4 model;
+// Matrix to transform world coords to camera view coords.
+static glm::mat4 view;
+// Matrix to transform view coords to clip space (frustum) coords.
+// Note: A final viewport transformation will happen from clip space to 2D screen space.
+//       The matrix of this transformation is defined by glViewport.
+static glm::mat4 projection;
+
 
 static bool setupTextures()
 {
@@ -79,16 +91,14 @@ static bool setupTextures()
    tex.bind();
    tex.setWrapPolicy(GL_REPEAT, GL_REPEAT);
    tex.setScaleFiltering(GL_NEAREST, GL_NEAREST);
-   tex.loadData(appPath / "directions.png", true, 0, GL_RGB, GL_RGBA,
-                  GL_UNSIGNED_BYTE);
+   tex.loadData(appPath / "directions.png", true, 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
    tex.generateMipmap();
 
    tex2.create();
    tex2.bind();
    tex2.setWrapPolicy(GL_REPEAT, GL_REPEAT);
    tex2.setScaleFiltering(GL_NEAREST, GL_NEAREST);
-   tex2.loadData(appPath / "red_marble.png", true, 0, GL_RGB, GL_RGBA,
-                  GL_UNSIGNED_BYTE);
+   tex2.loadData(appPath / "red_marble.png", true, 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
    tex2.generateMipmap();
 
    prog.use();
@@ -146,6 +156,12 @@ static void setupRendering()
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+
+   model = glm::mat4(1.0f);
+   model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+   view = glm::mat4(1.0f);
+   view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+   projection = glm::perspective(glm::radians(45.0f), 800.0f / 800.0f, 0.1f, 100.0f);
 }
 
 
@@ -200,7 +216,14 @@ static void render(glfwl::Window& wnd)
 
    prog.use();
    vao.bind();
-   
+
+   gll::Uniform modelUf = prog.uniform("model");
+   modelUf.setValue(model);
+   gll::Uniform viewUf = prog.uniform("view");
+   viewUf.setValue(view);
+   gll::Uniform projUf = prog.uniform("projection");
+   projUf.setValue(projection);
+
    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(std::size(indices)), GL_UNSIGNED_INT,
                   nullptr);
 
