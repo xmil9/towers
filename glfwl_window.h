@@ -29,6 +29,7 @@ class Window
    void destroy();
    GLFWwindow* handle() { return m_wnd; }
    void swapBuffers();
+   void pollEvents();
 
    bool shouldClose() const;
    void setShouldClose(bool close);

@@ -82,6 +82,12 @@ void Window::swapBuffers()
 }
 
 
+void Window::pollEvents()
+{
+   glfwPollEvents();
+}
+
+
 bool Window::shouldClose() const
 {
    if (m_wnd)
