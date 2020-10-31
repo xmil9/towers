@@ -123,6 +123,8 @@ void Window::setupCallbacks()
    glfwSetWindowMaximizeCallback(m_wnd, windowMaximizeCallback);
    glfwSetFramebufferSizeCallback(m_wnd, framebufferSizeCallback);
    glfwSetWindowContentScaleCallback(m_wnd, windowContentScaleCallback);
+   glfwSetCursorPosCallback(m_wnd, windowCursorPosCallback);
+   glfwSetScrollCallback(m_wnd, windowScrollCallback);
 }
 
 
@@ -204,6 +206,24 @@ void Window::windowContentScaleCallback(GLFWwindow* wnd, float xscale, float ysc
    assert(self);
    if (self)
       self->onWindowContentScaled(xscale, yscale);
+}
+
+
+void Window::windowCursorPosCallback(GLFWwindow* wnd, double xpos, double ypos)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowMouseMoved(xpos, ypos);
+}
+
+
+void Window::windowScrollCallback(GLFWwindow* wnd, double xoffset, double yoffset)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowScrolled(xoffset, yoffset);
 }
 
 } // namespace glfwl

@@ -47,6 +47,8 @@ class Window
    virtual void onWindowMaximizeChanged(int /*maximized*/) {}
    virtual void onFramebufferResized(int /*width*/, int /*height*/) {}
    virtual void onWindowContentScaled(float /*xscale*/, float /*yscale*/) {}
+   virtual void onWindowMouseMoved(double /*xpos*/, double /*ypos*/) {}
+   virtual void onWindowScrolled(double /*xoffset*/, double /*yoffset*/) {}
 
  private:
    void setupCallbacks();
@@ -59,6 +61,8 @@ class Window
    static void windowMaximizeCallback(GLFWwindow* wnd, int maximized);
    static void framebufferSizeCallback(GLFWwindow* wnd, int width, int height);
    static void windowContentScaleCallback(GLFWwindow* wnd, float xscale, float yscale);
+   static void windowCursorPosCallback(GLFWwindow* wnd, double xpos, double ypos);
+   static void windowScrollCallback(GLFWwindow* wnd, double xoffset, double yoffset);
 
  private:
    GLFWwindow* m_wnd = nullptr;
