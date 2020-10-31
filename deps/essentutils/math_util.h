@@ -74,19 +74,21 @@ template <typename T> T shiftIntoRange(T val, T min, T max)
 // Angle unit conversions.
 
 template <typename FP> constexpr FP Pi = FP{3.1415926535};
+template <typename FP> constexpr FP DegRad = Pi<FP> / FP(180.0);
+template <typename FP> constexpr FP RadDeg = FP(1.0) / DegRad<FP>;
 
 
 template <typename FP> constexpr FP degreesFromRadians(FP rad)
 {
    static_assert(std::is_floating_point_v<FP>);
-   return rad * FP{180.0} / Pi<FP>;
+   return rad * RadDeg<FP>;
 }
 
 
 template <typename FP> constexpr FP radiansFromDegrees(FP deg)
 {
    static_assert(std::is_floating_point_v<FP>);
-   return deg * Pi<FP> / FP{180.0};
+   return deg * DegRad<FP>;
 }
 
 
