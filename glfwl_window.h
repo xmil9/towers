@@ -33,6 +33,10 @@ class Window
    bool shouldClose() const;
    void setShouldClose(bool close);
 
+   // Sets the mouse cursor mode. Values:
+   // GLFW_CURSOR_NORMAL, GLFW_CURSOR_HIDDEN, GLFW_CURSOR_DISABLED
+   void setCursorMode(int mode);
+
  protected:
    virtual void onWindowMoved(int /*xpos*/, int /*ypos*/) {}
    virtual void onWindowResized(int width, int height);

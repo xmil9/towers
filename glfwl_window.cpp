@@ -97,6 +97,13 @@ void Window::setShouldClose(bool close)
 }
 
 
+void Window::setCursorMode(int mode)
+{
+   if (m_wnd)
+      glfwSetInputMode(m_wnd, GLFW_CURSOR, mode);
+}
+
+
 void Window::onWindowResized(int width, int height)
 {
    glViewport(0, 0, width, height);
