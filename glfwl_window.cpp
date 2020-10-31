@@ -106,6 +106,7 @@ void Window::setCursorMode(int mode)
 
 void Window::onWindowResized(int width, int height)
 {
+   // By default adjust viewport accordingly.
    glViewport(0, 0, width, height);
 }
 
