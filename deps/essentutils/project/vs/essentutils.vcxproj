@@ -35,6 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\angle.h" />
     <ClInclude Include="..\..\color.h" />
     <ClInclude Include="..\..\filesys.h" />
     <ClInclude Include="..\..\fputil.h" />
