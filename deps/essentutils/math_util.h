@@ -78,14 +78,14 @@ template <typename FP> constexpr FP DegRad = Pi<FP> / FP(180.0);
 template <typename FP> constexpr FP RadDeg = FP(1.0) / DegRad<FP>;
 
 
-template <typename FP> constexpr FP degreesFromRadians(FP rad)
+template <typename FP> constexpr FP degrees(FP rad)
 {
    static_assert(std::is_floating_point_v<FP>);
    return rad * RadDeg<FP>;
 }
 
 
-template <typename FP> constexpr FP radiansFromDegrees(FP deg)
+template <typename FP> constexpr FP radians(FP deg)
 {
    static_assert(std::is_floating_point_v<FP>);
    return deg * DegRad<FP>;

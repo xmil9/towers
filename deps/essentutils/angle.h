@@ -35,7 +35,7 @@ template <typename Fp> class Angle
 
    constexpr operator Fp() const { return radians(); }
    constexpr Fp radians() const { return m_rad; }
-   constexpr Fp degrees() const { return sutil::degreesFromRadians(m_rad); }
+   constexpr Fp degrees() const { return sutil::degrees(m_rad); }
 
    constexpr Angle& operator+=(Angle a);
    constexpr Angle& operator+=(Fp rad);
@@ -73,7 +73,7 @@ template <typename Fp>
 template <typename T>
 constexpr Angle<Fp> Angle<Fp>::makeDegrees(T deg)
 {
-   return Angle<Fp>{sutil::radiansFromDegrees(deg)};
+   return Angle<Fp>{sutil::radians(deg)};
 }
 
 template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator=(Fp rad)
