@@ -20,6 +20,8 @@ namespace sutil
 template <typename Fp> class Angle
 {
  public:
+   using value_type = Fp;
+
    Angle() = default;
    explicit constexpr Angle(Fp rad);
    template <typename T> static constexpr Angle makeRadians(T rad);
@@ -29,13 +31,22 @@ template <typename Fp> class Angle
 
    Angle& operator=(const Angle&) = default;
    Angle& operator=(Angle&&) = default;
-   Angle& operator=(Fp rad);
+   constexpr Angle& operator=(Fp rad);
 
    constexpr operator Fp() const { return radians(); }
    constexpr Fp radians() const { return m_rad; }
    constexpr Fp degrees() const { return sutil::degreesFromRadians(m_rad); }
 
-   friend void swap(Angle<Fp>& a, Angle<Fp>& b) noexcept
+   constexpr Angle& operator+=(Angle a);
+   constexpr Angle& operator+=(Fp rad);
+   constexpr Angle& operator-=(Angle a);
+   constexpr Angle& operator-=(Fp rad);
+   constexpr Angle& operator*=(Angle a);
+   constexpr Angle& operator*=(Fp rad);
+   constexpr Angle& operator/=(Angle a);
+   constexpr Angle& operator/=(Fp rad);
+
+   friend constexpr void swap(Angle<Fp>& a, Angle<Fp>& b) noexcept
    {
       std::swap(a.m_rad, b.m_rad);
    }
@@ -46,8 +57,7 @@ template <typename Fp> class Angle
 };
 
 
-template <typename Fp>
-constexpr Angle<Fp>::Angle(Fp rad) : m_rad(rad)
+template <typename Fp> constexpr Angle<Fp>::Angle(Fp rad) : m_rad(rad)
 {
    static_assert(std::is_floating_point_v<Fp>);
 }
@@ -66,52 +76,256 @@ constexpr Angle<Fp> Angle<Fp>::makeDegrees(T deg)
    return Angle<Fp>{sutil::radiansFromDegrees(deg)};
 }
 
-
-template <typename Fp>
-Angle<Fp>& Angle<Fp>::operator=(Fp rad)
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator=(Fp rad)
 {
    m_rad = rad;
+   return *this;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator+=(Angle a)
+{
+   return *this += a.m_rad;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator+=(Fp rad)
+{
+   m_rad += rad;
+   return *this;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator-=(Angle a)
+{
+   return *this -= a.m_rad;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator-=(Fp rad)
+{
+   m_rad -= rad;
+   return *this;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator*=(Angle a)
+{
+   return *this *= a.m_rad;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator*=(Fp rad)
+{
+   m_rad *= rad;
+   return *this;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator/=(Angle a)
+{
+   return *this /= a.m_rad;
+}
+
+template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator/=(Fp rad)
+{
+   // No protection again div by zero.
+   assert(rad != 0.0);
+   m_rad /= rad;
    return *this;
 }
 
 
 ///////////////////
 
-template <typename T, typename U> bool operator==(const Angle<T>& a, const Angle<U>& b)
+// Free function comparisions between two angles or an angle and a scalar.
+// Note that the scalar overloads are necessary otherwise the compiler will implicitly
+// convert the angle operand of a mixed scalar-angle operation to a scalar which will call
+// the comparision operator of the scalar which in turn will not perform a correct
+// floating point comparision.
+
+// Equality.
+template <typename T, typename U>
+constexpr bool operator==(const Angle<T>& a, const Angle<U>& b)
 {
    using Common = std::common_type_t<T, U>;
    return sutil::equal<Common>(a, b);
 }
 
-template <typename T, typename U> bool operator!=(const Angle<T>& a, const Angle<U>& b)
+template <typename T, typename Scalar>
+constexpr bool operator==(const Angle<T>& a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return sutil::equal<Common>(a, b);
+}
+
+template <typename Scalar, typename T>
+constexpr bool operator==(Scalar a, const Angle<T>& b)
+{
+   using Common = std::common_type_t<Scalar, T>;
+   return sutil::equal<Common>(a, b);
+}
+
+// Inquality.
+template <typename T, typename U>
+constexpr bool operator!=(const Angle<T>& a, const Angle<U>& b)
 {
    return !(a == b);
 }
 
-template <typename T, typename U> bool operator<(const Angle<T>& a, const Angle<U>& b)
+template <typename T, typename Scalar>
+constexpr bool operator!=(const Angle<T>& a, Scalar b)
+{
+   return !(a == b);
+}
+
+template <typename Scalar, typename T>
+constexpr bool operator!=(Scalar a, const Angle<T>& b)
+{
+   return !(a == b);
+}
+
+// Less-than.
+template <typename T, typename U>
+constexpr bool operator<(const Angle<T>& a, const Angle<U>& b)
 {
    using Common = std::common_type_t<T, U>;
    return sutil::less<Common>(a, b);
 }
 
-template <typename T, typename U> bool operator<=(const Angle<T>& a, const Angle<U>& b)
+template <typename T, typename Scalar>
+constexpr bool operator<(const Angle<T>& a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return sutil::less<Common>(a, b);
+}
+
+template <typename Scalar, typename T>
+constexpr bool operator<(Scalar a, const Angle<T>& b)
+{
+   using Common = std::common_type_t<Scalar, T>;
+   return sutil::less<Common>(a, b);
+}
+
+// Less-or-equal-than.
+template <typename T, typename U>
+constexpr bool operator<=(const Angle<T>& a, const Angle<U>& b)
 {
    using Common = std::common_type_t<T, U>;
    return sutil::lessEqual<Common>(a, b);
 }
 
-template <typename T, typename U> bool operator>(const Angle<T>& a, const Angle<U>& b)
+template <typename T, typename Scalar>
+constexpr bool operator<=(const Angle<T>& a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return sutil::lessEqual<Common>(a, b);
+}
+
+template <typename Scalar, typename T>
+constexpr bool operator<=(Scalar a, const Angle<T>& b)
+{
+   using Common = std::common_type_t<Scalar, T>;
+   return sutil::lessEqual<Common>(a, b);
+}
+
+// Greater-than.
+template <typename T, typename U>
+constexpr bool operator>(const Angle<T>& a, const Angle<U>& b)
 {
    return !(a <= b);
 }
 
-template <typename T, typename U> bool operator>=(const Angle<T>& a, const Angle<U>& b)
+template <typename T, typename Scalar>
+constexpr bool operator>(const Angle<T>& a, Scalar b)
+{
+   return !(a <= b);
+}
+
+template <typename Scalar, typename T>
+constexpr bool operator>(Scalar a, const Angle<T>& b)
+{
+   return !(a <= b);
+}
+
+// Greater-or-equal-than.
+template <typename T, typename U>
+constexpr bool operator>=(const Angle<T>& a, const Angle<U>& b)
 {
    return !(a < b);
 }
 
+template <typename T, typename Scalar>
+constexpr bool operator>=(const Angle<T>& a, Scalar b)
+{
+   return !(a < b);
+}
+
+template <typename Scalar, typename T>
+constexpr bool operator>=(Scalar a, const Angle<T>& b)
+{
+   return !(a < b);
+}
+
+
+///////////////////
+
+// Free function arithmatic between two angles or an angle and a scalar.
+// Note that the scalar overloads are necessary because the compiler will not implicitly
+// convert a scalar to and angle.
+// Don't define overloads with a scalar as the first operand because it is not clear if
+// the result should be a scalar or an angle.
+
+template <typename T, typename U>
+constexpr Angle<std::common_type_t<T, U>> operator+(Angle<T> a, Angle<U> b)
+{
+   return a += b;
+}
+
+template <typename T, typename Scalar>
+constexpr Angle<std::common_type_t<T, Scalar>> operator+(Angle<T> a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return a += static_cast<Common>(b);
+}
+
+template <typename T, typename U>
+constexpr Angle<std::common_type_t<T, U>> operator-(Angle<T> a, Angle<U> b)
+{
+   return a -= b;
+}
+
+template <typename T, typename Scalar>
+constexpr Angle<std::common_type_t<T, Scalar>> operator-(Angle<T> a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return a -= static_cast<Common>(b);
+}
+
+template <typename T, typename U>
+constexpr Angle<std::common_type_t<T, U>> operator*(Angle<T> a, Angle<U> b)
+{
+   return a *= b;
+}
+
+template <typename T, typename Scalar>
+constexpr Angle<std::common_type_t<T, Scalar>> operator*(Angle<T> a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return a *= static_cast<Common>(b);
+}
+
+template <typename T, typename U>
+constexpr Angle<std::common_type_t<T, U>> operator/(Angle<T> a, Angle<U> b)
+{
+   return a /= b;
+}
+
+template <typename T, typename Scalar>
+constexpr Angle<std::common_type_t<T, Scalar>> operator/(Angle<T> a, Scalar b)
+{
+   using Common = std::common_type_t<T, Scalar>;
+   return a /= static_cast<Common>(b);
+}
+
 } // namespace sutil
 
+
+///////////////////
+// Hashing
 
 namespace std
 {
