@@ -157,6 +157,8 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\app_window.cpp" />
+    <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
@@ -165,10 +167,14 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\gll_texture.cpp" />
+    <ClCompile Include="..\..\input_state.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\app_types.h" />
+    <ClInclude Include="..\..\app_window.h" />
+    <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\glfwl_types.h" />
     <ClInclude Include="..\..\glfwl_lib.h" />
@@ -182,6 +188,9 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\gll_types.h" />
     <ClInclude Include="..\..\gll_uniform.h" />
     <ClInclude Include="..\..\gll_vertex_array.h" />
+    <ClInclude Include="..\..\input_controller.h" />
+    <ClInclude Include="..\..\input_state.h" />
+    <ClInclude Include="..\..\observed.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.fs" />

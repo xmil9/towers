@@ -1,5 +1,11 @@
+//
+// Oct-2020, Michael Lindner
+// MIT license
+//
+#include "app_window.h"
+#include "camera_fps.h"
+#include "input_state.h"
 #include "glfwl_lib.h"
-#include "glfwl_window.h"
 #include "gll_buffer.h"
 #include "gll_data_format.h"
 #include "gll_program.h"
@@ -416,6 +422,16 @@ static glm::mat4 view;
 //       The matrix of this transformation is defined by glViewport.
 static glm::mat4 projection;
 
+static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+static glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+static float deltaTime = 0.0f;
+static float lastFrame = 0.0f;
+
+static float yaw = 0.0f;
+static float pitch = -90.0f;
+static bool isFirstMouseMove = true;
+static glm::vec3 direction = glm::vec3(0.0f, 0.0f, -1.0f);
 
 static bool setupTextures()
 {
@@ -494,10 +510,8 @@ static void setupRendering()
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
    glEnable(GL_DEPTH_TEST);
 
-   //model = glm::mat4(1.0f);
-   //model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-   view = glm::mat4(1.0f);
-   view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+   model = glm::mat4(1.0f);
+   model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
    projection = glm::perspective(glm::radians(45.0f), 800.0f / 800.0f, 0.1f, 100.0f);
 }
 
@@ -531,9 +545,20 @@ static gll::Program setupShaders()
 }
 
 
-static void processInput(glfwl::Window& /*wnd*/)
+static void processInput(glfwl::Window& wnd)
 {
-   glfwPollEvents();
+   if (glfwGetKey(wnd.handle(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+      wnd.setShouldClose(true);
+
+   float cameraSpeed = 2.5f * deltaTime;
+   if (glfwGetKey(wnd.handle(), GLFW_KEY_W) == GLFW_PRESS)
+      cameraPos += cameraSpeed * cameraFront;
+   if (glfwGetKey(wnd.handle(), GLFW_KEY_S) == GLFW_PRESS)
+      cameraPos -= cameraSpeed * cameraFront;
+   if (glfwGetKey(wnd.handle(), GLFW_KEY_A) == GLFW_PRESS)
+      cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+   if (glfwGetKey(wnd.handle(), GLFW_KEY_D) == GLFW_PRESS)
+      cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
 
@@ -542,8 +567,12 @@ static void updateState()
 }
 
 
-static void render(glfwl::Window& wnd)
+static void render(glfwl::Window& wnd, const CameraFps& cam)
 {
+   const float currentFrame = static_cast<float>(glfwGetTime());
+   deltaTime = currentFrame - lastFrame;
+   lastFrame = currentFrame;
+
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    glActiveTexture(GL_TEXTURE0);
@@ -554,9 +583,7 @@ static void render(glfwl::Window& wnd)
    prog.use();
    vao.bind();
 
-   model = glm::mat4(1.0f);
-   model =
-      glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
+   view = cam.viewMatrix();
 
    gll::Uniform modelUf = prog.uniform("model");
    modelUf.setValue(model);
@@ -572,6 +599,7 @@ static void render(glfwl::Window& wnd)
    gll::Texture2D::unbind();
 
    wnd.swapBuffers();
+   wnd.pollEvents();
 }
 
 
@@ -582,10 +610,16 @@ int main()
    if (err)
       return EXIT_FAILURE;
 
-   glfwl::Window wnd;
+   InputState input;
+   CameraFps cam;
+   cam.setupInput(input);
+
+   AppWindow wnd;
+   wnd.setInputController(&input);
    err = wnd.create(800, 800, "towers");
    if (err)
       return EXIT_FAILURE;
+   wnd.setCursorMode(GLFW_CURSOR_DISABLED);
 
    glfwMakeContextCurrent(wnd.handle());
 
@@ -604,7 +638,7 @@ int main()
    {
       processInput(wnd);
       updateState();
-      render(wnd);
+      render(wnd, cam);
    }
 
    vao.destroy();
