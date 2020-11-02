@@ -161,6 +161,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
+    <ClCompile Include="..\..\frustum.cpp" />
     <ClCompile Include="..\..\glfw_lib.cpp" />
     <ClCompile Include="..\..\glfwl_window.cpp" />
     <ClCompile Include="..\..\gll_buffer.cpp" />
@@ -176,6 +177,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
+    <ClInclude Include="..\..\frustum.h" />
     <ClInclude Include="..\..\glfwl_types.h" />
     <ClInclude Include="..\..\glfwl_lib.h" />
     <ClInclude Include="..\..\glfwl_window.h" />

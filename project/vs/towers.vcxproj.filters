@@ -32,6 +32,7 @@
     <ClCompile Include="..\..\app_window.cpp" />
     <ClCompile Include="..\..\input_state.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
+    <ClCompile Include="..\..\frustum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -93,6 +94,7 @@
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\app_types.h" />
+    <ClInclude Include="..\..\frustum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.vs" />
