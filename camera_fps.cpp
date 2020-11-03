@@ -5,8 +5,6 @@
 #include "camera_fps.h"
 #include "input_state.h"
 #include "essentutils/math_util.h"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/matrix.hpp"
 #include <cmath>
 
 
@@ -20,16 +18,12 @@ constexpr Angle_t MinPitch{Angle_t::makeDegrees(-89.0f)};
 } // namespace
 
 
+///////////////////
+
 void CameraFps::setupInput(InputState& input)
 {
    input.addObserver(
       [this](InputState& input, std::string_view msg) { onInputChanged(input, msg); });
-}
-
-
-glm::mat4x4 CameraFps::viewMatrix() const
-{
-   return glm::lookAt(m_eye, m_eye + m_direction, m_up);
 }
 
 

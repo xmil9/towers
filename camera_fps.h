@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "app_types.h"
+#include "glm/gtc/matrix_transform.hpp"
 #include "glm/matrix.hpp"
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
@@ -20,7 +21,6 @@ class CameraFps
 
  private:
    void onInputChanged(InputState& input, std::string_view msg);
-
    void updateCameraDirection(const glm::vec2& offset);
 
  private:
@@ -35,3 +35,9 @@ class CameraFps
    // Direction that is upwards for camera.
    glm::vec3 m_up = glm::vec3(0.0f, 1.0f, 0.0f);
 };
+
+
+inline glm::mat4x4 CameraFps::viewMatrix() const
+{
+   return glm::lookAt(m_eye, m_eye + m_direction, m_up);
+}
