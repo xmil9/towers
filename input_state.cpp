@@ -23,6 +23,8 @@ void InputState::onMouseMoved(double xpos, double ypos)
 }
 
 
-void InputState::onMouseScrolled(double /*xoffset*/, double /*yoffset*/)
+void InputState::onMouseScrolled(double xoffset, double yoffset)
 {
+   m_scrollDelta = glm::vec2(xoffset, yoffset);
+   notify(*this, MouseScrolledMsg);
 }

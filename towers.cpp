@@ -4,6 +4,7 @@
 //
 #include "app_window.h"
 #include "camera_fps.h"
+#include "frustum.h"
 #include "input_state.h"
 #include "glfwl_lib.h"
 #include "gll_buffer.h"
@@ -512,7 +513,6 @@ static void setupRendering()
 
    model = glm::mat4(1.0f);
    model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-   projection = glm::perspective(glm::radians(45.0f), 800.0f / 800.0f, 0.1f, 100.0f);
 }
 
 
@@ -567,7 +567,7 @@ static void updateState()
 }
 
 
-static void render(glfwl::Window& wnd, const CameraFps& cam)
+static void render(glfwl::Window& wnd, const CameraFps& cam, const Frustum& frustum)
 {
    const float currentFrame = static_cast<float>(glfwGetTime());
    deltaTime = currentFrame - lastFrame;
@@ -584,6 +584,7 @@ static void render(glfwl::Window& wnd, const CameraFps& cam)
    vao.bind();
 
    view = cam.viewMatrix();
+   projection = frustum.projectionMatrix();
 
    gll::Uniform modelUf = prog.uniform("model");
    modelUf.setValue(model);
@@ -613,6 +614,8 @@ int main()
    InputState input;
    CameraFps cam;
    cam.setupInput(input);
+   Frustum frustum;
+   frustum.setupInput(input);
 
    AppWindow wnd;
    wnd.setInputController(&input);
@@ -638,7 +641,7 @@ int main()
    {
       processInput(wnd);
       updateState();
-      render(wnd, cam);
+      render(wnd, cam, frustum);
    }
 
    vao.destroy();

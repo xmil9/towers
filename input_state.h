@@ -19,6 +19,8 @@ class InputState : public InputController, public Observed<InputState>
    glm::vec2 mousePosition() const { return m_mousePos; }
    glm::vec2 rawMouseDelta() const { return m_mouseDelta; }
    glm::vec2 adjMouseDelta() const { return m_mouseDelta * MouseSensitivity; }
+   glm::vec2 rawScrollDelta() const { return m_scrollDelta; }
+   glm::vec2 adjScrollDelta() const { return m_scrollDelta * ScrollSensitivity; }
 
  private:
    // InputController overrides.
@@ -30,4 +32,7 @@ class InputState : public InputController, public Observed<InputState>
    bool m_isFirstMouseMove = true;
    glm::vec2 m_mousePos{0.0, 0.0};
    glm::vec2 m_mouseDelta{0.0, 0.0};
+
+   static constexpr float ScrollSensitivity = 2.0f;
+   glm::vec2 m_scrollDelta{0.0, 0.0};
 };
