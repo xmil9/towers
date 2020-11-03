@@ -24,8 +24,8 @@ template <typename Fp> class Angle
 
    Angle() = default;
    explicit constexpr Angle(Fp rad);
-   template <typename T> static constexpr Angle makeRadians(T rad);
-   template <typename T> static constexpr Angle makeDegrees(T deg);
+   template <typename T> static constexpr Angle fromRadians(T rad);
+   template <typename T> static constexpr Angle fromDegrees(T deg);
    Angle(const Angle&) = default;
    Angle(Angle&&) = default;
 
@@ -64,14 +64,14 @@ template <typename Fp> constexpr Angle<Fp>::Angle(Fp rad) : m_rad(rad)
 
 template <typename Fp>
 template <typename T>
-constexpr Angle<Fp> Angle<Fp>::makeRadians(T rad)
+constexpr Angle<Fp> Angle<Fp>::fromRadians(T rad)
 {
    return Angle<Fp>(rad);
 }
 
 template <typename Fp>
 template <typename T>
-constexpr Angle<Fp> Angle<Fp>::makeDegrees(T deg)
+constexpr Angle<Fp> Angle<Fp>::fromDegrees(T deg)
 {
    return Angle<Fp>{sutil::radians(deg)};
 }

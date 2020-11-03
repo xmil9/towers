@@ -10,8 +10,8 @@ namespace
 {
 ///////////////////
 
-constexpr Angle_t MaxFov{Angle_t::makeDegrees(60.0f)};
-constexpr Angle_t MinFov{Angle_t::makeDegrees(20.0f)};
+constexpr Angle_t MaxFov{Angle_t::fromDegrees(60.0f)};
+constexpr Angle_t MinFov{Angle_t::fromDegrees(20.0f)};
 
 } // namespace
 

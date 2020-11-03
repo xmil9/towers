@@ -27,7 +27,7 @@ private:
 
  private:
    // The horizontal field-of-view angle. Defines how wide the frustum is.
-   Angle_t m_horzFov = Angle_t::makeDegrees(45.0f);
+   Angle_t m_horzFov = Angle_t::fromDegrees(45.0f);
    // Aspect ratio of horizontal to vertical size of the frustum.
    float m_aspect = 1.0f;
    // Coordinates (along the central axis) of the near and far planes that cut off the
