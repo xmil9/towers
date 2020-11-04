@@ -16,6 +16,7 @@ class AppWindow : public glfwl::Window
  protected:
    void onWindowMouseMoved(double xpos, double ypos) override;
    void onWindowScrolled(double xoffset, double yoffset) override;
+   void onWindowKeyChanged(int key, int scancode, int action, int mods) override;
 
  private:
    InputController* m_inputController;

@@ -8,7 +8,6 @@
 using namespace glfwl;
 
 
-
 namespace
 {
 ///////////////////
@@ -37,8 +36,7 @@ Window::~Window()
 }
 
 
-Window::Window(Window&& other)
-   : m_wnd{other.m_wnd}
+Window::Window(Window&& other) : m_wnd{other.m_wnd}
 {
    other.m_wnd = nullptr;
 }
@@ -131,6 +129,7 @@ void Window::setupCallbacks()
    glfwSetWindowContentScaleCallback(m_wnd, windowContentScaleCallback);
    glfwSetCursorPosCallback(m_wnd, windowCursorPosCallback);
    glfwSetScrollCallback(m_wnd, windowScrollCallback);
+   glfwSetKeyCallback(m_wnd, windowKeyCallback);
 }
 
 
@@ -230,6 +229,16 @@ void Window::windowScrollCallback(GLFWwindow* wnd, double xoffset, double yoffse
    assert(self);
    if (self)
       self->onWindowScrolled(xoffset, yoffset);
+}
+
+
+void Window::windowKeyCallback(GLFWwindow* wnd, int key, int scancode, int action,
+                               int mods)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowKeyChanged(key, scancode, action, mods);
 }
 
 } // namespace glfwl

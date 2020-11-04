@@ -9,30 +9,53 @@
 #include "glm/vec2.hpp"
 
 
-constexpr char MouseMovedMsg[] = "mouse-moved";
-constexpr char MouseScrolledMsg[] = "mouse-scrolled";
-
-
 class InputState : public InputController, public Observed<InputState>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
-   glm::vec2 rawMouseDelta() const { return m_mouseDelta; }
-   glm::vec2 adjMouseDelta() const { return m_mouseDelta * MouseSensitivity; }
-   glm::vec2 rawScrollDelta() const { return m_scrollDelta; }
-   glm::vec2 adjScrollDelta() const { return m_scrollDelta * ScrollSensitivity; }
 
  private:
    // InputController overrides.
    void onMouseMoved(double xpos, double ypos) override;
    void onMouseScrolled(double xoffset, double yoffset) override;
+   void onKeyChanged(int key, int scancode, int action, int mods) override;
 
  private:
    static constexpr float MouseSensitivity = 0.1f;
+   static constexpr float ScrollSensitivity = 2.0f;
    bool m_isFirstMouseMove = true;
    glm::vec2 m_mousePos{0.0, 0.0};
-   glm::vec2 m_mouseDelta{0.0, 0.0};
+};
 
-   static constexpr float ScrollSensitivity = 2.0f;
-   glm::vec2 m_scrollDelta{0.0, 0.0};
+
+///////////////////
+
+// Notifications sent to input state observers.
+
+constexpr char MouseMovedMsg[] = "mouse-moved";
+struct MouseMovedMsgData : public Observed<InputState>::MsgData
+{
+   glm::vec2 pos;
+   glm::vec2 rawDelta;
+   glm::vec2 adjustedDelta;
+};
+
+constexpr char MouseScrolledMsg[] = "mouse-scrolled";
+struct MouseScrolledMsgData : public Observed<InputState>::MsgData
+{
+   glm::vec2 rawDelta;
+   glm::vec2 adjustedDelta;
+};
+
+constexpr char KeyChangedMsg[] = "key-changed";
+struct KeyChangedMsgData : public Observed<InputState>::MsgData
+{
+   // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
+   int key = 0;
+   // System-specific scancode.
+   int scancode = 0;
+   // Key action: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT
+   int action = 0;
+   // Modifier key flags: GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, ...
+   int mods = 0;
 };

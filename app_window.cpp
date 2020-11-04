@@ -20,3 +20,14 @@ void AppWindow::onWindowScrolled(double xoffset, double yoffset)
    if (m_inputController)
       m_inputController->onMouseScrolled(xoffset, yoffset);
 }
+
+
+void AppWindow::onWindowKeyChanged(int key, int scancode, int action, int mods)
+{
+   assert(m_inputController);
+   if (m_inputController)
+      m_inputController->onKeyChanged(key, scancode, action, mods);
+
+   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+      setShouldClose(true);
+}

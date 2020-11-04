@@ -15,16 +15,36 @@ void InputState::onMouseMoved(double xpos, double ypos)
       m_isFirstMouseMove = false;
    }
 
-   m_mouseDelta = newPos - m_mousePos;
+   const glm::vec2 delta = newPos - m_mousePos;
    m_mousePos = newPos;
 
-   if (m_mouseDelta.x != 0.0 || m_mouseDelta.y != 0.0)
-      notify(*this, MouseMovedMsg);
+   if (delta.x != 0.0 || delta.y != 0.0)
+   {
+      MouseMovedMsgData data;
+      data.pos = m_mousePos;
+      data.rawDelta = delta;
+      data.adjustedDelta = delta * MouseSensitivity;
+      notify(*this, MouseMovedMsg, data);
+   }
 }
 
 
 void InputState::onMouseScrolled(double xoffset, double yoffset)
 {
-   m_scrollDelta = glm::vec2(xoffset, yoffset);
-   notify(*this, MouseScrolledMsg);
+   const glm::vec2 delta(xoffset, yoffset);
+   MouseScrolledMsgData data;
+   data.rawDelta = delta;
+   data.adjustedDelta = delta * ScrollSensitivity;
+   notify(*this, MouseScrolledMsg, data);
+}
+
+
+void InputState::onKeyChanged(int key, int scancode, int action, int mods)
+{
+   KeyChangedMsgData data;
+   data.key = key;
+   data.scancode = scancode;
+   data.action = action;
+   data.mods = mods;
+   notify(*this, KeyChangedMsg, data);
 }

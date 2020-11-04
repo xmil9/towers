@@ -20,15 +20,21 @@ constexpr Angle_t MinFov{Angle_t::fromDegrees(20.0f)};
 
 void Frustum::setupInput(InputState& input)
 {
-   input.addObserver(
-      [this](InputState& input, std::string_view msg) { onInputChanged(input, msg); });
+   input.addObserver([this](InputState& input, std::string_view msg,
+                            const Observed<InputState>::MsgData& data) {
+      onInputChanged(input, msg, data);
+   });
 }
 
 
-void Frustum::onInputChanged(InputState& input, std::string_view msg)
+void Frustum::onInputChanged(InputState& /*input*/, std::string_view msg,
+                             const Observed<InputState>::MsgData& data)
 {
    if (msg == MouseScrolledMsg)
-      updateFov(input.adjScrollDelta().y);
+   {
+      const auto mouseScrolledData = static_cast<const MouseScrolledMsgData&>(data);
+      updateFov(mouseScrolledData.adjustedDelta.y);
+   }
 }
 
 

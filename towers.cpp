@@ -423,16 +423,9 @@ static glm::mat4 view;
 //       The matrix of this transformation is defined by glViewport.
 static glm::mat4 projection;
 
-static glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-static glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-static glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 static float deltaTime = 0.0f;
 static float lastFrame = 0.0f;
 
-static float yaw = 0.0f;
-static float pitch = -90.0f;
-static bool isFirstMouseMove = true;
-static glm::vec3 direction = glm::vec3(0.0f, 0.0f, -1.0f);
 
 static bool setupTextures()
 {
@@ -545,23 +538,6 @@ static gll::Program setupShaders()
 }
 
 
-static void processInput(glfwl::Window& wnd)
-{
-   if (glfwGetKey(wnd.handle(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
-      wnd.setShouldClose(true);
-
-   float cameraSpeed = 2.5f * deltaTime;
-   if (glfwGetKey(wnd.handle(), GLFW_KEY_W) == GLFW_PRESS)
-      cameraPos += cameraSpeed * cameraFront;
-   if (glfwGetKey(wnd.handle(), GLFW_KEY_S) == GLFW_PRESS)
-      cameraPos -= cameraSpeed * cameraFront;
-   if (glfwGetKey(wnd.handle(), GLFW_KEY_A) == GLFW_PRESS)
-      cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-   if (glfwGetKey(wnd.handle(), GLFW_KEY_D) == GLFW_PRESS)
-      cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-}
-
-
 static void updateState()
 {
 }
@@ -639,7 +615,6 @@ int main()
 
    while (!wnd.shouldClose())
    {
-      processInput(wnd);
       updateState();
       render(wnd, cam, frustum);
    }

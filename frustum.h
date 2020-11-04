@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "app_types.h"
+#include "input_state.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/mat4x4.hpp"
 #include <string>
@@ -21,8 +22,9 @@ class Frustum
    void setupInput(InputState& input);
    glm::mat4x4 projectionMatrix() const;
 
-private:
-   void onInputChanged(InputState& input, std::string_view msg);
+ private:
+   void onInputChanged(InputState& input, std::string_view msg,
+                       const Observed<InputState>::MsgData& data);
    void updateFov(float offset);
 
  private:
