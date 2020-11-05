@@ -5,6 +5,8 @@
 #include "camera_fps.h"
 #include "input_state.h"
 #include "essentutils/math_util.h"
+#include "glfw/glfw3.h"
+#include <cassert>
 #include <cmath>
 
 
@@ -37,35 +39,21 @@ void CameraFps::onInputChanged(InputState& /*input*/, std::string_view msg,
       const auto mouseMovedData = static_cast<const MouseMovedMsgData&>(data);
       updateCameraDirection(mouseMovedData.adjustedDelta);
    }
-   else if (msg == KeyChangedMsg)
+   else if (msg == KeyPolledMsg)
    {
-      const auto keyData = static_cast<const KeyChangedMsgData&>(data);
-      processKeyChange(keyData.key, keyData.action);
+      const auto keyData = static_cast<const KeyPolledMsgData&>(data);
+      processKeyPoll(keyData.key, keyData.elapsedTime);
    }
 }
 
 
-void CameraFps::processKeyChange(int key, int action)
+void CameraFps::processKeyPoll(int key, float elapsedTime)
 {
-   switch (key)
-   {
-   case GLFW_KEY_W:
-      if (action == GLFW_PRESS)
-         updateCameraPosition(front());
-      return;
-   case GLFW_KEY_S:
-      if (action == GLFW_PRESS)
-         updateCameraPosition(back());
-      return;
-   case GLFW_KEY_A:
-      if (action == GLFW_PRESS)
-         updateCameraPosition(left());
-      return;
-   case GLFW_KEY_D:
-      if (action == GLFW_PRESS)
-         updateCameraPosition(right());
-      return;
-   }
+   const auto movementDir = directionForKey(key);
+   if (movementDir)
+      updateCameraPosition(*movementDir * elapsedTime);
+
+   // Process non-movement keys if necessary.
 }
 
 
@@ -90,4 +78,22 @@ void CameraFps::updateCameraDirection(const glm::vec2& offset)
 void CameraFps::updateCameraPosition(const glm::vec3& offset)
 {
    m_eye += offset * MovementSpeed;
+}
+
+
+std::optional<glm::vec3> CameraFps::directionForKey(int key)
+{
+   switch (key)
+   {
+   case GLFW_KEY_W:
+      return front();
+   case GLFW_KEY_S:
+      return back();
+   case GLFW_KEY_A:
+      return left();
+   case GLFW_KEY_D:
+      return right();
+   default:
+      return std::nullopt;
+   }
 }

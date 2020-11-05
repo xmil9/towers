@@ -3,6 +3,22 @@
 // MIT license
 //
 #include "input_state.h"
+#include "glfwl_window.h"
+#include <array>
+
+
+void InputState::pollInput(glfwl::Window& wnd, float elapsedTime)
+{
+   static constexpr std::array<int, 4> PolledKeys = {
+      GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A, GLFW_KEY_D
+   };
+
+   for (auto key : PolledKeys)
+   {
+      if (glfwGetKey(wnd.handle(), key) == GLFW_PRESS)
+         notifyKeyPolled(key, elapsedTime);
+   }
+}
 
 
 void InputState::onMouseMoved(double xpos, double ypos)
@@ -47,4 +63,13 @@ void InputState::onKeyChanged(int key, int scancode, int action, int mods)
    data.action = action;
    data.mods = mods;
    notify(*this, KeyChangedMsg, data);
+}
+
+
+void InputState::notifyKeyPolled(int key, float elapsedTime)
+{
+   KeyPolledMsgData data;
+   data.key = key;
+   data.elapsedTime = elapsedTime;
+   notify(*this, KeyPolledMsg, data);
 }

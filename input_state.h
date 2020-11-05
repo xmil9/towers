@@ -3,22 +3,31 @@
 // MIT license
 //
 #pragma once
-#include "app_window.h"
 #include "input_controller.h"
 #include "observed.h"
 #include "glm/vec2.hpp"
 
+namespace glfwl
+{
+class Window;
+}
+
+
+///////////////////
 
 class InputState : public InputController, public Observed<InputState>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
+   void pollInput(glfwl::Window& wnd, float elapsedTime);
 
  private:
    // InputController overrides.
    void onMouseMoved(double xpos, double ypos) override;
    void onMouseScrolled(double xoffset, double yoffset) override;
    void onKeyChanged(int key, int scancode, int action, int mods) override;
+
+   void notifyKeyPolled(int key, float elapsedTime);
 
  private:
    static constexpr float MouseSensitivity = 0.1f;
@@ -58,4 +67,13 @@ struct KeyChangedMsgData : public Observed<InputState>::MsgData
    int action = 0;
    // Modifier key flags: GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, ...
    int mods = 0;
+};
+
+constexpr char KeyPolledMsg[] = "key-polled";
+struct KeyPolledMsgData : public Observed<InputState>::MsgData
+{
+   // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
+   int key = 0;
+   // Time elapsed since last polling.
+   float elapsedTime = 0.0;
 };

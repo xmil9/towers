@@ -615,6 +615,7 @@ int main()
 
    while (!wnd.shouldClose())
    {
+      input.pollInput(wnd, deltaTime);
       updateState();
       render(wnd, cam, frustum);
    }
