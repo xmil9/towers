@@ -95,6 +95,7 @@
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\app_types.h" />
     <ClInclude Include="..\..\frustum.h" />
+    <ClInclude Include="..\..\clock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.vs" />

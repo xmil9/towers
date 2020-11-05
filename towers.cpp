@@ -4,6 +4,7 @@
 //
 #include "app_window.h"
 #include "camera_fps.h"
+#include "clock.h"
 #include "frustum.h"
 #include "input_state.h"
 #include "glfwl_lib.h"
@@ -497,7 +498,7 @@ static void setupData()
 }
 
 
-static void setupRendering()
+static void setupRendering(FrameClock& frameClock)
 {
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -506,6 +507,8 @@ static void setupRendering()
 
    model = glm::mat4(1.0f);
    model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+   frameClock.measureCycle();
 }
 
 
@@ -543,11 +546,10 @@ static void updateState()
 }
 
 
-static void render(glfwl::Window& wnd, const CameraFps& cam, const Frustum& frustum)
+static void render(glfwl::Window& wnd, FrameClock& frameClock, const CameraFps& cam,
+                   const Frustum& frustum)
 {
-   const float currentFrame = static_cast<float>(glfwGetTime());
-   deltaTime = currentFrame - lastFrame;
-   lastFrame = currentFrame;
+   frameClock.measureCycle();
 
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -587,6 +589,7 @@ int main()
    if (err)
       return EXIT_FAILURE;
 
+   FrameClock frameClock;
    InputState input;
    CameraFps cam;
    cam.setupInput(input);
@@ -611,13 +614,13 @@ int main()
    if (!setupTextures())
       return EXIT_FAILURE;
    setupData();
-   setupRendering();
+   setupRendering(frameClock);
 
    while (!wnd.shouldClose())
    {
-      input.pollInput(wnd, deltaTime);
+      input.pollInput(wnd, frameClock.cycleLength() / 1000.0f);
       updateState();
-      render(wnd, cam, frustum);
+      render(wnd, frameClock, cam, frustum);
    }
 
    vao.destroy();

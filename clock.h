@@ -6,12 +6,16 @@
 #include <chrono>
 
 
-template <typename Duration = std::chrono::microseconds> class Clock
+template <typename T, typename Duration = std::chrono::milliseconds> class Clock
 {
  public:
-   template <typename T> T measureCycle();
-   template <typename T> T lastCycleLength() const;
-   template <typename T> T elapsed() const;
+   using value_type = T;
+   using duration_type = Duration;
+
+ public:
+   T measureCycle();
+   T cycleLength() const;
+   T elapsed() const;
 
  private:
    using TimePoint = std::chrono::steady_clock::time_point;
@@ -23,25 +27,23 @@ template <typename Duration = std::chrono::microseconds> class Clock
 };
 
 
-template <typename Duration> template <typename T> T Clock<Duration>::measureCycle()
+template <typename T, typename Duration> T Clock<T, Duration>::measureCycle()
 {
    const TimePoint now = m_clock.now();
    m_cycleLength = std::chrono::duration_cast<Duration>(now - m_lastCycle);
    m_lastCycle = now;
-   return lastCycleLength<T>();
+   return cycleLength();
 }
 
 
-template <typename Duration>
-template <typename T>
-T Clock<Duration>::lastCycleLength() const
+template <typename T, typename Duration> T Clock<T, Duration>::cycleLength() const
 {
    return static_cast<T>(m_cycleLength.count());
 }
 
 
-template <typename Duration> template <typename T> T Clock<Duration>::elapsed() const
+template <typename T, typename Duration> T Clock<T, Duration>::elapsed() const
 {
    const auto elapsed = std::chrono::duration_cast<Duration>(m_clock.now() - m_lastCycle);
-   return static_cast<T>(elapsed);
+   return static_cast<T>(elapsed.count());
 }
