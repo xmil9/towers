@@ -20,7 +20,7 @@
 #include <cstdlib>
 #include <utility>
 
-constexpr glfwl::GlfwLib::ContextVersion OpenGLVersion{4, 6};
+constexpr glfwl::Lib::ContextVersion OpenGLVersion{4, 6};
 
 static float positions[] = {
    // Front face
@@ -582,7 +582,7 @@ static void render(glfwl::Window& wnd, FrameClock& frameClock, const CameraFps& 
 
 int main()
 {
-   glfwl::GlfwLib glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE};
+   glfwl::Lib glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE};
    glfwl::Err err = glfw.init();
    if (err)
       return EXIT_FAILURE;

@@ -13,38 +13,38 @@ namespace glfwl
 {
 ///////////////////
 
-class GlfwLib
+class Lib
 {
-public:
+ public:
    struct ContextVersion
    {
       unsigned int major = 1;
       unsigned int minor = 0;
    };
 
-public:
-   GlfwLib(ContextVersion ver, int profile);
-   ~GlfwLib();
-   GlfwLib(const GlfwLib&) = delete;
-   GlfwLib(GlfwLib&& other);
+ public:
+   Lib(ContextVersion ver, int profile);
+   ~Lib();
+   Lib(const Lib&) = delete;
+   Lib(Lib&& other);
 
-   GlfwLib& operator=(const GlfwLib&) = delete;
-   GlfwLib& operator=(GlfwLib&& other);
+   Lib& operator=(const Lib&) = delete;
+   Lib& operator=(Lib&& other);
 
    Err init();
    void terminate();
 
-   friend inline void swap(GlfwLib& a, GlfwLib& b)
+   friend inline void swap(Lib& a, Lib& b)
    {
       std::swap(a.m_ver, b.m_ver);
       std::swap(a.m_profile, b.m_profile);
       std::swap(a.m_terminate, b.m_terminate);
    }
 
-private:
+ private:
    void setHints();
 
-private:
+ private:
    ContextVersion m_ver;
    int m_profile = GLFW_OPENGL_ANY_PROFILE;
    bool m_terminate = false;

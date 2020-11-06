@@ -162,7 +162,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\frustum.cpp" />
-    <ClCompile Include="..\..\glfw_lib.cpp" />
+    <ClCompile Include="..\..\glfwl_lib.cpp" />
     <ClCompile Include="..\..\glfwl_window.cpp" />
     <ClCompile Include="..\..\gll_buffer.cpp" />
     <ClCompile Include="..\..\gll_program.cpp" />

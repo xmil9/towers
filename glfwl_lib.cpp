@@ -11,25 +11,24 @@ namespace glfwl
 {
 ///////////////////
 
-GlfwLib::GlfwLib(ContextVersion ver, int profile)
-: m_ver{std::move(ver)}, m_profile{profile}
+Lib::Lib(ContextVersion ver, int profile) : m_ver{std::move(ver)}, m_profile{profile}
 {
 }
 
 
-GlfwLib::~GlfwLib()
+Lib::~Lib()
 {
    terminate();
 }
 
 
-GlfwLib::GlfwLib(GlfwLib&& other)
+Lib::Lib(Lib&& other)
 {
    swap(*this, other);
 }
 
 
-GlfwLib& GlfwLib::operator=(GlfwLib&& other)
+Lib& Lib::operator=(Lib&& other)
 {
    terminate();
    m_ver = other.m_ver;
@@ -40,7 +39,7 @@ GlfwLib& GlfwLib::operator=(GlfwLib&& other)
 }
 
 
-Err GlfwLib::init()
+Err Lib::init()
 {
    if (glfwInit())
    {
@@ -51,7 +50,7 @@ Err GlfwLib::init()
 }
 
 
-void GlfwLib::terminate()
+void Lib::terminate()
 {
    if (m_terminate)
    {
@@ -61,7 +60,7 @@ void GlfwLib::terminate()
 }
 
 
-void GlfwLib::setHints()
+void Lib::setHints()
 {
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_ver.major);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_ver.minor);
