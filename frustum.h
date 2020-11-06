@@ -21,6 +21,7 @@ class Frustum
  public:
    void setupInput(InputState& input);
    glm::mat4x4 projectionMatrix() const;
+   void setAspect(float aspect) { m_aspect = aspect; }
 
  private:
    void onInputChanged(InputState& input, std::string_view msg,
