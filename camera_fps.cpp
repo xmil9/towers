@@ -42,16 +42,16 @@ void CameraFps::onInputChanged(InputState& /*input*/, std::string_view msg,
    else if (msg == KeyPolledMsg)
    {
       const auto keyData = static_cast<const KeyPolledMsgData&>(data);
-      processKeyPoll(keyData.key, keyData.elapsedTime);
+      processKeyPoll(keyData.key, keyData.frameLengthSecs);
    }
 }
 
 
-void CameraFps::processKeyPoll(int key, float elapsedTime)
+void CameraFps::processKeyPoll(int key, float frameLengthSecs)
 {
    const auto movementDir = directionForKey(key);
    if (movementDir)
-      updateCameraPosition(*movementDir * elapsedTime);
+      updateCameraPosition(*movementDir * frameLengthSecs);
 
    // Process non-movement keys if necessary.
 }

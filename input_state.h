@@ -74,6 +74,6 @@ struct KeyPolledMsgData : public Observed<InputState>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    int key = 0;
-   // Time elapsed since last polling.
-   float elapsedTime = 0.0;
+   // Frame length in seconds.
+   float frameLengthSecs = 0.0;
 };

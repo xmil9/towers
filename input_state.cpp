@@ -7,7 +7,7 @@
 #include <array>
 
 
-void InputState::pollInput(glfwl::Window& wnd, float elapsedTime)
+void InputState::pollInput(glfwl::Window& wnd, float frameLengthSecs)
 {
    static constexpr std::array<int, 4> PolledKeys = {
       GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A, GLFW_KEY_D
@@ -16,7 +16,7 @@ void InputState::pollInput(glfwl::Window& wnd, float elapsedTime)
    for (auto key : PolledKeys)
    {
       if (glfwGetKey(wnd.handle(), key) == GLFW_PRESS)
-         notifyKeyPolled(key, elapsedTime);
+         notifyKeyPolled(key, frameLengthSecs);
    }
 }
 
@@ -66,10 +66,10 @@ void InputState::onKeyChanged(int key, int scancode, int action, int mods)
 }
 
 
-void InputState::notifyKeyPolled(int key, float elapsedTime)
+void InputState::notifyKeyPolled(int key, float frameLengthSecs)
 {
    KeyPolledMsgData data;
    data.key = key;
-   data.elapsedTime = elapsedTime;
+   data.frameLengthSecs = frameLengthSecs;
    notify(*this, KeyPolledMsg, data);
 }
