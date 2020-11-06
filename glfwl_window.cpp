@@ -51,7 +51,7 @@ Window& Window::operator=(Window&& other)
 }
 
 
-GlfwErr Window::create(int width, int height, const Utf8Char* title)
+Err Window::create(int width, int height, const Utf8Char* title)
 {
    destroy();
 

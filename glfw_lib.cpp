@@ -40,7 +40,7 @@ GlfwLib& GlfwLib::operator=(GlfwLib&& other)
 }
 
 
-GlfwErr GlfwLib::init()
+Err GlfwLib::init()
 {
    if (glfwInit())
    {

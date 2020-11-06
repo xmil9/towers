@@ -9,7 +9,7 @@ namespace glfwl
 {
 ///////////////////
 
-using GlfwErr = int;
+using Err = int;
 using Utf8Char = char;
 
 } // namespace glfwl

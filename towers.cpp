@@ -583,7 +583,7 @@ static void render(glfwl::Window& wnd, FrameClock& frameClock, const CameraFps& 
 int main()
 {
    glfwl::GlfwLib glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE};
-   glfwl::GlfwErr err = glfw.init();
+   glfwl::Err err = glfw.init();
    if (err)
       return EXIT_FAILURE;
 

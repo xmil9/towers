@@ -31,7 +31,7 @@ public:
    GlfwLib& operator=(const GlfwLib&) = delete;
    GlfwLib& operator=(GlfwLib&& other);
 
-   GlfwErr init();
+   Err init();
    void terminate();
 
    friend inline void swap(GlfwLib& a, GlfwLib& b)
