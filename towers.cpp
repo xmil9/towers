@@ -4,9 +4,9 @@
 //
 #include "app_window.h"
 #include "camera_fps.h"
-#include "clock.h"
 #include "frustum.h"
 #include "input_state.h"
+#include "lap_clock.h"
 #include "glfwl_lib.h"
 #include "gll_buffer.h"
 #include "gll_data_format.h"
@@ -424,8 +424,6 @@ static glm::mat4 view;
 //       The matrix of this transformation is defined by glViewport.
 static glm::mat4 projection;
 
-static float deltaTime = 0.0f;
-static float lastFrame = 0.0f;
 
 
 static bool setupTextures()
@@ -508,7 +506,7 @@ static void setupRendering(FrameClock& frameClock)
    model = glm::mat4(1.0f);
    model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
-   frameClock.measureCycle();
+   frameClock.nextLap();
 }
 
 
@@ -549,7 +547,7 @@ static void updateState()
 static void render(glfwl::Window& wnd, FrameClock& frameClock, const CameraFps& cam,
                    const Frustum& frustum)
 {
-   frameClock.measureCycle();
+   frameClock.nextLap();
 
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -618,7 +616,7 @@ int main()
 
    while (!wnd.shouldClose())
    {
-      input.pollInput(wnd, frameClock.cycleLength() / 1000.0f);
+      input.pollInput(wnd, frameClock.lapLength(MsToSecs));
       updateState();
       render(wnd, frameClock, cam, frustum);
    }

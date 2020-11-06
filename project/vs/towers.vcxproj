@@ -176,7 +176,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\app_types.h" />
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_fps.h" />
-    <ClInclude Include="..\..\clock.h" />
+    <ClInclude Include="..\..\lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\frustum.h" />
     <ClInclude Include="..\..\glfwl_types.h" />
