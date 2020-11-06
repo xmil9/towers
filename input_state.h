@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "app_types.h"
 #include "input_controller.h"
 #include "observed.h"
 #include "glm/vec2.hpp"
@@ -25,9 +26,9 @@ class InputState : public InputController, public Observed<InputState>
    // InputController overrides.
    void onMouseMoved(double xpos, double ypos) override;
    void onMouseScrolled(double xoffset, double yoffset) override;
-   void onKeyChanged(int key, int scancode, int action, int mods) override;
+   void onKeyChanged(Key_t key, int scancode, int action, int mods) override;
 
-   void notifyKeyPolled(int key, float elapsedTime);
+   void notifyKeyPolled(Key_t key, float elapsedTime);
 
  private:
    static constexpr float MouseSensitivity = 0.05f;
@@ -60,7 +61,7 @@ constexpr char KeyChangedMsg[] = "key-changed";
 struct KeyChangedMsgData : public Observed<InputState>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
-   int key = 0;
+   Key_t key = 0;
    // System-specific scancode.
    int scancode = 0;
    // Key action: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT
@@ -73,7 +74,7 @@ constexpr char KeyPolledMsg[] = "key-polled";
 struct KeyPolledMsgData : public Observed<InputState>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
-   int key = 0;
+   Key_t key = 0;
    // Frame length in seconds.
    float frameLengthSecs = 0.0;
 };

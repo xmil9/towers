@@ -50,7 +50,7 @@ class Window
    virtual void onWindowContentScaled(float /*xscale*/, float /*yscale*/) {}
    virtual void onWindowMouseMoved(double /*xpos*/, double /*ypos*/) {}
    virtual void onWindowScrolled(double /*xoffset*/, double /*yoffset*/) {}
-   virtual void onWindowKeyChanged(int /*key*/, int /*scancode*/, int /*action*/,
+   virtual void onWindowKeyChanged(Key /*key*/, int /*scancode*/, int /*action*/,
                                    int /*mods*/)
    {
    }
@@ -68,7 +68,7 @@ class Window
    static void windowContentScaleCallback(GLFWwindow* wnd, float xscale, float yscale);
    static void windowCursorPosCallback(GLFWwindow* wnd, double xpos, double ypos);
    static void windowScrollCallback(GLFWwindow* wnd, double xoffset, double yoffset);
-   static void windowKeyCallback(GLFWwindow* wnd, int key, int scancode, int action,
+   static void windowKeyCallback(GLFWwindow* wnd, Key key, int scancode, int action,
                                  int mods);
 
  private:

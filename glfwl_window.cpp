@@ -232,7 +232,7 @@ void Window::windowScrollCallback(GLFWwindow* wnd, double xoffset, double yoffse
 }
 
 
-void Window::windowKeyCallback(GLFWwindow* wnd, int key, int scancode, int action,
+void Window::windowKeyCallback(GLFWwindow* wnd, Key key, int scancode, int action,
                                int mods)
 {
    Window* self = getSelf(wnd);

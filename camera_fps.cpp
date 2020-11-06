@@ -47,7 +47,7 @@ void CameraFps::onInputChanged(InputState& /*input*/, std::string_view msg,
 }
 
 
-void CameraFps::processKeyPoll(int key, float frameLengthSecs)
+void CameraFps::processKeyPoll(Key_t key, float frameLengthSecs)
 {
    const auto movementDir = directionForKey(key);
    if (movementDir)
@@ -81,7 +81,7 @@ void CameraFps::updateCameraPosition(const glm::vec3& offset)
 }
 
 
-std::optional<glm::vec3> CameraFps::directionForKey(int key)
+std::optional<glm::vec3> CameraFps::directionForKey(Key_t key)
 {
    switch (key)
    {

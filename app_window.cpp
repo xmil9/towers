@@ -22,7 +22,7 @@ void AppWindow::onWindowScrolled(double xoffset, double yoffset)
 }
 
 
-void AppWindow::onWindowKeyChanged(int key, int scancode, int action, int mods)
+void AppWindow::onWindowKeyChanged(Key_t key, int scancode, int action, int mods)
 {
    assert(m_inputController);
    if (m_inputController)

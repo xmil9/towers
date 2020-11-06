@@ -55,7 +55,7 @@ void InputState::onMouseScrolled(double xoffset, double yoffset)
 }
 
 
-void InputState::onKeyChanged(int key, int scancode, int action, int mods)
+void InputState::onKeyChanged(Key_t key, int scancode, int action, int mods)
 {
    KeyChangedMsgData data;
    data.key = key;
@@ -66,7 +66,7 @@ void InputState::onKeyChanged(int key, int scancode, int action, int mods)
 }
 
 
-void InputState::notifyKeyPolled(int key, float frameLengthSecs)
+void InputState::notifyKeyPolled(Key_t key, float frameLengthSecs)
 {
    KeyPolledMsgData data;
    data.key = key;

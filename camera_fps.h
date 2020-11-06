@@ -22,7 +22,7 @@ class CameraFps
  private:
    void onInputChanged(InputState& input, std::string_view msg,
                        const Observed<InputState>::MsgData& data);
-   void processKeyPoll(int key, float elapsedTime);
+   void processKeyPoll(Key_t key, float elapsedTime);
 
    void updateCameraDirection(const glm::vec2& offset);
    void updateCameraPosition(const glm::vec3& offset);
@@ -31,7 +31,7 @@ class CameraFps
    glm::vec3 back() const { return -front(); }
    glm::vec3 left() const { return -right(); }
    glm::vec3 right() const { return glm::normalize(glm::cross(front(), m_up)); }
-   std::optional<glm::vec3> directionForKey(int key);
+   std::optional<glm::vec3> directionForKey(Key_t key);
 
  private:
    static constexpr float MovementSpeed = 2.5f;
