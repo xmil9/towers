@@ -30,7 +30,7 @@ class InputState : public InputController, public Observed<InputState>
    void notifyKeyPolled(int key, float elapsedTime);
 
  private:
-   static constexpr float MouseSensitivity = 0.1f;
+   static constexpr float MouseSensitivity = 0.05f;
    static constexpr float ScrollSensitivity = 2.0f;
    bool m_isFirstMouseMove = true;
    glm::vec2 m_mousePos{0.0, 0.0};
