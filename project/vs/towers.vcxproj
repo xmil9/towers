@@ -171,6 +171,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\input_state.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
+    <ClCompile Include="..\..\ui_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\app_types.h" />
@@ -194,6 +195,8 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\input_state.h" />
     <ClInclude Include="..\..\observed.h" />
+    <ClInclude Include="..\..\ui_controller.h" />
+    <ClInclude Include="..\..\ui_state.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.fs" />

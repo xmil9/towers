@@ -3,7 +3,19 @@
 // MIT license
 //
 #include "app_window.h"
+#include "input_controller.h"
+#include "ui_controller.h"
 #include <cassert>
+
+
+void AppWindow::onWindowResized(int width, int height)
+{
+   Window::onWindowResized(width, height);
+
+   assert(m_uiController);
+   if (m_uiController)
+      m_uiController->onWindowResized(width, height);
+}
 
 
 void AppWindow::onWindowMouseMoved(double xpos, double ypos)

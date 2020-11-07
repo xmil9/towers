@@ -5,11 +5,10 @@
 #pragma once
 #include "app_types.h"
 #include "input_state.h"
+#include "ui_state.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/mat4x4.hpp"
 #include <string>
-
-class InputState;
 
 
 // Represents the section of view space that is visible.
@@ -20,12 +19,16 @@ class Frustum
 {
  public:
    void setupInput(InputState& input);
+   void setupUi(UiState& ui);
+
    glm::mat4x4 projectionMatrix() const;
    void setAspect(float aspect) { m_aspect = aspect; }
 
  private:
    void onInputChanged(InputState& input, std::string_view msg,
                        const Observed<InputState>::MsgData& data);
+   void onUiChanged(UiState& ui, std::string_view msg,
+                    const Observed<UiState>::MsgData& data);
    void updateFov(float offset);
 
  private:

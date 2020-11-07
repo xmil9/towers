@@ -7,6 +7,8 @@
 #include "frustum.h"
 #include "input_state.h"
 #include "lap_clock.h"
+#include "ui_state.h"
+#include "essentutils/filesys.h"
 #include "glfwl_lib.h"
 #include "gll_buffer.h"
 #include "gll_data_format.h"
@@ -15,7 +17,6 @@
 #include "gll_texture.h"
 #include "gll_uniform.h"
 #include "gll_vertex_array.h"
-#include "essentutils/filesys.h"
 #include <cassert>
 #include <cstdlib>
 #include <utility>
@@ -589,13 +590,16 @@ int main()
 
    FrameClock frameClock;
    InputState input;
+   UiState ui;
    CameraFps cam;
    cam.setupInput(input);
    Frustum frustum;
    frustum.setupInput(input);
+   frustum.setupUi(ui);
 
    AppWindow wnd;
    wnd.setInputController(&input);
+   wnd.setUiController(&ui);
    err = wnd.create(800, 800, "towers");
    if (err)
       return EXIT_FAILURE;
