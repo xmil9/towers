@@ -162,21 +162,25 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\frustum.cpp" />
+    <ClCompile Include="..\..\game.cpp" />
     <ClCompile Include="..\..\glfwl_lib.cpp" />
     <ClCompile Include="..\..\glfwl_window.cpp" />
     <ClCompile Include="..\..\gll_buffer.cpp" />
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\gll_texture.cpp" />
-    <ClCompile Include="..\..\input_state.cpp" />
+    <ClCompile Include="..\..\input.cpp" />
+    <ClCompile Include="..\..\renderer.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
-    <ClCompile Include="..\..\ui_state.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\app_types.h" />
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_fps.h" />
+    <ClInclude Include="..\..\data.h" />
+    <ClInclude Include="..\..\game.h" />
+    <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\frustum.h" />
@@ -192,11 +196,9 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\gll_types.h" />
     <ClInclude Include="..\..\gll_uniform.h" />
     <ClInclude Include="..\..\gll_vertex_array.h" />
-    <ClInclude Include="..\..\input_controller.h" />
-    <ClInclude Include="..\..\input_state.h" />
+    <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\observed.h" />
-    <ClInclude Include="..\..\ui_controller.h" />
-    <ClInclude Include="..\..\ui_state.h" />
+    <ClInclude Include="..\..\renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.fs" />

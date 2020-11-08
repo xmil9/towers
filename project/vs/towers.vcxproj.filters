@@ -26,14 +26,25 @@
     <ClCompile Include="..\..\gll_texture.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\app_window.cpp" />
-    <ClCompile Include="..\..\input_state.cpp" />
-    <ClCompile Include="..\..\camera_fps.cpp" />
-    <ClCompile Include="..\..\frustum.cpp" />
     <ClCompile Include="..\..\glfwl_lib.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ui_state.cpp" />
+    <ClCompile Include="..\..\camera_fps.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\frustum.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\app_window.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\game.cpp" />
+    <ClCompile Include="..\..\renderer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\input.cpp">
+      <Filter>Ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -47,6 +58,15 @@
     </Filter>
     <Filter Include="Stb">
       <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{4589b49b-6d2f-4cf1-bb21-0224ce69757b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui">
+      <UniqueIdentifier>{130ef901-d481-4ccf-836d-83d29dd1dd08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{6be38c80-5e3f-4c4b-98b5-bef3f5c98975}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,16 +109,35 @@
     <ClInclude Include="..\..\gll_texture.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app_window.h" />
-    <ClInclude Include="..\..\input_state.h" />
-    <ClInclude Include="..\..\observed.h" />
-    <ClInclude Include="..\..\input_controller.h" />
-    <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\app_types.h" />
-    <ClInclude Include="..\..\frustum.h" />
-    <ClInclude Include="..\..\lap_clock.h" />
-    <ClInclude Include="..\..\ui_controller.h" />
-    <ClInclude Include="..\..\ui_state.h" />
+    <ClInclude Include="..\..\lap_clock.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\observed.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\camera_fps.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\frustum.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\app_window.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game.h" />
+    <ClInclude Include="..\..\renderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\data.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\input.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\input_controller.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.vs" />

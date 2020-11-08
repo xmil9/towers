@@ -1,5 +1,5 @@
 //
-// Oct-2020, Michael Lindner
+// Nov-2020, Michael Lindner
 // MIT license
 //
 #pragma once

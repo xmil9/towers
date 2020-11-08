@@ -4,8 +4,6 @@
 //
 #pragma once
 #include "app_types.h"
-#include "input_state.h"
-#include "ui_state.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/mat4x4.hpp"
 #include <string>
@@ -18,17 +16,11 @@
 class Frustum
 {
  public:
-   void setupInput(InputState& input);
-   void setupUi(UiState& ui);
-
+   // Matrix to transform view coords to clip space (frustum) coords.
+   // Note: A final viewport transformation will happen from clip space to 2D screen
+   // space. The matrix of this transformation is defined by glViewport.
    glm::mat4x4 projectionMatrix() const;
    void setAspect(float aspect) { m_aspect = aspect; }
-
- private:
-   void onInputChanged(InputState& input, std::string_view msg,
-                       const Observed<InputState>::MsgData& data);
-   void onUiChanged(UiState& ui, std::string_view msg,
-                    const Observed<UiState>::MsgData& data);
    void updateFov(float offset);
 
  private:

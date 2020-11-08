@@ -2,26 +2,19 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "input_state.h"
+#include "input.h"
 #include "glfwl_window.h"
 #include <array>
 
 
-void InputState::pollInput(glfwl::Window& wnd, float frameLengthSecs)
+void Input::process(glfwl::Window& wnd, float frameLengthSecs)
 {
-   static constexpr std::array<int, 4> PolledKeys = {
-      GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A, GLFW_KEY_D
-   };
-
-   for (auto key : PolledKeys)
-   {
-      if (glfwGetKey(wnd.handle(), key) == GLFW_PRESS)
-         notifyKeyPolled(key, frameLengthSecs);
-   }
+   wnd.pollEvents();
+   pollKeys(wnd, frameLengthSecs);
 }
 
 
-void InputState::onMouseMoved(double xpos, double ypos)
+void Input::onMouseMoved(double xpos, double ypos)
 {
    const glm::vec2 newPos(xpos, ypos);
 
@@ -38,24 +31,22 @@ void InputState::onMouseMoved(double xpos, double ypos)
    {
       MouseMovedMsgData data;
       data.pos = m_mousePos;
-      data.rawDelta = delta;
-      data.adjustedDelta = delta * MouseSensitivity;
+      data.delta = delta;
       notify(*this, MouseMovedMsg, data);
    }
 }
 
 
-void InputState::onMouseScrolled(double xoffset, double yoffset)
+void Input::onMouseScrolled(double xoffset, double yoffset)
 {
    const glm::vec2 delta(xoffset, yoffset);
    MouseScrolledMsgData data;
-   data.rawDelta = delta;
-   data.adjustedDelta = delta * ScrollSensitivity;
+   data.delta = delta;
    notify(*this, MouseScrolledMsg, data);
 }
 
 
-void InputState::onKeyChanged(Key_t key, int scancode, int action, int mods)
+void Input::onKeyChanged(Key_t key, int scancode, int action, int mods)
 {
    KeyChangedMsgData data;
    data.key = key;
@@ -66,7 +57,21 @@ void InputState::onKeyChanged(Key_t key, int scancode, int action, int mods)
 }
 
 
-void InputState::notifyKeyPolled(Key_t key, float frameLengthSecs)
+void Input::pollKeys(glfwl::Window& wnd, float frameLengthSecs)
+{
+   static constexpr std::array<int, 4> PolledKeys = {
+      GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A, GLFW_KEY_D
+   };
+
+   for (auto key : PolledKeys)
+   {
+      if (glfwGetKey(wnd.handle(), key) == GLFW_PRESS)
+         notifyKeyPolled(key, frameLengthSecs);
+   }
+}
+
+
+void Input::notifyKeyPolled(Key_t key, float frameLengthSecs)
 {
    KeyPolledMsgData data;
    data.key = key;

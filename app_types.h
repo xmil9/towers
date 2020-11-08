@@ -15,3 +15,12 @@ using FrameClock = LapClock<float, std::chrono::milliseconds>;
 constexpr float MsToSecs = 0.001f;
 
 using Key_t = glfwl::Key;
+
+enum class DirectionXZ
+{
+   Left,
+   Right,
+   Forward,
+   Backward
+};
+

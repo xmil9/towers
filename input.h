@@ -16,11 +16,11 @@ class Window;
 
 ///////////////////
 
-class InputState : public InputController, public Observed<InputState>
+class Input : public InputController, public Observed<Input>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
-   void pollInput(glfwl::Window& wnd, float elapsedTime);
+   void process(glfwl::Window& wnd, float frameLengthSecs);
 
  private:
    // InputController overrides.
@@ -28,11 +28,10 @@ class InputState : public InputController, public Observed<InputState>
    void onMouseScrolled(double xoffset, double yoffset) override;
    void onKeyChanged(Key_t key, int scancode, int action, int mods) override;
 
-   void notifyKeyPolled(Key_t key, float elapsedTime);
+   void pollKeys(glfwl::Window& wnd, float frameLengthSecs);
+   void notifyKeyPolled(Key_t key, float frameLengthSecs);
 
  private:
-   static constexpr float MouseSensitivity = 0.05f;
-   static constexpr float ScrollSensitivity = 2.0f;
    bool m_isFirstMouseMove = true;
    glm::vec2 m_mousePos{0.0, 0.0};
 };
@@ -43,22 +42,20 @@ class InputState : public InputController, public Observed<InputState>
 // Notifications sent to input state observers.
 
 constexpr char MouseMovedMsg[] = "mouse-moved";
-struct MouseMovedMsgData : public Observed<InputState>::MsgData
+struct MouseMovedMsgData : public Observed<Input>::MsgData
 {
    glm::vec2 pos;
-   glm::vec2 rawDelta;
-   glm::vec2 adjustedDelta;
+   glm::vec2 delta;
 };
 
 constexpr char MouseScrolledMsg[] = "mouse-scrolled";
-struct MouseScrolledMsgData : public Observed<InputState>::MsgData
+struct MouseScrolledMsgData : public Observed<Input>::MsgData
 {
-   glm::vec2 rawDelta;
-   glm::vec2 adjustedDelta;
+   glm::vec2 delta;
 };
 
 constexpr char KeyChangedMsg[] = "key-changed";
-struct KeyChangedMsgData : public Observed<InputState>::MsgData
+struct KeyChangedMsgData : public Observed<Input>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    Key_t key = 0;
@@ -71,7 +68,7 @@ struct KeyChangedMsgData : public Observed<InputState>::MsgData
 };
 
 constexpr char KeyPolledMsg[] = "key-polled";
-struct KeyPolledMsgData : public Observed<InputState>::MsgData
+struct KeyPolledMsgData : public Observed<Input>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    Key_t key = 0;

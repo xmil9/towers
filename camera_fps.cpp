@@ -3,7 +3,6 @@
 // MIT license
 //
 #include "camera_fps.h"
-#include "input_state.h"
 #include "essentutils/math_util.h"
 #include "glfw/glfw3.h"
 #include <cassert>
@@ -22,42 +21,7 @@ constexpr Angle_t MinPitch{Angle_t::fromDegrees(-89.0f)};
 
 ///////////////////
 
-void CameraFps::setupInput(InputState& input)
-{
-   input.addObserver([this](InputState& input, std::string_view msg,
-                            const Observed<InputState>::MsgData& data) {
-      onInputChanged(input, msg, data);
-   });
-}
-
-
-void CameraFps::onInputChanged(InputState& /*input*/, std::string_view msg,
-                               const Observed<InputState>::MsgData& data)
-{
-   if (msg == MouseMovedMsg)
-   {
-      const auto mouseMovedData = static_cast<const MouseMovedMsgData&>(data);
-      updateCameraDirection(mouseMovedData.adjustedDelta);
-   }
-   else if (msg == KeyPolledMsg)
-   {
-      const auto keyData = static_cast<const KeyPolledMsgData&>(data);
-      processKeyPoll(keyData.key, keyData.frameLengthSecs);
-   }
-}
-
-
-void CameraFps::processKeyPoll(Key_t key, float frameLengthSecs)
-{
-   const auto movementDir = directionForKey(key);
-   if (movementDir)
-      updateCameraPosition(*movementDir * frameLengthSecs);
-
-   // Process non-movement keys if necessary.
-}
-
-
-void CameraFps::updateCameraDirection(const glm::vec2& offset)
+void CameraFps::updateDirection(const glm::vec2& offset)
 {
    m_yaw += sutil::radians(offset.x);
    m_pitch += sutil::radians(offset.y);
@@ -75,25 +39,20 @@ void CameraFps::updateCameraDirection(const glm::vec2& offset)
 }
 
 
-void CameraFps::updateCameraPosition(const glm::vec3& offset)
+glm::vec3 CameraFps::directionVector(DirectionXZ dir) const
 {
-   m_eye += offset * MovementSpeed;
-}
-
-
-std::optional<glm::vec3> CameraFps::directionForKey(Key_t key)
-{
-   switch (key)
+   switch (dir)
    {
-   case GLFW_KEY_W:
-      return front();
-   case GLFW_KEY_S:
-      return back();
-   case GLFW_KEY_A:
+   case DirectionXZ::Left:
       return left();
-   case GLFW_KEY_D:
+   case DirectionXZ::Right:
       return right();
-   default:
-      return std::nullopt;
+   case DirectionXZ::Forward:
+      return front();
+   case DirectionXZ::Backward:
+      return back();
    }
+
+   assert(false && "Unexpected direction.");
+   return {};
 }

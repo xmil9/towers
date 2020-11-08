@@ -4,18 +4,17 @@
 //
 #pragma once
 #include "app_types.h"
+#include "input_controller.h"
+#include "observed.h"
 #include "glfwl_window.h"
-#include <vector>
-
-struct InputController;
-struct UiController;
+#include "glm/vec2.hpp"
 
 
-class AppWindow : public glfwl::Window
+
+class AppWindow : public glfwl::Window, public Observed<AppWindow>
 {
- public:
-   void setInputController(InputController* input) { m_inputController = input; }
-   void setUiController(UiController* input) { m_uiController = input; }
+public:
+   void setInputController(InputController* controller);
 
  protected:
    void onWindowResized(int width, int height) override;
@@ -23,7 +22,20 @@ class AppWindow : public glfwl::Window
    void onWindowScrolled(double xoffset, double yoffset) override;
    void onWindowKeyChanged(Key_t key, int scancode, int action, int mods) override;
 
- private:
+private:
    InputController* m_inputController = nullptr;
-   UiController* m_uiController = nullptr;
+   glm::ivec2 m_wndSize;
+};
+
+
+///////////////////
+
+// Notifications sent to observers.
+
+constexpr char WindowResizedMsg[] = "window_resized";
+struct WindowResizedMsgData : public Observed<AppWindow>::MsgData
+{
+   glm::ivec2 newSize;
+   // Difference to previous size.
+   glm::ivec2 diff;
 };

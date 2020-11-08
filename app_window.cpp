@@ -3,18 +3,31 @@
 // MIT license
 //
 #include "app_window.h"
-#include "input_controller.h"
-#include "ui_controller.h"
 #include <cassert>
+
+
+void AppWindow::setInputController(InputController* controller)
+{
+   assert(controller);
+   m_inputController = controller;
+}
 
 
 void AppWindow::onWindowResized(int width, int height)
 {
    Window::onWindowResized(width, height);
 
-   assert(m_uiController);
-   if (m_uiController)
-      m_uiController->onWindowResized(width, height);
+   const glm::ivec2 newSize(width, height);
+   const glm::ivec2 diff = newSize - m_wndSize;
+   m_wndSize = newSize;
+
+   if (diff.x != 0 || diff.y != 0)
+   {
+      WindowResizedMsgData data;
+      data.newSize = newSize;
+      data.diff = diff;
+      notify(*this, WindowResizedMsg, data);
+   }
 }
 
 
