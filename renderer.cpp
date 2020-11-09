@@ -28,6 +28,7 @@ void Renderer::cleanup()
 {
    m_vao.destroy();
    m_posBuf.destroy();
+   m_normalBuf.destroy();
    m_colorBuf.destroy();
    m_texCoordBuf.destroy();
    m_tex.destroy();
@@ -133,11 +134,19 @@ bool Renderer::setupData()
    m_vao.setAttribFormat(posAttribIdx, posFormat);
    m_vao.enableAttrib(posAttribIdx);
 
+   m_normalBuf.create();
+   m_normalBuf.bind(GL_ARRAY_BUFFER);
+   m_normalBuf.setData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+   // The attribute index has to match the 'location' value in the vertex shader code.
+   constexpr GLuint normalAttribIdx = 1;
+   m_vao.setAttribFormat(normalAttribIdx, normalFormat);
+   m_vao.enableAttrib(normalAttribIdx);
+
    m_colorBuf.create();
    m_colorBuf.bind(GL_ARRAY_BUFFER);
    m_colorBuf.setData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
    // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint colorAttribIdx = 1;
+   constexpr GLuint colorAttribIdx = 2;
    m_vao.setAttribFormat(colorAttribIdx, colorFormat);
    m_vao.enableAttrib(colorAttribIdx);
 
@@ -145,7 +154,7 @@ bool Renderer::setupData()
    m_texCoordBuf.bind(GL_ARRAY_BUFFER);
    m_texCoordBuf.setData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
    // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint texCoordAttribIdx = 2;
+   constexpr GLuint texCoordAttribIdx = 3;
    m_vao.setAttribFormat(texCoordAttribIdx, texCoordFormat);
    m_vao.enableAttrib(texCoordAttribIdx);
 
@@ -180,13 +189,19 @@ bool Renderer::setupRendering()
 
 bool Renderer::setupLighting()
 {
-   const glm::vec3 ambientColor{0.5f, 0.3f, 0.8f};
-   constexpr float ambientIntensity = 0.3f;
-   const glm::vec3 ambientInfluence = ambientColor * ambientIntensity;
+   const glm::vec3 lightPos{1.f, 2.f, 1.5f};
+   const glm::vec3 lightColor{1.0f, 1.0f, 1.0f};
+   constexpr float ambientIntensity = 0.1f;
+   const glm::vec3 ambient = lightColor * ambientIntensity;
    
    m_prog.use();
+   gll::Uniform lightPosUf = m_prog.uniform("lightPos");
+   lightPosUf.setValue(lightPos);
    gll::Uniform lightColorUf = m_prog.uniform("lightColor");
-   lightColorUf.setValue(ambientInfluence);
+   lightColorUf.setValue(lightColor);
+   // Ambient light.
+   gll::Uniform ambientUf = m_prog.uniform("ambient");
+   ambientUf.setValue(ambient);
 
    return true;
 }

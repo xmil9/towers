@@ -112,6 +112,113 @@ static float positions[] = {
 static constexpr gll::DataFormat posFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                                               nullptr};
 
+static float normals[] = {
+   // Front face
+   // lt
+   0.0f,
+   0.0f,
+   1.0f,
+   // rt
+   0.0f,
+   0.0f,
+   1.0f,
+   // rb
+   0.0f,
+   0.0f,
+   1.0f,
+   // lb
+   0.0f,
+   0.0f,
+   1.0f,
+   // Left face
+   // lt
+   -1.0f,
+   0.0f,
+   0.0f,
+   // rt
+   -1.0f,
+   0.0f,
+   0.0f,
+   // rb
+   -1.0f,
+   0.0f,
+   0.0f,
+   // lb
+   -1.0f,
+   0.0f,
+   0.0f,
+   // Top face
+   // lt
+   0.0f,
+   1.0f,
+   0.0f,
+   // rt
+   0.0f,
+   1.0f,
+   0.0f,
+   // rb
+   0.0f,
+   1.0f,
+   0.0f,
+   // lb
+   0.0f,
+   1.0f,
+   0.0f,
+   // Right face
+   // lt
+   1.0f,
+   0.0f,
+   0.0f,
+   // rt
+   1.0f,
+   0.0f,
+   0.0f,
+   // rb
+   1.0f,
+   0.0f,
+   0.0f,
+   // lb
+   1.0f,
+   0.0f,
+   0.0f,
+   // Bottom face
+   // lt
+   0.0f,
+   -1.0f,
+   0.0f,
+   // rt
+   0.0f,
+   -1.0f,
+   0.0f,
+   // rb
+   0.0f,
+   -1.0f,
+   0.0f,
+   // lb
+   0.0f,
+   -1.0f,
+   0.0f,
+   // Back face
+   // lt
+   0.0f,
+   0.0f,
+   -1.0f,
+   // rt
+   0.0f,
+   0.0f,
+   -1.0f,
+   // rb
+   0.0f,
+   0.0f,
+   -1.0f,
+   // lb
+   0.0f,
+   0.0f,
+   -1.0f,
+};
+static constexpr gll::DataFormat normalFormat = {3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+                                                 nullptr};
+
 static unsigned int indices[] = {
    // Front face
    // Triangle 1

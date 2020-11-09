@@ -44,6 +44,7 @@ class Renderer
 
    gll::VertexArray m_vao;
    gll::Buffer m_posBuf;
+   gll::Buffer m_normalBuf;
    gll::Buffer m_colorBuf;
    gll::Buffer m_texCoordBuf;
    gll::Texture2D m_tex;
