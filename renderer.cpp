@@ -18,6 +18,8 @@ bool Renderer::setup()
       return false;
    if (!setupRendering())
       return false;
+   if (!setupLighting())
+      return false;
    return true;
 }
 
@@ -171,6 +173,20 @@ bool Renderer::setupRendering()
 
    m_model = glm::mat4(1.0f);
    m_model = glm::rotate(m_model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+   return true;
+}
+
+
+bool Renderer::setupLighting()
+{
+   const glm::vec3 ambientColor{0.5f, 0.3f, 0.8f};
+   constexpr float ambientIntensity = 0.3f;
+   const glm::vec3 ambientInfluence = ambientColor * ambientIntensity;
+   
+   m_prog.use();
+   gll::Uniform lightColorUf = m_prog.uniform("lightColor");
+   lightColorUf.setValue(ambientInfluence);
 
    return true;
 }

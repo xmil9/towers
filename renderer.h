@@ -33,6 +33,7 @@ class Renderer
    bool setupTextures();
    bool setupData();
    bool setupRendering();
+   bool setupLighting();
 
  private:
    CameraFps m_cam;
