@@ -5,6 +5,7 @@
 #include "renderer.h"
 #include "data.h"
 #include "essentutils/filesys.h"
+#include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"
 
 
@@ -48,6 +49,12 @@ void Renderer::renderFrame()
 
    m_prog.use();
    m_vao.bind();
+
+   const float tm = static_cast<float>(glfwGetTime());
+   const glm::vec3 lightPos{5.f * std::cos(tm), -3.f, 5.f * std::sin(tm)};
+   gll::Uniform lightPosUf = m_prog.uniform("lightPos");
+   lightPosUf.setValue(lightPos);
+
 
    gll::Uniform modelUf = m_prog.uniform("model");
    modelUf.setValue(m_model);
@@ -181,7 +188,7 @@ bool Renderer::setupRendering()
    glEnable(GL_DEPTH_TEST);
 
    m_model = glm::mat4(1.0f);
-   m_model = glm::rotate(m_model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+   m_model = glm::rotate(m_model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
    return true;
 }
@@ -189,14 +196,11 @@ bool Renderer::setupRendering()
 
 bool Renderer::setupLighting()
 {
-   const glm::vec3 lightPos{1.f, 2.f, 1.5f};
    const glm::vec3 lightColor{1.0f, 1.0f, 1.0f};
    constexpr float ambientIntensity = 0.1f;
    const glm::vec3 ambient = lightColor * ambientIntensity;
    
    m_prog.use();
-   gll::Uniform lightPosUf = m_prog.uniform("lightPos");
-   lightPosUf.setValue(lightPos);
    gll::Uniform lightColorUf = m_prog.uniform("lightColor");
    lightColorUf.setValue(lightColor);
    // Ambient light.
