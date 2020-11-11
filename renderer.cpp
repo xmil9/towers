@@ -50,14 +50,16 @@ void Renderer::renderFrame()
    m_prog.use();
    m_vao.bind();
 
+   // Move the light source.
    const float tm = static_cast<float>(glfwGetTime());
    const glm::vec3 lightPos{5.f * std::cos(tm), -3.f, 5.f * std::sin(tm)};
    gll::Uniform lightPosUf = m_prog.uniform("lightPos");
    lightPosUf.setValue(lightPos);
 
-
    gll::Uniform modelUf = m_prog.uniform("model");
-   modelUf.setValue(m_model);
+   modelUf.setValue(m_modelMat);
+   gll::Uniform normalMatUf = m_prog.uniform("normalMat");
+   normalMatUf.setValue(m_normalMat);
    gll::Uniform viewUf = m_prog.uniform("view");
    viewUf.setValue(m_cam.viewMatrix());
    gll::Uniform projUf = m_prog.uniform("projection");
@@ -117,7 +119,8 @@ bool Renderer::setupTextures()
    m_tex2.bind();
    m_tex2.setWrapPolicy(GL_REPEAT, GL_REPEAT);
    m_tex2.setScaleFiltering(GL_NEAREST, GL_NEAREST);
-   m_tex2.loadData(appPath / "red_marble.png", true, 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
+   m_tex2.loadData(appPath / "red_marble.png", true, 0, GL_RGB, GL_RGBA,
+                   GL_UNSIGNED_BYTE);
    m_tex2.generateMipmap();
 
    m_prog.use();
@@ -187,8 +190,10 @@ bool Renderer::setupRendering()
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
    glEnable(GL_DEPTH_TEST);
 
-   m_model = glm::mat4(1.0f);
-   m_model = glm::rotate(m_model, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+   m_modelMat = glm::mat4(1.0f);
+   m_modelMat =
+      glm::rotate(m_modelMat, glm::radians(-20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+   m_normalMat = glm::mat3(glm::transpose(glm::inverse(m_modelMat)));
 
    return true;
 }
@@ -199,7 +204,7 @@ bool Renderer::setupLighting()
    const glm::vec3 lightColor{1.0f, 1.0f, 1.0f};
    constexpr float ambientIntensity = 0.1f;
    const glm::vec3 ambient = lightColor * ambientIntensity;
-   
+
    m_prog.use();
    gll::Uniform lightColorUf = m_prog.uniform("lightColor");
    lightColorUf.setValue(lightColor);

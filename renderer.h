@@ -40,7 +40,10 @@ class Renderer
    Frustum m_frustum;
 
    // Matrix to transform object coords to world coords.
-   glm::mat4 m_model;
+   glm::mat4 m_modelMat;
+   // Matrix to transform normals to world coords. Model matrix with scaling and
+   // translations removed.
+   glm::mat3 m_normalMat;
 
    gll::VertexArray m_vao;
    gll::Buffer m_posBuf;
