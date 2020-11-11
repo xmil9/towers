@@ -56,6 +56,10 @@ void Renderer::renderFrame()
    gll::Uniform lightPosUf = m_prog.uniform("lightPos");
    lightPosUf.setValue(lightPos);
 
+   gll::Uniform viewPosUf = m_prog.uniform("viewPos");
+   viewPosUf.setValue(m_cam.position());
+
+   // Set coordinate transformation matrices.
    gll::Uniform modelUf = m_prog.uniform("model");
    modelUf.setValue(m_modelMat);
    gll::Uniform normalMatUf = m_prog.uniform("normalMat");

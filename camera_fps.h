@@ -14,6 +14,7 @@
 class CameraFps
 {
  public:
+   glm::vec3 position() const { return m_eye; }
    // Calculates matrix to transform world coords to camera view coords.
    glm::mat4x4 viewMatrix() const;
    void updateDirection(const glm::vec2& offset);
