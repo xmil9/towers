@@ -127,8 +127,8 @@
       <AdditionalDependencies>glfw\lib\Debug\glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /A /Y "$(ProjectDir)..\..\towers.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
+      <Command>copy /A /Y "$(ProjectDir)..\..\cube3_shader.vs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,8 +152,8 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
       <AdditionalDependencies>glfw\lib\Release\glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /A /Y "$(ProjectDir)..\..\towers.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
+      <Command>copy /A /Y "$(ProjectDir)..\..\cube3_shader.vs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
