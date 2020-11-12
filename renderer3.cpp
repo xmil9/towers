@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "renderer3.h"
-#include "data.h"
+#include "sample_data.h"
 #include "essentutils/filesys.h"
 #include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"

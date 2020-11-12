@@ -122,9 +122,6 @@
     <ClInclude Include="..\..\app_window.h">
       <Filter>Ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\data.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\input.h">
       <Filter>Ui</Filter>
     </ClInclude>
@@ -138,6 +135,9 @@
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game3.h" />
+    <ClInclude Include="..\..\sample_data.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.vs" />
