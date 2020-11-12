@@ -135,12 +135,12 @@
       <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game3.h" />
-    <ClInclude Include="..\..\sample_data.h">
+    <ClInclude Include="..\..\cube3_data.h">
       <Filter>Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\towers.vs" />
-    <None Include="..\..\towers.fs" />
+    <None Include="..\..\cube3_shader.vs" />
+    <None Include="..\..\cube3_shader.fs" />
   </ItemGroup>
 </Project>

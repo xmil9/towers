@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "renderer3.h"
-#include "sample_data.h"
+#include "cube3_data.h"
 #include "essentutils/filesys.h"
 #include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"
@@ -82,11 +82,11 @@ bool Renderer3::setupShaders()
    const std::filesystem::path appPath = sutil::appDirectory();
    bool ok = !appPath.empty();
 
-   gll::Shader vs{gll::makeVertexShader(appPath / "towers.vs")};
+   gll::Shader vs{gll::makeVertexShader(appPath / "cube3_shader.vs")};
    if (ok)
       ok = vs.compile();
 
-   gll::Shader fs{gll::makeFragmentShader(appPath / "towers.fs")};
+   gll::Shader fs{gll::makeFragmentShader(appPath / "cube3_shader.fs")};
    if (ok)
       ok = fs.compile();
 

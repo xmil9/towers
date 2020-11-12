@@ -178,7 +178,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\app_types.h" />
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_fps.h" />
-    <ClInclude Include="..\..\sample_data.h" />
+    <ClInclude Include="..\..\cube3_data.h" />
     <ClInclude Include="..\..\game3.h" />
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\lap_clock.h" />
@@ -201,8 +201,8 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\renderer3.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\towers.fs" />
-    <None Include="..\..\towers.vs" />
+    <None Include="..\..\cube3_shader.fs" />
+    <None Include="..\..\cube3_shader.vs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\deps\essentutils\project\vs\essentutils.vcxproj">
