@@ -2,7 +2,7 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "game.h"
+#include "game3.h"
 
 
 namespace
@@ -20,12 +20,12 @@ constexpr float MovementSpeed = 2.5f;
 
 ///////////////////
 
-Game::Game() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
+Game3::Game3() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 {
 }
 
 
-bool Game::setup()
+bool Game3::setup()
 {
    if (!setupUi())
       return false;
@@ -37,13 +37,13 @@ bool Game::setup()
 }
 
 
-void Game::cleanup()
+void Game3::cleanup()
 {
    m_renderer.cleanup();
 }
 
 
-void Game::run()
+void Game3::run()
 {
    while (!m_mainWnd.shouldClose())
    {
@@ -56,7 +56,7 @@ void Game::run()
 }
 
 
-bool Game::setupUi()
+bool Game3::setupUi()
 {
    if (m_glfw.init() != GLFW_NO_ERROR)
       return false;
@@ -73,7 +73,7 @@ bool Game::setupUi()
 }
 
 
-bool Game::setupMainWindow()
+bool Game3::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
 
@@ -91,7 +91,7 @@ bool Game::setupMainWindow()
 }
 
 
-bool Game::setupInput()
+bool Game3::setupInput()
 {
    m_input.addObserver(
       [this](Input& /*src*/, std::string_view msg, const Observed<Input>::MsgData& data) {
@@ -101,7 +101,7 @@ bool Game::setupInput()
 }
 
 
-void Game::onMainWindowChanged(AppWindow& /*src*/, std::string_view msg,
+void Game3::onMainWindowChanged(AppWindow& /*src*/, std::string_view msg,
                                const Observed<AppWindow>::MsgData& data)
 {
    if (msg == WindowResizedMsg)
@@ -113,14 +113,14 @@ void Game::onMainWindowChanged(AppWindow& /*src*/, std::string_view msg,
 }
 
 
-void Game::onMainWindowResize(const glm::ivec2& newSize)
+void Game3::onMainWindowResize(const glm::ivec2& newSize)
 {
    m_renderer.setFrustumAspect(static_cast<float>(newSize.x) /
                                static_cast<float>(newSize.y));
 }
 
 
-void Game::onInputChanged(Input& /*src*/, std::string_view msg,
+void Game3::onInputChanged(Input& /*src*/, std::string_view msg,
                           const Observed<Input>::MsgData& data)
 {
    if (msg == MouseMovedMsg)
@@ -141,25 +141,25 @@ void Game::onInputChanged(Input& /*src*/, std::string_view msg,
 }
 
 
-void Game::onMouseMoved(const glm::vec2& delta)
+void Game3::onMouseMoved(const glm::vec2& delta)
 {
    m_renderer.updateCameraDirection(delta * MouseSensitivity);
 }
 
 
-void Game::onMouseScrolled(const glm::vec2& delta)
+void Game3::onMouseScrolled(const glm::vec2& delta)
 {
    m_renderer.updateFrustumFov(delta.y * ScrollSensitivity);
 }
 
 
-void Game::onKeyPolled(Key_t key, float frameLengthSecs)
+void Game3::onKeyPolled(Key_t key, float frameLengthSecs)
 {
    updateCameraPosition(key, frameLengthSecs);
 }
 
 
-std::optional<DirectionXZ> Game::getCameraDirection(Key_t key) const
+std::optional<DirectionXZ> Game3::getCameraDirection(Key_t key) const
 {
    switch (key)
    {
@@ -177,7 +177,7 @@ std::optional<DirectionXZ> Game::getCameraDirection(Key_t key) const
 }
 
 
-void Game::updateCameraPosition(Key_t key, float frameLengthSecs)
+void Game3::updateCameraPosition(Key_t key, float frameLengthSecs)
 {
    const auto camDir = getCameraDirection(key);
    if (camDir)

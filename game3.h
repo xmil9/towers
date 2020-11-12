@@ -7,15 +7,15 @@
 #include "app_window.h"
 #include "glfwl_lib.h"
 #include "input.h"
-#include "renderer.h"
+#include "renderer3.h"
 #include "glm/vec3.hpp"
 #include <optional>
 
 
-class Game
+class Game3
 {
  public:
-   Game();
+   Game3();
 
    bool setup();
    void cleanup();
@@ -44,5 +44,5 @@ class Game
    glfwl::Lib m_glfw;
    AppWindow m_mainWnd;
    Input m_input;
-   Renderer m_renderer;
+   Renderer3 m_renderer;
 };

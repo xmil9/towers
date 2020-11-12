@@ -161,8 +161,8 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
-    <ClCompile Include="..\..\frustum.cpp" />
-    <ClCompile Include="..\..\game.cpp" />
+    <ClCompile Include="..\..\frustum3.cpp" />
+    <ClCompile Include="..\..\game3.cpp" />
     <ClCompile Include="..\..\glfwl_lib.cpp" />
     <ClCompile Include="..\..\glfwl_window.cpp" />
     <ClCompile Include="..\..\gll_buffer.cpp" />
@@ -170,7 +170,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\gll_texture.cpp" />
     <ClCompile Include="..\..\input.cpp" />
-    <ClCompile Include="..\..\renderer.cpp" />
+    <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
   </ItemGroup>
@@ -179,11 +179,11 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\data.h" />
-    <ClInclude Include="..\..\game.h" />
+    <ClInclude Include="..\..\game3.h" />
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
-    <ClInclude Include="..\..\frustum.h" />
+    <ClInclude Include="..\..\frustum3.h" />
     <ClInclude Include="..\..\glfwl_types.h" />
     <ClInclude Include="..\..\glfwl_lib.h" />
     <ClInclude Include="..\..\glfwl_window.h" />
@@ -198,7 +198,7 @@ copy /A /Y "$(ProjectDir)..\..\towers.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\gll_vertex_array.h" />
     <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\observed.h" />
-    <ClInclude Include="..\..\renderer.h" />
+    <ClInclude Include="..\..\renderer3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.fs" />

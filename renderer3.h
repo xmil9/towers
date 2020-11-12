@@ -5,7 +5,7 @@
 #pragma once
 #include "app_types.h"
 #include "camera_fps.h"
-#include "frustum.h"
+#include "frustum3.h"
 #include "gll_buffer.h"
 #include "gll_data_format.h"
 #include "gll_program.h"
@@ -16,7 +16,7 @@
 #include "glm/matrix.hpp"
 
 
-class Renderer
+class Renderer3
 {
  public:
    bool setup();
@@ -37,7 +37,7 @@ class Renderer
 
  private:
    CameraFps m_cam;
-   Frustum m_frustum;
+   Frustum3 m_frustum;
 
    // Matrix to transform object coords to world coords.
    glm::mat4 m_modelMat;
@@ -57,7 +57,7 @@ class Renderer
 };
 
 
-inline void Renderer::updateCameraPosition(DirectionXZ dir, float dist)
+inline void Renderer3::updateCameraPosition(DirectionXZ dir, float dist)
 {
    m_cam.updatePosition(dir, dist);
 }

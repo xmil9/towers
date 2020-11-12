@@ -2,14 +2,14 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "renderer.h"
+#include "renderer3.h"
 #include "data.h"
 #include "essentutils/filesys.h"
 #include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"
 
 
-bool Renderer::setup()
+bool Renderer3::setup()
 {
    if (!setupShaders())
       return false;
@@ -25,7 +25,7 @@ bool Renderer::setup()
 }
 
 
-void Renderer::cleanup()
+void Renderer3::cleanup()
 {
    m_vao.destroy();
    m_posBuf.destroy();
@@ -38,7 +38,7 @@ void Renderer::cleanup()
 }
 
 
-void Renderer::renderFrame()
+void Renderer3::renderFrame()
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -77,7 +77,7 @@ void Renderer::renderFrame()
 }
 
 
-bool Renderer::setupShaders()
+bool Renderer3::setupShaders()
 {
    const std::filesystem::path appPath = sutil::appDirectory();
    bool ok = !appPath.empty();
@@ -106,7 +106,7 @@ bool Renderer::setupShaders()
 }
 
 
-bool Renderer::setupTextures()
+bool Renderer3::setupTextures()
 {
    const std::filesystem::path appPath = sutil::appDirectory();
    if (appPath.empty())
@@ -135,7 +135,7 @@ bool Renderer::setupTextures()
 }
 
 
-bool Renderer::setupData()
+bool Renderer3::setupData()
 {
    m_vao.create();
    m_vao.bind();
@@ -187,7 +187,7 @@ bool Renderer::setupData()
 }
 
 
-bool Renderer::setupRendering()
+bool Renderer3::setupRendering()
 {
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -203,7 +203,7 @@ bool Renderer::setupRendering()
 }
 
 
-bool Renderer::setupLighting()
+bool Renderer3::setupLighting()
 {
    const glm::vec3 lightColor{1.0f, 1.0f, 1.0f};
    constexpr float ambientIntensity = 0.1f;

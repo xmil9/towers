@@ -2,11 +2,11 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "game.h"
+#include "game3.h"
 
 int main()
 {
-   Game towers;
+   Game3 towers;
    towers.setup();
    towers.run();
    towers.cleanup();

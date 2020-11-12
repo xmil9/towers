@@ -2,7 +2,7 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "frustum.h"
+#include "frustum3.h"
 
 
 namespace
@@ -17,7 +17,7 @@ constexpr Angle_t MinFov{Angle_t::fromDegrees(20.0f)};
 
 ///////////////////
 
-void Frustum::updateFov(float offset)
+void Frustum3::updateFov(float offset)
 {
    m_horzFov -= sutil::radians(offset);
 

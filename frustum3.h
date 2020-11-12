@@ -13,7 +13,7 @@
 // Content within this space will be rendered. Content outside will be clipped off.
 // Defines the clip space of the coordinate transformation sequence:
 //   local space -> world space -> view/camera space -> CLIP SPACE -> screen space
-class Frustum
+class Frustum3
 {
  public:
    // Matrix to transform view coords to clip space (frustum) coords.
@@ -35,7 +35,7 @@ class Frustum
 };
 
 
-inline glm::mat4x4 Frustum::projectionMatrix() const
+inline glm::mat4x4 Frustum3::projectionMatrix() const
 {
    return glm::perspective(m_horzFov.radians(), m_aspect, m_nearPlane, m_farPlane);
 }

@@ -32,19 +32,19 @@
     <ClCompile Include="..\..\camera_fps.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\frustum.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\app_window.cpp">
       <Filter>Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\game.cpp" />
-    <ClCompile Include="..\..\renderer.cpp">
-      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\input.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\frustum3.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer3.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\game3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -119,15 +119,8 @@
     <ClInclude Include="..\..\camera_fps.h">
       <Filter>Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\frustum.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\app_window.h">
       <Filter>Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game.h" />
-    <ClInclude Include="..\..\renderer.h">
-      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\data.h">
       <Filter>Rendering</Filter>
@@ -138,6 +131,13 @@
     <ClInclude Include="..\..\input_controller.h">
       <Filter>Ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\frustum3.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\renderer3.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\towers.vs" />
