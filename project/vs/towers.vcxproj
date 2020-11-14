@@ -170,7 +170,10 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\gll_texture.cpp" />
     <ClCompile Include="..\..\input.cpp" />
+    <ClCompile Include="..\..\png_texture.cpp" />
     <ClCompile Include="..\..\renderer3.cpp" />
+    <ClCompile Include="..\..\resources.cpp" />
+    <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
   </ItemGroup>
@@ -179,6 +182,7 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />
+    <ClInclude Include="..\..\frustum2.h" />
     <ClInclude Include="..\..\game3.h" />
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\lap_clock.h" />
@@ -198,7 +202,10 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\gll_vertex_array.h" />
     <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\observed.h" />
+    <ClInclude Include="..\..\png_texture.h" />
     <ClInclude Include="..\..\renderer3.h" />
+    <ClInclude Include="..\..\resources.h" />
+    <ClInclude Include="..\..\textures.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\cube3_shader.fs" />

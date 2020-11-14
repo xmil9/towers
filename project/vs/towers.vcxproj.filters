@@ -45,6 +45,11 @@
       <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game3.cpp" />
+    <ClCompile Include="..\..\png_texture.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resources.cpp" />
+    <ClCompile Include="..\..\textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -138,6 +143,14 @@
     <ClInclude Include="..\..\cube3_data.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\frustum2.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\png_texture.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resources.h" />
+    <ClInclude Include="..\..\textures.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\cube3_shader.vs" />
