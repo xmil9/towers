@@ -3,8 +3,11 @@
 // MIT license
 //
 #include "sprite_renderer.h"
+#include "resources.h"
+#include "sprite_look.h"
 #include "gll_buffer.h"
 #include "gll_data_format.h"
+#include "gll_program.h"
 
 
 void SpriteRenderer::setMesh(const Mesh2& mesh)
@@ -17,7 +20,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
    gll::Buffer posBuf;
    posBuf.create();
    posBuf.bind(GL_ARRAY_BUFFER);
-   posBuf.setData(GL_ARRAY_BUFFER, mesh.numPositionsBytes(), mesh.positions(),
+   posBuf.setData(GL_ARRAY_BUFFER, mesh.numPositionBytes(), mesh.positions(),
                   GL_STATIC_DRAW);
    // The attribute index has to match the 'location' value in the vertex shader code.
    constexpr GLuint posAttribIdx = 0;
@@ -26,22 +29,25 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
    m_vao.setAttribFormat(posAttribIdx, posFormat);
    m_vao.enableAttrib(posAttribIdx);
 
-   gll::Buffer normalBuf;
-   normalBuf.create();
-   normalBuf.bind(GL_ARRAY_BUFFER);
-   normalBuf.setData(GL_ARRAY_BUFFER, mesh.numNormalsBytes(), mesh.normals(),
-                     GL_STATIC_DRAW);
-   // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint normalAttribIdx = 1;
-   constexpr gll::DataFormat normalFormat = {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
-                                             nullptr};
-   m_vao.setAttribFormat(normalAttribIdx, normalFormat);
-   m_vao.enableAttrib(normalAttribIdx);
+   if (mesh.numTextureCoords() > 0)
+   {
+      gll::Buffer texCoordBuf;
+      texCoordBuf.create();
+      texCoordBuf.bind(GL_ARRAY_BUFFER);
+      texCoordBuf.setData(GL_ARRAY_BUFFER, mesh.numTextureCoordBytes(), mesh.textureCoords(),
+                          GL_STATIC_DRAW);
+      // The attribute index has to match the 'location' value in the vertex shader code.
+      constexpr GLuint texCoordsAttribIdx = 1;
+      constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
+                                                  nullptr};
+      m_vao.setAttribFormat(texCoordsAttribIdx, texCoordFormat);
+      m_vao.enableAttrib(texCoordsAttribIdx);
+   }
 
    gll::Buffer elemBuf;
    elemBuf.create();
    elemBuf.bind(GL_ELEMENT_ARRAY_BUFFER);
-   elemBuf.setData(GL_ELEMENT_ARRAY_BUFFER, mesh.numIndicesBytes(), mesh.indices(),
+   elemBuf.setData(GL_ELEMENT_ARRAY_BUFFER, mesh.numIndexBytes(), mesh.indices(),
                    GL_STATIC_DRAW);
 
    // Unbind vao first to stop "recording" information in it.
@@ -52,12 +58,15 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 }
 
 
-void SpriteRenderer::render(const gll::Program& shaders, const std::string& texTag,
+void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
                             glm::vec2 pos) const
 {
-   glActiveTexture(GL_TEXTURE0);
-   const gll::Texture2D& tex = m_resources->getTexture(texTag);
-   tex.bind();
+   if (look.hasTexture())
+   {
+      glActiveTexture(GL_TEXTURE0);
+      const gll::Texture2D& tex = m_resources->getTexture(look.texture());
+      tex.bind();
+   }
 
    m_vao.bind();
 
@@ -70,5 +79,6 @@ void SpriteRenderer::render(const gll::Program& shaders, const std::string& texT
                   nullptr);
 
    gll::VertexArray::unbind();
-   gll::Texture2D::unbind();
+   if (look.hasTexture())
+      gll::Texture2D::unbind();
 }

@@ -15,9 +15,9 @@ class Resources;
 class Renderer2
 {
 public:
-   explicit Renderer2(Resources* resources);
-
+   void setResources(Resources* resources) { m_resources = resources; }
    bool setupShaders();
+   void setFrustumSize(int width, int height) { m_frustum.setSize(width, height); }
    void render(const std::vector<Sprite>& sprites) const;
 
 private:
@@ -26,9 +26,3 @@ private:
    Frustum2 m_frustum;
    gll::Program m_shaders;
 };
-
-
-inline Renderer2::Renderer2(Resources* resources)
-   : m_resources{resources}
-{
-}

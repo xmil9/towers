@@ -4,9 +4,12 @@
 //
 #pragma once
 #include "app_types.h"
+#include <algorithm>
 #include <cstddef>
 #include <vector>
 
+
+///////////////////
 
 class Mesh2
 {
@@ -16,27 +19,28 @@ class Mesh2
  public:
    virtual ~Mesh2() = default;
 
-   void set(const std::vector<Point2_t>& positions, const std::vector<Point2_t>& normals,
-            const std::vector<VertexIdx>& indices);
-   void set(std::vector<Point2_t>&& positions, std::vector<Point2_t>&& normals,
-            std::vector<VertexIdx>&& indices);
-
    std::size_t numPositions() const { return m_positions.size(); }
-   std::size_t numPositionsBytes() const { return m_positions.size() * sizeof(Point2_t); }
+   std::size_t numPositionBytes() const { return m_positions.size() * sizeof(Point2_t); }
    const Coord* positions() const;
-
-   std::size_t numNormals() const { return m_normals.size(); }
-   std::size_t numNormalsBytes() const { return m_normals.size() * sizeof(Point2_t); }
-   const Coord* normals() const;
+   void setPositions(const std::vector<Point2_t>& positions);
+   void setPositions(std::vector<Point2_t>&& positions);
 
    std::size_t numIndices() const { return m_indices.size(); }
-   std::size_t numIndicesBytes() const { return m_indices.size() * sizeof(VertexIdx); }
-   const VertexIdx* indices() const;
+   std::size_t numIndexBytes() const { return m_indices.size() * sizeof(VertexIdx); }
+   const VertexIdx* indices() const { return m_indices.data(); }
+   void setIndices(const std::vector<VertexIdx>& indices);
+   void setIndices(std::vector<VertexIdx>&& indices);
+
+   std::size_t numTextureCoords() const { return m_texCoords.size(); }
+   std::size_t numTextureCoordBytes() const;
+   const Coord* textureCoords() const;
+   void setTextureCoords(const std::vector<Point2_t>& texCoords);
+   void setTextureCoords(std::vector<Point2_t>&& texCoords);
 
  protected:
    std::vector<Point2_t> m_positions;
-   std::vector<Point2_t> m_normals;
    std::vector<VertexIdx> m_indices;
+   std::vector<Point2_t> m_texCoords;
 };
 
 
@@ -45,12 +49,45 @@ inline const Mesh2::Coord* Mesh2::positions() const
    return reinterpret_cast<const Coord*>(m_positions.data());
 }
 
-inline const Mesh2::Coord* Mesh2::normals() const
+inline void Mesh2::setPositions(const std::vector<Point2_t>& positions)
 {
-   return reinterpret_cast<const Coord*>(m_normals.data());
+   m_positions.reserve(positions.size());
+   std::copy(positions.begin(), positions.end(), m_positions.begin());
 }
 
-inline const VertexIdx* Mesh2::indices() const
+inline void Mesh2::setPositions(std::vector<Point2_t>&& positions)
 {
-   return m_indices.data();
+   m_positions = std::move(positions);
+}
+
+inline void Mesh2::setIndices(const std::vector<VertexIdx>& indices)
+{
+   m_indices.reserve(indices.size());
+   std::copy(indices.begin(), indices.end(), m_indices.begin());
+}
+
+inline void Mesh2::setIndices(std::vector<VertexIdx>&& indices)
+{
+   m_indices = std::move(indices);
+}
+
+inline std::size_t Mesh2::numTextureCoordBytes() const
+{
+   return m_texCoords.size() * sizeof(Point2_t);
+}
+
+inline const Mesh2::Coord* Mesh2::textureCoords() const
+{
+   return reinterpret_cast<const Coord*>(m_texCoords.data());
+}
+
+inline void Mesh2::setTextureCoords(const std::vector<Point2_t>& texCoords)
+{
+   m_texCoords.reserve(texCoords.size());
+   std::copy(texCoords.begin(), texCoords.end(), m_texCoords.begin());
+}
+
+inline void Mesh2::setTextureCoords(std::vector<Point2_t>&& texCoords)
+{
+   m_texCoords = std::move(texCoords);
 }

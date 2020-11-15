@@ -53,8 +53,8 @@
     <ClCompile Include="..\..\sprite_renderer.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\mesh2.cpp" />
     <ClCompile Include="..\..\renderer2.cpp" />
+    <ClCompile Include="..\..\game2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -166,9 +166,17 @@
     <ClInclude Include="..\..\camera_2d.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\sprite_look.h" />
+    <ClInclude Include="..\..\game2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\cube3_shader.vs" />
     <None Include="..\..\cube3_shader.fs" />
+    <None Include="..\..\sprite_shader.vs">
+      <Filter>Rendering</Filter>
+    </None>
+    <None Include="..\..\sprite_shader.fs">
+      <Filter>Rendering</Filter>
+    </None>
   </ItemGroup>
 </Project>

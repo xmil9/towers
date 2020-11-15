@@ -3,7 +3,8 @@
 // MIT license
 //
 #include "renderer2.h"
-
+#include "resources.h"
+#include "gll_shader.h"
 
 
 bool Renderer2::setupShaders()

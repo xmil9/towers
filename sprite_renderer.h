@@ -4,12 +4,19 @@
 //
 #pragma once
 #include "mesh2.h"
-#include "resources.h"
-#include "gll_program.h"
-#include "gll_shader.h"
 #include "gll_vertex_array.h"
 #include "glm/vec2.hpp"
+#include <cstddef>
 
+namespace gll
+{
+class Program;
+}
+class Resources;
+class SpriteLook;
+
+
+///////////////////
 
 class SpriteRenderer
 {
@@ -23,9 +30,7 @@ class SpriteRenderer
    SpriteRenderer& operator=(SpriteRenderer&&) = default;
 
    void setMesh(const Mesh2& mesh);
-
-   void render(const gll::Program& shaders, const std::string& texTag,
-               glm::vec2 pos) const;
+   void render(const gll::Program& shaders, const SpriteLook& look, glm::vec2 pos) const;
 
  private:
    Resources* m_resources = nullptr;
@@ -40,13 +45,12 @@ inline SpriteRenderer::SpriteRenderer(Resources* resources) : m_resources{resour
 
 
 // sprite renderer
-//   ctor(mesh)
 //   shader program - always same
-//   sprite voa
+//   sprite voa - made from mesh
 //   render(texture, pos, rot)
 //
 //
 // sprite
 //   model - behavior
-//   renderer (shared)
-//   texture
+//   sprite renderer (shared)
+//   sprite look (shared)
