@@ -37,7 +37,7 @@ class Program : public Object<Program>
    void detachShader(const Shader& shader);
    bool link();
    std::string linkLog() const;
-   void use();
+   void use() const;
    // The program must be successully linked to access uniforms.
    Uniform uniform(const GLchar* name) const;
    // Set the texture sampler to use a texture bound to the unit with the given index.

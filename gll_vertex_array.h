@@ -38,7 +38,7 @@ class VertexArray : public Object<VertexArray>
    VertexArray& operator=(const VertexArray&) = delete;
    VertexArray& operator=(VertexArray&& other) = default;
 
-   void bind();
+   void bind() const;
    static void unbind();
    static void setAttribFormat(GLuint attribIdx, const DataFormat& format);
    static void setAttribIFormat(GLuint attribIdx, const DataFormat& format);

@@ -26,7 +26,7 @@ class Texture2D : public Object<Texture2D>
    Texture2D& operator=(const Texture2D&) = delete;
    Texture2D& operator=(Texture2D&& other) = default;
 
-   void bind();
+   void bind() const;
    // Unbinds currently bound texture for the given target.
    static void unbind();
    // Buffer needs to be active/bound in order to set data.

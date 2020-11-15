@@ -9,13 +9,19 @@
 class Resources
 {
  public:
+   Resources();
+
+   std::filesystem::path texturePath() const;
+   std::filesystem::path shaderPath() const;
+
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);
-   const PngTexture& getTexture(const std::string& tag) const;
+   const gll::Texture2D& getTexture(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
  private:
    Textures m_texRepos;
+   std::filesystem::path m_mainPath;
 };
 
 
@@ -25,7 +31,7 @@ inline bool Resources::loadTexture(const std::string& tag,
    return m_texRepos.load(tag, texFile, flipVert);
 }
 
-inline const PngTexture& Resources::getTexture(const std::string& tag) const
+inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
 {
    return m_texRepos[tag];
 }

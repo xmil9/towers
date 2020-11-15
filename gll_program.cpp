@@ -52,7 +52,7 @@ std::string Program::linkLog() const
 }
 
 
-void Program::use()
+void Program::use() const
 {
    if (hasId())
       glUseProgram(id());

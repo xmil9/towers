@@ -50,6 +50,11 @@
     </ClCompile>
     <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
+    <ClCompile Include="..\..\sprite_renderer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\mesh2.cpp" />
+    <ClCompile Include="..\..\renderer2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -151,6 +156,16 @@
     </ClInclude>
     <ClInclude Include="..\..\resources.h" />
     <ClInclude Include="..\..\textures.h" />
+    <ClInclude Include="..\..\sprite_renderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\point2.h" />
+    <ClInclude Include="..\..\mesh2.h" />
+    <ClInclude Include="..\..\renderer2.h" />
+    <ClInclude Include="..\..\sprite.h" />
+    <ClInclude Include="..\..\camera_2d.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\cube3_shader.vs" />

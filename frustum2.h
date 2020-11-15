@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "glad/glad.h" // glad must be included before anything else opengl related.
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/mat4x4.hpp"
 #include <string>
@@ -20,16 +21,12 @@ class Frustum2
  private:
    int m_width = 0;
    int m_height = 0;
-   // Coordinates (along the central axis) of the near and far planes that cut off the
-   // frustum in the front and back.
-   static constexpr float m_nearPlane = 1.0f;
-   static constexpr float m_farPlane = -1.0f;
 };
 
 
 inline glm::mat4x4 Frustum2::projectionMatrix() const
 {
-   return glm::ortho(0, m_width, 0, m_height, m_nearPlane, m_farPlane);
+   return glm::ortho(0, m_width, 0, m_height);
 }
 
 

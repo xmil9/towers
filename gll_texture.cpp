@@ -10,7 +10,7 @@ namespace gll
 {
 ///////////////////
 
-void Texture2D::bind()
+void Texture2D::bind() const
 {
    if (hasId())
       glBindTexture(GL_TEXTURE_2D, id());

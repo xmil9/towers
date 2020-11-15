@@ -170,9 +170,12 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\gll_texture.cpp" />
     <ClCompile Include="..\..\input.cpp" />
+    <ClCompile Include="..\..\mesh2.cpp" />
     <ClCompile Include="..\..\png_texture.cpp" />
+    <ClCompile Include="..\..\renderer2.cpp" />
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
+    <ClCompile Include="..\..\sprite_renderer.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\gll_vertex_array.cpp" />
@@ -180,6 +183,7 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="..\..\app_types.h" />
     <ClInclude Include="..\..\app_window.h" />
+    <ClInclude Include="..\..\camera_2d.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />
     <ClInclude Include="..\..\frustum2.h" />
@@ -201,10 +205,15 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     <ClInclude Include="..\..\gll_uniform.h" />
     <ClInclude Include="..\..\gll_vertex_array.h" />
     <ClInclude Include="..\..\input.h" />
+    <ClInclude Include="..\..\mesh2.h" />
     <ClInclude Include="..\..\observed.h" />
     <ClInclude Include="..\..\png_texture.h" />
+    <ClInclude Include="..\..\point2.h" />
     <ClInclude Include="..\..\renderer3.h" />
     <ClInclude Include="..\..\resources.h" />
+    <ClInclude Include="..\..\renderer2.h" />
+    <ClInclude Include="..\..\sprite.h" />
+    <ClInclude Include="..\..\sprite_renderer.h" />
     <ClInclude Include="..\..\textures.h" />
   </ItemGroup>
   <ItemGroup>

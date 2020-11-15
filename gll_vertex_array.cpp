@@ -10,7 +10,7 @@ namespace gll
 {
 ///////////////////
 
-void VertexArray::bind()
+void VertexArray::bind() const
 {
    if (hasId())
       glBindVertexArray(id());
