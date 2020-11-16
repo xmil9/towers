@@ -76,17 +76,15 @@ bool Game3::setupUi()
 bool Game3::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-
-   if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
-      return false;
-
-   m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
-
    m_mainWnd.addObserver([this](AppWindow& src, std::string_view msg,
                                 const Observed<AppWindow>::MsgData& data) {
       onMainWindowChanged(src, msg, data);
    });
 
+   if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
+      return false;
+
+   m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
    return true;
 }
 

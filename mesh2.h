@@ -51,7 +51,7 @@ inline const Mesh2::Coord* Mesh2::positions() const
 
 inline void Mesh2::setPositions(const std::vector<Point2_t>& positions)
 {
-   m_positions.reserve(positions.size());
+   m_positions.resize(positions.size());
    std::copy(positions.begin(), positions.end(), m_positions.begin());
 }
 
@@ -62,7 +62,7 @@ inline void Mesh2::setPositions(std::vector<Point2_t>&& positions)
 
 inline void Mesh2::setIndices(const std::vector<VertexIdx>& indices)
 {
-   m_indices.reserve(indices.size());
+   m_indices.resize(indices.size());
    std::copy(indices.begin(), indices.end(), m_indices.begin());
 }
 
@@ -83,7 +83,7 @@ inline const Mesh2::Coord* Mesh2::textureCoords() const
 
 inline void Mesh2::setTextureCoords(const std::vector<Point2_t>& texCoords)
 {
-   m_texCoords.reserve(texCoords.size());
+   m_texCoords.resize(texCoords.size());
    std::copy(texCoords.begin(), texCoords.end(), m_texCoords.begin());
 }
 

@@ -26,7 +26,9 @@ class Game2
    bool setupUi();
    bool setupMainWindow();
    bool setupInput();
+   bool setupResources();
    bool setupRenderer();
+   bool setupData();
 
    void onMainWindowChanged(AppWindow& src, std::string_view msg,
                             const Observed<AppWindow>::MsgData& data);

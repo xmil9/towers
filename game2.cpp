@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "game2.h"
+#include "mesh2.h"
 
 
 namespace
@@ -27,13 +28,8 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 
 bool Game2::setup()
 {
-   if (!setupUi())
-      return false;
-   if (!setupInput())
-      return false;
-   if (!setupRenderer())
-      return false;
-   return true;
+   return (setupUi() && setupInput() && setupResources() && setupRenderer() &&
+           setupData());
 }
 
 
@@ -75,17 +71,15 @@ bool Game2::setupUi()
 bool Game2::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-
-   if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
-      return false;
-
-   m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
-
    m_mainWnd.addObserver([this](AppWindow& src, std::string_view msg,
                                 const Observed<AppWindow>::MsgData& data) {
       onMainWindowChanged(src, msg, data);
    });
 
+   if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
+      return false;
+
+   m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
    return true;
 }
 
@@ -100,10 +94,34 @@ bool Game2::setupInput()
 }
 
 
+bool Game2::setupResources()
+{
+   return m_resources.loadTexture("test", m_resources.texturePath() / "directions.png");
+}
+
+
 bool Game2::setupRenderer()
 {
-   m_renderer.setResources(&m_resources);
-   return m_renderer.setupShaders();
+   return m_renderer.setup(&m_resources);
+}
+
+
+bool Game2::setupData()
+{
+   const std::vector<Point2_t> positions = {
+      {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
+   const std::vector<VertexIdx> indices = {0, 1, 2, 2, 3, 0};
+   const std::vector<Point2_t> texCoords = positions;
+
+   Mesh2 mesh;
+   mesh.setPositions(std::move(positions));
+   mesh.setIndices(std::move(indices));
+   mesh.setTextureCoords(std::move(texCoords));
+   auto spriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
+   auto spriteLook = std::make_shared<SpriteLook>("test");
+   m_sprites.emplace_back(spriteRenderer, spriteLook);
+
+   return true;
 }
 
 

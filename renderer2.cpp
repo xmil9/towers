@@ -7,6 +7,13 @@
 #include "gll_shader.h"
 
 
+bool Renderer2::setup(Resources* resources)
+{
+   m_resources = resources;
+   return setupShaders() && setupSetting();
+}
+
+
 bool Renderer2::setupShaders()
 {
    const std::filesystem::path path = m_resources->shaderPath();
@@ -25,8 +32,6 @@ bool Renderer2::setupShaders()
    m_shaders.attachShader(vs);
    m_shaders.attachShader(fs);
 
-   if (!m_shaders.create())
-      return false;
    if (!m_shaders.link())
       return false;
 
@@ -34,8 +39,18 @@ bool Renderer2::setupShaders()
 }
 
 
+bool Renderer2::setupSetting()
+{
+   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+   return true;
+}
+
+
 void Renderer2::render(const std::vector<Sprite>& sprites) const
 {
+   glClear(GL_COLOR_BUFFER_BIT);
    m_shaders.use();
 
    gll::Uniform viewUf = m_shaders.uniform("view");

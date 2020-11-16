@@ -128,7 +128,10 @@
     </Link>
     <PostBuildEvent>
       <Command>copy /A /Y "$(ProjectDir)..\..\cube3_shader.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
+copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,7 +156,10 @@ copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
     </Link>
     <PostBuildEvent>
       <Command>copy /A /Y "$(ProjectDir)..\..\cube3_shader.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"</Command>
+copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

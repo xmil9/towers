@@ -19,8 +19,8 @@ class Frustum2
    void setSize(int width, int height);
 
  private:
-   int m_width = 0;
-   int m_height = 0;
+   int m_width = 1;
+   int m_height = 1;
 };
 
 
