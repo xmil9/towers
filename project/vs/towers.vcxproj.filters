@@ -55,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="..\..\renderer2.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
+    <ClCompile Include="..\..\gll_debug.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -168,6 +171,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\game2.h" />
+    <ClInclude Include="..\..\gll_debug.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\cube3_shader.vs" />
