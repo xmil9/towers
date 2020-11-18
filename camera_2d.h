@@ -19,17 +19,17 @@ class Camera2d
 
  private:
    // Location of camera in world space.
-   glm::vec3 m_eye = glm::vec3(0.0f, 0.0f, 3.0f);
+   glm::vec3 m_eye = glm::vec3(0.f, 0.f, 0.f);
    // Normalized direction that camera is looking at.
-   glm::vec3 m_direction = glm::vec3(0.0f, 0.0f, -1.0f);
+   static constexpr glm::vec3 Direction = glm::vec3(0.f, 0.f, -1.f);
    // Normalized direction that is upwards for camera.
-   glm::vec3 m_up = glm::vec3(0.0f, 1.0f, 0.0f);
+   static constexpr glm::vec3 Up = glm::vec3(0.f, 1.f, 0.f);
 };
 
 
 inline glm::mat4x4 Camera2d::viewMatrix() const
 {
-   return glm::lookAt(m_eye, m_eye + m_direction, m_up);
+   return glm::lookAt(m_eye, m_eye + Direction, Up);
 }
 
 
