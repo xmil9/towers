@@ -19,19 +19,20 @@ class Frustum2
    void setSize(int width, int height);
 
  private:
-   int m_width = 1;
-   int m_height = 1;
+   float m_width = 0.f;
+   float m_height = 0.f;
 };
 
 
 inline glm::mat4x4 Frustum2::projectionMatrix() const
 {
-   return glm::ortho(0, m_width, 0, m_height);
+   // Flip y-axis so that (0, 0) is at left-top.
+   return glm::ortho(0.f, m_width, m_height, 0.f, -1.f, 1.f);
 }
 
 
 inline void Frustum2::setSize(int width, int height)
 {
-   m_width = width;
-   m_height = height;
+   m_width = static_cast<float>(width);
+   m_height = static_cast<float>(height);
 }
