@@ -15,13 +15,13 @@ class Resources;
 class Renderer2
 {
 public:
-   bool setup(Resources* resources);
+   bool setup(Resources* resources, int viewWidth, int viewHeight);
    void setFrustumSize(int width, int height) { m_frustum.setSize(width, height); }
    void render(const std::vector<Sprite>& sprites) const;
 
 private:
    bool setupShaders();
-   bool setupSetting();
+   bool setupSetting(int viewWidth, int viewHeight);
 
 private:
    Resources* m_resources = nullptr;

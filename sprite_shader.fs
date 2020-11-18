@@ -7,6 +7,7 @@ uniform sampler2D spriteTex;
 uniform vec3 spriteColor;
 
 void main()
-{    
-    fragColor = vec4(spriteColor, 1.0) * texture(spriteTex, vertexTexCoord);
+{
+    fragColor = vec4(1.0f, 0.5f, 0.5f, 1.0f);
+    //fragColor = vec4(spriteColor, 1.0f) * texture(spriteTex, vertexTexCoord);
 }

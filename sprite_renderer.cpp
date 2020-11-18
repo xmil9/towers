@@ -59,7 +59,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 
 
 void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
-                            glm::vec2 pos) const
+                            const glm::vec2& pos, const glm::vec2& scale) const
 {
    if (look.hasTexture())
    {
@@ -70,8 +70,9 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
 
    m_vao.bind();
 
-   glm::mat4 modelMat(1.0f);
-   modelMat = glm::translate(modelMat, glm::vec3(pos, 0.0f));
+   glm::mat4 modelMat(1.f);
+   modelMat = glm::translate(modelMat, glm::vec3(pos, 0.f));
+   modelMat = glm::scale(modelMat, glm::vec3(scale, 1.0f));
    gll::Uniform modelUf = shaders.uniform("model");
    modelUf.setValue(modelMat);
 

@@ -4,6 +4,8 @@
 //
 #include "game2.h"
 #include "mesh2.h"
+#include "gll_debug.h"
+#include <iostream>
 
 
 namespace
@@ -28,8 +30,8 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 
 bool Game2::setup()
 {
-   return (setupUi() && setupInput() && setupResources() && setupRenderer() &&
-           setupData());
+   return (setupUi() && setupInput() && setupOutput() && setupResources() &&
+           setupRenderer() && setupData());
 }
 
 
@@ -53,7 +55,7 @@ void Game2::run()
 
 bool Game2::setupUi()
 {
-   if (m_glfw.init() != GLFW_NO_ERROR)
+   if (m_glfw.init(glfwl::Lib::DebugOuput::On) != GLFW_NO_ERROR)
       return false;
 
    if (!setupMainWindow())
@@ -76,10 +78,11 @@ bool Game2::setupMainWindow()
       onMainWindowChanged(src, msg, data);
    });
 
-   if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
+   if (m_mainWnd.create(MainWndWidth, MainWndHeight, "towers") != GLFW_NO_ERROR)
       return false;
 
-   m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
+   // Hide mouse cursor and capture its events even outside the main window.
+   //m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
    return true;
 }
 
@@ -94,6 +97,14 @@ bool Game2::setupInput()
 }
 
 
+bool Game2::setupOutput()
+{
+   if (gll::haveDebugContext())
+      gll::setDebugOutputCallback();
+   return true;
+}
+
+
 bool Game2::setupResources()
 {
    return m_resources.loadTexture("test", m_resources.texturePath() / "directions.png");
@@ -102,14 +113,18 @@ bool Game2::setupResources()
 
 bool Game2::setupRenderer()
 {
-   return m_renderer.setup(&m_resources);
+   return m_renderer.setup(&m_resources, MainWndWidth, MainWndHeight);
 }
 
 
 bool Game2::setupData()
 {
    const std::vector<Point2_t> positions = {
-      {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
+      //   {0.2f, .8f}, {.8f, .8f}, {.8f, .2f}, {0.2f, 0.2f}};
+      {0.f, 1.f},
+      {1.f, 1.f},
+      {1.f, 0.f},
+      {0.f, 0.f}};
    const std::vector<VertexIdx> indices = {0, 1, 2, 2, 3, 0};
    const std::vector<Point2_t> texCoords = positions;
 
@@ -118,6 +133,7 @@ bool Game2::setupData()
    mesh.setIndices(std::move(indices));
    mesh.setTextureCoords(std::move(texCoords));
    auto spriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
+   spriteRenderer->setMesh(mesh);
    auto spriteLook = std::make_shared<SpriteLook>("test");
    m_sprites.emplace_back(spriteRenderer, spriteLook);
 

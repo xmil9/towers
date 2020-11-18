@@ -26,6 +26,7 @@ class Game2
    bool setupUi();
    bool setupMainWindow();
    bool setupInput();
+   bool setupOutput();
    bool setupResources();
    bool setupRenderer();
    bool setupData();
@@ -41,6 +42,8 @@ class Game2
    void onKeyPolled(Key_t key, float frameLengthSecs);
 
  private:
+   static constexpr int MainWndWidth = 800;
+   static constexpr int MainWndHeight = 800;
    Resources m_resources;
    FrameClock m_frameClock;
    glfwl::Lib m_glfw;

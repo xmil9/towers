@@ -7,10 +7,10 @@
 #include "gll_shader.h"
 
 
-bool Renderer2::setup(Resources* resources)
+bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
 {
    m_resources = resources;
-   return setupShaders() && setupSetting();
+   return setupShaders() && setupSetting(viewWidth, viewHeight);
 }
 
 
@@ -39,8 +39,11 @@ bool Renderer2::setupShaders()
 }
 
 
-bool Renderer2::setupSetting()
+bool Renderer2::setupSetting(int viewWidth, int viewHeight)
 {
+   glViewport(0, 0, viewWidth, viewHeight);
+   setFrustumSize(viewWidth, viewHeight);
+
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
