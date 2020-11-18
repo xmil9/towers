@@ -34,5 +34,5 @@ inline Sprite::Sprite(std::shared_ptr<SpriteRenderer> renderer,
 
 inline void Sprite::render(const gll::Program& shaders) const
 {
-   m_renderer->render(shaders, *m_look, {5.f, 25.f}, {100.f, 100.f});
+   m_renderer->render(shaders, *m_look, {5.f, 25.f}, {100.f, 100.f}, .5f);
 }

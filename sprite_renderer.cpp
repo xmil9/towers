@@ -10,6 +10,32 @@
 #include "gll_program.h"
 
 
+namespace
+{
+///////////////////
+
+glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const glm::vec2& size, float rot)
+{
+   glm::mat4x4 res = glm::translate(m, glm::vec3(.5f * size.x, .5f * size.y, 0.f));
+   constexpr glm::vec3 rotNormal{0.f, 0.f, 1.f};
+   res = glm::rotate(res, rot, rotNormal);
+   return glm::translate(res, glm::vec3(-.5f * size.x, -.5f * size.y, 0.f));
+}
+
+
+glm::mat4x4 calcModelMatrix(const glm::vec2& pos, const glm::vec2& size, float rot)
+{
+   glm::mat4 m(1.f);
+   m = glm::translate(m, glm::vec3(pos, 0.f));
+   m = rotateAtCenter(m, size, rot);
+   return glm::scale(m, glm::vec3(size, 1.f));
+}
+
+} // namespace
+
+
+///////////////////
+
 void SpriteRenderer::setMesh(const Mesh2& mesh)
 {
    m_numElements = mesh.numIndices();
@@ -34,12 +60,12 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
       gll::Buffer texCoordBuf;
       texCoordBuf.create();
       texCoordBuf.bind(GL_ARRAY_BUFFER);
-      texCoordBuf.setData(GL_ARRAY_BUFFER, mesh.numTextureCoordBytes(), mesh.textureCoords(),
-                          GL_STATIC_DRAW);
+      texCoordBuf.setData(GL_ARRAY_BUFFER, mesh.numTextureCoordBytes(),
+                          mesh.textureCoords(), GL_STATIC_DRAW);
       // The attribute index has to match the 'location' value in the vertex shader code.
       constexpr GLuint texCoordsAttribIdx = 1;
-      constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
-                                                  nullptr};
+      constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE,
+                                                  2 * sizeof(float), nullptr};
       m_vao.setAttribFormat(texCoordsAttribIdx, texCoordFormat);
       m_vao.enableAttrib(texCoordsAttribIdx);
    }
@@ -59,7 +85,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 
 
 void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
-                            const glm::vec2& pos, const glm::vec2& scale) const
+                            const glm::vec2& pos, const glm::vec2& size, float rot) const
 {
    if (look.hasTexture())
    {
@@ -70,11 +96,8 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
 
    m_vao.bind();
 
-   glm::mat4 modelMat(1.f);
-   modelMat = glm::translate(modelMat, glm::vec3(pos, 0.f));
-   modelMat = glm::scale(modelMat, glm::vec3(scale, 1.0f));
    gll::Uniform modelUf = shaders.uniform("model");
-   modelUf.setValue(modelMat);
+   modelUf.setValue(calcModelMatrix(pos, size, rot));
 
    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                   nullptr);

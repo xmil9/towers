@@ -31,7 +31,7 @@ class SpriteRenderer
 
    void setMesh(const Mesh2& mesh);
    void render(const gll::Program& shaders, const SpriteLook& look, const glm::vec2& pos,
-               const glm::vec2& scale) const;
+               const glm::vec2& size, float rot) const;
 
  private:
    Resources* m_resources = nullptr;
