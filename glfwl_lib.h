@@ -22,6 +22,12 @@ class Lib
       unsigned int minor = 0;
    };
 
+   enum DebugOuput
+   {
+      Off,
+      On
+   };
+
  public:
    Lib(ContextVersion ver, int profile);
    ~Lib();
@@ -31,7 +37,7 @@ class Lib
    Lib& operator=(const Lib&) = delete;
    Lib& operator=(Lib&& other);
 
-   Err init();
+   Err init(DebugOuput dbgOutput = DebugOuput::Off);
    void terminate();
 
    friend inline void swap(Lib& a, Lib& b)
@@ -42,7 +48,7 @@ class Lib
    }
 
  private:
-   void setHints();
+   void setHints(DebugOuput dbgOutput);
 
  private:
    ContextVersion m_ver;

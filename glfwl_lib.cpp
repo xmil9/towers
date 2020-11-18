@@ -39,11 +39,11 @@ Lib& Lib::operator=(Lib&& other)
 }
 
 
-Err Lib::init()
+Err Lib::init(DebugOuput dbgOutput)
 {
    if (glfwInit())
    {
-      setHints();
+      setHints(dbgOutput);
       m_terminate = true;
    }
    return glfwGetError(nullptr);
@@ -60,7 +60,7 @@ void Lib::terminate()
 }
 
 
-void Lib::setHints()
+void Lib::setHints(DebugOuput dbgOutput)
 {
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_ver.major);
    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_ver.minor);
@@ -69,6 +69,7 @@ void Lib::setHints()
    if (m_ver.major >= 3)
       glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+   glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, dbgOutput == DebugOuput::On);
 }
 
 } // namespace glfwl
