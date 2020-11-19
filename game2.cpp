@@ -82,7 +82,7 @@ bool Game2::setupMainWindow()
       return false;
 
    // Hide mouse cursor and capture its events even outside the main window.
-   //m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
+   // m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
    return true;
 }
 
@@ -120,11 +120,7 @@ bool Game2::setupRenderer()
 bool Game2::setupData()
 {
    const std::vector<Point2_t> positions = {
-      //   {0.2f, .8f}, {.8f, .8f}, {.8f, .2f}, {0.2f, 0.2f}};
-      {0.f, 1.f},
-      {1.f, 1.f},
-      {1.f, 0.f},
-      {0.f, 0.f}};
+      {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
    const std::vector<VertexIdx> indices = {0, 1, 2, 2, 3, 0};
    const std::vector<Point2_t> texCoords = positions;
 
