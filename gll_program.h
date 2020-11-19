@@ -42,7 +42,7 @@ class Program : public Object<Program>
    Uniform uniform(const GLchar* name) const;
    // Set the texture sampler to use a texture bound to the unit with the given index.
    // Program must be in-use.
-   void setTextureUnit(const GLchar* samplerName, GLint unitIdx);
+   void setTextureUnit(const GLchar* samplerName, GLint unitIdx) const;
 
    friend inline void swap(Program& a, Program& b)
    {

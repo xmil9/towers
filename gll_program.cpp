@@ -72,7 +72,7 @@ Uniform Program::uniform(const GLchar* name) const
 }
 
 
-void Program::setTextureUnit(const GLchar* samplerName, GLint unitIdx)
+void Program::setTextureUnit(const GLchar* samplerName, GLint unitIdx) const
 {
    if (!hasId())
       return;
