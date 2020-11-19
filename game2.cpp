@@ -119,9 +119,14 @@ bool Game2::setupRenderer()
 
 bool Game2::setupData()
 {
+   // Coord system for vertex coordinates is:
+   // (0, 0) - left-top, (1, 1) - right-bottom
    const std::vector<Point2_t> positions = {
       {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
+   // Triangle vertices are ordered ccw.
    const std::vector<VertexIdx> indices = {0, 1, 2, 2, 3, 0};
+   // Coord system for texture coordinates is:
+   // (0, 0) - left-bottom, (1, 1) - right-top
    const std::vector<Point2_t> texCoords = positions;
 
    Mesh2 mesh;
