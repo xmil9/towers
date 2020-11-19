@@ -55,9 +55,9 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
    m_vao.setAttribFormat(posAttribIdx, posFormat);
    m_vao.enableAttrib(posAttribIdx);
 
+   gll::Buffer texCoordBuf;
    if (mesh.numTextureCoords() > 0)
    {
-      gll::Buffer texCoordBuf;
       texCoordBuf.create();
       texCoordBuf.bind(GL_ARRAY_BUFFER);
       texCoordBuf.setData(GL_ARRAY_BUFFER, mesh.numTextureCoordBytes(),
