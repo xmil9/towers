@@ -27,8 +27,8 @@ class PngTexture
    int width() const { return m_width; }
    int height() const { return m_height; }
    const unsigned char* data() const { return m_data; }
-   GLint format() const { return GL_RGB; }
-   GLenum internalFormat() const { return GL_RGBA; }
+   GLint format() const { return GL_RGBA; }
+   GLenum internalFormat() const { return GL_RGB; }
    GLenum pixelType() const { return GL_UNSIGNED_BYTE; }
 
    friend inline void swap(PngTexture& a, PngTexture& b)
