@@ -17,18 +17,28 @@ namespace
 glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const glm::vec2& size, float rot)
 {
    constexpr glm::vec3 rotNormal{0.f, 0.f, 1.f};
-   return glm::translate(
-      glm::rotate(glm::translate(m, glm::vec3(.5f * size.x, .5f * size.y, 0.f)), rot,
-                  rotNormal),
-      glm::vec3(-.5f * size.x, -.5f * size.y, 0.f));
+   return
+      // Translate back to original position.
+      glm::translate(
+         // Rotate
+         glm::rotate(
+            // Translate center to origin.
+            glm::translate(m, glm::vec3(.5f * size.x, .5f * size.y, 0.f)), rot,
+            rotNormal),
+         glm::vec3(-.5f * size.x, -.5f * size.y, 0.f));
 }
 
 
 glm::mat4x4 calcModelMatrix(const glm::vec2& pos, const glm::vec2& size, float rot)
 {
-   return glm::scale(
-      rotateAtCenter(glm::translate(glm::mat4(1.f), glm::vec3(pos, 0.f)), size, rot),
-      glm::vec3(size, 1.f));
+   return
+      // Finally scale.
+      glm::scale(
+         // Then rotate.
+         rotateAtCenter(
+            // First translate.
+            glm::translate(glm::mat4(1.f), glm::vec3(pos, 0.f)), size, rot),
+         glm::vec3(size, 1.f));
 }
 
 } // namespace
