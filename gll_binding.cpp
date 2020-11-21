@@ -16,9 +16,9 @@ void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
    if (dataSize == 0)
       return;
 
-   buf.vbo.create();
-   buf.binding.bind(buf.vbo, GL_ARRAY_BUFFER);
-   buf.vbo.setData(GL_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
+   buf.create();
+   buf.bind(GL_ARRAY_BUFFER);
+   buf.setData(GL_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
 
    Vao::setAttribFormat(attribIdx, format);
    Vao::enableAttrib(attribIdx);
@@ -27,9 +27,9 @@ void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
 
 void bindElementVbo(const void* data, std::size_t dataSize, BoundVbo& buf)
 {
-   buf.vbo.create();
-   buf.binding.bind(buf.vbo, GL_ELEMENT_ARRAY_BUFFER);
-   buf.vbo.setData(GL_ELEMENT_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
+   buf.create();
+   buf.bind(GL_ELEMENT_ARRAY_BUFFER);
+   buf.setData(GL_ELEMENT_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
 }
 
 } // namespace gll

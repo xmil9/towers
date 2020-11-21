@@ -145,11 +145,28 @@ inline void VboBindingScope::unbind()
 ///////////////////
 
 // Combines a vbo and its binding scope.
-struct BoundVbo
+// Helper class for vbo binding functions below.
+class BoundVbo
 {
-   gll::Vbo vbo;
-   gll::VboBindingScope binding;
+ public:
+   bool create() { return m_vbo.create(); }
+   void bind(GLenum target) { m_binding.bind(m_vbo, target); }
+   void setData(GLenum target, GLsizeiptr size, const void* data, GLenum usage);
+
+ private:
+   gll::Vbo m_vbo;
+   gll::VboBindingScope m_binding;
 };
+
+
+inline void BoundVbo::setData(GLenum target, GLsizeiptr size, const void* data,
+                              GLenum usage)
+{
+   m_vbo.setData(target, size, data, usage);
+}
+
+
+///////////////////
 
 // Binds array vbo to current vao.
 void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
