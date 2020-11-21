@@ -5,8 +5,10 @@
 #include "sprite_renderer.h"
 #include "resources.h"
 #include "sprite_look.h"
+#include "gll_binding.h"
 #include "gll_data_format.h"
 #include "gll_program.h"
+#include "gll_vbo.h"
 
 
 namespace
@@ -78,9 +80,9 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
 void SpriteRenderer::makeVao(const Mesh2& mesh)
 {
    // VBOs and their bindings. They have to be unbound after the vao.
-   BoundVbo posBuf;
-   BoundVbo texCoordBuf;
-   BoundVbo elemBuf;
+   gll::BoundVbo posBuf;
+   gll::BoundVbo texCoordBuf;
+   gll::BoundVbo elemBuf;
 
    // Scope for vao binding.
    // Needs to be unbound before the vbos.
@@ -98,28 +100,4 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
                    mesh.textureCoordsFormat(), texCoordBuf);
       bindElementVbo(mesh.indices(), mesh.numIndexBytes(), elemBuf);
    }
-}
-
-
-void SpriteRenderer::bindArrayVbo(GLuint attribIdx, const void* data,
-                                  std::size_t dataSize, const gll::DataFormat& format,
-                                  BoundVbo& buf)
-{
-   if (dataSize == 0)
-      return;
-
-   buf.vbo.create();
-   buf.binding.bind(buf.vbo, GL_ARRAY_BUFFER);
-   buf.vbo.setData(GL_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
-   m_vao.setAttribFormat(attribIdx, format);
-   m_vao.enableAttrib(attribIdx);
-}
-
-
-void SpriteRenderer::bindElementVbo(const void* data, std::size_t dataSize,
-                                    BoundVbo& buf)
-{
-   buf.vbo.create();
-   buf.binding.bind(buf.vbo, GL_ELEMENT_ARRAY_BUFFER);
-   buf.vbo.setData(GL_ELEMENT_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
 }

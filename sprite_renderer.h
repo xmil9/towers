@@ -4,17 +4,14 @@
 //
 #pragma once
 #include "mesh2.h"
-#include "gll_binding.h"
 #include "gll_vao.h"
-#include "gll_vbo.h"
 #include "glm/vec2.hpp"
 #include <cstddef>
 
 namespace gll
 {
-struct DataFormat;
 class Program;
-} // namespace gll
+}
 class Resources;
 class SpriteLook;
 
@@ -37,18 +34,7 @@ class SpriteRenderer
                const glm::vec2& size, float rot) const;
 
  private:
-   // Combines a vbo and an object that controls the vbo's binding to th global
-   // OpenGL state.
-   struct BoundVbo
-   {
-      gll::Vbo vbo;
-      gll::VboBinding binding;
-   };
-
    void makeVao(const Mesh2& mesh);
-   void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
-                     const gll::DataFormat& format, BoundVbo& buf);
-   void bindElementVbo(const void* data, std::size_t dataSize, BoundVbo& buf);
 
  private:
    Resources* m_resources = nullptr;

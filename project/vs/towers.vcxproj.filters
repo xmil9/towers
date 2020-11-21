@@ -52,6 +52,9 @@
     <ClCompile Include="..\..\gll_debug.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gll_binding.cpp">
+      <Filter>Gl Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">

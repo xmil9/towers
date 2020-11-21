@@ -6,6 +6,11 @@
 #include "gll_vbo.h"
 #include <utility>
 
+namespace gll
+{
+struct DataFormat;
+}
+
 
 namespace gll
 {
@@ -38,41 +43,35 @@ template <typename T> struct Binding
 };
 
 
-template <typename T>
-Binding<T>::Binding(const T& bound)
+template <typename T> Binding<T>::Binding(const T& bound)
 {
    bind(bound);
 }
 
-template <typename T>
-Binding<T>::~Binding()
+template <typename T> Binding<T>::~Binding()
 {
    unbind();
 }
 
-template <typename T>
-Binding<T>::Binding(Binding&& other)
+template <typename T> Binding<T>::Binding(Binding&& other)
 {
    swap(*this, other);
 }
 
-template <typename T>
-Binding<T>& Binding<T>::operator=(Binding&& other)
+template <typename T> Binding<T>& Binding<T>::operator=(Binding&& other)
 {
    unbind();
    swap(*this, other);
 }
 
-template <typename T>
-void Binding<T>::bind(const T& bound)
+template <typename T> void Binding<T>::bind(const T& bound)
 {
    unbind();
    m_isBound = true;
    bound.bind();
 }
 
-template <typename T>
-void Binding<T>::unbind()
+template <typename T> void Binding<T>::unbind()
 {
    if (m_isBound)
    {
@@ -87,7 +86,7 @@ void Binding<T>::unbind()
 // RAII helper to unbind vbos at end of their lifetime.
 class VboBinding
 {
-public:
+ public:
    VboBinding() = default;
    explicit VboBinding(const Vbo& bound, GLenum target);
    ~VboBinding() { unbind(); }
@@ -140,5 +139,23 @@ inline void VboBinding::unbind()
       m_target = 0;
    }
 }
+
+
+///////////////////
+
+// Combines a vbo and an object that controls the vbo's binding to th global
+// OpenGL state.
+struct BoundVbo
+{
+   gll::Vbo vbo;
+   gll::VboBinding binding;
+};
+
+// Binds array vbo to current vao.
+void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
+                  const gll::DataFormat& format, BoundVbo& buf);
+
+// Binds element vbo to current vao.
+void bindElementVbo(const void* data, std::size_t dataSize, BoundVbo& buf);
 
 } // namespace gll

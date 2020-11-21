@@ -178,6 +178,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
     <ClCompile Include="..\..\gll_texture.cpp" />
+    <ClCompile Include="..\..\gll_binding.cpp" />
     <ClCompile Include="..\..\input.cpp" />
     <ClCompile Include="..\..\png_texture.cpp" />
     <ClCompile Include="..\..\renderer2.cpp" />
