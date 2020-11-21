@@ -89,48 +89,36 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
       gll::Binding vaoBinding{m_vao};
 
       // Each attribute index has to match the 'location' value in the vertex shader code.
-      constexpr GLuint posAttribIdx = 0;
-      constexpr GLuint texCoordsAttribIdx = 1;
-      
-      makePositionVbo(mesh, posAttribIdx, posBuf);
-      makeTextureCoordVbo(mesh, texCoordsAttribIdx, texCoordBuf);
-      makeElementVbo(mesh, elemBuf);
+      constexpr GLuint PosAttribIdx = 0;
+      constexpr GLuint TexCoordsAttribIdx = 1;
+
+      makeArrayVbo(PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
+                   mesh.positionsFormat(), posBuf);
+      makeArrayVbo(TexCoordsAttribIdx, mesh.textureCoords(), mesh.numTextureCoordBytes(),
+                   mesh.textureCoordsFormat(), texCoordBuf);
+      makeElementVbo(mesh.indices(), mesh.numIndexBytes(), elemBuf);
    }
 }
 
-
-void SpriteRenderer::makePositionVbo(const Mesh2& mesh, GLuint attribIdx, BoundBuffer& buf)
+void SpriteRenderer::makeArrayVbo(GLuint attribIdx, const void* data,
+                                  std::size_t dataSize, const gll::DataFormat& format,
+                                  BoundBuffer& buf)
 {
+   if (dataSize == 0)
+      return;
+
    buf.vbo.create();
    buf.binding.bind(buf.vbo, GL_ARRAY_BUFFER);
-   buf.vbo.setData(GL_ARRAY_BUFFER, mesh.numPositionBytes(), mesh.positions(),
-                   GL_STATIC_DRAW);
-   m_vao.setAttribFormat(attribIdx, mesh.positionsFormat());
+   buf.vbo.setData(GL_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
+   m_vao.setAttribFormat(attribIdx, format);
    m_vao.enableAttrib(attribIdx);
 }
 
 
-void SpriteRenderer::makeTextureCoordVbo(const Mesh2& mesh, GLuint attribIdx,
-                                         BoundBuffer& buf)
-{
-   if (mesh.numTextureCoords() > 0)
-   {
-      buf.vbo.create();
-      buf.binding.bind(buf.vbo, GL_ARRAY_BUFFER);
-      buf.vbo.setData(GL_ARRAY_BUFFER, mesh.numTextureCoordBytes(), mesh.textureCoords(),
-                      GL_STATIC_DRAW);
-      // The attribute index has to match the 'location' value in the vertex shader
-      // code.
-      m_vao.setAttribFormat(attribIdx, mesh.textureCoordsFormat());
-      m_vao.enableAttrib(attribIdx);
-   }
-}
-
-
-void SpriteRenderer::makeElementVbo(const Mesh2& mesh, BoundBuffer& buf)
+void SpriteRenderer::makeElementVbo(const void* data, std::size_t dataSize,
+                                    BoundBuffer& buf)
 {
    buf.vbo.create();
    buf.binding.bind(buf.vbo, GL_ELEMENT_ARRAY_BUFFER);
-   buf.vbo.setData(GL_ELEMENT_ARRAY_BUFFER, mesh.numIndexBytes(), mesh.indices(),
-                   GL_STATIC_DRAW);
+   buf.vbo.setData(GL_ELEMENT_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
 }

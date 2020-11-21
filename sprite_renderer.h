@@ -12,6 +12,7 @@
 
 namespace gll
 {
+struct DataFormat;
 class Program;
 }
 class Resources;
@@ -44,9 +45,9 @@ class SpriteRenderer
    };
 
    void makeVao(const Mesh2& mesh);
-   void makePositionVbo(const Mesh2& mesh, GLuint attribIdx, BoundBuffer& buf);
-   void makeTextureCoordVbo(const Mesh2& mesh, GLuint attribIdx, BoundBuffer& buf);
-   void makeElementVbo(const Mesh2& mesh, BoundBuffer& buf);
+   void makeArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
+                     const gll::DataFormat& format, BoundBuffer& buf);
+   void makeElementVbo(const void* data, std::size_t dataSize, BoundBuffer& buf);
 
  private:
    Resources* m_resources = nullptr;
