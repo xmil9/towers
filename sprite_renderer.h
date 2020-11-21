@@ -45,9 +45,9 @@ class SpriteRenderer
    };
 
    void makeVao(const Mesh2& mesh);
-   void makeArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
+   void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
                      const gll::DataFormat& format, BoundBuffer& buf);
-   void makeElementVbo(const void* data, std::size_t dataSize, BoundBuffer& buf);
+   void bindElementVbo(const void* data, std::size_t dataSize, BoundBuffer& buf);
 
  private:
    Resources* m_resources = nullptr;

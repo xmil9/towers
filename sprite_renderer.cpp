@@ -92,15 +92,15 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
       constexpr GLuint PosAttribIdx = 0;
       constexpr GLuint TexCoordsAttribIdx = 1;
 
-      makeArrayVbo(PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
+      bindArrayVbo(PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
                    mesh.positionsFormat(), posBuf);
-      makeArrayVbo(TexCoordsAttribIdx, mesh.textureCoords(), mesh.numTextureCoordBytes(),
+      bindArrayVbo(TexCoordsAttribIdx, mesh.textureCoords(), mesh.numTextureCoordBytes(),
                    mesh.textureCoordsFormat(), texCoordBuf);
-      makeElementVbo(mesh.indices(), mesh.numIndexBytes(), elemBuf);
+      bindElementVbo(mesh.indices(), mesh.numIndexBytes(), elemBuf);
    }
 }
 
-void SpriteRenderer::makeArrayVbo(GLuint attribIdx, const void* data,
+void SpriteRenderer::bindArrayVbo(GLuint attribIdx, const void* data,
                                   std::size_t dataSize, const gll::DataFormat& format,
                                   BoundBuffer& buf)
 {
@@ -115,7 +115,7 @@ void SpriteRenderer::makeArrayVbo(GLuint attribIdx, const void* data,
 }
 
 
-void SpriteRenderer::makeElementVbo(const void* data, std::size_t dataSize,
+void SpriteRenderer::bindElementVbo(const void* data, std::size_t dataSize,
                                     BoundBuffer& buf)
 {
    buf.vbo.create();
