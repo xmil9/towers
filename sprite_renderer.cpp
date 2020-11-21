@@ -77,13 +77,13 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
 
 void SpriteRenderer::makeVao(const Mesh2& mesh)
 {
-   // VBOs and their bindings. They have to be unbound after the VAO.
-   BoundBuffer posBuf;
-   BoundBuffer texCoordBuf;
-   BoundBuffer elemBuf;
+   // VBOs and their bindings. They have to be unbound after the vao.
+   BoundVbo posBuf;
+   BoundVbo texCoordBuf;
+   BoundVbo elemBuf;
 
-   // Scope for VAO binding.
-   // Needs to be unbound before the VBOs.
+   // Scope for vao binding.
+   // Needs to be unbound before the vbos.
    {
       m_vao.create();
       gll::Binding vaoBinding{m_vao};
@@ -100,9 +100,10 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
    }
 }
 
+
 void SpriteRenderer::bindArrayVbo(GLuint attribIdx, const void* data,
                                   std::size_t dataSize, const gll::DataFormat& format,
-                                  BoundBuffer& buf)
+                                  BoundVbo& buf)
 {
    if (dataSize == 0)
       return;
@@ -116,7 +117,7 @@ void SpriteRenderer::bindArrayVbo(GLuint attribIdx, const void* data,
 
 
 void SpriteRenderer::bindElementVbo(const void* data, std::size_t dataSize,
-                                    BoundBuffer& buf)
+                                    BoundVbo& buf)
 {
    buf.vbo.create();
    buf.binding.bind(buf.vbo, GL_ELEMENT_ARRAY_BUFFER);

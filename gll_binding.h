@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "gll_vbo.h"
+#include <utility>
 
 
 namespace gll
@@ -12,7 +13,7 @@ namespace gll
 
 // RAII helper to unbind OpenGL objects at end of their lifetime.
 // Requirements for T:
-// - Has menber function bind().
+// - Has member function bind().
 // - Has static member function unbind().
 template <typename T> struct Binding
 {
@@ -83,22 +84,22 @@ void Binding<T>::unbind()
 
 ///////////////////
 
-// RAII helper to unbind buffer objects at end of their lifetime.
-class BufferBinding
+// RAII helper to unbind vbos at end of their lifetime.
+class VboBinding
 {
 public:
-   BufferBinding() = default;
-   explicit BufferBinding(const Vbo& bound, GLenum target);
-   ~BufferBinding() { unbind(); }
-   BufferBinding(const BufferBinding&) = delete;
-   BufferBinding(BufferBinding&& other);
-   BufferBinding& operator=(const BufferBinding&) = delete;
-   BufferBinding& operator=(BufferBinding&& other);
+   VboBinding() = default;
+   explicit VboBinding(const Vbo& bound, GLenum target);
+   ~VboBinding() { unbind(); }
+   VboBinding(const VboBinding&) = delete;
+   VboBinding(VboBinding&& other);
+   VboBinding& operator=(const VboBinding&) = delete;
+   VboBinding& operator=(VboBinding&& other);
 
    void bind(const Vbo& bound, GLenum target);
    void unbind();
 
-   friend inline void swap(BufferBinding& a, BufferBinding& b)
+   friend inline void swap(VboBinding& a, VboBinding& b)
    {
       std::swap(a.m_target, b.m_target);
    }
@@ -108,30 +109,30 @@ public:
 };
 
 
-inline BufferBinding::BufferBinding(const Vbo& bound, GLenum target) : m_target{target}
+inline VboBinding::VboBinding(const Vbo& bound, GLenum target) : m_target{target}
 {
    bind(bound, m_target);
 }
 
-inline BufferBinding::BufferBinding(BufferBinding&& other)
+inline VboBinding::VboBinding(VboBinding&& other)
 {
    swap(*this, other);
 }
 
-inline BufferBinding& BufferBinding::operator=(BufferBinding&& other)
+inline VboBinding& VboBinding::operator=(VboBinding&& other)
 {
    unbind();
    swap(*this, other);
 }
 
-inline void BufferBinding::bind(const Vbo& bound, GLenum target)
+inline void VboBinding::bind(const Vbo& bound, GLenum target)
 {
    unbind();
    m_target = target;
    bound.bind(m_target);
 }
 
-inline void BufferBinding::unbind()
+inline void VboBinding::unbind()
 {
    if (m_target != 0)
    {
