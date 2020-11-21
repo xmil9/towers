@@ -5,6 +5,7 @@
 #include "renderer3.h"
 #include "cube3_data.h"
 #include "essentutils/filesys.h"
+#include "gll_binding.h"
 #include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"
 
@@ -137,51 +138,32 @@ bool Renderer3::setupTextures()
 
 bool Renderer3::setupData()
 {
-   m_vao.create();
-   m_vao.bind();
+   // VBOs and their bindings. They have to be unbound after the vao.
+   gll::BoundVbo posBuf;
+   gll::BoundVbo normalBuf;
+   gll::BoundVbo colorBuf;
+   gll::BoundVbo texCoordBuf;
+   gll::BoundVbo elemBuf;
 
-   m_posBuf.create();
-   m_posBuf.bind(GL_ARRAY_BUFFER);
-   m_posBuf.setData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-   // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint posAttribIdx = 0;
-   m_vao.setAttribFormat(posAttribIdx, posFormat);
-   m_vao.enableAttrib(posAttribIdx);
+   // Scope for vao binding.
+   // Needs to be unbound before the vbos.
+   {
+      m_vao.create();
+      gll::Binding vaoBinding{m_vao};
 
-   m_normalBuf.create();
-   m_normalBuf.bind(GL_ARRAY_BUFFER);
-   m_normalBuf.setData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
-   // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint normalAttribIdx = 1;
-   m_vao.setAttribFormat(normalAttribIdx, normalFormat);
-   m_vao.enableAttrib(normalAttribIdx);
+      // Each attribute index has to match the 'location' value in the vertex shader code.
+      constexpr GLuint PosAttribIdx = 0;
+      constexpr GLuint NormalAttribIdx = 1;
+      constexpr GLuint ColorAttribIdx = 2;
+      constexpr GLuint TexCoordsAttribIdx = 3;
 
-   m_colorBuf.create();
-   m_colorBuf.bind(GL_ARRAY_BUFFER);
-   m_colorBuf.setData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW);
-   // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint colorAttribIdx = 2;
-   m_vao.setAttribFormat(colorAttribIdx, colorFormat);
-   m_vao.enableAttrib(colorAttribIdx);
-
-   m_texCoordBuf.create();
-   m_texCoordBuf.bind(GL_ARRAY_BUFFER);
-   m_texCoordBuf.setData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-   // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint texCoordAttribIdx = 3;
-   m_vao.setAttribFormat(texCoordAttribIdx, texCoordFormat);
-   m_vao.enableAttrib(texCoordAttribIdx);
-
-   m_elemBuf.create();
-   m_elemBuf.bind(GL_ELEMENT_ARRAY_BUFFER);
-   m_elemBuf.setData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-   // Unbind vao first to stop "recording" information in it.
-   m_vao.unbind();
-   // Unbind each buffer type from global state.
-   gll::Vbo::unbind(GL_ARRAY_BUFFER);
-   gll::Vbo::unbind(GL_ELEMENT_ARRAY_BUFFER);
-   gll::Texture2D::unbind();
+      bindArrayVbo(PosAttribIdx, positions, sizeof(positions), posFormat, posBuf);
+      bindArrayVbo(NormalAttribIdx, normals, sizeof(normals), normalFormat, normalBuf);
+      bindArrayVbo(ColorAttribIdx, colors, sizeof(colors), colorFormat, colorBuf);
+      bindArrayVbo(TexCoordsAttribIdx, texCoords, sizeof(texCoords), texCoordFormat,
+                   texCoordBuf);
+      bindElementVbo(indices, sizeof(indices), elemBuf);
+   }
 
    return true;
 }
