@@ -36,7 +36,7 @@ class SpriteRenderer
                const glm::vec2& size, float rot) const;
 
  private:
-    // Combines a VBO and an object that releases the VBO's binding.
+   // Combines a VBO and an object that releases the VBO's binding.
    struct BoundBuffer
    {
       gll::Buffer vbo;
@@ -44,8 +44,8 @@ class SpriteRenderer
    };
 
    void makeVao(const Mesh2& mesh);
-   void makePositionVbo(const Mesh2& mesh, BoundBuffer& buf);
-   void makeTextureCoordVbo(const Mesh2& mesh, BoundBuffer& buf);
+   void makePositionVbo(const Mesh2& mesh, GLuint attribIdx, BoundBuffer& buf);
+   void makeTextureCoordVbo(const Mesh2& mesh, GLuint attribIdx, BoundBuffer& buf);
    void makeElementVbo(const Mesh2& mesh, BoundBuffer& buf);
 
  private:

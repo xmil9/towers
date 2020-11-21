@@ -88,27 +88,30 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
       m_vao.create();
       gll::Binding vaoBinding{m_vao};
 
-      makePositionVbo(mesh, posBuf);
-      makeTextureCoordVbo(mesh, texCoordBuf);
+      // Each attribute index has to match the 'location' value in the vertex shader code.
+      constexpr GLuint posAttribIdx = 0;
+      constexpr GLuint texCoordsAttribIdx = 1;
+      
+      makePositionVbo(mesh, posAttribIdx, posBuf);
+      makeTextureCoordVbo(mesh, texCoordsAttribIdx, texCoordBuf);
       makeElementVbo(mesh, elemBuf);
    }
 }
 
 
-void SpriteRenderer::makePositionVbo(const Mesh2& mesh, BoundBuffer& buf)
+void SpriteRenderer::makePositionVbo(const Mesh2& mesh, GLuint attribIdx, BoundBuffer& buf)
 {
    buf.vbo.create();
    buf.binding.bind(buf.vbo, GL_ARRAY_BUFFER);
    buf.vbo.setData(GL_ARRAY_BUFFER, mesh.numPositionBytes(), mesh.positions(),
                    GL_STATIC_DRAW);
-   // The attribute index has to match the 'location' value in the vertex shader code.
-   constexpr GLuint posAttribIdx = 0;
-   m_vao.setAttribFormat(posAttribIdx, mesh.positionsFormat());
-   m_vao.enableAttrib(posAttribIdx);
+   m_vao.setAttribFormat(attribIdx, mesh.positionsFormat());
+   m_vao.enableAttrib(attribIdx);
 }
 
 
-void SpriteRenderer::makeTextureCoordVbo(const Mesh2& mesh, BoundBuffer& buf)
+void SpriteRenderer::makeTextureCoordVbo(const Mesh2& mesh, GLuint attribIdx,
+                                         BoundBuffer& buf)
 {
    if (mesh.numTextureCoords() > 0)
    {
@@ -118,9 +121,8 @@ void SpriteRenderer::makeTextureCoordVbo(const Mesh2& mesh, BoundBuffer& buf)
                       GL_STATIC_DRAW);
       // The attribute index has to match the 'location' value in the vertex shader
       // code.
-      constexpr GLuint texCoordsAttribIdx = 1;
-      m_vao.setAttribFormat(texCoordsAttribIdx, mesh.textureCoordsFormat());
-      m_vao.enableAttrib(texCoordsAttribIdx);
+      m_vao.setAttribFormat(attribIdx, mesh.textureCoordsFormat());
+      m_vao.enableAttrib(attribIdx);
    }
 }
 
