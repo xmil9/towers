@@ -136,7 +136,11 @@ bool Game2::setupData()
    auto spriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
    spriteRenderer->setMesh(mesh);
    auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
-   m_sprites.emplace_back(spriteRenderer, spriteLook);
+
+   m_sprites.emplace_back(spriteRenderer, spriteLook,
+                          SpriteForm{{5.f, 25.f}, {100.f, 100.f}, .5f});
+   m_sprites.emplace_back(spriteRenderer, spriteLook,
+                          SpriteForm{{115.f, 125.f}, {50.f, 50.f}, 1.8f});
 
    return true;
 }

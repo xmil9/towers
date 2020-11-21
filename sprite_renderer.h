@@ -13,6 +13,7 @@ namespace gll
 class Program;
 }
 class Resources;
+struct SpriteForm;
 class SpriteLook;
 
 
@@ -30,8 +31,8 @@ class SpriteRenderer
    SpriteRenderer& operator=(SpriteRenderer&&) = default;
 
    void setMesh(const Mesh2& mesh);
-   void render(const gll::Program& shaders, const SpriteLook& look, const glm::vec2& pos,
-               const glm::vec2& size, float rot) const;
+   void render(const gll::Program& shaders, const SpriteLook& look,
+               const SpriteForm& form) const;
 
  private:
    void makeVao(const Mesh2& mesh);

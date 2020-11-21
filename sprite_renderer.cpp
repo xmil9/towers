@@ -4,6 +4,7 @@
 //
 #include "sprite_renderer.h"
 #include "resources.h"
+#include "sprite_form.h"
 #include "sprite_look.h"
 #include "gll_binding.h"
 #include "gll_data_format.h"
@@ -55,7 +56,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 
 
 void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
-                            const glm::vec2& pos, const glm::vec2& size, float rot) const
+                            const SpriteForm& form) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (look.hasTexture())
@@ -72,7 +73,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
-      modelUf.setValue(calcModelMatrix(pos, size, rot));
+      modelUf.setValue(calcModelMatrix(form.pos, form.size, form.rot));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);
