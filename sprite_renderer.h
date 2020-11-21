@@ -4,6 +4,8 @@
 //
 #pragma once
 #include "mesh2.h"
+#include "gll_binding.h"
+#include "gll_buffer.h"
 #include "gll_vertex_array.h"
 #include "glm/vec2.hpp"
 #include <cstddef>
@@ -34,6 +36,19 @@ class SpriteRenderer
                const glm::vec2& size, float rot) const;
 
  private:
+    // Combines a VBO and an object that releases the VBO's binding.
+   struct BoundBuffer
+   {
+      gll::Buffer vbo;
+      gll::BufferBinding binding;
+   };
+
+   void makeVao(const Mesh2& mesh);
+   void makePositionVbo(const Mesh2& mesh, BoundBuffer& buf);
+   void makeTextureCoordVbo(const Mesh2& mesh, BoundBuffer& buf);
+   void makeElementVbo(const Mesh2& mesh, BoundBuffer& buf);
+
+ private:
    Resources* m_resources = nullptr;
    gll::VertexArray m_vao;
    std::size_t m_numElements = 0;
@@ -43,15 +58,3 @@ class SpriteRenderer
 inline SpriteRenderer::SpriteRenderer(Resources* resources) : m_resources{resources}
 {
 }
-
-
-// sprite renderer
-//   shader program - always same
-//   sprite voa - made from mesh
-//   render(texture, pos, rot)
-//
-//
-// sprite
-//   model - behavior
-//   sprite renderer (shared)
-//   sprite look (shared)

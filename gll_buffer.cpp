@@ -9,7 +9,7 @@ namespace gll
 {
 ///////////////////
 
-void Buffer::bind(GLenum target)
+void Buffer::bind(GLenum target) const
 {
    if (hasId())
       glBindBuffer(target, id());

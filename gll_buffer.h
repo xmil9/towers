@@ -25,7 +25,7 @@ class Buffer : public Object<Buffer>
    Buffer& operator=(const Buffer&) = delete;
    Buffer& operator=(Buffer&& other) = default;
 
-   void bind(GLenum target);
+   void bind(GLenum target) const;
    // Unbinds currently bound buffer for the given target.
    static void unbind(GLenum target);
    // Buffer needs to be active/bound in order to set data.

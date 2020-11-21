@@ -196,6 +196,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClInclude Include="..\..\frustum2.h" />
     <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\game3.h" />
+    <ClInclude Include="..\..\gll_binding.h" />
     <ClInclude Include="..\..\gll_debug.h" />
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\lap_clock.h" />
