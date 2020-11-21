@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "app_types.h"
+#include "gll_data_format.h"
 #include <algorithm>
 #include <cstddef>
 #include <vector>
@@ -22,6 +23,7 @@ class Mesh2
    std::size_t numPositions() const { return m_positions.size(); }
    std::size_t numPositionBytes() const { return m_positions.size() * sizeof(Point2_t); }
    const Coord* positions() const;
+   constexpr gll::DataFormat positionsFormat() const;
    void setPositions(const std::vector<Point2_t>& positions);
    void setPositions(std::vector<Point2_t>&& positions);
 
@@ -34,6 +36,7 @@ class Mesh2
    std::size_t numTextureCoords() const { return m_texCoords.size(); }
    std::size_t numTextureCoordBytes() const;
    const Coord* textureCoords() const;
+   constexpr gll::DataFormat textureCoordsFormat() const;
    void setTextureCoords(const std::vector<Point2_t>& texCoords);
    void setTextureCoords(std::vector<Point2_t>&& texCoords);
 
@@ -47,6 +50,11 @@ class Mesh2
 inline const Mesh2::Coord* Mesh2::positions() const
 {
    return reinterpret_cast<const Coord*>(m_positions.data());
+}
+
+inline constexpr gll::DataFormat Mesh2::positionsFormat() const
+{
+   return {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr};
 }
 
 inline void Mesh2::setPositions(const std::vector<Point2_t>& positions)
@@ -79,6 +87,11 @@ inline std::size_t Mesh2::numTextureCoordBytes() const
 inline const Mesh2::Coord* Mesh2::textureCoords() const
 {
    return reinterpret_cast<const Coord*>(m_texCoords.data());
+}
+
+inline constexpr gll::DataFormat Mesh2::textureCoordsFormat() const
+{
+   return {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr};
 }
 
 inline void Mesh2::setTextureCoords(const std::vector<Point2_t>& texCoords)

@@ -103,9 +103,7 @@ void SpriteRenderer::makePositionVbo(const Mesh2& mesh, BoundBuffer& buf)
                    GL_STATIC_DRAW);
    // The attribute index has to match the 'location' value in the vertex shader code.
    constexpr GLuint posAttribIdx = 0;
-   constexpr gll::DataFormat posFormat = {2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
-                                          nullptr};
-   m_vao.setAttribFormat(posAttribIdx, posFormat);
+   m_vao.setAttribFormat(posAttribIdx, mesh.positionsFormat());
    m_vao.enableAttrib(posAttribIdx);
 }
 
@@ -121,9 +119,7 @@ void SpriteRenderer::makeTextureCoordVbo(const Mesh2& mesh, BoundBuffer& buf)
       // The attribute index has to match the 'location' value in the vertex shader
       // code.
       constexpr GLuint texCoordsAttribIdx = 1;
-      constexpr gll::DataFormat texCoordFormat = {2, GL_FLOAT, GL_FALSE,
-                                                  2 * sizeof(float), nullptr};
-      m_vao.setAttribFormat(texCoordsAttribIdx, texCoordFormat);
+      m_vao.setAttribFormat(texCoordsAttribIdx, mesh.textureCoordsFormat());
       m_vao.enableAttrib(texCoordsAttribIdx);
    }
 }
