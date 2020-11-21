@@ -138,7 +138,7 @@ bool Renderer3::setupTextures()
 
 bool Renderer3::setupData()
 {
-   // VBOs and their bindings. They have to be unbound after the vao.
+   // VBOs and their binding scopes. They have to be unbound after the vao.
    gll::BoundVbo posBuf;
    gll::BoundVbo normalBuf;
    gll::BoundVbo colorBuf;
@@ -149,7 +149,7 @@ bool Renderer3::setupData()
    // Needs to be unbound before the vbos.
    {
       m_vao.create();
-      gll::Binding vaoBinding{m_vao};
+      gll::BindingScope vaoBinding{m_vao};
 
       // Each attribute index has to match the 'location' value in the vertex shader code.
       constexpr GLuint PosAttribIdx = 0;

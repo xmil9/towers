@@ -16,24 +16,24 @@ namespace gll
 {
 ///////////////////
 
-// RAII helper to unbind OpenGL objects at end of their lifetime.
+// Unbinds active GL object type at the end of the lifetime of the RAII object.
 // Requirements for T:
 // - Has member function bind().
 // - Has static member function unbind().
-template <typename T> struct Binding
+template <typename T> struct BindingScope
 {
-   Binding() {}
-   explicit Binding(const T& bound);
-   ~Binding();
-   Binding(const Binding&) = delete;
-   Binding(Binding&& other);
-   Binding& operator=(const Binding&) = delete;
-   Binding& operator=(Binding&& other);
+   BindingScope() = default;
+   explicit BindingScope(const T& bound);
+   ~BindingScope();
+   BindingScope(const BindingScope&) = delete;
+   BindingScope(BindingScope&& other);
+   BindingScope& operator=(const BindingScope&) = delete;
+   BindingScope& operator=(BindingScope&& other);
 
    void bind(const T& bound);
    void unbind();
 
-   friend inline void swap(Binding& a, Binding& b)
+   friend inline void swap(BindingScope& a, BindingScope& b)
    {
       std::swap(a.m_isBound, b.m_isBound);
    }
@@ -43,35 +43,35 @@ template <typename T> struct Binding
 };
 
 
-template <typename T> Binding<T>::Binding(const T& bound)
+template <typename T> BindingScope<T>::BindingScope(const T& bound)
 {
    bind(bound);
 }
 
-template <typename T> Binding<T>::~Binding()
+template <typename T> BindingScope<T>::~BindingScope()
 {
    unbind();
 }
 
-template <typename T> Binding<T>::Binding(Binding&& other)
+template <typename T> BindingScope<T>::BindingScope(BindingScope&& other)
 {
    swap(*this, other);
 }
 
-template <typename T> Binding<T>& Binding<T>::operator=(Binding&& other)
+template <typename T> BindingScope<T>& BindingScope<T>::operator=(BindingScope&& other)
 {
    unbind();
    swap(*this, other);
 }
 
-template <typename T> void Binding<T>::bind(const T& bound)
+template <typename T> void BindingScope<T>::bind(const T& bound)
 {
    unbind();
    m_isBound = true;
    bound.bind();
 }
 
-template <typename T> void Binding<T>::unbind()
+template <typename T> void BindingScope<T>::unbind()
 {
    if (m_isBound)
    {
@@ -83,22 +83,22 @@ template <typename T> void Binding<T>::unbind()
 
 ///////////////////
 
-// RAII helper to unbind vbos at end of their lifetime.
-class VboBinding
+// Unbinds active vbo of given target type at the end of the lifetime of the RAII object.
+class VboBindingScope
 {
  public:
-   VboBinding() = default;
-   explicit VboBinding(const Vbo& bound, GLenum target);
-   ~VboBinding() { unbind(); }
-   VboBinding(const VboBinding&) = delete;
-   VboBinding(VboBinding&& other);
-   VboBinding& operator=(const VboBinding&) = delete;
-   VboBinding& operator=(VboBinding&& other);
+   VboBindingScope() = default;
+   VboBindingScope(const Vbo& bound, GLenum target);
+   ~VboBindingScope() { unbind(); }
+   VboBindingScope(const VboBindingScope&) = delete;
+   VboBindingScope(VboBindingScope&& other);
+   VboBindingScope& operator=(const VboBindingScope&) = delete;
+   VboBindingScope& operator=(VboBindingScope&& other);
 
    void bind(const Vbo& bound, GLenum target);
    void unbind();
 
-   friend inline void swap(VboBinding& a, VboBinding& b)
+   friend inline void swap(VboBindingScope& a, VboBindingScope& b)
    {
       std::swap(a.m_target, b.m_target);
    }
@@ -108,30 +108,31 @@ class VboBinding
 };
 
 
-inline VboBinding::VboBinding(const Vbo& bound, GLenum target) : m_target{target}
+inline VboBindingScope::VboBindingScope(const Vbo& bound, GLenum target)
+: m_target{target}
 {
    bind(bound, m_target);
 }
 
-inline VboBinding::VboBinding(VboBinding&& other)
+inline VboBindingScope::VboBindingScope(VboBindingScope&& other)
 {
    swap(*this, other);
 }
 
-inline VboBinding& VboBinding::operator=(VboBinding&& other)
+inline VboBindingScope& VboBindingScope::operator=(VboBindingScope&& other)
 {
    unbind();
    swap(*this, other);
 }
 
-inline void VboBinding::bind(const Vbo& bound, GLenum target)
+inline void VboBindingScope::bind(const Vbo& bound, GLenum target)
 {
    unbind();
    m_target = target;
    bound.bind(m_target);
 }
 
-inline void VboBinding::unbind()
+inline void VboBindingScope::unbind()
 {
    if (m_target != 0)
    {
@@ -143,12 +144,11 @@ inline void VboBinding::unbind()
 
 ///////////////////
 
-// Combines a vbo and an object that controls the vbo's binding to th global
-// OpenGL state.
+// Combines a vbo and its binding scope.
 struct BoundVbo
 {
    gll::Vbo vbo;
-   gll::VboBinding binding;
+   gll::VboBindingScope binding;
 };
 
 // Binds array vbo to current vao.

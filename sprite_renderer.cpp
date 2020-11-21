@@ -57,7 +57,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
                             const glm::vec2& pos, const glm::vec2& size, float rot) const
 {
-   gll::Binding<gll::Texture2D> texBinding;
+   gll::BindingScope<gll::Texture2D> texBinding;
    if (look.hasTexture())
    {
       glActiveTexture(GL_TEXTURE0);
@@ -66,7 +66,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
 
    // Scope for VAO binding.
    {
-      gll::Binding vaoBinding{m_vao};
+      gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
       modelUf.setValue(calcModelMatrix(pos, size, rot));
@@ -79,7 +79,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
 
 void SpriteRenderer::makeVao(const Mesh2& mesh)
 {
-   // VBOs and their bindings. They have to be unbound after the vao.
+   // VBOs and their binding scopes. They have to be unbound after the vao.
    gll::BoundVbo posBuf;
    gll::BoundVbo texCoordBuf;
    gll::BoundVbo elemBuf;
@@ -88,7 +88,7 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
    // Needs to be unbound before the vbos.
    {
       m_vao.create();
-      gll::Binding vaoBinding{m_vao};
+      gll::BindingScope vaoBinding{m_vao};
 
       // Each attribute index has to match the 'location' value in the vertex shader code.
       constexpr GLuint PosAttribIdx = 0;
