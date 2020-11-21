@@ -5,8 +5,8 @@
 #pragma once
 #include "mesh2.h"
 #include "gll_binding.h"
+#include "gll_vao.h"
 #include "gll_vbo.h"
-#include "gll_vertex_array.h"
 #include "glm/vec2.hpp"
 #include <cstddef>
 
@@ -51,7 +51,7 @@ class SpriteRenderer
 
  private:
    Resources* m_resources = nullptr;
-   gll::VertexArray m_vao;
+   gll::Vao m_vao;
    std::size_t m_numElements = 0;
 };
 

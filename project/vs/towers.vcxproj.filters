@@ -14,9 +14,6 @@
     <ClCompile Include="..\..\gll_program.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gll_vertex_array.cpp">
-      <Filter>Gl Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\glfwl_window.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     <ClInclude Include="..\..\gll_uniform.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gll_vertex_array.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\glfwl_types.h">
       <Filter>Glfw Utilities</Filter>
     </ClInclude>
@@ -172,6 +166,9 @@
       <Filter>Gl Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_vbo.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_vao.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>

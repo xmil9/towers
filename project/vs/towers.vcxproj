@@ -186,7 +186,6 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClCompile Include="..\..\sprite_renderer.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
-    <ClCompile Include="..\..\gll_vertex_array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\app_types.h" />
@@ -214,7 +213,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClInclude Include="..\..\gll_texture.h" />
     <ClInclude Include="..\..\gll_types.h" />
     <ClInclude Include="..\..\gll_uniform.h" />
-    <ClInclude Include="..\..\gll_vertex_array.h" />
+    <ClInclude Include="..\..\gll_vao.h" />
     <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\mesh2.h" />

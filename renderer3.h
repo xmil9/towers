@@ -11,8 +11,8 @@
 #include "gll_shader.h"
 #include "gll_texture.h"
 #include "gll_uniform.h"
+#include "gll_vao.h"
 #include "gll_vbo.h"
-#include "gll_vertex_array.h"
 #include "glm/matrix.hpp"
 
 
@@ -45,7 +45,7 @@ class Renderer3
    // translations removed.
    glm::mat3 m_normalMat;
 
-   gll::VertexArray m_vao;
+   gll::Vao m_vao;
    gll::Vbo m_posBuf;
    gll::Vbo m_normalBuf;
    gll::Vbo m_colorBuf;

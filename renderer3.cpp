@@ -72,7 +72,7 @@ void Renderer3::renderFrame()
    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(std::size(indices)), GL_UNSIGNED_INT,
                   nullptr);
 
-   gll::VertexArray::unbind();
+   gll::Vao::unbind();
    gll::Texture2D::unbind();
 }
 
