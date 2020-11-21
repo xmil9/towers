@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "gll_buffer.h"
+#include "gll_vbo.h"
 
 
 namespace gll
@@ -88,14 +88,14 @@ class BufferBinding
 {
 public:
    BufferBinding() = default;
-   explicit BufferBinding(const Buffer& bound, GLenum target);
+   explicit BufferBinding(const Vbo& bound, GLenum target);
    ~BufferBinding() { unbind(); }
    BufferBinding(const BufferBinding&) = delete;
    BufferBinding(BufferBinding&& other);
    BufferBinding& operator=(const BufferBinding&) = delete;
    BufferBinding& operator=(BufferBinding&& other);
 
-   void bind(const Buffer& bound, GLenum target);
+   void bind(const Vbo& bound, GLenum target);
    void unbind();
 
    friend inline void swap(BufferBinding& a, BufferBinding& b)
@@ -108,7 +108,7 @@ public:
 };
 
 
-inline BufferBinding::BufferBinding(const Buffer& bound, GLenum target) : m_target{target}
+inline BufferBinding::BufferBinding(const Vbo& bound, GLenum target) : m_target{target}
 {
    bind(bound, m_target);
 }
@@ -124,7 +124,7 @@ inline BufferBinding& BufferBinding::operator=(BufferBinding&& other)
    swap(*this, other);
 }
 
-inline void BufferBinding::bind(const Buffer& bound, GLenum target)
+inline void BufferBinding::bind(const Vbo& bound, GLenum target)
 {
    unbind();
    m_target = target;
@@ -135,7 +135,7 @@ inline void BufferBinding::unbind()
 {
    if (m_target != 0)
    {
-      Buffer::unbind(m_target);
+      Vbo::unbind(m_target);
       m_target = 0;
    }
 }

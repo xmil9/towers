@@ -6,12 +6,12 @@
 #include "app_types.h"
 #include "camera_fps.h"
 #include "frustum3.h"
-#include "gll_buffer.h"
 #include "gll_data_format.h"
 #include "gll_program.h"
 #include "gll_shader.h"
 #include "gll_texture.h"
 #include "gll_uniform.h"
+#include "gll_vbo.h"
 #include "gll_vertex_array.h"
 #include "glm/matrix.hpp"
 
@@ -46,13 +46,13 @@ class Renderer3
    glm::mat3 m_normalMat;
 
    gll::VertexArray m_vao;
-   gll::Buffer m_posBuf;
-   gll::Buffer m_normalBuf;
-   gll::Buffer m_colorBuf;
-   gll::Buffer m_texCoordBuf;
+   gll::Vbo m_posBuf;
+   gll::Vbo m_normalBuf;
+   gll::Vbo m_colorBuf;
+   gll::Vbo m_texCoordBuf;
    gll::Texture2D m_tex;
    gll::Texture2D m_tex2;
-   gll::Buffer m_elemBuf;
+   gll::Vbo m_elemBuf;
    gll::Program m_prog;
 };
 

@@ -179,8 +179,8 @@ bool Renderer3::setupData()
    // Unbind vao first to stop "recording" information in it.
    m_vao.unbind();
    // Unbind each buffer type from global state.
-   gll::Buffer::unbind(GL_ARRAY_BUFFER);
-   gll::Buffer::unbind(GL_ELEMENT_ARRAY_BUFFER);
+   gll::Vbo::unbind(GL_ARRAY_BUFFER);
+   gll::Vbo::unbind(GL_ELEMENT_ARRAY_BUFFER);
    gll::Texture2D::unbind();
 
    return true;

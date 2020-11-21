@@ -8,9 +8,6 @@
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Stb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gll_buffer.cpp">
-      <Filter>Gl Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gll_shader.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
@@ -95,9 +92,6 @@
     <ClInclude Include="..\..\gll_data_format.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gll_buffer.h">
-      <Filter>Gl Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gll_shader.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
@@ -175,6 +169,9 @@
       <Filter>Gl Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_binding.h">
+      <Filter>Gl Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gll_vbo.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
   </ItemGroup>

@@ -174,7 +174,6 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClCompile Include="..\..\game3.cpp" />
     <ClCompile Include="..\..\glfwl_lib.cpp" />
     <ClCompile Include="..\..\glfwl_window.cpp" />
-    <ClCompile Include="..\..\gll_buffer.cpp" />
     <ClCompile Include="..\..\gll_debug.cpp" />
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
@@ -207,7 +206,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClInclude Include="..\..\glfwl_types.h" />
     <ClInclude Include="..\..\glfwl_lib.h" />
     <ClInclude Include="..\..\glfwl_window.h" />
-    <ClInclude Include="..\..\gll_buffer.h" />
+    <ClInclude Include="..\..\gll_vbo.h" />
     <ClInclude Include="..\..\gll_data_format.h" />
     <ClInclude Include="..\..\gll_object.h" />
     <ClInclude Include="..\..\gll_program.h" />

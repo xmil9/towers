@@ -5,7 +5,7 @@
 #pragma once
 #include "mesh2.h"
 #include "gll_binding.h"
-#include "gll_buffer.h"
+#include "gll_vbo.h"
 #include "gll_vertex_array.h"
 #include "glm/vec2.hpp"
 #include <cstddef>
@@ -40,7 +40,7 @@ class SpriteRenderer
    // Combines a VBO and an object that releases the VBO's binding.
    struct BoundBuffer
    {
-      gll::Buffer vbo;
+      gll::Vbo vbo;
       gll::BufferBinding binding;
    };
 
