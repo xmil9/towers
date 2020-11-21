@@ -64,7 +64,10 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       texBinding.bind(m_resources->getTexture(look.texture()));
    }
 
-   // Scope for VAO binding.
+   gll::Uniform colorUf = shaders.uniform("spriteColor");
+   colorUf.setValue(look.color());
+
+   // Scope for vao binding.
    {
       gll::BindingScope vaoBinding{m_vao};
 

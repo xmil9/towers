@@ -24,16 +24,17 @@ class SpriteLook
 
    bool hasTexture() const { return m_textureTag.has_value(); }
    std::string texture() const;
+   bool hasColor() const { return m_color != White; }
    glm::vec3 color() const { return m_color; }
 
  private:
+   static constexpr glm::vec3 White{1.0f, 1.0f, 1.0f};
    std::optional<std::string> m_textureTag;
    glm::vec3 m_color;
 };
 
 
-inline SpriteLook::SpriteLook(const std::string& texTag)
-: SpriteLook{texTag, glm::vec3{1.0f, 1.0f, 1.0f}}
+inline SpriteLook::SpriteLook(const std::string& texTag) : SpriteLook{texTag, White}
 {
 }
 

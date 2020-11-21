@@ -135,7 +135,7 @@ bool Game2::setupData()
    mesh.setTextureCoords(std::move(texCoords));
    auto spriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
    spriteRenderer->setMesh(mesh);
-   auto spriteLook = std::make_shared<SpriteLook>("test");
+   auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
    m_sprites.emplace_back(spriteRenderer, spriteLook);
 
    return true;
