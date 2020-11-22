@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "app_types.h"
+#include "basic_types.h"
 #include "camera_fps.h"
 #include "frustum3.h"
 #include "gll_data_format.h"

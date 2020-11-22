@@ -189,7 +189,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\app_types.h" />
+    <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\app_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />
     <ClInclude Include="..\..\camera_fps.h" />

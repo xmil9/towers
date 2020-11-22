@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "app_types.h"
 #include "app_window.h"
+#include "basic_types.h"
 #include "glfwl_lib.h"
 #include "input.h"
 #include "renderer2.h"

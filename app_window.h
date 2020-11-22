@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "app_types.h"
+#include "basic_types.h"
 #include "input_controller.h"
 #include "observed.h"
 #include "glfwl_window.h"

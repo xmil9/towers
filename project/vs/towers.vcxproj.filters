@@ -23,20 +23,11 @@
     <ClCompile Include="..\..\glfwl_lib.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\camera_fps.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\app_window.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\input.cpp">
       <Filter>Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\frustum3.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\renderer3.cpp">
-      <Filter>Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game3.cpp" />
     <ClCompile Include="..\..\png_texture.cpp">
@@ -44,16 +35,27 @@
     </ClCompile>
     <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
-    <ClCompile Include="..\..\sprite_renderer.cpp">
-      <Filter>Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\renderer2.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\gll_debug.cpp">
       <Filter>Gl Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_binding.cpp">
       <Filter>Gl Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\camera_fps.cpp">
+      <Filter>Rendering\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\frustum3.cpp">
+      <Filter>Rendering\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer3.cpp">
+      <Filter>Rendering\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sprite_renderer.cpp">
+      <Filter>Rendering\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer2.cpp">
+      <Filter>Rendering\2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +79,12 @@
     </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{6be38c80-5e3f-4c4b-98b5-bef3f5c98975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\3d">
+      <UniqueIdentifier>{9b77bbb6-9618-4356-93dd-9e1df30e1f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\2d">
+      <UniqueIdentifier>{90907dfb-daf6-4040-b3a8-0fd88a104460}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,15 +121,11 @@
     <ClInclude Include="..\..\gll_texture.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app_types.h" />
     <ClInclude Include="..\..\lap_clock.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\observed.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\camera_fps.h">
-      <Filter>Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\app_window.h">
       <Filter>Ui</Filter>
@@ -132,35 +136,12 @@
     <ClInclude Include="..\..\input_controller.h">
       <Filter>Ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\frustum3.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\renderer3.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\game3.h" />
-    <ClInclude Include="..\..\cube3_data.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\frustum2.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\png_texture.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\resources.h" />
     <ClInclude Include="..\..\textures.h" />
-    <ClInclude Include="..\..\sprite_renderer.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\point2.h" />
-    <ClInclude Include="..\..\mesh2.h" />
-    <ClInclude Include="..\..\renderer2.h" />
-    <ClInclude Include="..\..\sprite.h" />
-    <ClInclude Include="..\..\camera_2d.h">
-      <Filter>Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\gll_debug.h">
       <Filter>Gl Utilities</Filter>
@@ -174,16 +155,59 @@
     <ClInclude Include="..\..\gll_vao.h">
       <Filter>Gl Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sprite_form.h" />
+    <ClInclude Include="..\..\camera_2d.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\camera_fps.h">
+      <Filter>Rendering\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\frustum2.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\frustum3.h">
+      <Filter>Rendering\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\renderer3.h">
+      <Filter>Rendering\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sprite_renderer.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cube3_data.h">
+      <Filter>Rendering\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\renderer2.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sprite.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sprite_look.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sprite_form.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\point2.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mesh2.h">
+      <Filter>Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\basic_types.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\cube3_shader.vs" />
-    <None Include="..\..\cube3_shader.fs" />
     <None Include="..\..\sprite_shader.vs">
-      <Filter>Rendering</Filter>
+      <Filter>Rendering\2d</Filter>
     </None>
     <None Include="..\..\sprite_shader.fs">
-      <Filter>Rendering</Filter>
+      <Filter>Rendering\2d</Filter>
+    </None>
+    <None Include="..\..\cube3_shader.vs">
+      <Filter>Rendering\3d</Filter>
+    </None>
+    <None Include="..\..\cube3_shader.fs">
+      <Filter>Rendering\3d</Filter>
     </None>
   </ItemGroup>
 </Project>
