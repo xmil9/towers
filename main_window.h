@@ -11,7 +11,7 @@
 
 
 
-class AppWindow : public glfwl::Window, public Observed<AppWindow>
+class MainWindow : public glfwl::Window, public Observed<MainWindow>
 {
 public:
    void setInputController(InputController* controller);
@@ -33,7 +33,7 @@ private:
 // Notifications sent to observers.
 
 constexpr char WindowResizedMsg[] = "window_resized";
-struct WindowResizedMsgData : public Observed<AppWindow>::MsgData
+struct WindowResizedMsgData : public Observed<MainWindow>::MsgData
 {
    glm::ivec2 newSize;
    // Difference to previous size.

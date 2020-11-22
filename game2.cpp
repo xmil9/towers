@@ -73,8 +73,8 @@ bool Game2::setupUi()
 bool Game2::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-   m_mainWnd.addObserver([this](AppWindow& src, std::string_view msg,
-                                const Observed<AppWindow>::MsgData& data) {
+   m_mainWnd.addObserver([this](MainWindow& src, std::string_view msg,
+                                const Observed<MainWindow>::MsgData& data) {
       onMainWindowChanged(src, msg, data);
    });
 
@@ -146,8 +146,8 @@ bool Game2::setupData()
 }
 
 
-void Game2::onMainWindowChanged(AppWindow& /*src*/, std::string_view msg,
-                                const Observed<AppWindow>::MsgData& data)
+void Game2::onMainWindowChanged(MainWindow& /*src*/, std::string_view msg,
+                                const Observed<MainWindow>::MsgData& data)
 {
    if (msg == WindowResizedMsg)
    {

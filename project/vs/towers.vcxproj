@@ -165,7 +165,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\app_window.cpp" />
+    <ClCompile Include="..\..\main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
@@ -190,7 +190,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\basic_types.h" />
-    <ClInclude Include="..\..\app_window.h" />
+    <ClInclude Include="..\..\main_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />

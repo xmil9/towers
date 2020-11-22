@@ -3,10 +3,10 @@
 // MIT license
 //
 #pragma once
-#include "app_window.h"
 #include "basic_types.h"
 #include "glfwl_lib.h"
 #include "input.h"
+#include "main_window.h"
 #include "renderer3.h"
 #include "glm/vec3.hpp"
 #include <optional>
@@ -26,8 +26,8 @@ class Game3
    bool setupMainWindow();
    bool setupInput();
 
-   void onMainWindowChanged(AppWindow& src, std::string_view msg,
-                            const Observed<AppWindow>::MsgData& data);
+   void onMainWindowChanged(MainWindow& src, std::string_view msg,
+                            const Observed<MainWindow>::MsgData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
    void onInputChanged(Input& src, std::string_view msg,
@@ -42,7 +42,7 @@ class Game3
  private:
    FrameClock m_frameClock;
    glfwl::Lib m_glfw;
-   AppWindow m_mainWnd;
+   MainWindow m_mainWnd;
    Input m_input;
    Renderer3 m_renderer;
 };

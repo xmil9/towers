@@ -23,9 +23,6 @@
     <ClCompile Include="..\..\glfwl_lib.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\app_window.cpp">
-      <Filter>Ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\input.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
@@ -56,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="..\..\renderer2.cpp">
       <Filter>Rendering\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main_window.cpp">
+      <Filter>Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +127,6 @@
     <ClInclude Include="..\..\observed.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\app_window.h">
-      <Filter>Ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\input.h">
       <Filter>Ui</Filter>
     </ClInclude>
@@ -195,6 +192,9 @@
       <Filter>Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\basic_types.h" />
+    <ClInclude Include="..\..\main_window.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\sprite_shader.vs">
