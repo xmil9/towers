@@ -215,4 +215,7 @@
       <Filter>Rendering\3d</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\terrain.json" />
+  </ItemGroup>
 </Project>

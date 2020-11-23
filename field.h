@@ -8,6 +8,7 @@
 class Field
 {
 public:
+   Field() = default;
    Field(bool attackFrom, bool buildOn);
 
 private:

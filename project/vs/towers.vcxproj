@@ -132,6 +132,7 @@
 copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -161,6 +162,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -244,6 +246,9 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ProjectReference Include="..\..\deps\essentutils\project\vs\essentutils.vcxproj">
       <Project>{1c70ff5c-cdc9-426e-9c6a-922919183bab}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\terrain.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

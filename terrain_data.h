@@ -14,11 +14,9 @@ using FieldPos = glm::ivec2;
 
 struct TerrainData
 {
-   std::vector<Field> map;
    // Rows and columns in the map.
    glm::ivec2 mapSize;
-   // Size of each field in pixels.
-   glm::ivec2 fieldSize;
+   std::vector<Field> map;
    // Coordinates of start fields.
    std::vector<FieldPos> starts;
    // Coordinates of finish field.

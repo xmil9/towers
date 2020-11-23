@@ -4,6 +4,7 @@
 //
 #include "game2.h"
 #include "mesh2.h"
+#include "terrain_data.h"
 #include "gll_debug.h"
 #include <iostream>
 
@@ -31,7 +32,7 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
-           setupRenderer() && setupData());
+           setupRenderer() && setupSpriteData() && setupTerrain());
 }
 
 
@@ -117,7 +118,7 @@ bool Game2::setupRenderer()
 }
 
 
-bool Game2::setupData()
+bool Game2::setupSpriteData()
 {
    // Coord system for vertex coordinates is:
    // (0, 0) - left-top, (1, 1) - right-bottom
@@ -142,6 +143,14 @@ bool Game2::setupData()
    m_sprites.emplace_back(spriteRenderer, spriteLook,
                           SpriteForm{{115.f, 125.f}, {50.f, 50.f}, 1.8f});
 
+   return true;
+}
+
+
+bool Game2::setupTerrain()
+{
+   TerrainData terrain;
+   loadTerrainData(m_resources.terrainPath() / "terrain.json", terrain);
    return true;
 }
 

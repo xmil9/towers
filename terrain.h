@@ -12,4 +12,6 @@ public:
 
 private:
    TerrainData m_rep;
+   // Size of each field in pixels.
+   glm::ivec2 fieldSize;
 };

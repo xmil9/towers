@@ -13,6 +13,7 @@ class Resources
 
    std::filesystem::path texturePath() const;
    std::filesystem::path shaderPath() const;
+   std::filesystem::path terrainPath() const;
 
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);

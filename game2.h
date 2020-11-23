@@ -29,7 +29,8 @@ class Game2
    bool setupOutput();
    bool setupResources();
    bool setupRenderer();
-   bool setupData();
+   bool setupSpriteData();
+   bool setupTerrain();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);

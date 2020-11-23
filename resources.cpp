@@ -22,3 +22,9 @@ std::filesystem::path Resources::shaderPath() const
 {
    return m_mainPath;
 }
+
+
+std::filesystem::path Resources::terrainPath() const
+{
+   return m_mainPath;
+}
