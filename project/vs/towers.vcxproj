@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HAVE_GLM;GLM_FORCE_SILENT_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\deps\glad\include;..\..\deps\glm\0.9.9.8;..\..\deps\glfw\include;..\..\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\deps\glad\include;..\..\deps\glm\0.9.9.8;..\..\deps\glfw\include;..\..\deps\nlohmann\3.9.1;..\..\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -143,7 +143,7 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HAVE_GLM;GLM_FORCE_SILENT_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\deps\glad\include;..\..\deps\glm\0.9.9.8;..\..\deps\glfw\include;..\..\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\deps\glad\include;..\..\deps\glm\0.9.9.8;..\..\deps\glfw\include;..\..\deps\nlohmann\3.9.1;..\..\deps;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -185,11 +185,14 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\sprite_renderer.cpp" />
+    <ClCompile Include="..\..\terrain_data.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\attacker.h" />
     <ClInclude Include="..\..\basic_types.h" />
+    <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\main_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />
     <ClInclude Include="..\..\camera_fps.h" />
@@ -227,6 +230,8 @@ copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
     <ClInclude Include="..\..\renderer2.h" />
     <ClInclude Include="..\..\sprite.h" />
     <ClInclude Include="..\..\sprite_renderer.h" />
+    <ClInclude Include="..\..\terrain.h" />
+    <ClInclude Include="..\..\terrain_data.h" />
     <ClInclude Include="..\..\textures.h" />
   </ItemGroup>
   <ItemGroup>

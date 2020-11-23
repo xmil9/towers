@@ -57,6 +57,7 @@
     <ClCompile Include="..\..\main_window.cpp">
       <Filter>Ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\terrain_data.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -195,6 +196,10 @@
     <ClInclude Include="..\..\main_window.h">
       <Filter>Ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\terrain.h" />
+    <ClInclude Include="..\..\field.h" />
+    <ClInclude Include="..\..\attacker.h" />
+    <ClInclude Include="..\..\terrain_data.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\sprite_shader.vs">
