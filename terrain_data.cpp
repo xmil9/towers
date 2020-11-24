@@ -11,6 +11,70 @@ using json = nlohmann::json;
 
 namespace
 {
+///////////////////
+
+std::optional<json> readTerrainFile(const std::filesystem::path& path)
+{
+   std::ifstream inStream{path.c_str()};
+   json jData;
+   inStream >> jData;
+   return jData;
+}
+
+
+///////////////////
+
+struct ParsedTerrainData
+{
+   glm::ivec2 mapSize;
+   std::string map;
+   std::vector<glm::ivec2> starts;
+   glm::ivec2 finish;
+
+   bool isValid() const;
+};
+
+
+bool ParsedTerrainData::isValid() const
+{
+   const int numFields = mapSize.x * mapSize.y;
+   return numFields == map.size();
+}
+
+
+std::optional<ParsedTerrainData> parseTerrainJson(const std::optional<json>& jData)
+{
+   if (!jData)
+      return std::nullopt;
+
+   json jTerrain = (*jData)["terrain"];
+
+   ParsedTerrainData parsed;
+   parsed.mapSize.x = jTerrain["rows"];
+   parsed.mapSize.y = jTerrain["cols"];
+
+   json jMap = jTerrain["map"];
+   assert(jMap.size() == parsed.mapSize.x);
+   for (int i = 0; i < jMap.size(); ++i)
+      parsed.map += jMap[i];
+
+   json jStarts = jTerrain["starts"];
+   for (int i = 0; i < jStarts.size(); ++i)
+   {
+      glm::ivec2 startPos;
+      startPos.x = jStarts[i]["x"];
+      startPos.y = jStarts[i]["y"];
+      parsed.starts.push_back(startPos);
+   }
+
+   parsed.finish.x = jTerrain["finish"]["x"];
+   parsed.finish.y = jTerrain["finish"]["y"];
+
+   return parsed.isValid() ? std::make_optional(parsed) : std::nullopt;
+}
+
+
+///////////////////
 
 constexpr char PathSymbol = '.';
 constexpr char SiteSymbol = '_';
@@ -21,82 +85,44 @@ Field makeField(char symbol)
 {
    switch (symbol)
    {
-      case PathSymbol:
-         return Field{true, false};
-      case SiteSymbol:
-         return Field{false, true};
-      default:
-         assert(false && "Unknown terrain symbol.");
-         [[fallthrough]];
-      case OffSymbol:
-         return Field{false, false};
+   case PathSymbol:
+      return Field{true, false};
+   case SiteSymbol:
+      return Field{false, true};
+   default:
+      assert(false && "Unknown terrain symbol.");
+      [[fallthrough]];
+   case OffSymbol:
+      return Field{false, false};
    }
 }
 
 
-bool populateMap(const std::string& mapStr, std::vector<Field>& map)
+std::optional<TerrainData>
+populateTerrainData(const std::optional<ParsedTerrainData>& parsed)
 {
-   if (mapStr.size() != map.size())
-      return false;
+   if (!parsed)
+      return std::nullopt;
+   const ParsedTerrainData& parsedData = *parsed;
 
-   for (int i = 0; i < mapStr.size(); ++i)
-      map[i] = makeField(mapStr[i]);
+   TerrainData terrain;
+   terrain.mapSize = parsedData.mapSize;
+   terrain.starts = parsedData.starts;
+   terrain.finish = parsedData.finish;
 
-   return true;
-}
+   terrain.map.reserve(terrain.mapSize.x * terrain.mapSize.y);
+   for (int i = 0; i < parsedData.map.size(); ++i)
+      terrain.map.push_back(makeField(parsedData.map[i]));
 
-
-bool populateTerrainData(glm::ivec2 mapSize, const std::string& map,
-                                const std::vector<glm::ivec2>& starts, glm::ivec2 finish,
-                                TerrainData& data)
-{
-   data.mapSize = mapSize;
-   data.starts = starts;
-   data.finish = finish;
-   data.map.resize(mapSize.x * mapSize.y);
-   return populateMap(map, data.map);
-}
-
-
-bool parseTerrainData(const json& jData, TerrainData& data)
-{
-   json jTerrain = jData["terrain"];
-
-   glm::ivec2 mapSize;
-   mapSize.x = jTerrain["rows"];
-   mapSize.y = jTerrain["cols"];
-
-   json jMap = jTerrain["map"];
-   assert(jMap.size() == mapSize.x);
-   std::string map;
-   for (int i = 0; i < jMap.size(); ++i)
-      map += jMap[i];
-
-   std::vector<glm::ivec2> starts;
-   json jStarts = jTerrain["starts"];
-   for (int i = 0; i < jStarts.size(); ++i)
-   {
-      glm::ivec2 startPos;
-      startPos.x = jStarts[i]["x"];
-      startPos.y = jStarts[i]["y"];
-      starts.push_back(startPos);
-   }
-
-   glm::ivec2 finish;
-   finish.x = jTerrain["finish"]["x"];
-   finish.y = jTerrain["finish"]["y"];
-
-   return populateTerrainData(mapSize, map, starts, finish, data);
+   return terrain;
 }
 
 } // namespace
 
 
-bool loadTerrainData(const std::filesystem::path& path, TerrainData& data)
-{
-   std::ifstream inStream{path.c_str()};
-   json jData;
-   inStream >> jData;
+///////////////////
 
-   return parseTerrainData(jData, data);
+std::optional<TerrainData> loadTerrainData(const std::filesystem::path& path)
+{
+   return populateTerrainData(parseTerrainJson(readTerrainFile(path)));
 }

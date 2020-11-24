@@ -10,6 +10,7 @@
 #include "renderer2.h"
 #include "resources.h"
 #include "sprite.h"
+#include "terrain.h"
 #include <vector>
 
 
@@ -43,8 +44,8 @@ class Game2
    void onKeyPolled(Key_t key, float frameLengthSecs);
 
  private:
-   static constexpr int MainWndWidth = 800;
-   static constexpr int MainWndHeight = 800;
+   static constexpr int MainWndWidth = 900;
+   static constexpr int MainWndHeight = 600;
    Resources m_resources;
    FrameClock m_frameClock;
    glfwl::Lib m_glfw;
@@ -52,4 +53,5 @@ class Game2
    Input m_input;
    Renderer2 m_renderer;
    std::vector<Sprite> m_sprites;
+   Terrain m_terrain;
 };

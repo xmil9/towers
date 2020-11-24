@@ -149,8 +149,15 @@ bool Game2::setupSpriteData()
 
 bool Game2::setupTerrain()
 {
-   TerrainData terrain;
-   loadTerrainData(m_resources.terrainPath() / "terrain.json", terrain);
+   std::optional<TerrainData> terrainData =
+      loadTerrainData(m_resources.terrainPath() / "terrain.json");
+   if (!terrainData)
+      return false;
+
+   const glm::ivec2 fieldSize{MainWndWidth / terrainData->mapSize.x,
+                              MainWndHeight / terrainData->mapSize.y};
+   m_terrain = Terrain{std::move(*terrainData), fieldSize};
+   
    return true;
 }
 

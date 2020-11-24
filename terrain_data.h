@@ -7,9 +7,11 @@
 #include "glm/vec2.hpp"
 #include <cstddef>
 #include <filesystem>
+#include <optional>
 #include <vector>
 
 
+// Field position coordinates.
 using FieldPos = glm::ivec2;
 
 struct TerrainData
@@ -23,5 +25,4 @@ struct TerrainData
    FieldPos finish;
 };
 
-
-bool loadTerrainData(const std::filesystem::path& path, TerrainData& data);
+std::optional<TerrainData> loadTerrainData(const std::filesystem::path& path);
