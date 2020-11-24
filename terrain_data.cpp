@@ -101,11 +101,11 @@ Field makeField(char symbol)
    switch (symbol)
    {
    case PathSymbol:
-      return Field{true, false};
+      return makePathField();
    case SiteSymbol:
-      return Field{false, true};
+      return makeSiteField();
    case OffSymbol:
-      return Field{false, false};
+      return makeOffField();
    default:
       throw std::runtime_error("Terrain import - Invalid field symbol.");
    }

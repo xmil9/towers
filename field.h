@@ -3,21 +3,47 @@
 // MIT license
 //
 #pragma once
+#include <cstdint>
 
+
+///////////////////
 
 class Field
 {
 public:
+   using Property = int64_t;
+   using Properties = int64_t;
+   static constexpr Property AttackFrom = 0x00000001;
+   static constexpr Property BuildOn = 0x00000002;
+
+public:
    Field() = default;
-   Field(bool attackFrom, bool buildOn);
+   explicit Field(Properties props);
 
 private:
-   bool m_attackFrom = false;
-   bool m_buildOn = false;
+   Properties m_props = 0;
 };
 
 
-inline Field::Field(bool attackFrom, bool buildOn)
-   : m_attackFrom{attackFrom}, m_buildOn{buildOn}
+inline Field::Field(Properties props)
+   : m_props{props}
 {
+}
+
+
+///////////////////
+
+inline Field makePathField()
+{
+   return Field{Field::AttackFrom};
+}
+
+inline Field makeSiteField()
+{
+   return Field{Field::BuildOn};
+}
+
+inline Field makeOffField()
+{
+   return Field{};
 }
