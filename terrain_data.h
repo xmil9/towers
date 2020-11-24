@@ -4,15 +4,13 @@
 //
 #pragma once
 #include "field.h"
-#include "glm/vec2.hpp"
+#include "path.h"
+#include "terrain_types.h"
 #include <cstddef>
 #include <filesystem>
 #include <optional>
 #include <vector>
 
-
-// Field position coordinates.
-using FieldPos = glm::ivec2;
 
 struct TerrainData
 {
@@ -24,7 +22,7 @@ struct TerrainData
    // Coordinates of finish field.
    FieldPos finish;
    // Coordinates for paths through the map.
-   std::vector<std::vector<FieldPos>> paths;
+   std::vector<Path> paths;
 };
 
 std::optional<TerrainData> loadTerrainData(const std::filesystem::path& path);

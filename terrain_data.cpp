@@ -30,7 +30,7 @@ struct ParsedTerrainData
    std::string map;
    std::vector<glm::ivec2> starts;
    glm::ivec2 finish;
-   std::vector<std::vector<glm::ivec2>> paths;
+   std::vector<std::vector<FieldPos>> paths;
 
    bool isValid() const;
 };
@@ -51,6 +51,16 @@ glm::ivec2 parsePosition(const json& jList)
 }
 
 
+std::vector<FieldPos> parseJsonPath(const json& jPath)
+{
+   std::vector<FieldPos> parsedPath;
+   parsedPath.reserve(jPath.size());
+   std::transform(jPath.begin(), jPath.end(), std::back_inserter(parsedPath),
+                  [](const json& jList) { return parsePosition(jList); });
+   return parsedPath;
+}
+
+
 ParsedTerrainData parseJson(const json& jData)
 {
    json jTerrain = jData["terrain"];
@@ -64,26 +74,19 @@ ParsedTerrainData parseJson(const json& jData)
    if (jMap.size() != parsed.mapSize.x)
       throw std::runtime_error(
          "Terrain import - Number of map rows not matching map layout.");
-   for (int i = 0; i < jMap.size(); ++i)
-      parsed.map += jMap[i];
+   parsed.map = std::accumulate(jMap.begin(), jMap.end(), parsed.map);
 
    json jStarts = jTerrain["starts"];
-   for (int i = 0; i < jStarts.size(); ++i)
-      parsed.starts.push_back(parsePosition(jStarts[i]));
+   parsed.starts.reserve(jStarts.size());
+   std::transform(jStarts.begin(), jStarts.end(), std::back_inserter(parsed.starts),
+                  [](const json& jlist) { return parsePosition(jlist); });
 
    parsed.finish = parsePosition(jTerrain["finish"]);
 
    json jPaths = jTerrain["paths"];
-   for (int i = 0; i < jPaths.size(); ++i)
-   {
-      std::vector<FieldPos> parsedPath;
-
-      json jPath = jPaths[i];
-      for (int j = 0; j < jPath.size(); ++j)
-         parsedPath.push_back(parsePosition(jPath[j]));
-
-      parsed.paths.push_back(parsedPath);
-   }
+   parsed.paths.reserve(jPaths.size());
+   std::transform(jPaths.begin(), jPaths.end(), std::back_inserter(parsed.paths),
+                  [](const json& jPath) { return parseJsonPath(jPath); });
 
    return parsed;
 }
@@ -120,8 +123,13 @@ TerrainData populateData(const ParsedTerrainData& parsed)
    terrain.finish = parsed.finish;
 
    terrain.map.reserve(terrain.mapSize.x * terrain.mapSize.y);
-   for (int i = 0; i < parsed.map.size(); ++i)
-      terrain.map.push_back(makeField(parsed.map[i]));
+   std::transform(parsed.map.cbegin(), parsed.map.cend(), std::back_inserter(terrain.map),
+                  [](char fieldSymbol) { return makeField(fieldSymbol); });
+
+   terrain.paths.reserve(parsed.paths.size());
+   std::transform(parsed.paths.cbegin(), parsed.paths.cend(),
+                  std::back_inserter(terrain.paths),
+                  [](const std::vector<FieldPos>& turns) { return Path{turns}; });
 
    return terrain;
 }
