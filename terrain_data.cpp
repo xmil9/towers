@@ -13,7 +13,7 @@ namespace
 {
 ///////////////////
 
-std::optional<json> readTerrainFile(const std::filesystem::path& path)
+json readFile(const std::filesystem::path& path)
 {
    std::ifstream inStream{path.c_str()};
    json jData;
@@ -30,6 +30,7 @@ struct ParsedTerrainData
    std::string map;
    std::vector<glm::ivec2> starts;
    glm::ivec2 finish;
+   std::vector<std::vector<glm::ivec2>> paths;
 
    bool isValid() const;
 };
@@ -42,12 +43,17 @@ bool ParsedTerrainData::isValid() const
 }
 
 
-std::optional<ParsedTerrainData> parseTerrainJson(const std::optional<json>& jData)
+glm::ivec2 parsePosition(const json& jList)
 {
-   if (!jData)
-      return std::nullopt;
+   if (jList.size() != 2)
+      throw std::runtime_error("Terrain import - Invalid position.");
+   return {jList[0], jList[1]};
+}
 
-   json jTerrain = (*jData)["terrain"];
+
+ParsedTerrainData parseJson(const json& jData)
+{
+   json jTerrain = jData["terrain"];
 
    ParsedTerrainData parsed;
    parsed.mapSize.x = jTerrain["rows"];
@@ -55,22 +61,31 @@ std::optional<ParsedTerrainData> parseTerrainJson(const std::optional<json>& jDa
 
    json jMap = jTerrain["map"];
    assert(jMap.size() == parsed.mapSize.x);
+   if (jMap.size() != parsed.mapSize.x)
+      throw std::runtime_error(
+         "Terrain import - Number of map rows not matching map layout.");
    for (int i = 0; i < jMap.size(); ++i)
       parsed.map += jMap[i];
 
    json jStarts = jTerrain["starts"];
    for (int i = 0; i < jStarts.size(); ++i)
+      parsed.starts.push_back(parsePosition(jStarts[i]));
+
+   parsed.finish = parsePosition(jTerrain["finish"]);
+
+   json jPaths = jTerrain["paths"];
+   for (int i = 0; i < jPaths.size(); ++i)
    {
-      glm::ivec2 startPos;
-      startPos.x = jStarts[i]["x"];
-      startPos.y = jStarts[i]["y"];
-      parsed.starts.push_back(startPos);
+      std::vector<FieldPos> parsedPath;
+
+      json jPath = jPaths[i];
+      for (int j = 0; j < jPath.size(); ++j)
+         parsedPath.push_back(parsePosition(jPath[j]));
+
+      parsed.paths.push_back(parsedPath);
    }
 
-   parsed.finish.x = jTerrain["finish"]["x"];
-   parsed.finish.y = jTerrain["finish"]["y"];
-
-   return parsed.isValid() ? std::make_optional(parsed) : std::nullopt;
+   return parsed;
 }
 
 
@@ -89,30 +104,24 @@ Field makeField(char symbol)
       return Field{true, false};
    case SiteSymbol:
       return Field{false, true};
-   default:
-      assert(false && "Unknown terrain symbol.");
-      [[fallthrough]];
    case OffSymbol:
       return Field{false, false};
+   default:
+      throw std::runtime_error("Terrain import - Invalid field symbol.");
    }
 }
 
 
-std::optional<TerrainData>
-populateTerrainData(const std::optional<ParsedTerrainData>& parsed)
+TerrainData populateData(const ParsedTerrainData& parsed)
 {
-   if (!parsed)
-      return std::nullopt;
-   const ParsedTerrainData& parsedData = *parsed;
-
    TerrainData terrain;
-   terrain.mapSize = parsedData.mapSize;
-   terrain.starts = parsedData.starts;
-   terrain.finish = parsedData.finish;
+   terrain.mapSize = parsed.mapSize;
+   terrain.starts = parsed.starts;
+   terrain.finish = parsed.finish;
 
    terrain.map.reserve(terrain.mapSize.x * terrain.mapSize.y);
-   for (int i = 0; i < parsedData.map.size(); ++i)
-      terrain.map.push_back(makeField(parsedData.map[i]));
+   for (int i = 0; i < parsed.map.size(); ++i)
+      terrain.map.push_back(makeField(parsed.map[i]));
 
    return terrain;
 }
@@ -124,5 +133,12 @@ populateTerrainData(const std::optional<ParsedTerrainData>& parsed)
 
 std::optional<TerrainData> loadTerrainData(const std::filesystem::path& path)
 {
-   return populateTerrainData(parseTerrainJson(readTerrainFile(path)));
+   try
+   {
+      return populateData(parseJson(readFile(path)));
+   }
+   catch (...)
+   {
+      return std::nullopt;
+   }
 }

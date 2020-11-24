@@ -23,6 +23,8 @@ struct TerrainData
    std::vector<FieldPos> starts;
    // Coordinates of finish field.
    FieldPos finish;
+   // Coordinates for paths through the map.
+   std::vector<std::vector<FieldPos>> paths;
 };
 
 std::optional<TerrainData> loadTerrainData(const std::filesystem::path& path);
