@@ -33,7 +33,7 @@ std::vector<FieldPos> generateSegment(FieldPos from, FieldPos to)
 }
 
 
-// Generates all fields from given turns.
+// Generates all path fields from given turns.
 std::vector<FieldPos> generateFields(const std::vector<FieldPos>& turns)
 {
    if (turns.empty())
