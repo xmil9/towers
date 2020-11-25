@@ -3,14 +3,15 @@
 // MIT license
 //
 #pragma once
+#include "attacker.h"
 #include "basic_types.h"
 #include "glfwl_lib.h"
 #include "input.h"
 #include "main_window.h"
 #include "renderer2.h"
 #include "resources.h"
-#include "sprite.h"
 #include "terrain.h"
+#include <memory>
 #include <vector>
 
 
@@ -30,8 +31,9 @@ class Game2
    bool setupOutput();
    bool setupResources();
    bool setupRenderer();
-   bool setupSpriteData();
    bool setupTerrain();
+   bool setupSpriteData();
+   bool setupAttackers();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);
@@ -52,6 +54,7 @@ class Game2
    MainWindow m_mainWnd;
    Input m_input;
    Renderer2 m_renderer;
-   std::vector<Sprite> m_sprites;
+   std::shared_ptr<SpriteRenderer> m_stdSpriteRenderer;
+   std::vector<Attacker> m_attackers;
    Terrain m_terrain;
 };

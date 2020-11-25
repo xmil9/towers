@@ -16,6 +16,7 @@ public:
    Path() = default;
    explicit Path(const std::vector<FieldPos>& turns);
 
+   std::optional<FieldPos> first() const;
    std::optional<FieldPos> next(const FieldPos& from) const;
 
 private:

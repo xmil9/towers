@@ -51,7 +51,7 @@ bool Renderer2::setupSetting(int viewWidth, int viewHeight)
 }
 
 
-void Renderer2::render(const std::vector<Sprite>& sprites) const
+void Renderer2::beginRendering() const
 {
    glClear(GL_COLOR_BUFFER_BIT);
    m_shaders.use();
@@ -60,7 +60,4 @@ void Renderer2::render(const std::vector<Sprite>& sprites) const
    viewUf.setValue(m_cam.viewMatrix());
    gll::Uniform projUf = m_shaders.uniform("projection");
    projUf.setValue(m_frustum.projectionMatrix());
-
-   for (auto& sprite : sprites)
-      sprite.render(m_shaders);
 }

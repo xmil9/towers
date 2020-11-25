@@ -11,6 +11,7 @@
 // Describes a sprite's configuration in world space.
 struct SpriteForm
 {
+   // Position of left-top corner.
    glm::vec2 pos;
    glm::vec2 size;
    // Rotation angle in radians.

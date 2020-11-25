@@ -66,16 +66,17 @@ ParsedTerrainData parseJson(const json& jData)
    json jTerrain = jData["terrain"];
 
    ParsedTerrainData parsed;
-   parsed.mapSize.x = jTerrain["rows"];
-   parsed.mapSize.y = jTerrain["cols"];
+   parsed.mapSize.x = jTerrain["cols"];
+   parsed.mapSize.y = jTerrain["rows"];
 
    json jMap = jTerrain["map"];
-   assert(jMap.size() == parsed.mapSize.x);
-   if (jMap.size() != parsed.mapSize.x)
+   assert(jMap.size() == parsed.mapSize.y);
+   if (jMap.size() != parsed.mapSize.y)
       throw std::runtime_error(
          "Terrain import - Number of map rows not matching map layout.");
    // Concat row strings.
-   parsed.map = std::reduce(jMap.begin(), jMap.end());
+   for (const auto& row : jMap)
+      parsed.map += row;
 
    json jStarts = jTerrain["starts"];
    parsed.starts.reserve(jStarts.size());

@@ -167,6 +167,7 @@ copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />

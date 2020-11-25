@@ -32,7 +32,7 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
-           setupRenderer() && setupSpriteData() && setupTerrain());
+           setupRenderer() && setupTerrain() && setupSpriteData() && setupAttackers());
 }
 
 
@@ -48,7 +48,9 @@ void Game2::run()
       m_frameClock.nextLap();
       m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
       // advanceState();
-      m_renderer.render(m_sprites);
+      m_renderer.beginRendering();
+      for (const auto& attacker : m_attackers)
+         attacker.render(m_renderer.shaders());
       m_mainWnd.swapBuffers();
    }
 }
@@ -118,6 +120,21 @@ bool Game2::setupRenderer()
 }
 
 
+bool Game2::setupTerrain()
+{
+   std::optional<TerrainData> terrainData =
+      loadTerrainData(m_resources.terrainPath() / "terrain.json");
+   if (!terrainData)
+      return false;
+
+   const glm::ivec2 fieldSize{MainWndWidth / terrainData->mapSize.x,
+                              MainWndHeight / terrainData->mapSize.y};
+   m_terrain = Terrain{std::move(*terrainData), fieldSize};
+
+   return true;
+}
+
+
 bool Game2::setupSpriteData()
 {
    // Coord system for vertex coordinates is:
@@ -134,30 +151,20 @@ bool Game2::setupSpriteData()
    mesh.setPositions(std::move(positions));
    mesh.setIndices(std::move(indices));
    mesh.setTextureCoords(std::move(texCoords));
-   auto spriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
-   spriteRenderer->setMesh(mesh);
-   auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
-
-   m_sprites.emplace_back(spriteRenderer, spriteLook,
-                          SpriteForm{{5.f, 25.f}, {100.f, 100.f}, .5f});
-   m_sprites.emplace_back(spriteRenderer, spriteLook,
-                          SpriteForm{{115.f, 125.f}, {50.f, 50.f}, 1.8f});
+   m_stdSpriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
+   m_stdSpriteRenderer->setMesh(mesh);
 
    return true;
 }
 
 
-bool Game2::setupTerrain()
+bool Game2::setupAttackers()
 {
-   std::optional<TerrainData> terrainData =
-      loadTerrainData(m_resources.terrainPath() / "terrain.json");
-   if (!terrainData)
-      return false;
-
-   const glm::ivec2 fieldSize{MainWndWidth / terrainData->mapSize.x,
-                              MainWndHeight / terrainData->mapSize.y};
-   m_terrain = Terrain{std::move(*terrainData), fieldSize};
+   auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
+   SpriteForm form{{}, m_terrain.fieldSize(), 0.f};
+   Sprite sprite{m_stdSpriteRenderer, spriteLook, form};
    
+   m_attackers.emplace_back(sprite, 0, m_terrain.path());
    return true;
 }
 

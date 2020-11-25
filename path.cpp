@@ -12,6 +12,20 @@ namespace
 {
 ///////////////////
 
+int makeStepCoord(int delta)
+{
+   return delta > 0 ? 1 : (delta < 0) ? -1 : 0;
+}
+
+
+FieldPos makeStep(FieldPos delta)
+{
+   return {makeStepCoord(delta.x), makeStepCoord(delta.y)};
+}
+
+
+///////////////////
+
 std::vector<FieldPos> generateSegment(FieldPos from, FieldPos to)
 {
    const FieldPos diff = to - from;
@@ -20,8 +34,8 @@ std::vector<FieldPos> generateSegment(FieldPos from, FieldPos to)
    if (diff.x == 0 && diff.y == 0)
       throw std::runtime_error("Path segment empty.");
 
-   const FieldPos step{diff.x > 0 ? 1 : 0, diff.y > 0 ? 1 : 0};
-   const int numSteps = std::max(diff.x, diff.y);
+   const FieldPos step = makeStep(diff);
+   const int numSteps = std::max(std::abs(diff.x), std::abs(diff.y));
 
    std::vector<FieldPos> segm;
    segm.resize(numSteps);
@@ -60,6 +74,14 @@ std::vector<FieldPos> generateFields(const std::vector<FieldPos>& turns)
 
 Path::Path(const std::vector<FieldPos>& turns) : m_fields{generateFields(turns)}
 {
+}
+
+
+std::optional<FieldPos> Path::first() const
+{
+   if (m_fields.empty())
+      return std::nullopt;
+   return m_fields[0];
 }
 
 

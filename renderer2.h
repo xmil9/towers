@@ -17,7 +17,9 @@ class Renderer2
 public:
    bool setup(Resources* resources, int viewWidth, int viewHeight);
    void setFrustumSize(int width, int height) { m_frustum.setSize(width, height); }
-   void render(const std::vector<Sprite>& sprites) const;
+
+   void beginRendering() const;
+   const gll::Program& shaders() const { return m_shaders; }
 
 private:
    bool setupShaders();

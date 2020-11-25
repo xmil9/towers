@@ -13,6 +13,9 @@ public:
    Terrain() = default;
    Terrain(TerrainData&& data, glm::ivec2 fieldSize);
 
+   const Path& path() const { return m_rep.paths[0]; }
+   glm::ivec2 fieldSize() const { return m_fieldSize; }
+
 private:
    TerrainData m_rep;
    // Size of each field in pixels.
