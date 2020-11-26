@@ -11,7 +11,6 @@
 class CoordSys
 {
 public:
-   CoordSys() = default;
    explicit CoordSys(glm::vec2 terrainDim);
 
    glm::vec2 toRenderCoords(Pos terrain) const;

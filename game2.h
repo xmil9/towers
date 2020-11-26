@@ -54,9 +54,9 @@ class Game2
    glfwl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;
-   CoordSys m_coordSys;
+   std::unique_ptr<CoordSys> m_coordSys;
    Renderer2 m_renderer;
    std::shared_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
-   Terrain m_terrain;
+   std::unique_ptr<Terrain> m_terrain;
 };

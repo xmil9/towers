@@ -122,13 +122,13 @@ bool Game2::setupRenderer()
 
 bool Game2::setupTerrain()
 {
-   m_coordSys = CoordSys({MainWndWidth, MainWndHeight});
+   m_coordSys = std::make_unique<CoordSys>(glm::vec2{MainWndWidth, MainWndHeight});
    
    std::optional<TerrainData> terrainData =
       loadTerrainData(m_resources.terrainPath() / "terrain.json");
    if (!terrainData)
       return false;
-   m_terrain = Terrain{std::move(*terrainData)};
+   m_terrain = std::make_unique<Terrain>(std::move(*terrainData));
 
    return true;
 }
@@ -163,7 +163,9 @@ bool Game2::setupAttackers()
    SpriteForm form{{}, {30.f, 30.f}, 0.f};
    Sprite sprite{m_stdSpriteRenderer, spriteLook, form};
    
-   m_attackers.emplace_back(sprite, 0, m_terrain.path(), m_coordSys);
+   assert(!!m_coordSys);
+   assert(!!m_terrain);
+   m_attackers.emplace_back(sprite, 0, m_terrain->path(), *m_coordSys);
    return true;
 }
 

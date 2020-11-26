@@ -10,7 +10,6 @@
 class Terrain
 {
 public:
-   Terrain() = default;
    explicit Terrain(TerrainData&& data);
 
    const Path& path() const { return m_rep.paths[0]; }
