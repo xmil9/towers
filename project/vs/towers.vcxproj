@@ -196,6 +196,7 @@ copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
   <ItemGroup>
     <ClInclude Include="..\..\attacker.h" />
     <ClInclude Include="..\..\basic_types.h" />
+    <ClInclude Include="..\..\coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\main_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />

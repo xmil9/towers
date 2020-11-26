@@ -122,14 +122,13 @@ bool Game2::setupRenderer()
 
 bool Game2::setupTerrain()
 {
+   m_coordSys = CoordSys({MainWndWidth, MainWndHeight});
+   
    std::optional<TerrainData> terrainData =
       loadTerrainData(m_resources.terrainPath() / "terrain.json");
    if (!terrainData)
       return false;
-
-   const glm::ivec2 fieldSize{MainWndWidth / terrainData->mapSize.x,
-                              MainWndHeight / terrainData->mapSize.y};
-   m_terrain = Terrain{std::move(*terrainData), fieldSize};
+   m_terrain = Terrain{std::move(*terrainData)};
 
    return true;
 }
@@ -161,10 +160,10 @@ bool Game2::setupSpriteData()
 bool Game2::setupAttackers()
 {
    auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
-   SpriteForm form{{}, m_terrain.fieldSize(), 0.f};
+   SpriteForm form{{}, {30.f, 30.f}, 0.f};
    Sprite sprite{m_stdSpriteRenderer, spriteLook, form};
    
-   m_attackers.emplace_back(sprite, 0, m_terrain.path());
+   m_attackers.emplace_back(sprite, 0, m_terrain.path(), m_coordSys);
    return true;
 }
 

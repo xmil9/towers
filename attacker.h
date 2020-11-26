@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "coord_sys.h"
 #include "path.h"
 #include "sprite.h"
 #include <cstddef>
@@ -17,29 +18,27 @@ class Program;
 
 class Attacker
 {
-public:
-   Attacker(Sprite sp, int hp, const Path& path);
+ public:
+   Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs);
 
    void render(const gll::Program& shaders) const;
    void advance();
 
-private:
+ private:
    float m_speed = 0.f;
    int m_hp = 0;
+   std::optional<Pos> m_pos;
    Sprite m_sprite;
    const Path& m_path;
-   std::optional<Pos> m_pos;
+   const CoordSys& m_coordSys;
 };
 
 
-inline Attacker::Attacker(Sprite sp, int hp, const Path& path)
-   : m_sprite{std::move(sp)}, m_hp{hp}, m_path{path}, m_pos{path.start().lt}
+inline Attacker::Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs)
+: m_sprite{std::move(sp)}, m_hp{hp}, m_pos{path.start().lt}, m_path{path}, m_coordSys{cs}
 {
    if (m_pos)
-   {
-      const glm::vec2 pixelPos{m_pos->x * 900, m_pos->y * 600};
-      m_sprite.setPosition(pixelPos);
-   }
+      m_sprite.setPosition(m_coordSys.toRenderCoords(*m_pos));
 }
 
 inline void Attacker::render(const gll::Program& shaders) const

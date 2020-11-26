@@ -204,6 +204,7 @@
     <ClInclude Include="..\..\terrain_data.h" />
     <ClInclude Include="..\..\path.h" />
     <ClInclude Include="..\..\terrain_types.h" />
+    <ClInclude Include="..\..\coord_sys.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\sprite_shader.vs">

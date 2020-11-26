@@ -5,6 +5,7 @@
 #pragma once
 #include "attacker.h"
 #include "basic_types.h"
+#include "coord_sys.h"
 #include "glfwl_lib.h"
 #include "input.h"
 #include "main_window.h"
@@ -53,6 +54,7 @@ class Game2
    glfwl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;
+   CoordSys m_coordSys;
    Renderer2 m_renderer;
    std::shared_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;

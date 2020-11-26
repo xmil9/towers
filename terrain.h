@@ -11,19 +11,16 @@ class Terrain
 {
 public:
    Terrain() = default;
-   Terrain(TerrainData&& data, glm::ivec2 fieldSize);
+   explicit Terrain(TerrainData&& data);
 
    const Path& path() const { return m_rep.paths[0]; }
-   glm::ivec2 fieldSize() const { return m_fieldSize; }
 
 private:
    TerrainData m_rep;
-   // Size of each field in pixels.
-   glm::ivec2 m_fieldSize;
 };
 
 
-inline Terrain::Terrain(TerrainData&& data, glm::ivec2 fieldSize)
-   : m_rep{std::move(data)}, m_fieldSize{fieldSize}
+inline Terrain::Terrain(TerrainData&& data)
+   : m_rep{std::move(data)}
 {
 }
