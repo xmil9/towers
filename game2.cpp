@@ -150,7 +150,7 @@ bool Game2::setupSpriteData()
    mesh.setPositions(std::move(positions));
    mesh.setIndices(std::move(indices));
    mesh.setTextureCoords(std::move(texCoords));
-   m_stdSpriteRenderer = std::make_shared<SpriteRenderer>(&m_resources);
+   m_stdSpriteRenderer = std::make_unique<SpriteRenderer>(&m_resources);
    m_stdSpriteRenderer->setMesh(mesh);
 
    return true;
@@ -161,7 +161,8 @@ bool Game2::setupAttackers()
 {
    auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
    SpriteForm form{{}, {30.f, 30.f}, 0.f};
-   Sprite sprite{m_stdSpriteRenderer, spriteLook, form};
+   assert(!!m_stdSpriteRenderer);
+   Sprite sprite{*m_stdSpriteRenderer, spriteLook, form};
    
    assert(!!m_coordSys);
    assert(!!m_terrain);

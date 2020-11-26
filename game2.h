@@ -56,7 +56,7 @@ class Game2
    Input m_input;
    std::unique_ptr<CoordSys> m_coordSys;
    Renderer2 m_renderer;
-   std::shared_ptr<SpriteRenderer> m_stdSpriteRenderer;
+   std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
    std::unique_ptr<Terrain> m_terrain;
 };
