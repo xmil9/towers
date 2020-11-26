@@ -37,7 +37,7 @@ inline Attacker::Attacker(Sprite sp, int hp, const Path& path)
 {
    if (m_pos)
    {
-      const glm::vec2 pixelPos{m_pos->x * 300, m_pos->y * 200};
+      const glm::vec2 pixelPos{m_pos->x * 900, m_pos->y * 600};
       m_sprite.setPosition(pixelPos);
    }
 }
