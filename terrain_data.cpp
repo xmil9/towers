@@ -128,10 +128,15 @@ TerrainData populateData(const ParsedTerrainData& parsed)
    std::transform(parsed.map.cbegin(), parsed.map.cend(), std::back_inserter(terrain.map),
                   [](char fieldSymbol) { return makeField(fieldSymbol); });
 
+   const glm::vec2 fieldSize{1.f / static_cast<float>(terrain.mapSize.x),
+                             1.f / static_cast<float>(terrain.mapSize.y)};
+
    terrain.paths.reserve(parsed.paths.size());
    std::transform(parsed.paths.cbegin(), parsed.paths.cend(),
                   std::back_inserter(terrain.paths),
-                  [](const std::vector<FieldPos>& turns) { return Path{turns}; });
+                  [&fieldSize](const std::vector<FieldPos>& turns) {
+                     return Path{turns, fieldSize};
+                  });
 
    return terrain;
 }

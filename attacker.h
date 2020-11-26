@@ -28,15 +28,18 @@ private:
    int m_hp = 0;
    Sprite m_sprite;
    const Path& m_path;
-   std::optional<FieldPos> m_pos;
+   std::optional<Pos> m_pos;
 };
 
 
 inline Attacker::Attacker(Sprite sp, int hp, const Path& path)
-   : m_sprite{std::move(sp)}, m_hp{hp}, m_path{path}, m_pos{path.first()}
+   : m_sprite{std::move(sp)}, m_hp{hp}, m_path{path}, m_pos{path.start().lt}
 {
    if (m_pos)
-      m_sprite.setPosition(*m_pos * 30);
+   {
+      const glm::vec2 pixelPos{m_pos->x * 300, m_pos->y * 200};
+      m_sprite.setPosition(pixelPos);
+   }
 }
 
 inline void Attacker::render(const gll::Program& shaders) const

@@ -6,5 +6,22 @@
 #include "glm/vec2.hpp"
 
 
-// Field position coordinates.
+// Position in terrain coordinates. Coordinates are in [0.0, 1.0].
+using Pos = glm::vec2;
+
+struct Rect
+{
+   Pos lt;
+   Pos rb;
+
+   bool contains(Pos at) const;
+};
+
+inline bool Rect::contains(Pos at) const
+{
+   return lt.x <= at.x && at.x < rb.x && lt.y <= at.y && at.y < rb.y;
+}
+
+
+// Indices of field.
 using FieldPos = glm::ivec2;

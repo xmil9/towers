@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "terrain_types.h"
+#include "glm/vec2.hpp"
 #include <optional>
 #include <vector>
 
@@ -12,13 +13,14 @@
 
 class Path
 {
-public:
+ public:
    Path() = default;
-   explicit Path(const std::vector<FieldPos>& turns);
+   Path(const std::vector<FieldPos>& turns, glm::vec2 fieldSize);
 
-   std::optional<FieldPos> first() const;
-   std::optional<FieldPos> next(const FieldPos& from) const;
+   Rect start() const { return m_turns[0]; }
+   std::optional<Rect> nextTurn(const Pos& at) const;
 
-private:
-   std::vector<FieldPos> m_fields;
+ private:
+    // Terrain bounds of fields where the path takes a turn.
+   std::vector<Rect> m_turns;
 };
