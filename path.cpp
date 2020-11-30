@@ -84,12 +84,6 @@ std::vector<Rect> generateTerrainTurns(const std::vector<FieldPos>& turns,
    return terrainTurns;
 }
 
-
-bool contains(Pos lt, Pos rb, Pos pos)
-{
-   return lt.x <= pos.x && pos.x < rb.x && lt.y <= pos.y && pos.y < rb.y;
-}
-
 } // namespace
 
 
