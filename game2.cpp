@@ -46,12 +46,9 @@ void Game2::run()
    while (!m_mainWnd.shouldClose())
    {
       m_frameClock.nextLap();
-      m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
-      // advanceState();
-      m_renderer.beginRendering();
-      for (const auto& attacker : m_attackers)
-         attacker.render(m_renderer.shaders());
-      m_mainWnd.swapBuffers();
+      processInput();
+      updateState();
+      render();
    }
 }
 
@@ -123,7 +120,7 @@ bool Game2::setupRenderer()
 bool Game2::setupTerrain()
 {
    m_coordSys = std::make_unique<CoordSys>(glm::vec2{MainWndWidth, MainWndHeight});
-   
+
    std::optional<TerrainData> terrainData =
       loadTerrainData(m_resources.terrainPath() / "terrain.json");
    if (!terrainData)
@@ -163,11 +160,34 @@ bool Game2::setupAttackers()
    SpriteForm form{{}, {30.f, 30.f}, 0.f};
    assert(!!m_stdSpriteRenderer);
    Sprite sprite{*m_stdSpriteRenderer, spriteLook, form};
-   
+
    assert(!!m_coordSys);
    assert(!!m_terrain);
    m_attackers.emplace_back(sprite, 0, m_terrain->path(), *m_coordSys);
    return true;
+}
+
+
+void Game2::processInput()
+{
+   m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
+}
+
+
+void Game2::updateState()
+{
+   for (auto& attacker : m_attackers)
+      attacker.update();
+}
+
+
+void Game2::render()
+{
+   m_renderer.beginRendering();
+   for (const auto& attacker : m_attackers)
+      attacker.render(m_renderer.shaders());
+
+   m_mainWnd.swapBuffers();
 }
 
 

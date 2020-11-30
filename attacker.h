@@ -22,10 +22,10 @@ class Attacker
    Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs);
 
    void render(const gll::Program& shaders) const;
-   void advance();
+   void update();
 
  private:
-   float m_speed = 0.f;
+   float m_speed = .001f;
    int m_hp = 0;
    std::optional<Pos> m_pos;
    Sprite m_sprite;

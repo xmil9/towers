@@ -5,6 +5,6 @@
 #include "attacker.h"
 
 
-void Attacker::advance()
+void Attacker::update()
 {
 }
