@@ -25,6 +25,9 @@ class Attacker
    void update();
 
  private:
+   void move();
+
+ private:
    float m_speed = .001f;
    int m_hp = 0;
    std::optional<Pos> m_pos;
@@ -35,7 +38,7 @@ class Attacker
 
 
 inline Attacker::Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs)
-: m_sprite{std::move(sp)}, m_hp{hp}, m_pos{path.start().lt}, m_path{path}, m_coordSys{cs}
+: m_sprite{std::move(sp)}, m_hp{hp}, m_pos{path.start().center()}, m_path{path}, m_coordSys{cs}
 {
    if (m_pos)
       m_sprite.setPosition(m_coordSys.toRenderCoords(*m_pos));
