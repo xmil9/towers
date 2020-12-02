@@ -4,12 +4,18 @@
 //
 #pragma once
 #include "glm/vec2.hpp"
+#include "essentutils/fputil.h"
 
 
 ///////////////////
 
 // Position in terrain coordinates. Coordinates are in range [0.0, 1.0].
 using Pos = glm::vec2;
+
+inline bool isEqualPos(Pos a, Pos b)
+{
+   return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
+}
 
 
 ///////////////////

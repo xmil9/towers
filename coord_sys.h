@@ -8,6 +8,10 @@
 #include <stdexcept>
 
 
+///////////////////
+
+// Maps terrain coordinates ([0, 1]x[0, 1]) to render coordinates
+// ([0, terrain width]x[0, terrain height]).
 class CoordSys
 {
 public:
@@ -17,6 +21,7 @@ public:
    Pos toTerrainCoords(glm::vec2 render) const;
 
 private:
+   // Size of terrain in render coordinates, e.g. 800x600.
    glm::vec2 m_terrainDim;
 };
 
@@ -30,7 +35,6 @@ inline CoordSys::CoordSys(glm::vec2 terrainDim)
 
 inline glm::vec2 CoordSys::toRenderCoords(Pos terrain) const
 {
-   assert(m_terrainDim.x != 0.f && m_terrainDim.y != 0.f);
    return terrain * m_terrainDim;
 }
 

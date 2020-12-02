@@ -21,30 +21,20 @@ class Attacker
  public:
    Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs);
 
-   void render(const gll::Program& shaders) const;
+   void render(const gll::Program& shaders) const { m_sprite.render(shaders); }
    void update();
 
  private:
    void move();
+   bool isAtLastPosition() const;
+   void setPosition(std::optional<Pos> pos);
 
  private:
    float m_speed = .001f;
    int m_hp = 0;
    std::optional<Pos> m_pos;
-   Sprite m_sprite;
+   std::optional<Path::Index> m_currTurn;
    const Path& m_path;
    const CoordSys& m_coordSys;
+   Sprite m_sprite;
 };
-
-
-inline Attacker::Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs)
-: m_sprite{std::move(sp)}, m_hp{hp}, m_pos{path.start().center()}, m_path{path}, m_coordSys{cs}
-{
-   if (m_pos)
-      m_sprite.setPosition(m_coordSys.toRenderCoords(*m_pos));
-}
-
-inline void Attacker::render(const gll::Program& shaders) const
-{
-   m_sprite.render(shaders);
-}
