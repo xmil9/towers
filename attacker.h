@@ -27,12 +27,12 @@ class Attacker
  private:
    void move();
    bool isAtLastPosition() const;
-   void setPosition(std::optional<Pos> pos);
+   void setPosition(std::optional<MapPos> pos);
 
  private:
    float m_speed = .001f;
    int m_hp = 0;
-   std::optional<Pos> m_pos;
+   std::optional<MapPos> m_pos;
    std::optional<Path::Index> m_currTurn;
    const Path& m_path;
    const MapCoordSys& m_coordSys;

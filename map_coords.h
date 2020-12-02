@@ -11,9 +11,9 @@
 ///////////////////
 
 // Position in map coordinates. Coordinates are in range [0.0, 1.0].
-using Pos = glm::vec2;
+using MapPos = glm::vec2;
 
-inline bool isEqualPos(Pos a, Pos b)
+inline bool isEqualPos(MapPos a, MapPos b)
 {
    return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
 }
@@ -21,21 +21,21 @@ inline bool isEqualPos(Pos a, Pos b)
 
 ///////////////////
 
-struct Rect
+struct MapRect
 {
-   Pos lt;
-   Pos rb;
+   MapPos lt;
+   MapPos rb;
 
-   bool contains(Pos at) const;
-   Pos center() const;
+   bool contains(MapPos at) const;
+   MapPos center() const;
 };
 
-inline bool Rect::contains(Pos at) const
+inline bool MapRect::contains(MapPos at) const
 {
    return lt.x <= at.x && at.x < rb.x && lt.y <= at.y && at.y < rb.y;
 }
 
-inline Pos Rect::center() const
+inline MapPos MapRect::center() const
 {
    return {(lt.x + rb.x) / 2.f, (lt.y + rb.y) / 2.f};
 }
@@ -56,8 +56,8 @@ class MapCoordSys
 public:
    explicit MapCoordSys(glm::vec2 renderDim);
 
-   glm::vec2 toRenderCoords(Pos mapPos) const;
-   Pos toMapCoords(glm::vec2 renderPos) const;
+   glm::vec2 toRenderCoords(MapPos mapPos) const;
+   MapPos toMapCoords(glm::vec2 renderPos) const;
 
 private:
    // Size of map in render coordinates, e.g. 800x600.
@@ -72,12 +72,12 @@ inline MapCoordSys::MapCoordSys(glm::vec2 renderDim)
       throw std::runtime_error("Map of zero size is illegal.");
 }
 
-inline glm::vec2 MapCoordSys::toRenderCoords(Pos mapPos) const
+inline glm::vec2 MapCoordSys::toRenderCoords(MapPos mapPos) const
 {
    return mapPos * m_renderDim;
 }
 
-inline Pos MapCoordSys::toMapCoords(glm::vec2 renderPos) const
+inline MapPos MapCoordSys::toMapCoords(glm::vec2 renderPos) const
 {
    assert(m_renderDim.x != 0.f && m_renderDim.y != 0.f);
    return renderPos / m_renderDim;

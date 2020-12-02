@@ -22,24 +22,24 @@ class Path
    Path(const std::vector<FieldPos>& turns, glm::vec2 fieldSize);
 
    std::size_t size() const { return m_turns.size(); }
-   Rect operator[](Index idx) const;
-   Rect start() const { return m_turns[0]; }
-   Rect finish() const;
-   std::optional<Rect> nextTurn(const Pos& at) const;
+   MapRect operator[](Index idx) const;
+   MapRect start() const { return m_turns[0]; }
+   MapRect finish() const;
+   std::optional<MapRect> nextTurn(const MapPos& at) const;
 
  private:
    // Bounds (in map coords [0, 1]x[0, 1]) of fields where the path takes a turn.
-   std::vector<Rect> m_turns;
+   std::vector<MapRect> m_turns;
 };
 
 
-inline Rect Path::operator[](Index idx) const
+inline MapRect Path::operator[](Index idx) const
 {
    assert(idx < size());
    return m_turns[idx];
 }
 
-inline Rect Path::finish() const
+inline MapRect Path::finish() const
 {
    assert(size() > 0);
    return m_turns[size() - 1];

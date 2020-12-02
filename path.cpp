@@ -12,15 +12,15 @@ namespace
 {
 ///////////////////
 
-std::vector<Rect> generateTerrainTurns(const std::vector<FieldPos>& turns,
+std::vector<MapRect> generateTerrainTurns(const std::vector<FieldPos>& turns,
                                        glm::vec2 fieldSize)
 {
-   std::vector<Rect> terrainTurns;
+   std::vector<MapRect> terrainTurns;
    terrainTurns.reserve(turns.size());
    std::transform(turns.begin(), turns.end(), std::back_inserter(terrainTurns),
                   [&fieldSize](FieldPos pos) {
-                     Pos lt = glm::vec2(pos) * fieldSize;
-                     return Rect{lt, lt + fieldSize};
+                     MapPos lt = glm::vec2(pos) * fieldSize;
+                     return MapRect{lt, lt + fieldSize};
                   });
    return terrainTurns;
 }
@@ -38,10 +38,10 @@ Path::Path(const std::vector<FieldPos>& turns, glm::vec2 fieldSize)
 }
 
 
-std::optional<Rect> Path::nextTurn(const Pos& at) const
+std::optional<MapRect> Path::nextTurn(const MapPos& at) const
 {
    auto turnIter = std::find_if(m_turns.cbegin(), m_turns.cend(),
-                                 [&](const Rect& turn) { return turn.contains(at); });
+                                [&](const MapRect& turn) { return turn.contains(at); });
    if (turnIter == m_turns.cend())
       throw std::runtime_error("Position not on path.");
 

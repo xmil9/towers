@@ -33,8 +33,8 @@ void Attacker::move()
 
    assert(m_pos && m_currTurn);
 
-   Rect nextTurn = m_path[*m_currTurn + 1];
-   const Pos nextTurnPos = nextTurn.center();
+   MapRect nextTurn = m_path[*m_currTurn + 1];
+   const MapPos nextTurnPos = nextTurn.center();
    const glm::vec2 dist = nextTurnPos - *m_pos;
    const glm::vec2 direction = glm::normalize(dist);
 
@@ -58,7 +58,7 @@ bool Attacker::isAtLastPosition() const
 }
 
 
-void Attacker::setPosition(std::optional<Pos> pos)
+void Attacker::setPosition(std::optional<MapPos> pos)
 {
    m_pos = pos;
    if (pos)
