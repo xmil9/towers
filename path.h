@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "terrain_types.h"
+#include "map_types.h"
 #include "glm/vec2.hpp"
 #include <cassert>
 #include <optional>
@@ -28,7 +28,7 @@ class Path
    std::optional<Rect> nextTurn(const Pos& at) const;
 
  private:
-   // Terrain bounds of fields where the path takes a turn.
+   // Bounds (in map coords [0, 1]x[0, 1]) of fields where the path takes a turn.
    std::vector<Rect> m_turns;
 };
 

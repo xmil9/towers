@@ -132,7 +132,7 @@
 copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\map.json" "$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -162,7 +162,7 @@ copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
+copy /A /Y "$(ProjectDir)..\..\map.json" "$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -189,7 +189,7 @@ copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\sprite_renderer.cpp" />
-    <ClCompile Include="..\..\terrain_data.cpp" />
+    <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
@@ -236,9 +236,9 @@ copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
     <ClInclude Include="..\..\renderer2.h" />
     <ClInclude Include="..\..\sprite.h" />
     <ClInclude Include="..\..\sprite_renderer.h" />
-    <ClInclude Include="..\..\terrain.h" />
-    <ClInclude Include="..\..\terrain_data.h" />
-    <ClInclude Include="..\..\terrain_types.h" />
+    <ClInclude Include="..\..\map.h" />
+    <ClInclude Include="..\..\map_data.h" />
+    <ClInclude Include="..\..\map_types.h" />
     <ClInclude Include="..\..\textures.h" />
   </ItemGroup>
   <ItemGroup>
@@ -253,7 +253,7 @@ copy /A /Y "$(ProjectDir)..\..\terrain.json" "$(OutDir)"
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\terrain.json" />
+    <Text Include="..\..\map.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

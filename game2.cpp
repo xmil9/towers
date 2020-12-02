@@ -3,8 +3,8 @@
 // MIT license
 //
 #include "game2.h"
+#include "map_data.h"
 #include "mesh2.h"
-#include "terrain_data.h"
 #include "gll_debug.h"
 #include <iostream>
 
@@ -121,11 +121,11 @@ bool Game2::setupTerrain()
 {
    m_coordSys = std::make_unique<CoordSys>(glm::vec2{MainWndWidth, MainWndHeight});
 
-   std::optional<TerrainData> terrainData =
-      loadTerrainData(m_resources.terrainPath() / "terrain.json");
-   if (!terrainData)
+   std::optional<MapData> mapData =
+      loadMapData(m_resources.mapPath() / "map.json");
+   if (!mapData)
       return false;
-   m_terrain = std::make_unique<Terrain>(std::move(*terrainData));
+   m_map = std::make_unique<Map>(std::move(*mapData));
 
    return true;
 }
@@ -162,8 +162,8 @@ bool Game2::setupAttackers()
    Sprite sprite{*m_stdSpriteRenderer, spriteLook, form};
 
    assert(!!m_coordSys);
-   assert(!!m_terrain);
-   m_attackers.emplace_back(sprite, 0, m_terrain->path(), *m_coordSys);
+   assert(!!m_map);
+   m_attackers.emplace_back(sprite, 0, m_map->path(), *m_coordSys);
    return true;
 }
 

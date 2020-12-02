@@ -3,23 +3,23 @@
 // MIT license
 //
 #pragma once
-#include "terrain_data.h"
+#include "map_data.h"
 #include "glm/vec2.hpp"
 
 
-class Terrain
+class Map
 {
 public:
-   explicit Terrain(TerrainData&& data);
+   explicit Map(MapData&& data);
 
    const Path& path() const { return m_rep.paths[0]; }
 
 private:
-   TerrainData m_rep;
+   MapData m_rep;
 };
 
 
-inline Terrain::Terrain(TerrainData&& data)
+inline Map::Map(MapData&& data)
    : m_rep{std::move(data)}
 {
 }

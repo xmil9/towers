@@ -4,19 +4,19 @@
 //
 #pragma once
 #include "field.h"
+#include "map_types.h"
 #include "path.h"
-#include "terrain_types.h"
 #include <cstddef>
 #include <filesystem>
 #include <optional>
 #include <vector>
 
 
-struct TerrainData
+struct MapData
 {
-   // Rows and columns in the map.
+   // Number of rows and columns in the map.
    glm::ivec2 mapSize;
-   std::vector<Field> map;
+   std::vector<Field> terrain;
    // Coordinates of start fields.
    std::vector<FieldPos> starts;
    // Coordinates of finish field.
@@ -25,4 +25,4 @@ struct TerrainData
    std::vector<Path> paths;
 };
 
-std::optional<TerrainData> loadTerrainData(const std::filesystem::path& path);
+std::optional<MapData> loadMapData(const std::filesystem::path& path);

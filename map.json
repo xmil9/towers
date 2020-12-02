@@ -1,8 +1,8 @@
 {
-	"terrain": {
+	"map": {
 		"rows": 20,
 		"cols": 30,
-		"map": [
+		"terrain": [
 			"xxxxxxxxxxxxxxxxxxxxx.xxxxxxxx",
 			"xxxxx_____________xxx.xxx_____",
 			"xxxx_________________.________",

@@ -9,9 +9,9 @@
 #include "glfwl_lib.h"
 #include "input.h"
 #include "main_window.h"
+#include "map.h"
 #include "renderer2.h"
 #include "resources.h"
-#include "terrain.h"
 #include <memory>
 #include <vector>
 
@@ -62,5 +62,5 @@ class Game2
    Renderer2 m_renderer;
    std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
-   std::unique_ptr<Terrain> m_terrain;
+   std::unique_ptr<Map> m_map;
 };

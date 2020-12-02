@@ -9,7 +9,7 @@
 
 ///////////////////
 
-// Position in terrain coordinates. Coordinates are in range [0.0, 1.0].
+// Position in map coordinates. Coordinates are in range [0.0, 1.0].
 using Pos = glm::vec2;
 
 inline bool isEqualPos(Pos a, Pos b)
