@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "map_types.h"
+#include "map_coords.h"
 #include "glm/vec2.hpp"
 #include <cassert>
 #include <optional>

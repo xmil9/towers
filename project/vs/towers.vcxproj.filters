@@ -201,10 +201,9 @@
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\attacker.h" />
     <ClInclude Include="..\..\path.h" />
-    <ClInclude Include="..\..\coord_sys.h" />
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
-    <ClInclude Include="..\..\map_types.h" />
+    <ClInclude Include="..\..\map_coords.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\sprite_shader.vs">

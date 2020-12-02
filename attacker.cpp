@@ -7,7 +7,7 @@
 #include "essentutils/fputil.h"
 
 
-Attacker::Attacker(Sprite sp, int hp, const Path& path, const CoordSys& cs)
+Attacker::Attacker(Sprite sp, int hp, const Path& path, const MapCoordSys& cs)
 : m_sprite{std::move(sp)}, m_hp{hp}, m_pos{path.start().center()},
   m_currTurn{0}, m_path{path}, m_coordSys{cs}
 {

@@ -196,7 +196,7 @@ copy /A /Y "$(ProjectDir)..\..\map.json" "$(OutDir)"
   <ItemGroup>
     <ClInclude Include="..\..\attacker.h" />
     <ClInclude Include="..\..\basic_types.h" />
-    <ClInclude Include="..\..\coord_sys.h" />
+    <ClInclude Include="..\..\map_coords.h" />
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\main_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />
@@ -238,7 +238,6 @@ copy /A /Y "$(ProjectDir)..\..\map.json" "$(OutDir)"
     <ClInclude Include="..\..\sprite_renderer.h" />
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
-    <ClInclude Include="..\..\map_types.h" />
     <ClInclude Include="..\..\textures.h" />
   </ItemGroup>
   <ItemGroup>

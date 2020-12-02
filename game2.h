@@ -5,11 +5,11 @@
 #pragma once
 #include "attacker.h"
 #include "basic_types.h"
-#include "coord_sys.h"
 #include "glfwl_lib.h"
 #include "input.h"
 #include "main_window.h"
 #include "map.h"
+#include "map_coords.h"
 #include "renderer2.h"
 #include "resources.h"
 #include <memory>
@@ -58,7 +58,7 @@ class Game2
    glfwl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;
-   std::unique_ptr<CoordSys> m_coordSys;
+   std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;
    std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;

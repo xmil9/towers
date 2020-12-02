@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "field.h"
-#include "map_types.h"
+#include "map_coords.h"
 #include "path.h"
 #include <cstddef>
 #include <filesystem>
