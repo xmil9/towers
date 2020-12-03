@@ -226,6 +226,7 @@ copy /B /Y "$(ProjectDir)..\..\attacker.png" "$(OutDir)"
     <ClInclude Include="..\..\gll_vao.h" />
     <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\path.h" />
+    <ClInclude Include="..\..\render_coords.h" />
     <ClInclude Include="..\..\sprite_form.h" />
     <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\mesh2.h" />

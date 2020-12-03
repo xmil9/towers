@@ -204,6 +204,7 @@
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
     <ClInclude Include="..\..\map_coords.h" />
+    <ClInclude Include="..\..\render_coords.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\sprite_shader.vs">

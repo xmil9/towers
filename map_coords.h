@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "render_coords.h"
 #include "glm/vec2.hpp"
 #include "essentutils/fputil.h"
 #include <stdexcept>
@@ -17,6 +18,9 @@ inline bool isEqualPos(MapPos a, MapPos b)
 {
    return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
 }
+
+// Dimensions in map coordinates.
+using MapDim = glm::vec2;
 
 
 ///////////////////
@@ -50,35 +54,35 @@ using FieldPos = glm::ivec2;
 ///////////////////
 
 // Converts map coordinates ([0, 1]x[0, 1]) to render coordinates
-// ([0, map width]x[0, map height]).
+// ([0, map width in pixels]x[0, map height in pixels]).
 class MapCoordSys
 {
 public:
-   explicit MapCoordSys(glm::vec2 renderDim);
+   explicit MapCoordSys(RenderDim rdim);
 
-   glm::vec2 toRenderCoords(MapPos mapPos) const;
-   MapPos toMapCoords(glm::vec2 renderPos) const;
+   RenderPos toRenderCoords(MapPos mpos) const;
+   MapPos toMapCoords(RenderPos rpos) const;
 
 private:
    // Size of map in render coordinates, e.g. 800x600.
-   glm::vec2 m_renderDim;
+   RenderDim m_renderDim;
 };
 
 
-inline MapCoordSys::MapCoordSys(glm::vec2 renderDim)
-   : m_renderDim{renderDim}
+inline MapCoordSys::MapCoordSys(RenderDim rdim)
+   : m_renderDim{rdim}
 {
    if (m_renderDim.x == 0.f || m_renderDim.y == 0.f)
       throw std::runtime_error("Map of zero size is illegal.");
 }
 
-inline glm::vec2 MapCoordSys::toRenderCoords(MapPos mapPos) const
+inline RenderPos MapCoordSys::toRenderCoords(MapPos mpos) const
 {
-   return mapPos * m_renderDim;
+   return mpos * m_renderDim;
 }
 
-inline MapPos MapCoordSys::toMapCoords(glm::vec2 renderPos) const
+inline MapPos MapCoordSys::toMapCoords(RenderPos rpos) const
 {
    assert(m_renderDim.x != 0.f && m_renderDim.y != 0.f);
-   return renderPos / m_renderDim;
+   return rpos / m_renderDim;
 }
