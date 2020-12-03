@@ -13,13 +13,13 @@ namespace
 ///////////////////
 
 std::vector<MapRect> generateTerrainTurns(const std::vector<FieldPos>& turns,
-                                       glm::vec2 fieldSize)
+                                          MapDim fieldSize)
 {
    std::vector<MapRect> terrainTurns;
    terrainTurns.reserve(turns.size());
    std::transform(turns.begin(), turns.end(), std::back_inserter(terrainTurns),
                   [&fieldSize](FieldPos pos) {
-                     MapPos lt = glm::vec2(pos) * fieldSize;
+                     const MapPos lt = MapPos(pos) * fieldSize;
                      return MapRect{lt, lt + fieldSize};
                   });
    return terrainTurns;
@@ -30,7 +30,7 @@ std::vector<MapRect> generateTerrainTurns(const std::vector<FieldPos>& turns,
 
 ///////////////////
 
-Path::Path(const std::vector<FieldPos>& turns, glm::vec2 fieldSize)
+Path::Path(const std::vector<FieldPos>& turns, MapDim fieldSize)
 : m_turns{generateTerrainTurns(turns, fieldSize)}
 {
    if (m_turns.empty())

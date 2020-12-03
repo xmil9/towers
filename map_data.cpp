@@ -26,10 +26,10 @@ json readFile(const std::filesystem::path& path)
 
 struct ParsedMapData
 {
-   glm::ivec2 mapSize;
+   FieldDim mapSize;
    std::string terrain;
-   std::vector<glm::ivec2> starts;
-   glm::ivec2 finish;
+   std::vector<FieldPos> starts;
+   FieldPos finish;
    std::vector<std::vector<FieldPos>> paths;
 
    bool isValid() const;
@@ -129,8 +129,8 @@ MapData populateData(const ParsedMapData& parsed)
                   std::back_inserter(map.terrain),
                   [](char fieldSymbol) { return makeField(fieldSymbol); });
 
-   const glm::vec2 fieldSize{1.f / static_cast<float>(map.mapSize.x),
-                             1.f / static_cast<float>(map.mapSize.y)};
+   const MapDim fieldSize{1.f / static_cast<float>(map.mapSize.x),
+                          1.f / static_cast<float>(map.mapSize.y)};
 
    map.paths.reserve(parsed.paths.size());
    std::transform(parsed.paths.cbegin(), parsed.paths.cend(),

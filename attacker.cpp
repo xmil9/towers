@@ -35,10 +35,10 @@ void Attacker::move()
 
    MapRect nextTurn = m_path[*m_currTurn + 1];
    const MapPos nextTurnPos = nextTurn.center();
-   const glm::vec2 dist = nextTurnPos - *m_pos;
-   const glm::vec2 direction = glm::normalize(dist);
+   const MapVec dist = nextTurnPos - *m_pos;
+   const MapVec direction = glm::normalize(dist);
 
-   glm::vec2 offset = m_speed * direction;
+   MapVec offset = m_speed * direction;
    // Limit movement to next turn.
    if (sutil::greaterEqual(glm::length(offset), glm::length(dist)))
    {

@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "glm/vec2.hpp"
+#include "render_coords.h"
 
 
 ///////////////////
@@ -12,8 +12,8 @@
 struct SpriteForm
 {
    // Position of left-top corner.
-   glm::vec2 pos;
-   glm::vec2 size;
+   RenderPos pos;
+   RenderDim size;
    // Rotation angle in radians.
    float rot = 0.f;
 };

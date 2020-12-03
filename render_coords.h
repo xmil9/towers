@@ -13,5 +13,8 @@
 // map height in pixels].
 using RenderPos = glm::vec2;
 
+// Vector in render coordinates.
+using RenderVec = glm::vec2;
+
 // Dimensions in render coordinates.
 using RenderDim = glm::vec2;

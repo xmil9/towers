@@ -15,7 +15,7 @@
 struct MapData
 {
    // Number of rows and columns in the map.
-   glm::ivec2 mapSize;
+   FieldDim mapSize;
    std::vector<Field> terrain;
    // Coordinates of start fields.
    std::vector<FieldPos> starts;

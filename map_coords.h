@@ -14,13 +14,17 @@
 // Position in map coordinates. Coordinates are in range [0.0, 1.0].
 using MapPos = glm::vec2;
 
-inline bool isEqualPos(MapPos a, MapPos b)
-{
-   return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
-}
+// Vector in map coordinates.
+using MapVec = glm::vec2;
 
 // Dimensions in map coordinates.
 using MapDim = glm::vec2;
+
+
+inline bool isEqualPos(glm::vec2 a, glm::vec2 b)
+{
+   return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
+}
 
 
 ///////////////////
@@ -47,8 +51,12 @@ inline MapPos MapRect::center() const
 
 ///////////////////
 
-// Indices of a field.
+// X- and y-indices of a field. Coordinates are in range
+// [0, map columns - 1]x[1, map rows - 1].
 using FieldPos = glm::ivec2;
+
+// Dimensions in number of fields.
+using FieldDim = glm::ivec2;
 
 
 ///////////////////
@@ -57,20 +65,19 @@ using FieldPos = glm::ivec2;
 // ([0, map width in pixels]x[0, map height in pixels]).
 class MapCoordSys
 {
-public:
+ public:
    explicit MapCoordSys(RenderDim rdim);
 
    RenderPos toRenderCoords(MapPos mpos) const;
    MapPos toMapCoords(RenderPos rpos) const;
 
-private:
+ private:
    // Size of map in render coordinates, e.g. 800x600.
    RenderDim m_renderDim;
 };
 
 
-inline MapCoordSys::MapCoordSys(RenderDim rdim)
-   : m_renderDim{rdim}
+inline MapCoordSys::MapCoordSys(RenderDim rdim) : m_renderDim{rdim}
 {
    if (m_renderDim.x == 0.f || m_renderDim.y == 0.f)
       throw std::runtime_error("Map of zero size is illegal.");

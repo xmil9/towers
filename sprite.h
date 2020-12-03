@@ -23,8 +23,8 @@ class Sprite
    Sprite(SpriteRenderer& renderer, std::shared_ptr<SpriteLook> look,
           const SpriteForm& form);
 
-   Sprite& setPosition(glm::vec2 pos);
-   Sprite& setSize(glm::vec2 size);
+   Sprite& setPosition(RenderPos pos);
+   Sprite& setSize(RenderDim size);
    Sprite& setRotation(float rot);
    Sprite& setForm(const SpriteForm& form);
 
@@ -49,13 +49,13 @@ inline Sprite::Sprite(SpriteRenderer& renderer,
 {
 }
 
-inline Sprite& Sprite::setPosition(glm::vec2 pos)
+inline Sprite& Sprite::setPosition(RenderPos pos)
 {
    m_form.pos = pos;
    return *this;
 }
 
-inline Sprite& Sprite::setSize(glm::vec2 size)
+inline Sprite& Sprite::setSize(RenderDim size)
 {
    m_form.size = size;
    return *this;
