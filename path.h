@@ -25,7 +25,6 @@ class Path
    MapRect operator[](Index idx) const;
    MapRect start() const { return m_turns[0]; }
    MapRect finish() const;
-   std::optional<MapRect> nextTurn(const MapPos& at) const;
 
  private:
    // Bounds (in map coords [0, 1]x[0, 1]) of fields where the path takes a turn.
