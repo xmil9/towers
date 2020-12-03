@@ -107,7 +107,7 @@ bool Game2::setupOutput()
 
 bool Game2::setupResources()
 {
-   return m_resources.loadTexture("test", m_resources.texturePath() / "directions.png");
+   return m_resources.loadTexture("attacker", m_resources.texturePath() / "attacker.png");
 }
 
 
@@ -155,7 +155,7 @@ bool Game2::setupSpriteData()
 
 bool Game2::setupAttackers()
 {
-   auto spriteLook = std::make_shared<SpriteLook>("test", glm::vec3{.8f, .5f, .5f});
+   auto spriteLook = std::make_shared<SpriteLook>("attacker");
    SpriteForm form{{}, {30.f, 30.f}, 0.f};
    assert(!!m_stdSpriteRenderer);
    Sprite sprite{*m_stdSpriteRenderer, spriteLook, form};
