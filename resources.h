@@ -17,7 +17,7 @@ class Resources
 
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);
-   const gll::Texture2D& getTexture(const std::string& tag) const;
+   const Textures::Entry& getTexture(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
  private:
@@ -32,7 +32,7 @@ inline bool Resources::loadTexture(const std::string& tag,
    return m_texRepos.load(tag, texFile, flipVert);
 }
 
-inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
+inline const Textures::Entry& Resources::getTexture(const std::string& tag) const
 {
    return m_texRepos[tag];
 }

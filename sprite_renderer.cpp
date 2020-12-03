@@ -62,7 +62,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
    if (look.hasTexture())
    {
       glActiveTexture(GL_TEXTURE0);
-      texBinding.bind(m_resources->getTexture(look.texture()));
+      texBinding.bind(m_resources->getTexture(look.texture()).texture);
    }
 
    gll::Uniform colorUf = shaders.uniform("spriteColor");

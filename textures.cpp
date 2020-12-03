@@ -6,7 +6,7 @@
 #include "png_texture.h"
 
 
-static gll::Texture2D NullTexture;
+static Textures::Entry NullEntry;
 
 
 bool Textures::load(const std::string& tag, const std::filesystem::path& texFile,
@@ -27,13 +27,14 @@ bool Textures::load(const std::string& tag, const std::filesystem::path& texFile
                  tex.pixelType(), tex.data());
    glTex.generateMipmap();
 
-   const auto [pos, ok] = m_texs.insert_or_assign(tag, std::move(glTex));
+   const auto [pos, ok] =
+      m_texs.insert_or_assign(tag, Entry{std::move(glTex), tex.width(), tex.height()});
    return ok;
 }
 
 
-const gll::Texture2D& Textures::operator[](const std::string& tag) const
+const Textures::Entry& Textures::operator[](const std::string& tag) const
 {
    const auto pos = m_texs.find(tag);
-   return (pos != m_texs.end()) ? pos->second : NullTexture;
+   return (pos != m_texs.end()) ? pos->second : NullEntry;
 }
