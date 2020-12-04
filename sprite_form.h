@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "basic_types.h"
 #include "render_coords.h"
 
 
@@ -14,6 +15,5 @@ struct SpriteForm
    // Position of left-top corner.
    RenderPos pos;
    RenderDim size;
-   // Rotation angle in radians.
-   float rot = 0.f;
+   Angle_t rot{0.f};
 };

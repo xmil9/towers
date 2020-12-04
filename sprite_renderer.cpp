@@ -16,7 +16,7 @@ namespace
 {
 ///////////////////
 
-glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const RenderDim& size, float rot)
+glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const RenderDim& size, Angle_t rot)
 {
    constexpr glm::vec3 rotNormal{0.f, 0.f, 1.f};
    return
@@ -25,13 +25,13 @@ glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const RenderDim& size, float ro
          // Rotate
          glm::rotate(
             // Translate center to origin.
-            glm::translate(m, glm::vec3(.5f * size.x, .5f * size.y, 0.f)), rot,
+            glm::translate(m, glm::vec3(.5f * size.x, .5f * size.y, 0.f)), rot.radians(),
             rotNormal),
          glm::vec3(-.5f * size.x, -.5f * size.y, 0.f));
 }
 
 
-glm::mat4x4 calcModelMatrix(const RenderPos& pos, const RenderDim& size, float rot)
+glm::mat4x4 calcModelMatrix(const RenderPos& pos, const RenderDim& size, Angle_t rot)
 {
    return
       // Finally scale.

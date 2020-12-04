@@ -156,7 +156,7 @@ bool Game2::setupSpriteData()
 bool Game2::setupAttackers()
 {
    auto spriteLook = std::make_shared<SpriteLook>("attacker");
-   SpriteForm form{{}, {30.f, 30.f}, 0.f};
+   SpriteForm form{{}, {30.f, 30.f}, Angle_t{0.f}};
    assert(!!m_stdSpriteRenderer);
    Sprite sprite{*m_stdSpriteRenderer, spriteLook, form};
 
