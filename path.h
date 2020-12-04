@@ -19,7 +19,7 @@ class Path
 
  public:
    Path() = default;
-   Path(const std::vector<FieldPos>& turns, glm::vec2 fieldSize);
+   Path(const std::vector<FieldPos>& turns, MapDim fieldSize);
 
    std::size_t size() const { return m_turns.size(); }
    MapRect operator[](Index idx) const;

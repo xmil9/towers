@@ -119,7 +119,7 @@ bool Game2::setupRenderer()
 
 bool Game2::setupTerrain()
 {
-   m_coordSys = std::make_unique<MapCoordSys>(glm::vec2{MainWndWidth, MainWndHeight});
+   m_coordSys = std::make_unique<MapCoordSys>(RenderDim{MainWndWidth, MainWndHeight});
 
    std::optional<MapData> mapData = loadMapData(m_resources.mapPath() / "map.json");
    if (!mapData)
