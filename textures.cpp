@@ -21,7 +21,7 @@ bool Textures::load(const std::string& tag, const std::filesystem::path& texFile
       return false;
 
    glTex.bind();
-   glTex.setWrapPolicy(GL_REPEAT, GL_REPEAT);
+   glTex.setWrapPolicy(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
    glTex.setScaleFiltering(GL_NEAREST, GL_NEAREST);
    glTex.setData(0, tex.internalFormat(), tex.width(), tex.height(), tex.format(),
                  tex.pixelType(), tex.data());
