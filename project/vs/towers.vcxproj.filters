@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\path.cpp" />
     <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\map_data.cpp" />
+    <ClCompile Include="..\..\sprite_form.cpp">
+      <Filter>Rendering\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">

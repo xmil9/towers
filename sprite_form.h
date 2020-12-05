@@ -12,7 +12,7 @@
 // Describes a sprite's location in world space.
 class SpriteForm
 {
-public:
+ public:
    SpriteForm() = default;
    SpriteForm(RenderPos pos, RenderDim size, Angle_t rot);
 
@@ -24,7 +24,7 @@ public:
    void setSize(RenderDim size) { m_size = size; }
    void setRotation(Angle_t rot) { m_rot = rot; }
 
-private:
+ private:
    // Position of left-top corner.
    RenderPos m_pos;
    RenderDim m_size;
@@ -33,6 +33,13 @@ private:
 
 
 inline SpriteForm::SpriteForm(RenderPos pos, RenderDim size, Angle_t rot)
-   : m_pos{pos}, m_size{size}, m_rot{rot}
+: m_pos{pos}, m_size{size}, m_rot{rot}
 {
 }
+
+
+///////////////////
+
+// Scales the longer source dimension to a given length and maintains the aspect ratio for
+// the shorter dimension.
+RenderDim scaleTo(float length, RenderDim source);

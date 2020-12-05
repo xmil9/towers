@@ -189,6 +189,7 @@ copy /B /Y "$(ProjectDir)..\..\attacker.png" "$(OutDir)"
     <ClCompile Include="..\..\renderer2.cpp" />
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
+    <ClCompile Include="..\..\sprite_form.cpp" />
     <ClCompile Include="..\..\sprite_renderer.cpp" />
     <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
