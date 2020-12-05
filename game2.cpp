@@ -159,18 +159,19 @@ bool Game2::setupAttackers()
    assert(!!m_map);
 
    const std::string texId{"attacker"};
-   auto spriteLook = std::make_shared<SpriteLook>(texId);
+   SpriteLook look{texId};
 
    SpriteForm form1{{}, scaleTo(30.f, m_resources.getTextureSize(texId)), Angle_t{0.f}};
    assert(!!m_stdSpriteRenderer);
-   Sprite sprite1{*m_stdSpriteRenderer, spriteLook, form1};
+   Sprite sprite1{*m_stdSpriteRenderer, look, form1};
+
+   m_attackers.emplace_back(sprite1, 0, .001f, m_map->path(), *m_coordSys);
 
    SpriteForm form2{
       {}, scaleTo(20.f, m_resources.getTextureSize(texId)), Angle_t::fromDegrees(90.f)};
    assert(!!m_stdSpriteRenderer);
-   Sprite sprite2{*m_stdSpriteRenderer, spriteLook, form2};
+   Sprite sprite2{*m_stdSpriteRenderer, look, form2};
 
-   m_attackers.emplace_back(sprite1, 0, .001f, m_map->path(), *m_coordSys);
    m_attackers.emplace_back(sprite2, 0, .002f, m_map->path(), *m_coordSys);
    return true;
 }

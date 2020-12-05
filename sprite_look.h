@@ -28,7 +28,7 @@ class SpriteLook
    glm::vec3 color() const { return m_color; }
 
  private:
-   static constexpr glm::vec3 White{1.0f, 1.0f, 1.0f};
+   static constexpr glm::vec3 White{1.f, 1.f, 1.f};
    std::optional<std::string> m_textureTag;
    glm::vec3 m_color;
 };
