@@ -19,7 +19,7 @@ class Program;
 class Attacker
 {
  public:
-   Attacker(Sprite sp, int hp, const Path& path, const MapCoordSys& cs);
+   Attacker(Sprite sp, int hp, float speed, const Path& path, const MapCoordSys& cs);
 
    void render(const gll::Program& shaders) const { m_sprite.render(shaders); }
    void update();

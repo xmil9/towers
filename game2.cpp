@@ -155,16 +155,23 @@ bool Game2::setupSpriteData()
 
 bool Game2::setupAttackers()
 {
-   const std::string texId{"attacker"};
-   auto spriteLook = std::make_shared<SpriteLook>(texId);
-   SpriteForm form{
-      {}, scaleTo(30.f, m_resources.getTextureSize(texId)), Angle_t{0.f}};
-   assert(!!m_stdSpriteRenderer);
-   Sprite sprite{*m_stdSpriteRenderer, spriteLook, form};
-
    assert(!!m_coordSys);
    assert(!!m_map);
-   m_attackers.emplace_back(sprite, 0, m_map->path(), *m_coordSys);
+
+   const std::string texId{"attacker"};
+   auto spriteLook = std::make_shared<SpriteLook>(texId);
+
+   SpriteForm form1{{}, scaleTo(30.f, m_resources.getTextureSize(texId)), Angle_t{0.f}};
+   assert(!!m_stdSpriteRenderer);
+   Sprite sprite1{*m_stdSpriteRenderer, spriteLook, form1};
+
+   SpriteForm form2{
+      {}, scaleTo(20.f, m_resources.getTextureSize(texId)), Angle_t::fromDegrees(90.f)};
+   assert(!!m_stdSpriteRenderer);
+   Sprite sprite2{*m_stdSpriteRenderer, spriteLook, form2};
+
+   m_attackers.emplace_back(sprite1, 0, .001f, m_map->path(), *m_coordSys);
+   m_attackers.emplace_back(sprite2, 0, .002f, m_map->path(), *m_coordSys);
    return true;
 }
 
