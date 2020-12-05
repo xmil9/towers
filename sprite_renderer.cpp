@@ -62,7 +62,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
    if (look.hasTexture())
    {
       glActiveTexture(GL_TEXTURE0);
-      texBinding.bind(m_resources->getTexture(look.texture()).texture);
+      texBinding.bind(m_resources->getTexture(look.texture()));
    }
 
    gll::Uniform colorUf = shaders.uniform("spriteColor");
@@ -73,7 +73,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
-      modelUf.setValue(calcModelMatrix(form.pos, form.size, form.rot));
+      modelUf.setValue(calcModelMatrix(form.m_pos, form.m_size, form.m_rot));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);

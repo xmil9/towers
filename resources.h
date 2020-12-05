@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "textures.h"
+#include <string>
 
 
 class Resources
@@ -17,7 +18,8 @@ class Resources
 
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);
-   const Textures::Entry& getTexture(const std::string& tag) const;
+   const gll::Texture2D& getTexture(const std::string& tag) const;
+   RenderDim getTextureSize(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
  private:
@@ -32,7 +34,12 @@ inline bool Resources::loadTexture(const std::string& tag,
    return m_texRepos.load(tag, texFile, flipVert);
 }
 
-inline const Textures::Entry& Resources::getTexture(const std::string& tag) const
+inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
 {
    return m_texRepos[tag];
+}
+
+inline RenderDim Resources::getTextureSize(const std::string& tag) const
+{
+   return m_texRepos.size(tag);
 }

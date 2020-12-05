@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "gll_texture.h"
+#include "render_coords.h"
 #include <filesystem>
 #include <string>
 #include <unordered_map>
@@ -12,18 +13,18 @@
 class Textures
 {
  public:
+   bool load(const std::string& tag, const std::filesystem::path& texFile,
+             bool flipVert = false);
+   const gll::Texture2D& operator[](const std::string& tag) const;
+   RenderDim size(const std::string& tag) const;
+   void clear() { m_texs.clear(); }
+
+ private:
     struct Entry
     {
        gll::Texture2D texture;
-       int width = 0;
-       int height = 0;
+       RenderDim size;
     };
-
- public:
-   bool load(const std::string& tag, const std::filesystem::path& texFile,
-             bool flipVert = false);
-   const Entry& operator[](const std::string& tag) const;
-   void clear() { m_texs.clear(); }
 
  private:
    std::unordered_map<std::string, Entry> m_texs;

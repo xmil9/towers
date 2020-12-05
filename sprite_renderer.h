@@ -13,7 +13,7 @@ namespace gll
 class Program;
 }
 class Resources;
-struct SpriteForm;
+class SpriteForm;
 class SpriteLook;
 
 

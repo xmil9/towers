@@ -51,19 +51,19 @@ inline Sprite::Sprite(SpriteRenderer& renderer,
 
 inline Sprite& Sprite::setPosition(RenderPos pos)
 {
-   m_form.pos = pos;
+   m_form.m_pos = pos;
    return *this;
 }
 
 inline Sprite& Sprite::setSize(RenderDim size)
 {
-   m_form.size = size;
+   m_form.m_size = size;
    return *this;
 }
 
 inline Sprite& Sprite::setRotation(float rot)
 {
-   m_form.rot = rot;
+   m_form.m_rot = rot;
    return *this;
 }
 
