@@ -73,7 +73,7 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
-      modelUf.setValue(calcModelMatrix(form.m_pos, form.m_size, form.m_rot));
+      modelUf.setValue(calcModelMatrix(form.position(), form.size(), form.rotation()));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);

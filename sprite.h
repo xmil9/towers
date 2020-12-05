@@ -25,7 +25,7 @@ class Sprite
 
    Sprite& setPosition(RenderPos pos);
    Sprite& setSize(RenderDim size);
-   Sprite& setRotation(float rot);
+   Sprite& setRotation(Angle_t rot);
    Sprite& setForm(const SpriteForm& form);
 
    void render(const gll::Program& shaders) const;
@@ -51,19 +51,19 @@ inline Sprite::Sprite(SpriteRenderer& renderer,
 
 inline Sprite& Sprite::setPosition(RenderPos pos)
 {
-   m_form.m_pos = pos;
+   m_form.setPosition(pos);
    return *this;
 }
 
 inline Sprite& Sprite::setSize(RenderDim size)
 {
-   m_form.m_size = size;
+   m_form.setSize(size);
    return *this;
 }
 
-inline Sprite& Sprite::setRotation(float rot)
+inline Sprite& Sprite::setRotation(Angle_t rot)
 {
-   m_form.m_rot = rot;
+   m_form.setRotation(rot);
    return *this;
 }
 
