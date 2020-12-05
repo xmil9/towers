@@ -191,9 +191,6 @@
     <ClInclude Include="..\..\sprite_form.h">
       <Filter>Rendering\2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\point2.h">
-      <Filter>Rendering\2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\mesh2.h">
       <Filter>Rendering\2d</Filter>
     </ClInclude>
@@ -206,8 +203,17 @@
     <ClInclude Include="..\..\path.h" />
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
-    <ClInclude Include="..\..\map_coords.h" />
-    <ClInclude Include="..\..\render_coords.h" />
+    <ClInclude Include="..\..\norm_coords.h" />
+    <ClInclude Include="..\..\pixel_coords.h" />
+    <ClInclude Include="..\..\coords.h" />
+    <ClInclude Include="..\..\rect.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\int_coords.h" />
+    <ClInclude Include="..\..\map_coord_sys.h" />
+    <ClInclude Include="..\..\point2.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\sprite_shader.vs">

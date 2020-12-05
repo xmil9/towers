@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "map_coords.h"
+#include "map_coord_sys.h"
 #include "path.h"
 #include "sprite.h"
 #include <cstddef>
@@ -27,12 +27,12 @@ class Attacker
  private:
    void move();
    bool isAtLastPosition() const;
-   void setPosition(std::optional<MapPos> pos);
+   void setPosition(std::optional<NormPos> pos);
 
  private:
    float m_speed = .001f;
    int m_hp = 0;
-   std::optional<MapPos> m_pos;
+   std::optional<NormPos> m_pos;
    std::optional<Path::Index> m_currTurn;
    const Path& m_path;
    const MapCoordSys& m_coordSys;

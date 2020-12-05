@@ -9,7 +9,7 @@
 #include "input.h"
 #include "main_window.h"
 #include "map.h"
-#include "map_coords.h"
+#include "map_coord_sys.h"
 #include "renderer2.h"
 #include "resources.h"
 #include <memory>
@@ -48,7 +48,7 @@ class Game2
                        const Observed<Input>::MsgData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
-   void onKeyPolled(Key_t key, float frameLengthSecs);
+   void onKeyPolled(glfwl::Key key, float frameLengthSecs);
 
  private:
    static constexpr int MainWndWidth = 900;

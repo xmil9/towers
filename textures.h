@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
+#include "coords.h"
 #include "gll_texture.h"
-#include "render_coords.h"
 #include <filesystem>
 #include <string>
 #include <unordered_map>
@@ -16,14 +16,14 @@ class Textures
    bool load(const std::string& tag, const std::filesystem::path& texFile,
              bool flipVert = false);
    const gll::Texture2D& operator[](const std::string& tag) const;
-   RenderDim size(const std::string& tag) const;
+   PixDim size(const std::string& tag) const;
    void clear() { m_texs.clear(); }
 
  private:
     struct Entry
     {
        gll::Texture2D texture;
-       RenderDim size;
+       PixDim size;
     };
 
  private:

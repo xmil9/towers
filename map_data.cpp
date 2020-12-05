@@ -26,11 +26,11 @@ json readFile(const std::filesystem::path& path)
 
 struct ParsedMapData
 {
-   FieldDim mapSize;
+   IntDim mapSize;
    std::string terrain;
-   std::vector<FieldPos> starts;
-   FieldPos finish;
-   std::vector<std::vector<FieldPos>> paths;
+   std::vector<IntPos> starts;
+   IntPos finish;
+   std::vector<std::vector<IntPos>> paths;
 
    bool isValid() const;
 };
@@ -51,9 +51,9 @@ glm::ivec2 parsePosition(const json& jList)
 }
 
 
-std::vector<FieldPos> parseJsonPath(const json& jPath)
+std::vector<IntPos> parseJsonPath(const json& jPath)
 {
-   std::vector<FieldPos> parsedPath;
+   std::vector<IntPos> parsedPath;
    parsedPath.reserve(jPath.size());
    std::transform(jPath.begin(), jPath.end(), std::back_inserter(parsedPath),
                   [](const json& jList) { return parsePosition(jList); });
@@ -129,13 +129,13 @@ MapData populateData(const ParsedMapData& parsed)
                   std::back_inserter(map.terrain),
                   [](char fieldSymbol) { return makeField(fieldSymbol); });
 
-   const MapDim fieldSize{1.f / static_cast<float>(map.mapSize.x),
-                          1.f / static_cast<float>(map.mapSize.y)};
+   const NormDim fieldSize{1.f / static_cast<float>(map.mapSize.x),
+                           1.f / static_cast<float>(map.mapSize.y)};
 
    map.paths.reserve(parsed.paths.size());
    std::transform(parsed.paths.cbegin(), parsed.paths.cend(),
                   std::back_inserter(map.paths),
-                  [&fieldSize](const std::vector<FieldPos>& turns) {
+                  [&fieldSize](const std::vector<IntPos>& turns) {
                      return Path{turns, fieldSize};
                   });
 

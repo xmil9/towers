@@ -47,7 +47,7 @@ void MainWindow::onWindowScrolled(double xoffset, double yoffset)
 }
 
 
-void MainWindow::onWindowKeyChanged(Key_t key, int scancode, int action, int mods)
+void MainWindow::onWindowKeyChanged(glfwl::Key key, int scancode, int action, int mods)
 {
    assert(m_inputController);
    if (m_inputController)

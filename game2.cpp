@@ -119,7 +119,7 @@ bool Game2::setupRenderer()
 
 bool Game2::setupTerrain()
 {
-   m_coordSys = std::make_unique<MapCoordSys>(RenderDim{MainWndWidth, MainWndHeight});
+   m_coordSys = std::make_unique<MapCoordSys>(PixDim{MainWndWidth, MainWndHeight});
 
    std::optional<MapData> mapData = loadMapData(m_resources.mapPath() / "map.json");
    if (!mapData)
@@ -134,13 +134,13 @@ bool Game2::setupSpriteData()
 {
    // Coord system for vertex coordinates is:
    // (0, 0) - left-top, (1, 1) - right-bottom
-   const std::vector<Point2_t> positions = {
+   const std::vector<Mesh2::Point> positions = {
       {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
    // Triangle vertices are ordered ccw.
-   const std::vector<VertexIdx> indices = {0, 1, 2, 2, 3, 0};
+   const std::vector<Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
    // Coord system for texture coordinates is:
    // (0, 0) - left-bottom, (1, 1) - right-top
-   const std::vector<Point2_t> texCoords = positions;
+   const std::vector<Mesh2::Point> texCoords = positions;
 
    Mesh2 mesh;
    mesh.setPositions(std::move(positions));
@@ -161,14 +161,14 @@ bool Game2::setupAttackers()
    const std::string texId{"attacker"};
    SpriteLook look{texId};
 
-   SpriteForm form1{{}, scaleTo(30.f, m_resources.getTextureSize(texId)), Angle_t{0.f}};
+   SpriteForm form1{{}, scaleTo(m_resources.getTextureSize(texId), 30.f), Angle_t{0.f}};
    assert(!!m_stdSpriteRenderer);
    Sprite sprite1{*m_stdSpriteRenderer, look, form1};
 
    m_attackers.emplace_back(sprite1, 0, .001f, m_map->path(), *m_coordSys);
 
    SpriteForm form2{
-      {}, scaleTo(20.f, m_resources.getTextureSize(texId)), Angle_t::fromDegrees(90.f)};
+      {}, scaleTo(m_resources.getTextureSize(texId), 20.f), Angle_t::fromDegrees(90.f)};
    assert(!!m_stdSpriteRenderer);
    Sprite sprite2{*m_stdSpriteRenderer, look, form2};
 
@@ -249,6 +249,6 @@ void Game2::onMouseScrolled(const glm::vec2& /*delta*/)
 }
 
 
-void Game2::onKeyPolled(Key_t /*key*/, float /*frameLengthSecs*/)
+void Game2::onKeyPolled(glfwl::Key /*key*/, float /*frameLengthSecs*/)
 {
 }

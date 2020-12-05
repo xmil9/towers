@@ -5,10 +5,10 @@
 #include "sprite_form.h"
 
 
-RenderDim scaleTo(float length, RenderDim source)
+PixDim scaleTo(PixDim source, PixCoord length)
 {
-   float& longer = source.x >= source.y ? source.x : source.y;
-   float& shorter = source.x >= source.y ? source.y : source.x;
+   PixCoord& longer = source.x >= source.y ? source.x : source.y;
+   PixCoord& shorter = source.x >= source.y ? source.y : source.x;
    const float aspect = shorter / longer;
    longer = length;
    shorter = aspect * longer;

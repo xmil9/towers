@@ -3,8 +3,9 @@
 // MIT license
 //
 #pragma once
+#include "coords.h"
 #include "field.h"
-#include "map_coords.h"
+#include "map_coord_sys.h"
 #include "path.h"
 #include <cstddef>
 #include <filesystem>
@@ -15,12 +16,12 @@
 struct MapData
 {
    // Number of rows and columns in the map.
-   FieldDim mapSize;
+   IntDim mapSize;
    std::vector<Field> terrain;
    // Coordinates of start fields.
-   std::vector<FieldPos> starts;
+   std::vector<IntPos> starts;
    // Coordinates of finish field.
-   FieldPos finish;
+   IntPos finish;
    // Coordinates for paths through the map.
    std::vector<Path> paths;
 };

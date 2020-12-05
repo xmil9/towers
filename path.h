@@ -3,7 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "map_coords.h"
+#include "coords.h"
+#include "map_coord_sys.h"
 #include "glm/vec2.hpp"
 #include <cassert>
 #include <optional>
@@ -19,26 +20,26 @@ class Path
 
  public:
    Path() = default;
-   Path(const std::vector<FieldPos>& turns, MapDim fieldSize);
+   Path(const std::vector<IntPos>& turns, NormDim fieldSize);
 
    std::size_t size() const { return m_turns.size(); }
-   MapRect operator[](Index idx) const;
-   MapRect start() const { return m_turns[0]; }
-   MapRect finish() const;
+   NormRect operator[](Index idx) const;
+   NormRect start() const { return m_turns[0]; }
+   NormRect finish() const;
 
  private:
    // Bounds (in map coords [0, 1]x[0, 1]) of fields where the path takes a turn.
-   std::vector<MapRect> m_turns;
+   std::vector<NormRect> m_turns;
 };
 
 
-inline MapRect Path::operator[](Index idx) const
+inline NormRect Path::operator[](Index idx) const
 {
    assert(idx < size());
    return m_turns[idx];
 }
 
-inline MapRect Path::finish() const
+inline NormRect Path::finish() const
 {
    assert(size() > 0);
    return m_turns[size() - 1];

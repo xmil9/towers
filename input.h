@@ -3,7 +3,6 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "input_controller.h"
 #include "observed.h"
 #include "glm/vec2.hpp"
@@ -26,10 +25,10 @@ class Input : public InputController, public Observed<Input>
    // InputController overrides.
    void onMouseMoved(double xpos, double ypos) override;
    void onMouseScrolled(double xoffset, double yoffset) override;
-   void onKeyChanged(Key_t key, int scancode, int action, int mods) override;
+   void onKeyChanged(glfwl::Key key, int scancode, int action, int mods) override;
 
    void pollKeys(glfwl::Window& wnd, float frameLengthSecs);
-   void notifyKeyPolled(Key_t key, float frameLengthSecs);
+   void notifyKeyPolled(glfwl::Key key, float frameLengthSecs);
 
  private:
    bool m_isFirstMouseMove = true;
@@ -58,7 +57,7 @@ constexpr char KeyChangedMsg[] = "key-changed";
 struct KeyChangedMsgData : public Observed<Input>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
-   Key_t key = 0;
+   glfwl::Key key = 0;
    // System-specific scancode.
    int scancode = 0;
    // Key action: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT
@@ -71,7 +70,7 @@ constexpr char KeyPolledMsg[] = "key-polled";
 struct KeyPolledMsgData : public Observed<Input>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
-   Key_t key = 0;
+   glfwl::Key key = 0;
    // Frame length in seconds.
    float frameLengthSecs = 0.0;
 };

@@ -28,7 +28,7 @@ bool Textures::load(const std::string& tag, const std::filesystem::path& texFile
    glTex.generateMipmap();
 
    const auto [pos, ok] = m_texs.insert_or_assign(
-      tag, Entry{std::move(glTex), RenderDim(tex.width(), tex.height())});
+      tag, Entry{std::move(glTex), PixDim(tex.width(), tex.height())});
    return ok;
 }
 
@@ -40,8 +40,8 @@ const gll::Texture2D& Textures::operator[](const std::string& tag) const
 }
 
 
-RenderDim Textures::size(const std::string& tag) const
+PixDim Textures::size(const std::string& tag) const
 {
    const auto pos = m_texs.find(tag);
-   return (pos != m_texs.end()) ? pos->second.size : RenderDim{};
+   return (pos != m_texs.end()) ? pos->second.size : PixDim{};
 }

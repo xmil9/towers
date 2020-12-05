@@ -198,7 +198,9 @@ copy /B /Y "$(ProjectDir)..\..\attacker.png" "$(OutDir)"
   <ItemGroup>
     <ClInclude Include="..\..\attacker.h" />
     <ClInclude Include="..\..\basic_types.h" />
-    <ClInclude Include="..\..\map_coords.h" />
+    <ClInclude Include="..\..\coords.h" />
+    <ClInclude Include="..\..\int_coords.h" />
+    <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\main_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />
@@ -226,8 +228,10 @@ copy /B /Y "$(ProjectDir)..\..\attacker.png" "$(OutDir)"
     <ClInclude Include="..\..\gll_uniform.h" />
     <ClInclude Include="..\..\gll_vao.h" />
     <ClInclude Include="..\..\input.h" />
+    <ClInclude Include="..\..\norm_coords.h" />
     <ClInclude Include="..\..\path.h" />
-    <ClInclude Include="..\..\render_coords.h" />
+    <ClInclude Include="..\..\pixel_coords.h" />
+    <ClInclude Include="..\..\rect.h" />
     <ClInclude Include="..\..\sprite_form.h" />
     <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\mesh2.h" />

@@ -46,7 +46,7 @@ void Input::onMouseScrolled(double xoffset, double yoffset)
 }
 
 
-void Input::onKeyChanged(Key_t key, int scancode, int action, int mods)
+void Input::onKeyChanged(glfwl::Key key, int scancode, int action, int mods)
 {
    KeyChangedMsgData data;
    data.key = key;
@@ -59,9 +59,8 @@ void Input::onKeyChanged(Key_t key, int scancode, int action, int mods)
 
 void Input::pollKeys(glfwl::Window& wnd, float frameLengthSecs)
 {
-   static constexpr std::array<int, 4> PolledKeys = {
-      GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A, GLFW_KEY_D
-   };
+   static constexpr std::array<int, 4> PolledKeys = {GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A,
+                                                     GLFW_KEY_D};
 
    for (auto key : PolledKeys)
    {
@@ -71,7 +70,7 @@ void Input::pollKeys(glfwl::Window& wnd, float frameLengthSecs)
 }
 
 
-void Input::notifyKeyPolled(Key_t key, float frameLengthSecs)
+void Input::notifyKeyPolled(glfwl::Key key, float frameLengthSecs)
 {
    KeyPolledMsgData data;
    data.key = key;

@@ -151,13 +151,13 @@ void Game3::onMouseScrolled(const glm::vec2& delta)
 }
 
 
-void Game3::onKeyPolled(Key_t key, float frameLengthSecs)
+void Game3::onKeyPolled(glfwl::Key key, float frameLengthSecs)
 {
    updateCameraPosition(key, frameLengthSecs);
 }
 
 
-std::optional<DirectionXZ> Game3::getCameraDirection(Key_t key) const
+std::optional<DirectionXZ> Game3::getCameraDirection(glfwl::Key key) const
 {
    switch (key)
    {
@@ -175,7 +175,7 @@ std::optional<DirectionXZ> Game3::getCameraDirection(Key_t key) const
 }
 
 
-void Game3::updateCameraPosition(Key_t key, float frameLengthSecs)
+void Game3::updateCameraPosition(glfwl::Key key, float frameLengthSecs)
 {
    const auto camDir = getCameraDirection(key);
    if (camDir)

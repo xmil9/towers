@@ -19,7 +19,7 @@ class Resources
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);
    const gll::Texture2D& getTexture(const std::string& tag) const;
-   RenderDim getTextureSize(const std::string& tag) const;
+   PixDim getTextureSize(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
  private:
@@ -39,7 +39,7 @@ inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
    return m_texRepos[tag];
 }
 
-inline RenderDim Resources::getTextureSize(const std::string& tag) const
+inline PixDim Resources::getTextureSize(const std::string& tag) const
 {
    return m_texRepos.size(tag);
 }

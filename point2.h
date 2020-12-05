@@ -11,8 +11,9 @@
 template<typename T>
 struct Point2
 {
-   using value_type = T;
+   using Coord = T;
+   using value_type = Coord;
 
-   T x;
-   T y;
+   Coord x;
+   Coord y;
 };

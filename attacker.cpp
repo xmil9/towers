@@ -34,12 +34,12 @@ void Attacker::move()
 
    assert(m_pos && m_currTurn);
 
-   MapRect nextTurn = m_path[*m_currTurn + 1];
-   const MapPos nextTurnPos = nextTurn.center();
-   const MapVec dist = nextTurnPos - *m_pos;
-   const MapVec direction = glm::normalize(dist);
+   NormRect nextTurn = m_path[*m_currTurn + 1];
+   const NormPos nextTurnPos = nextTurn.center();
+   const NormVec dist = nextTurnPos - *m_pos;
+   const NormVec direction = glm::normalize(dist);
 
-   MapVec offset = m_speed * direction;
+   NormVec offset = m_speed * direction;
    // Limit movement to next turn.
    if (sutil::greaterEqual(glm::length(offset), glm::length(dist)))
    {
@@ -55,11 +55,11 @@ bool Attacker::isAtLastPosition() const
 {
    if (!m_pos)
       return true;
-   return isEqualPos(*m_pos, m_path.finish().center());
+   return isEqual(*m_pos, m_path.finish().center());
 }
 
 
-void Attacker::setPosition(std::optional<MapPos> pos)
+void Attacker::setPosition(std::optional<NormPos> pos)
 {
    m_pos = pos;
    if (pos)

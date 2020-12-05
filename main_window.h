@@ -3,26 +3,24 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "input_controller.h"
 #include "observed.h"
 #include "glfwl_window.h"
 #include "glm/vec2.hpp"
 
 
-
 class MainWindow : public glfwl::Window, public Observed<MainWindow>
 {
-public:
+ public:
    void setInputController(InputController* controller);
 
  protected:
    void onWindowResized(int width, int height) override;
    void onWindowMouseMoved(double xpos, double ypos) override;
    void onWindowScrolled(double xoffset, double yoffset) override;
-   void onWindowKeyChanged(Key_t key, int scancode, int action, int mods) override;
+   void onWindowKeyChanged(glfwl::Key key, int scancode, int action, int mods) override;
 
-private:
+ private:
    InputController* m_inputController = nullptr;
    glm::ivec2 m_wndSize;
 };

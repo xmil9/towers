@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "basic_types.h"
+#include "coords.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/matrix.hpp"
 #include "glm/vec2.hpp"

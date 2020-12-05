@@ -34,10 +34,10 @@ class Game3
                        const Observed<Input>::MsgData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
-   void onKeyPolled(Key_t key, float frameLengthSecs);
+   void onKeyPolled(glfwl::Key key, float frameLengthSecs);
 
-   std::optional<DirectionXZ> getCameraDirection(Key_t key) const;
-   void updateCameraPosition(Key_t key, float frameLengthSecs);
+   std::optional<DirectionXZ> getCameraDirection(glfwl::Key key) const;
+   void updateCameraPosition(glfwl::Key key, float frameLengthSecs);
 
  private:
    FrameClock m_frameClock;

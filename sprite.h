@@ -21,8 +21,8 @@ class Sprite
    Sprite(SpriteRenderer& renderer, SpriteLook look);
    Sprite(SpriteRenderer& renderer, SpriteLook look, const SpriteForm& form);
 
-   Sprite& setPosition(RenderPos pos);
-   Sprite& setSize(RenderDim size);
+   Sprite& setPosition(PixPos pos);
+   Sprite& setSize(PixDim size);
    Sprite& setRotation(Angle_t rot);
    Sprite& setForm(const SpriteForm& form);
 
@@ -45,13 +45,13 @@ inline Sprite::Sprite(SpriteRenderer& renderer, SpriteLook look, const SpriteFor
 {
 }
 
-inline Sprite& Sprite::setPosition(RenderPos pos)
+inline Sprite& Sprite::setPosition(PixPos pos)
 {
    m_form.setPosition(pos);
    return *this;
 }
 
-inline Sprite& Sprite::setSize(RenderDim size)
+inline Sprite& Sprite::setSize(PixDim size)
 {
    m_form.setSize(size);
    return *this;

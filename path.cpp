@@ -12,15 +12,15 @@ namespace
 {
 ///////////////////
 
-std::vector<MapRect> generateTerrainTurns(const std::vector<FieldPos>& turns,
-                                          MapDim fieldSize)
+std::vector<NormRect> generateTerrainTurns(const std::vector<IntPos>& turns,
+                                           NormDim fieldSize)
 {
-   std::vector<MapRect> terrainTurns;
+   std::vector<NormRect> terrainTurns;
    terrainTurns.reserve(turns.size());
    std::transform(turns.begin(), turns.end(), std::back_inserter(terrainTurns),
-                  [&fieldSize](FieldPos pos) {
-                     const MapPos lt = MapPos(pos) * fieldSize;
-                     return MapRect{lt, lt + fieldSize};
+                  [&fieldSize](IntPos pos) {
+                     const NormPos lt = NormPos(pos) * fieldSize;
+                     return NormRect{lt, lt + fieldSize};
                   });
    return terrainTurns;
 }
@@ -30,7 +30,7 @@ std::vector<MapRect> generateTerrainTurns(const std::vector<FieldPos>& turns,
 
 ///////////////////
 
-Path::Path(const std::vector<FieldPos>& turns, MapDim fieldSize)
+Path::Path(const std::vector<IntPos>& turns, NormDim fieldSize)
 : m_turns{generateTerrainTurns(turns, fieldSize)}
 {
    if (m_turns.empty())
