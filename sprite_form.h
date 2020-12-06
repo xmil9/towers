@@ -3,7 +3,6 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "coords.h"
 
 
@@ -36,10 +35,3 @@ inline SpriteForm::SpriteForm(PixPos pos, PixDim size, Angle_t rot)
 : m_pos{pos}, m_size{size}, m_rot{rot}
 {
 }
-
-
-///////////////////
-
-// Scales the longer source dimension to a given length and maintains the aspect ratio for
-// the shorter dimension.
-PixDim scaleTo(PixDim source, PixCoord length);

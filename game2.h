@@ -52,8 +52,8 @@ class Game2
    void onKeyPolled(glfwl::Key key, float frameLengthSecs);
 
  private:
-   static constexpr int MainWndWidth = 900;
-   static constexpr int MainWndHeight = 600;
+   static constexpr int MainWndWidth = 1800;
+   static constexpr int MainWndHeight = 1200;
    Resources m_resources;
    FrameClock m_frameClock;
    glfwl::Lib m_glfw;
