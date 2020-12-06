@@ -7,11 +7,12 @@
 #include "essentutils/fputil.h"
 
 
-Attacker::Attacker(Sprite sp, int hp, float speed, const OffsetPath& path,
+Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
                    const MapCoordSys& cs)
-: m_speed{speed}, m_hp{hp}, m_pos{path.start().center()}, m_currTurn{0}, m_path{path},
-  m_coordSys{cs}, m_sprite{std::move(sp)}
+: m_size{size}, m_hp{hp}, m_speed{speed}, m_center{path.start().center()},
+  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)}
 {
+   setSize(size);
    setPosition(path.start().center());
 }
 
@@ -32,11 +33,11 @@ void Attacker::move()
       return;
    }
 
-   assert(m_pos && m_currTurn);
+   assert(m_center && m_currTurn);
 
-   NormRect nextTurn = m_path[*m_currTurn + 1];
+   const NormRect nextTurn = m_path[*m_currTurn + 1];
    const NormPos nextTurnPos = nextTurn.center();
-   const NormVec dist = nextTurnPos - *m_pos;
+   const NormVec dist = nextTurnPos - *m_center;
    const NormVec direction = glm::normalize(dist);
 
    NormVec offset = m_speed * direction;
@@ -47,23 +48,35 @@ void Attacker::move()
       ++*m_currTurn;
    }
 
-   setPosition(*m_pos + offset);
+   setPosition(*m_center + offset);
 }
 
 
 bool Attacker::isAtLastPosition() const
 {
-   if (!m_pos)
+   if (!m_center)
       return true;
-   return isEqual(*m_pos, m_path.finish().center());
+   return isEqual(*m_center, m_path.finish().center());
 }
 
 
-void Attacker::setPosition(std::optional<NormPos> pos)
+void Attacker::setPosition(std::optional<NormPos> center)
 {
-   m_pos = pos;
-   if (pos)
-      m_sprite.setPosition(m_coordSys.toRenderCoords(*m_pos));
+   m_center = center;
+   if (m_center)
+   {
+      // Sprite uses left-top coord as position.
+      m_sprite.setPosition(m_coordSys.toRenderCoords(*m_center - m_size / 2.f));
+   }
    else
+   {
       ; // todo - set flag to remove attacker
+   }
+}
+
+
+void Attacker::setSize(NormVec size)
+{
+   m_size = size;
+   m_sprite.setSize(m_coordSys.toRenderCoords(size));
 }

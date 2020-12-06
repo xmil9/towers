@@ -19,7 +19,7 @@ class Program;
 class Attacker
 {
  public:
-   Attacker(Sprite sp, int hp, float speed, const OffsetPath& path,
+   Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
             const MapCoordSys& cs);
 
    void render(const gll::Program& shaders) const { m_sprite.render(shaders); }
@@ -28,12 +28,14 @@ class Attacker
  private:
    void move();
    bool isAtLastPosition() const;
-   void setPosition(std::optional<NormPos> pos);
+   void setPosition(std::optional<NormPos> center);
+   void setSize(NormVec size);
 
  private:
-   float m_speed = .001f;
+   NormVec m_size;
    int m_hp = 0;
-   std::optional<NormPos> m_pos;
+   float m_speed = .001f;
+   std::optional<NormPos> m_center;
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
    const MapCoordSys& m_coordSys;

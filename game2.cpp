@@ -168,16 +168,18 @@ bool Game2::setupAttackers()
    assert(!!m_stdSpriteRenderer);
    Sprite sprite1{m_stdSpriteRenderer.get(), look, form1};
 
-   m_attackers.emplace_back(
-      sprite1, 0, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, *m_coordSys);
+   m_attackers.emplace_back(sprite1, NormVec{.01, .03}, 0, .001f,
+                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}},
+                            *m_coordSys);
 
    SpriteForm form2{
       {}, scaleTo(m_resources.getTextureSize(texId), 20.f), Angle_t::fromDegrees(0.f)};
    assert(!!m_stdSpriteRenderer);
    Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
 
-   m_attackers.emplace_back(
-      sprite2, 0, .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_coordSys);
+   m_attackers.emplace_back(sprite2, NormVec{.005, .01}, 0, .002f,
+                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}},
+                            *m_coordSys);
    return true;
 }
 
