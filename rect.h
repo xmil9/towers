@@ -24,6 +24,9 @@ struct Rect
 
    bool contains(Pos at) const;
    Pos center() const;
+
+   template<typename Vec>
+   Rect& operator+=(Vec offset);
 };
 
 
@@ -49,4 +52,25 @@ template<typename Pos>
 inline Pos Rect<Pos>::center() const
 {
    return {(l + r) / Coord(2), (t + b) / Coord(2)};
+}
+
+template<typename Pos>
+template<typename Vec>
+Rect<Pos>& Rect<Pos>::operator+=(Vec offset)
+{
+   l += offset.x;
+   t += offset.y;
+   r += offset.x;
+   b += offset.y;
+   return *this;
+}
+
+
+// Free functions.
+
+template<typename Pos, typename Vec>
+Rect<Pos> operator+(const Rect<Pos>& r, Vec offset)
+{
+   Rect<Pos> res{r};
+   return res += offset;
 }

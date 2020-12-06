@@ -44,3 +44,57 @@ inline NormRect Path::finish() const
    assert(size() > 0);
    return m_turns[size() - 1];
 }
+
+
+///////////////////
+
+// Modifies a path by a given offset.
+class OffsetPath
+{
+ public:
+   OffsetPath(const Path* path, NormVec offset);
+
+   std::size_t size() const;
+   NormRect operator[](Path::Index idx) const;
+   NormRect start() const;
+   NormRect finish() const;
+
+ private:
+   NormRect transform(const NormRect& r) const;
+
+ private:
+   const Path* m_path;
+   NormVec m_offset;
+};
+
+
+inline OffsetPath::OffsetPath(const Path* path, NormVec offset)
+: m_path{path}, m_offset{offset}
+{
+   assert(m_path);
+}
+
+inline std::size_t OffsetPath::size() const
+{
+   return m_path->size();
+}
+
+inline NormRect OffsetPath::operator[](Path::Index idx) const
+{
+   return transform((*m_path)[idx]);
+}
+
+inline NormRect OffsetPath::start() const
+{
+   return transform(m_path->start());
+}
+
+inline NormRect OffsetPath::finish() const
+{
+   return transform(m_path->finish());
+}
+
+inline NormRect OffsetPath::transform(const NormRect& r) const
+{
+   return r + m_offset;
+}

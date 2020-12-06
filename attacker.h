@@ -19,7 +19,8 @@ class Program;
 class Attacker
 {
  public:
-   Attacker(Sprite sp, int hp, float speed, const Path& path, const MapCoordSys& cs);
+   Attacker(Sprite sp, int hp, float speed, const OffsetPath& path,
+            const MapCoordSys& cs);
 
    void render(const gll::Program& shaders) const { m_sprite.render(shaders); }
    void update();
@@ -34,7 +35,7 @@ class Attacker
    int m_hp = 0;
    std::optional<NormPos> m_pos;
    std::optional<Path::Index> m_currTurn;
-   const Path& m_path;
+   OffsetPath m_path;
    const MapCoordSys& m_coordSys;
    Sprite m_sprite;
 };
