@@ -32,7 +32,8 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
-           setupRenderer() && setupTerrain() && setupSpriteData() && setupAttackers());
+           setupRenderer() && setupTerrain() && setupSpriteData() && setupAttackers() &&
+           setupBackground());
 }
 
 
@@ -107,7 +108,9 @@ bool Game2::setupOutput()
 
 bool Game2::setupResources()
 {
-   return m_resources.loadTexture("attacker", m_resources.texturePath() / "attacker.png");
+   return m_resources.loadTexture("attacker",
+                                  m_resources.texturePath() / "attacker.png") &&
+          m_resources.loadTexture("map1", m_resources.texturePath() / "map1.png");
 }
 
 
@@ -163,16 +166,29 @@ bool Game2::setupAttackers()
 
    SpriteForm form1{{}, scaleTo(m_resources.getTextureSize(texId), 30.f), Angle_t{0.f}};
    assert(!!m_stdSpriteRenderer);
-   Sprite sprite1{*m_stdSpriteRenderer, look, form1};
+   Sprite sprite1{m_stdSpriteRenderer.get(), look, form1};
 
    m_attackers.emplace_back(sprite1, 0, .001f, m_map->path(), *m_coordSys);
 
    SpriteForm form2{
-      {}, scaleTo(m_resources.getTextureSize(texId), 20.f), Angle_t::fromDegrees(90.f)};
+      {}, scaleTo(m_resources.getTextureSize(texId), 20.f), Angle_t::fromDegrees(0.f)};
    assert(!!m_stdSpriteRenderer);
-   Sprite sprite2{*m_stdSpriteRenderer, look, form2};
+   Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
 
    m_attackers.emplace_back(sprite2, 0, .002f, m_map->path(), *m_coordSys);
+   return true;
+}
+
+
+bool Game2::setupBackground()
+{
+   const std::string texId{"map1"};
+   SpriteLook look{texId};
+   SpriteForm form{
+      {0.f, 0.f}, scaleTo(m_resources.getTextureSize(texId), 900.f), Angle_t{0.f}};
+   assert(!!m_stdSpriteRenderer);
+   m_background = std::make_unique<Sprite>(m_stdSpriteRenderer.get(), look, form);
+
    return true;
 }
 
@@ -193,6 +209,7 @@ void Game2::updateState()
 void Game2::render()
 {
    m_renderer.beginRendering();
+   m_background->render(m_renderer.shaders());
    for (const auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());
 

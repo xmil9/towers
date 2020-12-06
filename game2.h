@@ -35,6 +35,7 @@ class Game2
    bool setupTerrain();
    bool setupSpriteData();
    bool setupAttackers();
+   bool setupBackground();
    
    void processInput();
    void updateState();
@@ -63,4 +64,5 @@ class Game2
    std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
    std::unique_ptr<Map> m_map;
+   std::unique_ptr<Sprite> m_background;
 };

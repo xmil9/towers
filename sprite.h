@@ -18,8 +18,10 @@ class Program;
 class Sprite
 {
  public:
-   Sprite(SpriteRenderer& renderer, SpriteLook look);
-   Sprite(SpriteRenderer& renderer, SpriteLook look, const SpriteForm& form);
+   Sprite(SpriteRenderer* renderer, SpriteLook look);
+   Sprite(SpriteRenderer* renderer, SpriteLook look, const SpriteForm& form);
+
+   PixDim size() const { return m_form.size(); }
 
    Sprite& setPosition(PixPos pos);
    Sprite& setSize(PixDim size);
@@ -29,20 +31,21 @@ class Sprite
    void render(const gll::Program& shaders) const;
 
  private:
-   SpriteRenderer& m_renderer;
+   SpriteRenderer* m_renderer = nullptr;
    SpriteLook m_look;
    SpriteForm m_form;
 };
 
 
-inline Sprite::Sprite(SpriteRenderer& renderer, SpriteLook look)
+inline Sprite::Sprite(SpriteRenderer* renderer, SpriteLook look)
 : Sprite{renderer, look, SpriteForm{}}
 {
 }
 
-inline Sprite::Sprite(SpriteRenderer& renderer, SpriteLook look, const SpriteForm& form)
+inline Sprite::Sprite(SpriteRenderer* renderer, SpriteLook look, const SpriteForm& form)
 : m_renderer{renderer}, m_look{look}, m_form{form}
 {
+   assert(m_renderer);
 }
 
 inline Sprite& Sprite::setPosition(PixPos pos)
@@ -71,5 +74,5 @@ inline Sprite& Sprite::setForm(const SpriteForm& form)
 
 inline void Sprite::render(const gll::Program& shaders) const
 {
-   m_renderer.render(shaders, m_look, m_form);
+   m_renderer->render(shaders, m_look, m_form);
 }
