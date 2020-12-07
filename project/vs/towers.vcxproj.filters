@@ -92,6 +92,9 @@
     <Filter Include="Rendering\2d">
       <UniqueIdentifier>{90907dfb-daf6-4040-b3a8-0fd88a104460}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{f8e70f2e-2aea-47ec-a92d-745ddc8e374e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
@@ -228,8 +231,8 @@
     <None Include="..\..\cube3_shader.fs">
       <Filter>Rendering\3d</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\map.json" />
+    <None Include="..\..\resources\map.json">
+      <Filter>resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

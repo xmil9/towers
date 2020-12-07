@@ -14,7 +14,7 @@ Resources::Resources()
 
 std::filesystem::path Resources::texturePath() const
 {
-   return m_mainPath;
+   return m_mainPath / "resources";
 }
 
 
@@ -26,5 +26,5 @@ std::filesystem::path Resources::shaderPath() const
 
 std::filesystem::path Resources::mapPath() const
 {
-   return m_mainPath;
+   return m_mainPath / "resources";
 }

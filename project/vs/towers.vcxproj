@@ -132,9 +132,8 @@
 copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\map.json" "$(OutDir)"
-copy /B /Y "$(ProjectDir)..\..\attacker.png" "$(OutDir)"
-copy /B /Y "$(ProjectDir)..\..\map1.png" "$(OutDir)"</Command>
+call "$(ProjectDir)deploy.bat" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,9 +162,8 @@ copy /B /Y "$(ProjectDir)..\..\map1.png" "$(OutDir)"</Command>
 copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
 copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\map.json" "$(OutDir)"
-copy /B /Y "$(ProjectDir)..\..\attacker.png" "$(OutDir)"
-copy /B /Y "$(ProjectDir)..\..\map1.png" "$(OutDir)"</Command>
+call "$(ProjectDir)deploy.bat" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -251,6 +249,7 @@ copy /B /Y "$(ProjectDir)..\..\map1.png" "$(OutDir)"</Command>
   <ItemGroup>
     <None Include="..\..\cube3_shader.fs" />
     <None Include="..\..\cube3_shader.vs" />
+    <None Include="..\..\resources\map.json" />
     <None Include="..\..\sprite_shader.fs" />
     <None Include="..\..\sprite_shader.vs" />
   </ItemGroup>
@@ -258,9 +257,6 @@ copy /B /Y "$(ProjectDir)..\..\map1.png" "$(OutDir)"</Command>
     <ProjectReference Include="..\..\deps\essentutils\project\vs\essentutils.vcxproj">
       <Project>{1c70ff5c-cdc9-426e-9c6a-922919183bab}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\map.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
