@@ -20,7 +20,7 @@ std::filesystem::path Resources::texturePath() const
 
 std::filesystem::path Resources::shaderPath() const
 {
-   return m_mainPath;
+   return m_mainPath / "shaders";
 }
 
 

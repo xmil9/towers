@@ -6,11 +6,17 @@ setlocal
 
 set destDir=%~1
 set thisDir=%~dp0
-set resSrcDir=%thisDir%..\..\resources
-set resDestDir=%destDir%\resources
 
-mkdir "%resDestDir%"
-robocopy %resSrcDir% %resDestDir% *.json
-robocopy %resSrcDir% %resDestDir% *.png
+set resSrc=%thisDir%..\..\resources
+set resDest=%destDir%\resources
+mkdir "%resDest%"
+robocopy "%resSrc%" "%resDest%" *.json
+robocopy "%resSrc%" "%resDest%" *.png
+
+set shaderSrc=%thisDir%..\..\shaders
+set shaderDest=%destDir%\shaders
+mkdir "%shaderDest%"
+robocopy "%shaderSrc%" "%shaderDest%" *.*
+robocopy "%shaderSrc%" "%shaderDest%" *.*
 
 exit 0
