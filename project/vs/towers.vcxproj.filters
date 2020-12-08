@@ -9,16 +9,16 @@
       <Filter>Stb</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_shader.cpp">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_program.cpp">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\glfwl_window.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_texture.cpp">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\glfwl_lib.cpp">
       <Filter>Glfw Utilities</Filter>
@@ -34,10 +34,10 @@
     <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\gll_debug.cpp">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_binding.cpp">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\camera_fps.cpp">
       <Filter>Rendering\3d</Filter>
@@ -71,9 +71,6 @@
     <Filter Include="Glad">
       <UniqueIdentifier>{e3626774-826b-4350-8f5e-5eb4e04c0390}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Gl Utilities">
-      <UniqueIdentifier>{83b7ab7a-7ef2-4e24-bee1-513529922f10}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Stb">
       <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
     </Filter>
@@ -95,28 +92,31 @@
     <Filter Include="resources">
       <UniqueIdentifier>{f8e70f2e-2aea-47ec-a92d-745ddc8e374e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL Utilities">
+      <UniqueIdentifier>{83b7ab7a-7ef2-4e24-bee1-513529922f10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Stb</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_types.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_object.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_data_format.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_shader.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_program.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_uniform.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\glfwl_types.h">
       <Filter>Glfw Utilities</Filter>
@@ -128,7 +128,7 @@
       <Filter>Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_texture.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\lap_clock.h">
       <Filter>Utilities</Filter>
@@ -150,16 +150,16 @@
     <ClInclude Include="..\..\textures.h" />
     <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\gll_debug.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_binding.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_vbo.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_vao.h">
-      <Filter>Gl Utilities</Filter>
+      <Filter>OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\camera_2d.h">
       <Filter>Rendering\2d</Filter>
