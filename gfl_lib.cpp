@@ -2,12 +2,12 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "glfwl_lib.h"
+#include "gfl_lib.h"
 #include "glfw/glfw3.h"
 #include <utility>
 
 
-namespace glfwl
+namespace gfl
 {
 ///////////////////
 
@@ -72,4 +72,4 @@ void Lib::setHints(DebugOuput dbgOutput)
    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, dbgOutput == DebugOuput::On);
 }
 
-} // namespace glfwl
+} // namespace gfl

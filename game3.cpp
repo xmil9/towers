@@ -10,7 +10,7 @@ namespace
 
 ///////////////////
 
-constexpr glfwl::Lib::ContextVersion OpenGLVersion{4, 6};
+constexpr gfl::Lib::ContextVersion OpenGLVersion{4, 6};
 constexpr float MouseSensitivity = 0.05f;
 constexpr float ScrollSensitivity = 2.0f;
 constexpr float MovementSpeed = 2.5f;
@@ -151,13 +151,13 @@ void Game3::onMouseScrolled(const glm::vec2& delta)
 }
 
 
-void Game3::onKeyPolled(glfwl::Key key, float frameLengthSecs)
+void Game3::onKeyPolled(gfl::Key key, float frameLengthSecs)
 {
    updateCameraPosition(key, frameLengthSecs);
 }
 
 
-std::optional<DirectionXZ> Game3::getCameraDirection(glfwl::Key key) const
+std::optional<DirectionXZ> Game3::getCameraDirection(gfl::Key key) const
 {
    switch (key)
    {
@@ -175,7 +175,7 @@ std::optional<DirectionXZ> Game3::getCameraDirection(glfwl::Key key) const
 }
 
 
-void Game3::updateCameraPosition(glfwl::Key key, float frameLengthSecs)
+void Game3::updateCameraPosition(gfl::Key key, float frameLengthSecs)
 {
    const auto camDir = getCameraDirection(key);
    if (camDir)

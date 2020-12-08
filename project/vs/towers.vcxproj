@@ -175,8 +175,8 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClCompile Include="..\..\frustum3.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\game3.cpp" />
-    <ClCompile Include="..\..\glfwl_lib.cpp" />
-    <ClCompile Include="..\..\glfwl_window.cpp" />
+    <ClCompile Include="..\..\gfl_lib.cpp" />
+    <ClCompile Include="..\..\gfl_window.cpp" />
     <ClCompile Include="..\..\gll_debug.cpp" />
     <ClCompile Include="..\..\gll_program.cpp" />
     <ClCompile Include="..\..\gll_shader.cpp" />
@@ -214,9 +214,9 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\frustum3.h" />
-    <ClInclude Include="..\..\glfwl_types.h" />
-    <ClInclude Include="..\..\glfwl_lib.h" />
-    <ClInclude Include="..\..\glfwl_window.h" />
+    <ClInclude Include="..\..\gfl_types.h" />
+    <ClInclude Include="..\..\gfl_lib.h" />
+    <ClInclude Include="..\..\gfl_window.h" />
     <ClInclude Include="..\..\gll_vbo.h" />
     <ClInclude Include="..\..\gll_data_format.h" />
     <ClInclude Include="..\..\gll_object.h" />

@@ -5,7 +5,7 @@
 #pragma once
 #include "attacker.h"
 #include "basic_types.h"
-#include "glfwl_lib.h"
+#include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
 #include "map.h"
@@ -49,14 +49,14 @@ class Game2
                        const Observed<Input>::MsgData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
-   void onKeyPolled(glfwl::Key key, float frameLengthSecs);
+   void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
  private:
    static constexpr int MainWndWidth = 1800;
    static constexpr int MainWndHeight = 1200;
    Resources m_resources;
    FrameClock m_frameClock;
-   glfwl::Lib m_glfw;
+   gfl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;

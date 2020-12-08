@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "basic_types.h"
-#include "glfwl_lib.h"
+#include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
 #include "renderer3.h"
@@ -34,14 +34,14 @@ class Game3
                        const Observed<Input>::MsgData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
-   void onKeyPolled(glfwl::Key key, float frameLengthSecs);
+   void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
-   std::optional<DirectionXZ> getCameraDirection(glfwl::Key key) const;
-   void updateCameraPosition(glfwl::Key key, float frameLengthSecs);
+   std::optional<DirectionXZ> getCameraDirection(gfl::Key key) const;
+   void updateCameraPosition(gfl::Key key, float frameLengthSecs);
 
  private:
    FrameClock m_frameClock;
-   glfwl::Lib m_glfw;
+   gfl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;
    Renderer3 m_renderer;

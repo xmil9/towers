@@ -4,7 +4,6 @@
 //
 #pragma once
 #include "lap_clock.h"
-#include "glfwl_types.h"
 
 
 using FrameClock = LapClock<float, std::chrono::milliseconds>;

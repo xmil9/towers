@@ -2,10 +2,10 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "glfwl_window.h"
+#include "gfl_window.h"
 #include <cassert>
 
-using namespace glfwl;
+using namespace gfl;
 
 
 namespace
@@ -26,7 +26,7 @@ Window* getSelf(GLFWwindow* wnd)
 } // namespace
 
 
-namespace glfwl
+namespace gfl
 {
 ///////////////////
 
@@ -241,4 +241,4 @@ void Window::windowKeyCallback(GLFWwindow* wnd, Key key, int scancode, int actio
       self->onWindowKeyChanged(key, scancode, action, mods);
 }
 
-} // namespace glfwl
+} // namespace gfl

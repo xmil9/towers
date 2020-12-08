@@ -3,11 +3,11 @@
 // MIT license
 //
 #include "input.h"
-#include "glfwl_window.h"
+#include "gfl_window.h"
 #include <array>
 
 
-void Input::process(glfwl::Window& wnd, float frameLengthSecs)
+void Input::process(gfl::Window& wnd, float frameLengthSecs)
 {
    wnd.pollEvents();
    pollKeys(wnd, frameLengthSecs);
@@ -46,7 +46,7 @@ void Input::onMouseScrolled(double xoffset, double yoffset)
 }
 
 
-void Input::onKeyChanged(glfwl::Key key, int scancode, int action, int mods)
+void Input::onKeyChanged(gfl::Key key, int scancode, int action, int mods)
 {
    KeyChangedMsgData data;
    data.key = key;
@@ -57,7 +57,7 @@ void Input::onKeyChanged(glfwl::Key key, int scancode, int action, int mods)
 }
 
 
-void Input::pollKeys(glfwl::Window& wnd, float frameLengthSecs)
+void Input::pollKeys(gfl::Window& wnd, float frameLengthSecs)
 {
    static constexpr std::array<int, 4> PolledKeys = {GLFW_KEY_W, GLFW_KEY_S, GLFW_KEY_A,
                                                      GLFW_KEY_D};
@@ -70,7 +70,7 @@ void Input::pollKeys(glfwl::Window& wnd, float frameLengthSecs)
 }
 
 
-void Input::notifyKeyPolled(glfwl::Key key, float frameLengthSecs)
+void Input::notifyKeyPolled(gfl::Key key, float frameLengthSecs)
 {
    KeyPolledMsgData data;
    data.key = key;

@@ -4,11 +4,11 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
+#include "gfl_types.h"
 #include "glfw/glfw3.h"
-#include "glfwl_types.h"
 
 
-namespace glfwl
+namespace gfl
 {
 ///////////////////
 
@@ -75,4 +75,4 @@ class Window
    GLFWwindow* m_wnd = nullptr;
 };
 
-} // namespace glfwl
+} // namespace gfl

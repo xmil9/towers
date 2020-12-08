@@ -5,7 +5,7 @@
 #pragma once
 
 
-namespace glfwl
+namespace gfl
 {
 ///////////////////
 
@@ -17,4 +17,4 @@ using Utf8Char = char;
 // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, etc.
 using Key = int;
 
-} // namespace glfwl
+} // namespace gfl

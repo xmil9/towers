@@ -14,7 +14,7 @@ namespace
 
 ///////////////////
 
-constexpr glfwl::Lib::ContextVersion OpenGLVersion{4, 6};
+constexpr gfl::Lib::ContextVersion OpenGLVersion{4, 6};
 constexpr float MouseSensitivity = 0.05f;
 constexpr float ScrollSensitivity = 2.0f;
 constexpr float MovementSpeed = 2.5f;
@@ -56,7 +56,7 @@ void Game2::run()
 
 bool Game2::setupUi()
 {
-   if (m_glfw.init(glfwl::Lib::DebugOuput::On) != GLFW_NO_ERROR)
+   if (m_glfw.init(gfl::Lib::DebugOuput::On) != GLFW_NO_ERROR)
       return false;
 
    if (!setupMainWindow())
@@ -268,6 +268,6 @@ void Game2::onMouseScrolled(const glm::vec2& /*delta*/)
 }
 
 
-void Game2::onKeyPolled(glfwl::Key /*key*/, float /*frameLengthSecs*/)
+void Game2::onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/)
 {
 }

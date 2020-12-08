@@ -14,14 +14,8 @@
     <ClCompile Include="..\..\gll_program.cpp">
       <Filter>OpenGL Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\glfwl_window.cpp">
-      <Filter>Glfw Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gll_texture.cpp">
       <Filter>OpenGL Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\glfwl_lib.cpp">
-      <Filter>Glfw Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\input.cpp">
       <Filter>Ui</Filter>
@@ -62,6 +56,12 @@
     <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\sprite_form.cpp">
       <Filter>Rendering\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gfl_lib.cpp">
+      <Filter>Glfw Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gfl_window.cpp">
+      <Filter>Glfw Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,15 +117,6 @@
     </ClInclude>
     <ClInclude Include="..\..\gll_uniform.h">
       <Filter>OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\glfwl_types.h">
-      <Filter>Glfw Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\glfwl_lib.h">
-      <Filter>Glfw Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\glfwl_window.h">
-      <Filter>Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_texture.h">
       <Filter>OpenGL Utilities</Filter>
@@ -216,6 +207,15 @@
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\point2.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gfl_types.h">
+      <Filter>Glfw Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gfl_lib.h">
+      <Filter>Glfw Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gfl_window.h">
+      <Filter>Glfw Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

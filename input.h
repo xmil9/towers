@@ -7,7 +7,7 @@
 #include "observed.h"
 #include "glm/vec2.hpp"
 
-namespace glfwl
+namespace gfl
 {
 class Window;
 }
@@ -19,16 +19,16 @@ class Input : public InputController, public Observed<Input>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
-   void process(glfwl::Window& wnd, float frameLengthSecs);
+   void process(gfl::Window& wnd, float frameLengthSecs);
 
  private:
    // InputController overrides.
    void onMouseMoved(double xpos, double ypos) override;
    void onMouseScrolled(double xoffset, double yoffset) override;
-   void onKeyChanged(glfwl::Key key, int scancode, int action, int mods) override;
+   void onKeyChanged(gfl::Key key, int scancode, int action, int mods) override;
 
-   void pollKeys(glfwl::Window& wnd, float frameLengthSecs);
-   void notifyKeyPolled(glfwl::Key key, float frameLengthSecs);
+   void pollKeys(gfl::Window& wnd, float frameLengthSecs);
+   void notifyKeyPolled(gfl::Key key, float frameLengthSecs);
 
  private:
    bool m_isFirstMouseMove = true;
@@ -57,7 +57,7 @@ constexpr char KeyChangedMsg[] = "key-changed";
 struct KeyChangedMsgData : public Observed<Input>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
-   glfwl::Key key = 0;
+   gfl::Key key = 0;
    // System-specific scancode.
    int scancode = 0;
    // Key action: GLFW_PRESS, GLFW_RELEASE, GLFW_REPEAT
@@ -70,7 +70,7 @@ constexpr char KeyPolledMsg[] = "key-polled";
 struct KeyPolledMsgData : public Observed<Input>::MsgData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
-   glfwl::Key key = 0;
+   gfl::Key key = 0;
    // Frame length in seconds.
    float frameLengthSecs = 0.0;
 };

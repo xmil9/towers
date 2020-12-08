@@ -5,11 +5,11 @@
 #pragma once
 #include "input_controller.h"
 #include "observed.h"
-#include "glfwl_window.h"
+#include "gfl_window.h"
 #include "glm/vec2.hpp"
 
 
-class MainWindow : public glfwl::Window, public Observed<MainWindow>
+class MainWindow : public gfl::Window, public Observed<MainWindow>
 {
  public:
    void setInputController(InputController* controller);
@@ -18,7 +18,7 @@ class MainWindow : public glfwl::Window, public Observed<MainWindow>
    void onWindowResized(int width, int height) override;
    void onWindowMouseMoved(double xpos, double ypos) override;
    void onWindowScrolled(double xoffset, double yoffset) override;
-   void onWindowKeyChanged(glfwl::Key key, int scancode, int action, int mods) override;
+   void onWindowKeyChanged(gfl::Key key, int scancode, int action, int mods) override;
 
  private:
    InputController* m_inputController = nullptr;

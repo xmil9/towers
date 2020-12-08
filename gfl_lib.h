@@ -4,12 +4,12 @@
 //
 #pragma once
 #include "glad/glad.h" // glad must be included before anything else opengl related.
+#include "gfl_types.h"
 #include "glfw/glfw3.h"
-#include "glfwl_types.h"
 #include <utility>
 
 
-namespace glfwl
+namespace gfl
 {
 ///////////////////
 
@@ -56,4 +56,4 @@ class Lib
    bool m_terminate = false;
 };
 
-} // namespace glfwl
+} // namespace gfl
