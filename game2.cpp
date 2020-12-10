@@ -33,7 +33,7 @@ bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
            setupRenderer() && setupTerrain() && setupSpriteData() && setupAttackers() &&
-           setupBackground());
+           setupDefenders() && setupBackground());
 }
 
 
@@ -110,6 +110,8 @@ bool Game2::setupResources()
 {
    return m_resources.loadTexture("attacker",
                                   m_resources.texturePath() / "attacker.png") &&
+          m_resources.loadTexture("defender",
+                                  m_resources.texturePath() / "defender.png") &&
           m_resources.loadTexture("map1", m_resources.texturePath() / "map1.png");
 }
 
@@ -177,8 +179,29 @@ bool Game2::setupAttackers()
    Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
 
    m_attackers.emplace_back(
-      sprite2, m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)),
-      0, .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_coordSys);
+      sprite2,
+      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 0,
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_coordSys);
+   return true;
+}
+
+
+bool Game2::setupDefenders()
+{
+   assert(!!m_coordSys);
+   assert(!!m_map);
+
+   const std::string texId{"defender"};
+   SpriteLook look{texId};
+
+   SpriteForm form{{}, {}, Angle_t{0.f}};
+   assert(!!m_stdSpriteRenderer);
+   Sprite sprite{m_stdSpriteRenderer.get(), look, form};
+
+   m_defenders.emplace_back(
+      sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
+      NormPos{.387f, .476f}, *m_coordSys);
+   
    return true;
 }
 
@@ -205,6 +228,8 @@ void Game2::updateState()
 {
    for (auto& attacker : m_attackers)
       attacker.update();
+   for (auto& defender : m_defenders)
+      defender.update();
 }
 
 
@@ -212,8 +237,11 @@ void Game2::render()
 {
    m_renderer.beginRendering();
    m_background->render(m_renderer.shaders());
-   for (const auto& attacker : m_attackers)
+
+   for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());
+   for (auto& defender : m_defenders)
+      defender.render(m_renderer.shaders());
 
    m_mainWnd.swapBuffers();
 }

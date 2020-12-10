@@ -5,6 +5,7 @@
 #pragma once
 #include "attacker.h"
 #include "basic_types.h"
+#include "defender.h"
 #include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
@@ -35,6 +36,7 @@ class Game2
    bool setupTerrain();
    bool setupSpriteData();
    bool setupAttackers();
+   bool setupDefenders();
    bool setupBackground();
    
    void processInput();
@@ -63,6 +65,7 @@ class Game2
    Renderer2 m_renderer;
    std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
+   std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
 };

@@ -6,6 +6,7 @@
 #include "map_coord_sys.h"
 #include "path.h"
 #include "sprite.h"
+#include "glm/glm.hpp"
 #include <cstddef>
 
 namespace gll
@@ -22,7 +23,7 @@ class Attacker
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
             const MapCoordSys& cs);
 
-   void render(const gll::Program& shaders) const { m_sprite.render(shaders); }
+   void render(const gll::Program& shaders);
    void update();
 
  private:
@@ -30,6 +31,10 @@ class Attacker
    bool isAtLastPosition() const;
    void setPosition(std::optional<NormPos> center);
    void setSize(NormVec size);
+   void calcRotation();
+   // Returns normalized direction of movement.
+   NormVec direction() const;
+   NormVec normedDirection() const { return glm::normalize(direction()); }
 
  private:
    NormVec m_size;

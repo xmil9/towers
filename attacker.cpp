@@ -4,7 +4,11 @@
 //
 #include "attacker.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/vector_angle.hpp"
 #include "essentutils/fputil.h"
+
+
+static constexpr NormVec Up{0., -1.};
 
 
 Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
@@ -14,6 +18,13 @@ Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPat
 {
    setSize(size);
    setPosition(path.start().center());
+}
+
+
+void Attacker::render(const gll::Program& shaders)
+{
+   calcRotation();
+   m_sprite.render(shaders);
 }
 
 
@@ -35,16 +46,12 @@ void Attacker::move()
 
    assert(m_center && m_currTurn);
 
-   const NormRect nextTurn = m_path[*m_currTurn + 1];
-   const NormPos nextTurnPos = nextTurn.center();
-   const NormVec dist = nextTurnPos - *m_center;
-   const NormVec direction = glm::normalize(dist);
-
-   NormVec offset = m_speed * direction;
+   const NormVec dir = direction();
+   NormVec offset = m_speed * glm::normalize(dir);
    // Limit movement to next turn.
-   if (sutil::greaterEqual(glm::length(offset), glm::length(dist)))
+   if (sutil::greaterEqual(glm::length(offset), glm::length(dir)))
    {
-      offset = dist;
+      offset = dir;
       ++*m_currTurn;
    }
 
@@ -79,4 +86,32 @@ void Attacker::setSize(NormVec size)
 {
    m_size = size;
    m_sprite.setSize(m_coordSys.toRenderCoords(size));
+}
+
+
+void Attacker::calcRotation()
+{
+   const Angle_t rot{glm::angle(normedDirection(), Up)};
+   m_sprite.setRotation(rot);
+}
+
+
+NormVec Attacker::direction() const
+{
+   if (!m_center || !m_currTurn)
+      return Up;
+
+   NormPos pos = *m_center;
+   NormPos nextPos = pos;
+   if (*m_currTurn < m_path.size() - 1)
+   {
+      nextPos = m_path[*m_currTurn + 1].center();
+   }
+   else
+   {
+      pos = m_path[*m_currTurn - 1].center();
+      nextPos = m_path[*m_currTurn].center();
+   }
+
+   return nextPos - pos;
 }
