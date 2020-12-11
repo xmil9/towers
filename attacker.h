@@ -25,6 +25,7 @@ class Attacker
 
    void render(const gll::Program& shaders);
    void update();
+   std::optional<NormPos> position() const { return m_center; }
 
  private:
    void move();

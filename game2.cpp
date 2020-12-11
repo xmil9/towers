@@ -200,8 +200,8 @@ bool Game2::setupDefenders()
 
    m_defenders.emplace_back(
       sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, *m_coordSys);
-   
+      NormPos{.387f, .476f}, .1f, *m_coordSys, m_attackers);
+
    return true;
 }
 
