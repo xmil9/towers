@@ -172,15 +172,15 @@ bool Game2::setupAttackers()
 
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      80, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, *m_coordSys);
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, m_coordSys.get());
 
    SpriteForm form2{{}, {}, Angle_t::fromDegrees(0.f)};
    Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
 
    m_attackers.emplace_back(
       sprite2,
-      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 20,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_coordSys);
+      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, m_coordSys.get());
    return true;
 }
 
@@ -199,14 +199,14 @@ bool Game2::setupDefenders()
 
    m_defenders.emplace_back(
       sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, .1f, 5, *m_coordSys, m_attackers);
+      NormPos{.387f, .476f}, .1f, 5, m_coordSys.get(), m_attackers);
 
    SpriteForm form2{{}, {}, Angle_t{0.f}};
    Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
 
    m_defenders.emplace_back(
       sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.45f, .276f}, .1f, 2, *m_coordSys, m_attackers);
+      NormPos{.45f, .276f}, .1f, 5, m_coordSys.get(), m_attackers);
 
    return true;
 }
@@ -236,6 +236,12 @@ void Game2::updateState()
       attacker.update();
    for (auto& defender : m_defenders)
       defender.update();
+
+   // Remove destroyed attackers.
+   m_attackers.erase(
+      std::remove_if(m_attackers.begin(), m_attackers.end(),
+                     [](const auto& attacker) { return !attacker.isAlive(); }),
+      m_attackers.end());
 }
 
 

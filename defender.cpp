@@ -11,7 +11,7 @@ static constexpr NormVec Up{0., -1.};
 
 
 Defender::Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
-                   const MapCoordSys& cs, std::vector<Attacker>& attackers)
+                   const MapCoordSys* cs, std::vector<Attacker>& attackers)
 : m_range{range}, m_damage{damage}, m_size{size}, m_center{center},
   m_coordSys{cs}, m_sprite{std::move(sp)}, m_attackers{attackers}
 {
@@ -30,7 +30,8 @@ void Defender::render(const gll::Program& shaders)
 
 void Defender::update()
 {
-   findTarget();
+   if (findTarget())
+      shoot();
 }
 
 
@@ -38,26 +39,31 @@ void Defender::setPosition(NormPos center)
 {
    m_center = center;
    // Sprite uses left-top coord as position.
-   m_sprite.setPosition(m_coordSys.toRenderCoords(m_center - m_size / 2.f));
+   m_sprite.setPosition(m_coordSys->toRenderCoords(m_center - m_size / 2.f));
 }
 
 
 void Defender::setSize(NormVec size)
 {
    m_size = size;
-   m_sprite.setSize(m_coordSys.toRenderCoords(size));
+   m_sprite.setSize(m_coordSys->toRenderCoords(size));
 }
 
 
-void Defender::findTarget()
+bool Defender::findTarget()
 {
    m_target.reset();
 
    for (auto& attacker : m_attackers)
    {
       if (isInRange(attacker))
+      {
          m_target = &attacker;
+         break;
+      }
    }
+
+   return !!m_target;
 }
 
 
@@ -93,4 +99,11 @@ std::optional<NormVec> Defender::targetDirection() const
       return std::nullopt;
 
    return *targetPos - m_center;
+}
+
+
+void Defender::shoot()
+{
+   if (m_target)
+      (*m_target)->damage(m_damage);
 }

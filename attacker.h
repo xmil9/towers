@@ -21,11 +21,13 @@ class Attacker
 {
  public:
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-            const MapCoordSys& cs);
+            const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();
    std::optional<NormPos> position() const { return m_center; }
+   void damage(int amount);
+   bool isAlive() const { return m_hp > 0; }
 
  private:
    void move();
@@ -44,6 +46,6 @@ class Attacker
    std::optional<NormPos> m_center;
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
-   const MapCoordSys& m_coordSys;
+   const MapCoordSys* m_coordSys = nullptr;
    Sprite m_sprite;
 };
