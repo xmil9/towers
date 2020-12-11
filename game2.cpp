@@ -162,25 +162,24 @@ bool Game2::setupAttackers()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
+   assert(!!m_stdSpriteRenderer);
 
    const std::string texId{"attacker"};
    SpriteLook look{texId};
 
    SpriteForm form1{{}, {}, Angle_t{0.f}};
-   assert(!!m_stdSpriteRenderer);
    Sprite sprite1{m_stdSpriteRenderer.get(), look, form1};
 
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      0, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, *m_coordSys);
+      80, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, *m_coordSys);
 
    SpriteForm form2{{}, {}, Angle_t::fromDegrees(0.f)};
-   assert(!!m_stdSpriteRenderer);
    Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
 
    m_attackers.emplace_back(
       sprite2,
-      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 0,
+      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 20,
       .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_coordSys);
    return true;
 }
@@ -190,17 +189,24 @@ bool Game2::setupDefenders()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
+   assert(!!m_stdSpriteRenderer);
 
    const std::string texId{"defender"};
    SpriteLook look{texId};
 
    SpriteForm form{{}, {}, Angle_t{0.f}};
-   assert(!!m_stdSpriteRenderer);
    Sprite sprite{m_stdSpriteRenderer.get(), look, form};
 
    m_defenders.emplace_back(
       sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, .1f, *m_coordSys, m_attackers);
+      NormPos{.387f, .476f}, .1f, 5, *m_coordSys, m_attackers);
+
+   SpriteForm form2{{}, {}, Angle_t{0.f}};
+   Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
+
+   m_defenders.emplace_back(
+      sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
+      NormPos{.45f, .276f}, .1f, 2, *m_coordSys, m_attackers);
 
    return true;
 }

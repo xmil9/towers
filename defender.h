@@ -23,7 +23,7 @@ class Program;
 class Defender
 {
  public:
-   Defender(Sprite sp, NormVec size, NormPos center, NormCoord range,
+   Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
             const MapCoordSys& cs, std::vector<Attacker>& attackers);
 
    void render(const gll::Program& shaders);
@@ -39,6 +39,7 @@ class Defender
 
  private:
    NormCoord m_range = 0.f;
+   int m_damage = 0;
    NormVec m_size;
    NormPos m_center;
    const MapCoordSys& m_coordSys;
