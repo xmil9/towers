@@ -225,6 +225,7 @@
     <ClInclude Include="..\..\animation.h">
       <Filter>Rendering\2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\effect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

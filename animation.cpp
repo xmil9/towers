@@ -7,9 +7,8 @@
 
 ///////////////////
 
-Animation::Animation(std::vector<Sprite> sprites, std::vector<int> durations,
-                     const MapCoordSys* cs)
-: m_sprites{std::move(sprites)}, m_durations{std::move(durations)}, m_coordSys{cs}
+Animation::Animation(std::vector<Sprite> sprites, std::vector<int> durations)
+: m_sprites{std::move(sprites)}, m_durations{std::move(durations)}
 {
    if (m_sprites.empty() || m_durations.empty() || m_durations.size() != m_sprites.size())
       throw std::runtime_error("Misconfigured animation.");
@@ -18,11 +17,11 @@ Animation::Animation(std::vector<Sprite> sprites, std::vector<int> durations,
 }
 
 
-void Animation::render(const gll::Program& shaders)
+void Animation::render(const gll::Program& shaders, PixPos at)
 {
    if (!hasFinished())
    {
-      m_sprites[m_stepIdx].render(shaders);
+      m_sprites[m_stepIdx].render(shaders, at);
       advance();
    }
 }
@@ -41,10 +40,11 @@ bool Animation::hasFinished() const
 }
 
 
-void Animation::setPosition(PixPos pos)
+PixDim Animation::size() const
 {
-   for (auto& sprite : m_sprites)
-      sprite.setPosition(pos);
+   if (hasFinished())
+      return {};
+   return m_sprites[m_stepIdx].size();
 }
 
 

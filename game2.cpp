@@ -172,14 +172,18 @@ bool Game2::setupExplosions()
    assert(!!m_stdSpriteRenderer);
 
    std::vector<Sprite> sprites{
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion1"}, {}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion2"}, {}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion3"}, {}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"}, {}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion1"},
+             SpriteForm{PixDim{20.f, 20.0f}, Angle_t{0.f}}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion2"},
+             SpriteForm{PixDim{25.f, 25.0f}, Angle_t{0.f}}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion3"},
+             SpriteForm{PixDim{30.f, 30.0f}, Angle_t{0.f}}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"},
+             SpriteForm{PixDim{35.f, 35.0f}, Angle_t{0.f}}},
    };
-   std::vector<int> durations{10, 10, 10, 10};
+   std::vector<int> durations{20, 20, 20, 20};
 
-   m_explosion = std::make_unique<Animation>(sprites, durations, m_coordSys.get());
+   m_explosion = std::make_unique<Animation>(sprites, durations);
 
    return true;
 }
@@ -273,7 +277,7 @@ void Game2::updateState()
 void Game2::render()
 {
    m_renderer.beginRendering();
-   m_background->render(m_renderer.shaders());
+   m_background->render(m_renderer.shaders(), {0.f, 0.f});
 
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());

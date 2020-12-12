@@ -12,6 +12,7 @@
 #include <memory>
 #include <vector>
 
+class Effect;
 namespace gll
 {
 class Program;
@@ -25,7 +26,7 @@ class Attacker
  public:
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
             Animation explosion,
-            std::vector<Animation>* activeExplosions,
+            std::vector<Effect>* activeExplosions,
             const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
@@ -54,5 +55,5 @@ class Attacker
    const MapCoordSys* m_coordSys = nullptr;
    Sprite m_sprite;
    Animation m_explosion;
-   std::vector<Animation>* m_activeExplosions;
+   std::vector<Effect>* m_activeExplosions;
 };

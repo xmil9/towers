@@ -24,18 +24,16 @@ class Sprite
 
    PixDim size() const { return m_form.size(); }
 
-   Sprite& setPosition(PixPos pos);
    Sprite& setSize(PixDim size);
    Sprite& setRotation(Angle_t rot);
    Sprite& setForm(const SpriteForm& form);
 
-   void render(const gll::Program& shaders) const;
+   void render(const gll::Program& shaders, PixPos at) const;
 
  private:
    SpriteRenderer* m_renderer = nullptr;
    SpriteLook m_look;
    SpriteForm m_form;
-   PixPos m_pos;
 };
 
 
@@ -48,12 +46,6 @@ inline Sprite::Sprite(SpriteRenderer* renderer, SpriteLook look, const SpriteFor
 : m_renderer{renderer}, m_look{look}, m_form{form}
 {
    assert(m_renderer);
-}
-
-inline Sprite& Sprite::setPosition(PixPos pos)
-{
-   m_pos = pos;
-   return *this;
 }
 
 inline Sprite& Sprite::setSize(PixDim size)
@@ -74,7 +66,7 @@ inline Sprite& Sprite::setForm(const SpriteForm& form)
    return *this;
 }
 
-inline void Sprite::render(const gll::Program& shaders) const
+inline void Sprite::render(const gll::Program& shaders, PixPos at) const
 {
-   m_renderer->render(shaders, m_look, m_form, m_pos);
+   m_renderer->render(shaders, m_look, m_form, at);
 }

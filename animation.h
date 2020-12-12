@@ -18,12 +18,12 @@ class Program;
 class Animation
 {
  public:
-   Animation(std::vector<Sprite> sprites, std::vector<int> durations,
-             const MapCoordSys* cs);
+   Animation(std::vector<Sprite> sprites, std::vector<int> durations);
 
-   void render(const gll::Program& shaders);
+   void render(const gll::Program& shaders, PixPos at);
    bool hasFinished() const;
-   void setPosition(PixPos pos);
+   // Returns the size of the current sprite.
+   PixDim size() const;
 
  private:
    void advance();
@@ -36,5 +36,4 @@ class Animation
    std::size_t m_stepIdx = 0;
    // Duration left in step.
    int m_stepDuration = 0;
-   const MapCoordSys* m_coordSys = nullptr;
 };

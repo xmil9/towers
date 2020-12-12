@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "attacker.h"
+#include "effect.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/vector_angle.hpp"
 #include "essentutils/fputil.h"
@@ -13,7 +14,7 @@ static constexpr NormVec Up{0., -1.};
 
 Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
                    Animation explosion,
-                   std::vector<Animation>* activeExplosions,
+                   std::vector<Effect>* activeExplosions,
                    const MapCoordSys* cs)
 : m_size{size}, m_hp{hp}, m_speed{speed}, m_center{path.start().center()},
   m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)},
@@ -27,7 +28,7 @@ Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPat
 void Attacker::render(const gll::Program& shaders)
 {
    calcRotation();
-   m_sprite.render(shaders);
+   m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
 }
 
 
@@ -42,7 +43,7 @@ void Attacker::damage(int amount)
    m_hp = std::max(0, m_hp - amount);
 
    if (!isAlive())
-      m_activeExplosions->push_back(m_explosion);
+      m_activeExplosions->push_back(Effect{m_explosion, m_coordSys, *m_center});
 }
 
 
@@ -82,15 +83,6 @@ bool Attacker::isAtLastPosition() const
 void Attacker::setPosition(std::optional<NormPos> center)
 {
    m_center = center;
-   if (m_center)
-   {
-      // Sprite uses left-top coord as position.
-      m_sprite.setPosition(m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
-   }
-   else
-   {
-      ; // todo - set flag to remove attacker
-   }
 }
 
 

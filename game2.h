@@ -6,6 +6,7 @@
 #include "attacker.h"
 #include "basic_types.h"
 #include "defender.h"
+#include "effect.h"
 #include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
@@ -68,7 +69,7 @@ class Game2
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Animation> m_explosion;
-   std::vector<Animation> m_activeExplosions;
+   std::vector<Effect> m_activeExplosions;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
 };

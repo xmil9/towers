@@ -24,7 +24,7 @@ void Defender::render(const gll::Program& shaders)
 {
    if (m_target)
       calcRotation();
-   m_sprite.render(shaders);
+   m_sprite.render(shaders, m_coordSys->toRenderCoords(m_center - m_size / 2.f));
 }
 
 
@@ -38,8 +38,6 @@ void Defender::update()
 void Defender::setPosition(NormPos center)
 {
    m_center = center;
-   // Sprite uses left-top coord as position.
-   m_sprite.setPosition(m_coordSys->toRenderCoords(m_center - m_size / 2.f));
 }
 
 
