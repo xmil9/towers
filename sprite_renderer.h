@@ -32,7 +32,7 @@ class SpriteRenderer
 
    void setMesh(const Mesh2& mesh);
    void render(const gll::Program& shaders, const SpriteLook& look,
-               const SpriteForm& form) const;
+               const SpriteForm& form, PixPos pos) const;
 
  private:
    void makeVao(const Mesh2& mesh);

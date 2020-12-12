@@ -35,6 +35,7 @@ class Sprite
    SpriteRenderer* m_renderer = nullptr;
    SpriteLook m_look;
    SpriteForm m_form;
+   PixPos m_pos;
 };
 
 
@@ -51,7 +52,7 @@ inline Sprite::Sprite(SpriteRenderer* renderer, SpriteLook look, const SpriteFor
 
 inline Sprite& Sprite::setPosition(PixPos pos)
 {
-   m_form.setPosition(pos);
+   m_pos = pos;
    return *this;
 }
 
@@ -75,5 +76,5 @@ inline Sprite& Sprite::setForm(const SpriteForm& form)
 
 inline void Sprite::render(const gll::Program& shaders) const
 {
-   m_renderer->render(shaders, m_look, m_form);
+   m_renderer->render(shaders, m_look, m_form, m_pos);
 }
