@@ -5,7 +5,7 @@
 #pragma once
 #include "map_coord_sys.h"
 #include "sprite.h"
-#include "glm/glm.hpp"
+#include <vector>
 
 namespace gll
 {
@@ -15,25 +15,26 @@ class Program;
 
 ///////////////////
 
-class Explosion
+class Animation
 {
  public:
-   Explosion(NormPos center, std::vector<Sprite> animation, std::vector<int> durations,
+   Animation(std::vector<Sprite> sprites, std::vector<int> durations,
              const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
-   void update();
    bool hasFinished() const;
+   void setPosition(PixPos pos);
 
  private:
-    void advanceAnimation();
+   void advance();
 
  private:
-   NormPos m_center;
-   std::vector<Sprite> m_animation;
+   std::vector<Sprite> m_sprites;
+   // Duration (in frames) of how long each sprite is displayed.
    std::vector<int> m_durations;
+   // Currently rendered step.
    std::size_t m_stepIdx = 0;
+   // Duration left in step.
    int m_stepDuration = 0;
    const MapCoordSys* m_coordSys = nullptr;
-   Sprite m_sprite;
 };

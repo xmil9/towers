@@ -12,9 +12,12 @@ static constexpr NormVec Up{0., -1.};
 
 
 Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
+                   Animation explosion,
+                   std::vector<Animation>* activeExplosions,
                    const MapCoordSys* cs)
 : m_size{size}, m_hp{hp}, m_speed{speed}, m_center{path.start().center()},
-  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)}
+  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)},
+  m_explosion{explosion}, m_activeExplosions{activeExplosions}
 {
    setSize(size);
    setPosition(path.start().center());
@@ -37,6 +40,9 @@ void Attacker::update()
 void Attacker::damage(int amount)
 {
    m_hp = std::max(0, m_hp - amount);
+
+   if (!isAlive())
+      m_activeExplosions->push_back(m_explosion);
 }
 
 

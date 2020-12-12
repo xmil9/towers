@@ -3,11 +3,14 @@
 // MIT license
 //
 #pragma once
+#include "animation.h"
 #include "map_coord_sys.h"
 #include "path.h"
 #include "sprite.h"
 #include "glm/glm.hpp"
 #include <cstddef>
+#include <memory>
+#include <vector>
 
 namespace gll
 {
@@ -21,6 +24,8 @@ class Attacker
 {
  public:
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
+            Animation explosion,
+            std::vector<Animation>* activeExplosions,
             const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
@@ -48,4 +53,6 @@ class Attacker
    OffsetPath m_path;
    const MapCoordSys* m_coordSys = nullptr;
    Sprite m_sprite;
+   Animation m_explosion;
+   std::vector<Animation>* m_activeExplosions;
 };

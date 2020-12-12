@@ -32,8 +32,8 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
-           setupRenderer() && setupTerrain() && setupSpriteData() && setupAttackers() &&
-           setupDefenders() && setupExplosions() && setupBackground());
+           setupRenderer() && setupTerrain() && setupSpriteData() && setupExplosions() &&
+           setupAttackers() && setupDefenders() && setupBackground());
 }
 
 
@@ -112,6 +112,14 @@ bool Game2::setupResources()
                                   m_resources.texturePath() / "attacker.png") &&
           m_resources.loadTexture("defender",
                                   m_resources.texturePath() / "defender.png") &&
+          m_resources.loadTexture("explosion1",
+                                  m_resources.texturePath() / "explosion1.png") &&
+          m_resources.loadTexture("explosion2",
+                                  m_resources.texturePath() / "explosion2.png") &&
+          m_resources.loadTexture("explosion3",
+                                  m_resources.texturePath() / "explosion3.png") &&
+          m_resources.loadTexture("explosion4",
+                                  m_resources.texturePath() / "explosion4.png") &&
           m_resources.loadTexture("map1", m_resources.texturePath() / "map1.png");
 }
 
@@ -158,6 +166,25 @@ bool Game2::setupSpriteData()
 }
 
 
+bool Game2::setupExplosions()
+{
+   assert(!!m_coordSys);
+   assert(!!m_stdSpriteRenderer);
+
+   std::vector<Sprite> sprites{
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion1"}, {}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion2"}, {}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion3"}, {}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"}, {}},
+   };
+   std::vector<int> durations{10, 10, 10, 10};
+
+   m_explosion = std::make_unique<Animation>(sprites, durations, m_coordSys.get());
+
+   return true;
+}
+
+
 bool Game2::setupAttackers()
 {
    assert(!!m_coordSys);
@@ -172,7 +199,8 @@ bool Game2::setupAttackers()
 
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, m_coordSys.get());
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, *m_explosion,
+      &m_activeExplosions, m_coordSys.get());
 
    SpriteForm form2{{}, {}, Angle_t::fromDegrees(0.f)};
    Sprite sprite2{m_stdSpriteRenderer.get(), look, form2};
@@ -180,7 +208,8 @@ bool Game2::setupAttackers()
    m_attackers.emplace_back(
       sprite2,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, m_coordSys.get());
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_explosion,
+      &m_activeExplosions, m_coordSys.get());
    return true;
 }
 
@@ -208,12 +237,6 @@ bool Game2::setupDefenders()
       sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
       NormPos{.45f, .276f}, .1f, 5, m_coordSys.get(), m_attackers);
 
-   return true;
-}
-
-
-bool Game2::setupExplosions()
-{
    return true;
 }
 
@@ -260,6 +283,8 @@ void Game2::render()
       attacker.render(m_renderer.shaders());
    for (auto& defender : m_defenders)
       defender.render(m_renderer.shaders());
+   for (auto& explosion : m_activeExplosions)
+      explosion.render(m_renderer.shaders());
 
    m_mainWnd.swapBuffers();
 }
