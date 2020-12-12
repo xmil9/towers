@@ -33,7 +33,7 @@ bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
            setupRenderer() && setupTerrain() && setupSpriteData() && setupAttackers() &&
-           setupDefenders() && setupBackground());
+           setupDefenders() && setupExplosions() && setupBackground());
 }
 
 
@@ -208,6 +208,12 @@ bool Game2::setupDefenders()
       sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
       NormPos{.45f, .276f}, .1f, 5, m_coordSys.get(), m_attackers);
 
+   return true;
+}
+
+
+bool Game2::setupExplosions()
+{
    return true;
 }
 

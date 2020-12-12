@@ -6,6 +6,7 @@
 #include "attacker.h"
 #include "basic_types.h"
 #include "defender.h"
+#include "explosion.h"
 #include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
@@ -37,6 +38,7 @@ class Game2
    bool setupSpriteData();
    bool setupAttackers();
    bool setupDefenders();
+   bool setupExplosions();
    bool setupBackground();
    
    void processInput();
@@ -66,6 +68,7 @@ class Game2
    std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
+   std::vector<Explosion> m_explosions;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
 };

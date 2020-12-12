@@ -18,6 +18,7 @@ class Program;
 class Sprite
 {
  public:
+   Sprite() = default;
    Sprite(SpriteRenderer* renderer, SpriteLook look);
    Sprite(SpriteRenderer* renderer, SpriteLook look, const SpriteForm& form);
 

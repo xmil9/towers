@@ -169,6 +169,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
   <ItemGroup>
     <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\defender.cpp" />
+    <ClCompile Include="..\..\explosion.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
@@ -200,6 +201,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\defender.h" />
+    <ClInclude Include="..\..\explosion.h" />
     <ClInclude Include="..\..\int_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />

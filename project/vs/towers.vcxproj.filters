@@ -64,6 +64,7 @@
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\defender.cpp" />
+    <ClCompile Include="..\..\explosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -219,6 +220,7 @@
       <Filter>Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\defender.h" />
+    <ClInclude Include="..\..\explosion.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
