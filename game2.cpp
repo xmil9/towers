@@ -181,7 +181,7 @@ bool Game2::setupExplosions()
       Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"},
              SpriteForm{PixDim{35.f, 35.0f}, Angle_t{0.f}}},
    };
-   std::vector<int> durations{20, 20, 20, 20};
+   std::vector<int> durations{15, 15, 15, 15};
 
    m_explosion = std::make_unique<Animation>(sprites, durations);
 
