@@ -27,6 +27,8 @@ class Sprite
    Sprite& setSize(PixDim size);
    Sprite& setRotation(Angle_t rot);
    Sprite& setForm(const SpriteForm& form);
+   Sprite& scale(float factor);
+   Sprite& rotate(Angle_t rot);
 
    void render(const gll::Program& shaders, PixPos at) const;
 
@@ -63,6 +65,18 @@ inline Sprite& Sprite::setRotation(Angle_t rot)
 inline Sprite& Sprite::setForm(const SpriteForm& form)
 {
    m_form = form;
+   return *this;
+}
+
+inline Sprite& Sprite::scale(float factor)
+{
+   m_form.scale(factor);
+   return *this;
+}
+
+inline Sprite& Sprite::rotate(Angle_t rot)
+{
+   m_form.rotate(rot);
    return *this;
 }
 

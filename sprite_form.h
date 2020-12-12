@@ -20,6 +20,8 @@ class SpriteForm
 
    void setSize(PixDim size) { m_size = size; }
    void setRotation(Angle_t rot) { m_rot = rot; }
+   void scale(float factor);
+   void rotate(Angle_t rot);
 
  private:
    PixDim m_size;
@@ -30,4 +32,14 @@ class SpriteForm
 inline SpriteForm::SpriteForm(PixDim size, Angle_t rot)
 : m_size{size}, m_rot{rot}
 {
+}
+
+inline void SpriteForm::scale(float factor)
+{
+   m_size *= factor;
+}
+
+inline void SpriteForm::rotate(Angle_t rot)
+{
+   m_rot += rot;
 }

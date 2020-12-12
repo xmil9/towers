@@ -24,6 +24,8 @@ class Animation
    bool hasFinished() const;
    // Returns the size of the current sprite.
    PixDim size() const;
+   void scale(float factor);
+   void rotate(Angle_t rot);
 
  private:
    void advance();

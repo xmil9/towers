@@ -48,6 +48,20 @@ PixDim Animation::size() const
 }
 
 
+void Animation::scale(float factor)
+{
+   for (auto& sprite : m_sprites)
+      sprite.scale(factor);
+}
+
+
+void Animation::rotate(Angle_t rot)
+{
+   for (auto& sprite : m_sprites)
+      sprite.rotate(rot);
+}
+
+
 void Animation::advance()
 {
    if (--m_stepDuration == 0)
