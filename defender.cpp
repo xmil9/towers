@@ -54,7 +54,7 @@ bool Defender::findTarget()
 
    for (auto& attacker : m_attackers)
    {
-      if (isInRange(attacker))
+      if (attacker.isAlive() && isInRange(attacker))
       {
          m_target = &attacker;
          break;
