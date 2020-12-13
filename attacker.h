@@ -12,7 +12,6 @@
 #include <memory>
 #include <vector>
 
-class Effect;
 namespace gll
 {
 class Program;
@@ -25,15 +24,14 @@ class Attacker
 {
  public:
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-            Animation explosion,
-            std::vector<Effect>* activeExplosions,
-            const MapCoordSys* cs);
+            std::shared_ptr<AnimationSeq> explosionSeq, const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();
    std::optional<NormPos> position() const { return m_center; }
-   void damage(int amount);
+   void hit(int amount);
    bool isAlive() const { return m_hp > 0; }
+   bool canBeRemoved() const;
 
  private:
    void move();
@@ -55,5 +53,4 @@ class Attacker
    const MapCoordSys* m_coordSys = nullptr;
    Sprite m_sprite;
    Animation m_explosion;
-   std::vector<Effect>* m_activeExplosions;
 };

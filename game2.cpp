@@ -181,9 +181,9 @@ bool Game2::setupExplosions()
       Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"},
              SpriteForm{PixDim{35.f, 35.0f}, Angle_t{0.f}}},
    };
-   std::vector<int> durations{15, 15, 15, 15};
+   std::vector<int> frames{15, 15, 15, 15};
 
-   m_explosion = std::make_unique<Animation>(sprites, durations);
+   m_explosion = std::make_shared<AnimationSeq>(sprites, frames);
 
    return true;
 }
@@ -202,16 +202,16 @@ bool Game2::setupAttackers()
 
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, *m_explosion,
-      &m_activeExplosions, m_coordSys.get());
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, m_explosion,
+      m_coordSys.get());
 
    Sprite sprite2{m_stdSpriteRenderer.get(), look, SpriteForm{}};
 
    m_attackers.emplace_back(
       sprite2,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, *m_explosion,
-      &m_activeExplosions, m_coordSys.get());
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, m_explosion,
+      m_coordSys.get());
    return true;
 }
 
@@ -269,7 +269,7 @@ void Game2::updateState()
    // Remove destroyed attackers.
    m_attackers.erase(
       std::remove_if(m_attackers.begin(), m_attackers.end(),
-                     [](const auto& attacker) { return !attacker.isAlive(); }),
+                     [](const auto& attacker) { return attacker.canBeRemoved(); }),
       m_attackers.end());
 }
 
@@ -283,8 +283,6 @@ void Game2::render()
       attacker.render(m_renderer.shaders());
    for (auto& defender : m_defenders)
       defender.render(m_renderer.shaders());
-   for (auto& explosion : m_activeExplosions)
-      explosion.render(m_renderer.shaders());
 
    m_mainWnd.swapBuffers();
 }

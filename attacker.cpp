@@ -3,7 +3,6 @@
 // MIT license
 //
 #include "attacker.h"
-#include "effect.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/vector_angle.hpp"
 #include "essentutils/fputil.h"
@@ -13,12 +12,9 @@ static constexpr NormVec Up{0., -1.};
 
 
 Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-                   Animation explosion,
-                   std::vector<Effect>* activeExplosions,
-                   const MapCoordSys* cs)
-: m_size{size}, m_hp{hp}, m_speed{speed}, m_center{path.start().center()},
-  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)},
-  m_explosion{explosion}, m_activeExplosions{activeExplosions}
+                   std::shared_ptr<AnimationSeq> explosionSeq, const MapCoordSys* cs)
+: m_size{size}, m_hp{hp}, m_speed{speed}, m_center{path.start().center()}, m_currTurn{0},
+  m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)}, m_explosion{explosionSeq, cs}
 {
    setSize(size);
    setPosition(path.start().center());
@@ -27,8 +23,15 @@ Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPat
 
 void Attacker::render(const gll::Program& shaders)
 {
-   calcRotation();
-   m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
+   if (isAlive())
+   {
+      calcRotation();
+      m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
+   }
+   else
+   {
+      m_explosion.render(shaders);
+   }
 }
 
 
@@ -38,18 +41,32 @@ void Attacker::update()
 }
 
 
-void Attacker::damage(int amount)
+void Attacker::hit(int amount)
 {
+   if (!isAlive())
+      return;
+
    m_hp = std::max(0, m_hp - amount);
 
    if (!isAlive())
-      m_activeExplosions->push_back(Effect{m_explosion, m_coordSys, *m_center});
+      m_explosion.setPosition(*m_center);
+}
+
+
+bool Attacker::canBeRemoved() const
+{
+   const bool isAtGoal = !m_center;
+   const bool hasExploded = m_explosion.hasFinished();
+   return isAtGoal || hasExploded;
 }
 
 
 void Attacker::move()
 {
-   // Cannot move anymore.
+   if (!isAlive())
+      return;
+
+   // Cannot move further.
    if (isAtLastPosition())
    {
       setPosition(std::nullopt);

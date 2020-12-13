@@ -103,5 +103,5 @@ std::optional<NormVec> Defender::targetDirection() const
 void Defender::shoot()
 {
    if (m_target)
-      (*m_target)->damage(m_damage);
+      (*m_target)->hit(m_damage);
 }
