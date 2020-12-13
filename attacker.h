@@ -24,13 +24,14 @@ class Attacker
 {
  public:
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-            std::shared_ptr<AnimationSeq> explosionSeq, const MapCoordSys* cs);
+            int delay, std::shared_ptr<AnimationSeq> explosionSeq, const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();
    std::optional<NormPos> position() const { return m_center; }
    void hit(int amount);
    bool isAlive() const { return m_hp > 0; }
+   bool hasStarted() const { return m_delay == 0; }
    bool canBeRemoved() const;
 
  private:
@@ -47,6 +48,7 @@ class Attacker
    NormVec m_size;
    int m_hp = 0;
    float m_speed = .001f;
+   int m_delay = 0;
    std::optional<NormPos> m_center;
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;

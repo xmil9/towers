@@ -12,9 +12,12 @@ static constexpr NormVec Up{0., -1.};
 
 
 Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-                   std::shared_ptr<AnimationSeq> explosionSeq, const MapCoordSys* cs)
-: m_size{size}, m_hp{hp}, m_speed{speed}, m_center{path.start().center()}, m_currTurn{0},
-  m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)}, m_explosion{explosionSeq, cs}
+                   int delay, std::shared_ptr<AnimationSeq> explosionSeq,
+                   const MapCoordSys* cs)
+: m_size{size}, m_hp{hp}, m_speed{speed}, m_delay{delay}, m_center{path.start().center()},
+  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)}, m_explosion{
+                                                                           explosionSeq,
+                                                                           cs}
 {
    setSize(size);
    setPosition(path.start().center());
@@ -25,8 +28,11 @@ void Attacker::render(const gll::Program& shaders)
 {
    if (isAlive())
    {
-      calcRotation();
-      m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
+      if (hasStarted())
+      {
+         calcRotation();
+         m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
+      }
    }
    else
    {
@@ -37,7 +43,10 @@ void Attacker::render(const gll::Program& shaders)
 
 void Attacker::update()
 {
-   move();
+   if (m_delay == 0)
+      move();
+   else
+      --m_delay;
 }
 
 

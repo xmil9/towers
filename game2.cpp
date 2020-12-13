@@ -199,19 +199,31 @@ bool Game2::setupAttackers()
    SpriteLook look{texId};
 
    Sprite sprite1{m_stdSpriteRenderer.get(), look, SpriteForm{}};
-
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, m_explosion,
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0, m_explosion,
       m_coordSys.get());
 
    Sprite sprite2{m_stdSpriteRenderer.get(), look, SpriteForm{}};
-
    m_attackers.emplace_back(
       sprite2,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, m_explosion,
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0, m_explosion,
       m_coordSys.get());
+
+   Sprite sprite3{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   m_attackers.emplace_back(
+      sprite3, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100, m_explosion,
+      m_coordSys.get());
+
+   Sprite sprite4{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   m_attackers.emplace_back(
+      sprite4,
+      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10, m_explosion,
+      m_coordSys.get());
+
    return true;
 }
 
