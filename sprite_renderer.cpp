@@ -16,7 +16,7 @@ namespace
 {
 ///////////////////
 
-glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const PixDim& size, Angle_t rot)
+glm::mat4x4 rotateAround(const glm::mat4x4& m, Angle_t rot, const PixPos& rotCenter)
 {
    constexpr glm::vec3 rotNormal{0.f, 0.f, 1.f};
    return
@@ -24,22 +24,23 @@ glm::mat4x4 rotateAtCenter(const glm::mat4x4& m, const PixDim& size, Angle_t rot
       glm::translate(
          // Rotate
          glm::rotate(
-            // Translate center to origin.
-            glm::translate(m, glm::vec3(.5f * size.x, .5f * size.y, 0.f)), rot.radians(),
+            // Translate to center of rotation.
+            glm::translate(m, glm::vec3(rotCenter.x, rotCenter.y, 0.f)), rot.radians(),
             rotNormal),
-         glm::vec3(-.5f * size.x, -.5f * size.y, 0.f));
+         glm::vec3(-rotCenter.x, -rotCenter.y, 0.f));
 }
 
 
-glm::mat4x4 calcModelMatrix(const PixPos& pos, const PixDim& size, Angle_t rot)
+glm::mat4x4 calcModelMatrix(const PixPos& pos, const PixDim& size, Angle_t rot,
+                            const PixPos& rotCenter)
 {
    return
       // Finally scale.
       glm::scale(
          // Then rotate.
-         rotateAtCenter(
+         rotateAround(
             // First translate.
-            glm::translate(glm::mat4(1.f), glm::vec3(pos, 0.f)), size, rot),
+            glm::translate(glm::mat4(1.f), glm::vec3(pos, 0.f)), rot, rotCenter),
          glm::vec3(size, 1.f));
 }
 
@@ -73,7 +74,8 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
-      modelUf.setValue(calcModelMatrix(pos, form.size(), form.rotation()));
+      modelUf.setValue(
+         calcModelMatrix(pos, form.size(), form.rotation(), form.rotationCenter()));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);
