@@ -67,8 +67,8 @@ class Game2
    std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
-   std::shared_ptr<AnimationSeq> m_explosion;
-   std::shared_ptr<AnimationSeq> m_defenderFiring;
+   std::unique_ptr<Animation> m_explosion;
+   std::unique_ptr<Animation> m_defenderFiring;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
 };

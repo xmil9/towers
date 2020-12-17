@@ -25,7 +25,7 @@ class Defender
 {
  public:
    Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
-            std::shared_ptr<AnimationSeq> firingSeq, const MapCoordSys* cs,
+            Animation firing, const MapCoordSys* cs,
             std::vector<Attacker>& attackers);
 
    void render(const gll::Program& shaders);

@@ -11,10 +11,10 @@ static constexpr NormVec Up{0., -1.};
 
 
 Defender::Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
-                   std::shared_ptr<AnimationSeq> firingSeq, const MapCoordSys* cs,
+                   Animation firing, const MapCoordSys* cs,
                    std::vector<Attacker>& attackers)
-: m_range{range}, m_damage{damage}, m_size{size}, m_center{center},
-  m_coordSys{cs}, m_sprite{std::move(sp)}, m_firing{firingSeq, cs}, m_attackers{attackers}
+: m_range{range}, m_damage{damage}, m_size{size}, m_center{center}, m_coordSys{cs},
+  m_sprite{std::move(sp)}, m_firing{std::move(firing)}, m_attackers{attackers}
 {
    setSize(size);
    setPosition(center);

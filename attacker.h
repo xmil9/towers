@@ -24,7 +24,7 @@ class Attacker
 {
  public:
    Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-            int delay, std::shared_ptr<AnimationSeq> explosionSeq, const MapCoordSys* cs);
+            int delay, Animation explosion, const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();

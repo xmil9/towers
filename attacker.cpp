@@ -12,12 +12,10 @@ static constexpr NormVec Up{0., -1.};
 
 
 Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-                   int delay, std::shared_ptr<AnimationSeq> explosionSeq,
-                   const MapCoordSys* cs)
+                   int delay, Animation explosion, const MapCoordSys* cs)
 : m_size{size}, m_hp{hp}, m_speed{speed}, m_delay{delay}, m_center{path.start().center()},
-  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)}, m_explosion{
-                                                                           explosionSeq,
-                                                                           cs}
+  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)},
+  m_explosion{std::move(explosion)}
 {
    setSize(size);
    setPosition(path.start().center());
