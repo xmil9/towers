@@ -22,8 +22,8 @@ class Program;
 class Animation
 {
  public:
-   Animation(std::vector<Sprite> sprites, std::vector<int> frames, const MapCoordSys* cs,
-             NormPos center = {});
+   Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat,
+             const MapCoordSys* cs, NormPos center = {});
 
    void render(const gll::Program& shaders);
    int numFrames() const { return m_totalFrames; }
@@ -35,11 +35,14 @@ class Animation
  private:
    void populateMaxFrameIndices();
    std::optional<std::size_t> calcSpriteIndex(int frame) const;
+   void reset();
 
  private:
    std::vector<Sprite> m_sprites;
    // Number of frames for how long each sprite is displayed.
    std::vector<int> m_frames;
+   // Repeat the animation after it finishes.
+   bool m_repeat = false;
    int m_totalFrames = 0;
    // The index of the last frame in each step.
    // Helps to find the step that a frame index falls into.

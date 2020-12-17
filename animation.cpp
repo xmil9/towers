@@ -11,8 +11,8 @@
 ///////////////////
 
 Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames,
-                     const MapCoordSys* cs, NormPos center)
-: m_sprites{std::move(sprites)}, m_frames{std::move(frames)},
+                     bool repeat, const MapCoordSys* cs, NormPos center)
+   : m_sprites{std::move(sprites)}, m_frames{std::move(frames)}, m_repeat{repeat},
   m_totalFrames{std::accumulate(m_frames.begin(), m_frames.end(), 0)},
   m_coordSys{cs}, m_center{center}
 {
@@ -26,6 +26,9 @@ Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames,
 
 void Animation::render(const gll::Program& shaders)
 {
+   if (hasFinished() && m_repeat)
+         reset();
+
    if (!hasFinished())
    {
       const auto idx = calcSpriteIndex(m_currFrame);
@@ -57,4 +60,10 @@ std::optional<std::size_t> Animation::calcSpriteIndex(int frame) const
    if (pos != m_maxFrameIdx.end())
       return pos - m_maxFrameIdx.begin();
    return std::nullopt;
+}
+
+
+void Animation::reset()
+{
+   m_currFrame = 0;
 }

@@ -186,7 +186,7 @@ bool Game2::setupAnimations()
              SpriteForm{PixDim{35.f, 35.0f}, Angle_t{0.f}}},
    };
    std::vector<int> frames{15, 15, 15, 15};
-   m_explosion = std::make_unique<Animation>(sprites, frames, m_coordSys.get());
+   m_explosion = std::make_unique<Animation>(sprites, frames, false, m_coordSys.get());
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
@@ -197,7 +197,8 @@ bool Game2::setupAnimations()
              SpriteForm{firingSize, Angle_t{0.f}}},
    };
    std::vector<int> frames2{10, 10};
-   m_defenderFiring = std::make_unique<Animation>(sprites2, frames2, m_coordSys.get());
+   m_defenderFiring =
+      std::make_unique<Animation>(sprites2, frames2, true, m_coordSys.get());
 
    return true;
 }
