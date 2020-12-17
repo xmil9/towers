@@ -24,18 +24,18 @@ Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPat
 
 void Attacker::render(const gll::Program& shaders)
 {
+   if (!hasStarted())
+      return;
+
    if (isAlive())
-   {
-      if (hasStarted())
-      {
-         calcRotation();
-         m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
-      }
-   }
-   else
-   {
+      calcRotation();
+
+   // Even when not alive anymore continue drawing the attacker so that the explosion
+   // appears on top of it.
+   m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
+
+   if (!isAlive())
       m_explosion.render(shaders);
-   }
 }
 
 
