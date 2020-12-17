@@ -32,7 +32,7 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupResources() &&
-           setupRenderer() && setupTerrain() && setupSpriteData() && setupExplosions() &&
+           setupRenderer() && setupTerrain() && setupSpriteData() && setupAnimations() &&
            setupAttackers() && setupDefenders() && setupBackground());
 }
 
@@ -120,6 +120,10 @@ bool Game2::setupResources()
                                   m_resources.texturePath() / "explosion3.png") &&
           m_resources.loadTexture("explosion4",
                                   m_resources.texturePath() / "explosion4.png") &&
+          m_resources.loadTexture("defender_firing1",
+                                  m_resources.texturePath() / "defender_firing1.png") &&
+          m_resources.loadTexture("defender_firing2",
+                                  m_resources.texturePath() / "defender_firing2.png") &&
           m_resources.loadTexture("map1", m_resources.texturePath() / "map1.png");
 }
 
@@ -166,7 +170,7 @@ bool Game2::setupSpriteData()
 }
 
 
-bool Game2::setupExplosions()
+bool Game2::setupAnimations()
 {
    assert(!!m_coordSys);
    assert(!!m_stdSpriteRenderer);
@@ -182,8 +186,18 @@ bool Game2::setupExplosions()
              SpriteForm{PixDim{35.f, 35.0f}, Angle_t{0.f}}},
    };
    std::vector<int> frames{15, 15, 15, 15};
-
    m_explosion = std::make_shared<AnimationSeq>(sprites, frames);
+
+   const PixDim firingSize = m_coordSys->toRenderCoords(
+      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
+   std::vector<Sprite> sprites2{
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing1"},
+             SpriteForm{firingSize, Angle_t{0.f}}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing2"},
+             SpriteForm{firingSize, Angle_t{0.f}}},
+   };
+   std::vector<int> frames2{10, 10};
+   m_defenderFiring = std::make_shared<AnimationSeq>(sprites2, frames2);
 
    return true;
 }
@@ -241,13 +255,13 @@ bool Game2::setupDefenders()
 
    m_defenders.emplace_back(
       sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, .1f, 5, m_coordSys.get(), m_attackers);
+      NormPos{.387f, .476f}, .1f, 5, m_defenderFiring, m_coordSys.get(), m_attackers);
 
    Sprite sprite2{m_stdSpriteRenderer.get(), look, SpriteForm{}};
 
    m_defenders.emplace_back(
       sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.45f, .276f}, .1f, 5, m_coordSys.get(), m_attackers);
+      NormPos{.45f, .276f}, .1f, 5, m_defenderFiring, m_coordSys.get(), m_attackers);
 
    return true;
 }

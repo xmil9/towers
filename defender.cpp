@@ -11,9 +11,10 @@ static constexpr NormVec Up{0., -1.};
 
 
 Defender::Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
-                   const MapCoordSys* cs, std::vector<Attacker>& attackers)
+                   std::shared_ptr<AnimationSeq> firingSeq, const MapCoordSys* cs,
+                   std::vector<Attacker>& attackers)
 : m_range{range}, m_damage{damage}, m_size{size}, m_center{center},
-  m_coordSys{cs}, m_sprite{std::move(sp)}, m_attackers{attackers}
+  m_coordSys{cs}, m_sprite{std::move(sp)}, m_firing{firingSeq, cs}, m_attackers{attackers}
 {
    setSize(size);
    setPosition(center);
@@ -23,8 +24,14 @@ Defender::Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int
 void Defender::render(const gll::Program& shaders)
 {
    if (m_target)
+   {
       calcRotation();
-   m_sprite.render(shaders, m_coordSys->toRenderCoords(m_center - m_size / 2.f));
+      m_firing.render(shaders);
+   }
+   else
+   {
+      m_sprite.render(shaders, m_coordSys->toRenderCoords(m_center - m_size / 2.f));
+   }
 }
 
 
@@ -38,6 +45,7 @@ void Defender::update()
 void Defender::setPosition(NormPos center)
 {
    m_center = center;
+   m_firing.setPosition(center);
 }
 
 

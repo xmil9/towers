@@ -35,7 +35,7 @@ class Game2
    bool setupRenderer();
    bool setupTerrain();
    bool setupSpriteData();
-   bool setupExplosions();
+   bool setupAnimations();
    bool setupAttackers();
    bool setupDefenders();
    bool setupBackground();
@@ -68,6 +68,7 @@ class Game2
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
    std::shared_ptr<AnimationSeq> m_explosion;
+   std::shared_ptr<AnimationSeq> m_defenderFiring;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
 };

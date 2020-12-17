@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "animation.h"
 #include "attacker.h"
 #include "map_coord_sys.h"
 #include "path.h"
@@ -24,7 +25,8 @@ class Defender
 {
  public:
    Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
-            const MapCoordSys* cs, std::vector<Attacker>& attackers);
+            std::shared_ptr<AnimationSeq> firingSeq, const MapCoordSys* cs,
+            std::vector<Attacker>& attackers);
 
    void render(const gll::Program& shaders);
    void update();
@@ -45,6 +47,7 @@ class Defender
    NormPos m_center;
    const MapCoordSys* m_coordSys;
    Sprite m_sprite;
+   Animation m_firing;
    std::vector<Attacker>& m_attackers;
    std::optional<Attacker*> m_target;
 };
