@@ -163,8 +163,8 @@ bool Game2::setupSpriteData()
    mesh.setPositions(std::move(positions));
    mesh.setIndices(std::move(indices));
    mesh.setTextureCoords(std::move(texCoords));
-   m_stdSpriteRenderer = std::make_unique<SpriteRenderer>(&m_resources);
-   m_stdSpriteRenderer->setMesh(mesh);
+   m_spriteRenderer = std::make_unique<SpriteRenderer>(&m_resources);
+   m_spriteRenderer->setMesh(mesh);
 
    return true;
 }
@@ -173,14 +173,14 @@ bool Game2::setupSpriteData()
 bool Game2::setupAnimations()
 {
    assert(!!m_coordSys);
-   assert(!!m_stdSpriteRenderer);
+   assert(!!m_spriteRenderer);
 
    const SpriteForm form{PixDim{40.f, 40.f}, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion1"}, form},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion2"}, form},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion3"}, form},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"}, form},
+      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion1"}, form},
+      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion2"}, form},
+      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion3"}, form},
+      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion4"}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
    m_explosion = std::make_unique<Animation>(sprites, frames, false, m_coordSys.get());
@@ -189,8 +189,8 @@ bool Game2::setupAnimations()
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
    const SpriteForm form2{firingSize, Angle_t{0.f}};
    std::vector<Sprite> sprites2{
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing1"}, form2},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing2"}, form2},
+      Sprite{m_spriteRenderer.get(), SpriteLook{"defender_firing1"}, form2},
+      Sprite{m_spriteRenderer.get(), SpriteLook{"defender_firing2"}, form2},
    };
    std::vector<int> frames2{10, 10};
    m_defenderFiring =
@@ -204,31 +204,31 @@ bool Game2::setupAttackers()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
-   assert(!!m_stdSpriteRenderer);
+   assert(!!m_spriteRenderer);
 
    const std::string texId{"attacker"};
    SpriteLook look{texId};
 
-   Sprite sprite1{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite1{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
       2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0, *m_explosion,
       m_coordSys.get());
 
-   Sprite sprite2{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite2{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite2,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
       .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0, *m_explosion,
       m_coordSys.get());
 
-   Sprite sprite3{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite3{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite3, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
       2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100, *m_explosion,
       m_coordSys.get());
 
-   Sprite sprite4{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite4{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite4,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
@@ -243,18 +243,18 @@ bool Game2::setupDefenders()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
-   assert(!!m_stdSpriteRenderer);
+   assert(!!m_spriteRenderer);
 
    const std::string texId{"defender"};
    SpriteLook look{texId};
 
-   Sprite sprite{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite{m_spriteRenderer.get(), look, SpriteForm{}};
 
    m_defenders.emplace_back(
       sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
       NormPos{.387f, .476f}, .1f, 5, *m_defenderFiring, m_coordSys.get(), m_attackers);
 
-   Sprite sprite2{m_stdSpriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite2{m_spriteRenderer.get(), look, SpriteForm{}};
 
    m_defenders.emplace_back(
       sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
@@ -269,8 +269,8 @@ bool Game2::setupBackground()
    const std::string texId{"map1"};
    SpriteLook look{texId};
    SpriteForm form{{MainWndWidth, MainWndHeight}, Angle_t{0.f}};
-   assert(!!m_stdSpriteRenderer);
-   m_background = std::make_unique<Sprite>(m_stdSpriteRenderer.get(), look, form);
+   assert(!!m_spriteRenderer);
+   m_background = std::make_unique<Sprite>(m_spriteRenderer.get(), look, form);
 
    return true;
 }

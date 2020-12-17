@@ -64,7 +64,7 @@ class Game2
    Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;
-   std::unique_ptr<SpriteRenderer> m_stdSpriteRenderer;
+   std::unique_ptr<SpriteRenderer> m_spriteRenderer;
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Animation> m_explosion;
