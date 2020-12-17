@@ -31,6 +31,7 @@ class Animation
    // Returns the size of the sprite rendered for the given frame.
    PixDim size(int frame) const;
    void setPosition(NormPos center) { m_center = center; }
+   void setRotation(Angle_t rot);
 
  private:
    void populateMaxFrameIndices();

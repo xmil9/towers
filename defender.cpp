@@ -92,6 +92,7 @@ void Defender::calcRotation()
 
    const Angle_t rot{-glm::orientedAngle(glm::normalize(*targetDir), Up)};
    m_sprite.setRotation(rot);
+   m_firing.setRotation(rot);
 }
 
 

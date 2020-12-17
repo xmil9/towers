@@ -47,6 +47,13 @@ PixDim Animation::size(int frame) const
 }
 
 
+void Animation::setRotation(Angle_t rot)
+{
+   for (auto& sp : m_sprites)
+      sp.setRotation(rot);
+}
+
+
 void Animation::populateMaxFrameIndices()
 {
    m_maxFrameIdx.reserve(m_frames.size());
