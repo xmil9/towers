@@ -175,26 +175,22 @@ bool Game2::setupAnimations()
    assert(!!m_coordSys);
    assert(!!m_stdSpriteRenderer);
 
+   const SpriteForm form{PixDim{40.f, 40.f}, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion1"},
-             SpriteForm{PixDim{20.f, 20.0f}, Angle_t{0.f}}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion2"},
-             SpriteForm{PixDim{25.f, 25.0f}, Angle_t{0.f}}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion3"},
-             SpriteForm{PixDim{30.f, 30.0f}, Angle_t{0.f}}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"},
-             SpriteForm{PixDim{35.f, 35.0f}, Angle_t{0.f}}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion1"}, form},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion2"}, form},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion3"}, form},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"explosion4"}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
    m_explosion = std::make_unique<Animation>(sprites, frames, false, m_coordSys.get());
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
+   const SpriteForm form2{firingSize, Angle_t{0.f}};
    std::vector<Sprite> sprites2{
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing1"},
-             SpriteForm{firingSize, Angle_t{0.f}}},
-      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing2"},
-             SpriteForm{firingSize, Angle_t{0.f}}},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing1"}, form2},
+      Sprite{m_stdSpriteRenderer.get(), SpriteLook{"defender_firing2"}, form2},
    };
    std::vector<int> frames2{10, 10};
    m_defenderFiring =
