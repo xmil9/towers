@@ -29,8 +29,13 @@ class Animation
    void render(const gll::Program& shaders);
    int numFrames() const { return m_totalFrames; }
    bool hasFinished() const { return m_currFrame >= numFrames(); }
+   
    void setPosition(NormPos center) { m_center = center; }
    void setRotation(Angle_t rot);
+   // Sets size of all sprites in the animation.
+   void setSize(PixDim size);
+   void scale(float factor);
+   void rotate(Angle_t rot);
 
  private:
    void populateMaxFrameIndices();

@@ -48,6 +48,27 @@ void Animation::setRotation(Angle_t rot)
 }
 
 
+void Animation::setSize(PixDim size)
+{
+   for (auto& sp : m_sprites)
+      sp.setSize(size);
+}
+
+
+void Animation::scale(float factor)
+{
+   for (auto& sp : m_sprites)
+      sp.scale(factor);
+}
+
+
+void Animation::rotate(Angle_t rot)
+{
+   for (auto& sp : m_sprites)
+      sp.rotate(rot);
+}
+
+
 void Animation::populateMaxFrameIndices()
 {
    m_maxFrameIdx.reserve(m_frames.size());
