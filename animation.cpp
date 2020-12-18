@@ -41,13 +41,6 @@ void Animation::render(const gll::Program& shaders)
 }
 
 
-PixDim Animation::size(int frame) const
-{
-   const auto idx = calcSpriteIndex(frame);
-   return idx ? m_sprites[*idx].size() : PixDim();
-}
-
-
 void Animation::setRotation(Angle_t rot)
 {
    for (auto& sp : m_sprites)
@@ -59,6 +52,13 @@ void Animation::populateMaxFrameIndices()
 {
    m_maxFrameIdx.reserve(m_frames.size());
    std::partial_sum(m_frames.begin(), m_frames.end(), std::back_inserter(m_maxFrameIdx));
+}
+
+
+PixDim Animation::size(int frame) const
+{
+   const auto idx = calcSpriteIndex(frame);
+   return idx ? m_sprites[*idx].size() : PixDim();
 }
 
 
