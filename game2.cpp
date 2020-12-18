@@ -4,8 +4,10 @@
 //
 #include "game2.h"
 #include "animation_factory.h"
+#include "animation_tags.h"
 #include "map_data.h"
 #include "mesh2.h"
+#include "texture_tags.h"
 #include "gll_debug.h"
 #include <iostream>
 
@@ -115,15 +117,15 @@ bool Game2::setupTextures()
       std::filesystem::path filename;
    };
    const std::vector<TextureSpec> texures{
-      {"attacker", "attacker.png"},
-      {"defender", "defender.png"},
-      {"explosion1", "explosion1.png"},
-      {"explosion2", "explosion2.png"},
-      {"explosion3", "explosion3.png"},
-      {"explosion4", "explosion4.png"},
-      {"defender_firing1", "defender_firing1.png"},
-      {"defender_firing2", "defender_firing2.png"},
-      {"map1", "map1.png"},
+      {AttackerTTag, "attacker.png"},
+      {DefenderTTag, "defender.png"},
+      {Explosion1TTag, "explosion1.png"},
+      {Explosion2TTag, "explosion2.png"},
+      {Explosion3TTag, "explosion3.png"},
+      {Explosion4TTag, "explosion4.png"},
+      {FiringDefender1TTag, "defender_firing1.png"},
+      {FiringDefender2TTag, "defender_firing2.png"},
+      {Map1TTag, "map1.png"},
    };
 
    for (const auto& spec : texures)
@@ -183,13 +185,13 @@ bool Game2::setupAnimations()
    AnimationFactory factory(m_spriteRenderer.get(), m_coordSys.get());
 
    m_resources.addAnimation(
-      "explosion",
-      factory.make("explosion", m_coordSys->toRenderCoords(NormDim{.05, .05})));
+      ExplosionATag,
+      factory.make(ExplosionATag, m_coordSys->toRenderCoords(NormDim{.05, .05})));
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
-   m_resources.addAnimation("defender_firing",
-                            factory.make("defender_firing", firingSize));
+   m_resources.addAnimation(FiringDefenderATag,
+                            factory.make(FiringDefenderATag, firingSize));
 
    return true;
 }
@@ -201,9 +203,9 @@ bool Game2::setupAttackers()
    assert(!!m_map);
    assert(!!m_spriteRenderer);
 
-   const std::string texId{"attacker"};
+   const std::string texId{AttackerTTag};
    SpriteLook look{texId};
-   const Animation& explosion = m_resources.getAnimation("explosion");
+   const Animation& explosion = m_resources.getAnimation(ExplosionATag);
 
    Sprite sprite1{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
@@ -241,9 +243,9 @@ bool Game2::setupDefenders()
    assert(!!m_map);
    assert(!!m_spriteRenderer);
 
-   const std::string texId{"defender"};
+   const std::string texId{DefenderTTag};
    SpriteLook look{texId};
-   const Animation& firing = m_resources.getAnimation("defender_firing");
+   const Animation& firing = m_resources.getAnimation(FiringDefenderATag);
 
    Sprite sprite{m_spriteRenderer.get(), look, SpriteForm{}};
 
@@ -263,7 +265,7 @@ bool Game2::setupDefenders()
 
 bool Game2::setupBackground()
 {
-   const std::string texId{"map1"};
+   const std::string texId{Map1TTag};
    SpriteLook look{texId};
    SpriteForm form{{MainWndWidth, MainWndHeight}, Angle_t{0.f}};
    assert(!!m_spriteRenderer);

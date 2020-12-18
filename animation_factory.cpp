@@ -1,11 +1,13 @@
 //
-// Doc-2020, Michael Lindner
+// Dec-2020, Michael Lindner
 // MIT license
 //
 #include "animation_factory.h"
 #include "animation.h"
+#include "animation_tags.h"
 #include "map_coord_sys.h"
 #include "sprite_renderer.h"
+#include "texture_tags.h"
 
 
 ///////////////////
@@ -18,10 +20,10 @@ static Animation makeExplosion(PixDim size, SpriteRenderer* renderer,
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{renderer, SpriteLook{"explosion1"}, form},
-      Sprite{renderer, SpriteLook{"explosion2"}, form},
-      Sprite{renderer, SpriteLook{"explosion3"}, form},
-      Sprite{renderer, SpriteLook{"explosion4"}, form},
+      Sprite{renderer, SpriteLook{Explosion1TTag}, form},
+      Sprite{renderer, SpriteLook{Explosion2TTag}, form},
+      Sprite{renderer, SpriteLook{Explosion3TTag}, form},
+      Sprite{renderer, SpriteLook{Explosion4TTag}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
 
@@ -34,8 +36,8 @@ static Animation makeFiringDefender(PixDim size, SpriteRenderer* renderer,
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{renderer, SpriteLook{"defender_firing1"}, form},
-      Sprite{renderer, SpriteLook{"defender_firing2"}, form},
+      Sprite{renderer, SpriteLook{FiringDefender1TTag}, form},
+      Sprite{renderer, SpriteLook{FiringDefender2TTag}, form},
    };
    std::vector<int> frames{10, 10};
 
@@ -52,8 +54,8 @@ AnimationFactory::AnimationFactory(SpriteRenderer* renderer, const MapCoordSys* 
    assert(m_coordSys);
 
    m_factories = {
-      {"explosion", makeExplosion},
-      {"defender_firing", makeFiringDefender},
+      {ExplosionATag, makeExplosion},
+      {FiringDefenderATag, makeFiringDefender},
    };
 }
 

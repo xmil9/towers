@@ -229,6 +229,8 @@
     </ClInclude>
     <ClInclude Include="..\..\animations.h" />
     <ClInclude Include="..\..\animation_factory.h" />
+    <ClInclude Include="..\..\animation_tags.h" />
+    <ClInclude Include="..\..\texture_tags.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
