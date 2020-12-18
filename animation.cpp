@@ -10,15 +10,13 @@
 
 ///////////////////
 
-Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames,
-                     bool repeat, const MapCoordSys* cs, NormPos center)
-   : m_sprites{std::move(sprites)}, m_frames{std::move(frames)}, m_repeat{repeat},
+Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat,
+                     const MapCoordSys* cs, NormPos center)
+: m_sprites{std::move(sprites)}, m_frames{std::move(frames)}, m_repeat{repeat},
   m_totalFrames{std::accumulate(m_frames.begin(), m_frames.end(), 0)},
   m_coordSys{cs}, m_center{center}
 {
-   if (m_sprites.empty() || m_frames.empty() || m_frames.size() != m_sprites.size())
-      throw std::runtime_error("Misconfigured animation.");
-
+   assert(m_frames.size() == m_sprites.size());
    populateMaxFrameIndices();
    assert(m_coordSys);
 }
@@ -26,8 +24,11 @@ Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames,
 
 void Animation::render(const gll::Program& shaders)
 {
+   if (m_totalFrames == 0)
+      return;
+
    if (hasFinished() && m_repeat)
-         reset();
+      reset();
 
    if (!hasFinished())
    {

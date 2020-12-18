@@ -22,6 +22,7 @@ class Program;
 class Animation
 {
  public:
+   Animation() = default;
    Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat,
              const MapCoordSys* cs, NormPos center = {});
 

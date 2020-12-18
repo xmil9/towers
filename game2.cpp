@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "game2.h"
+#include "animation_factory.h"
 #include "map_data.h"
 #include "mesh2.h"
 #include "gll_debug.h"
@@ -31,7 +32,7 @@ Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
 
 bool Game2::setup()
 {
-   return (setupUi() && setupInput() && setupOutput() && setupResources() &&
+   return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
            setupRenderer() && setupTerrain() && setupSpriteData() && setupAnimations() &&
            setupAttackers() && setupDefenders() && setupBackground());
 }
@@ -106,25 +107,29 @@ bool Game2::setupOutput()
 }
 
 
-bool Game2::setupResources()
+bool Game2::setupTextures()
 {
-   return m_resources.loadTexture("attacker",
-                                  m_resources.texturePath() / "attacker.png") &&
-          m_resources.loadTexture("defender",
-                                  m_resources.texturePath() / "defender.png") &&
-          m_resources.loadTexture("explosion1",
-                                  m_resources.texturePath() / "explosion1.png") &&
-          m_resources.loadTexture("explosion2",
-                                  m_resources.texturePath() / "explosion2.png") &&
-          m_resources.loadTexture("explosion3",
-                                  m_resources.texturePath() / "explosion3.png") &&
-          m_resources.loadTexture("explosion4",
-                                  m_resources.texturePath() / "explosion4.png") &&
-          m_resources.loadTexture("defender_firing1",
-                                  m_resources.texturePath() / "defender_firing1.png") &&
-          m_resources.loadTexture("defender_firing2",
-                                  m_resources.texturePath() / "defender_firing2.png") &&
-          m_resources.loadTexture("map1", m_resources.texturePath() / "map1.png");
+   struct TextureSpec
+   {
+      std::string tag;
+      std::filesystem::path filename;
+   };
+   const std::vector<TextureSpec> texures{
+      {"attacker", "attacker.png"},
+      {"defender", "defender.png"},
+      {"explosion1", "explosion1.png"},
+      {"explosion2", "explosion2.png"},
+      {"explosion3", "explosion3.png"},
+      {"explosion4", "explosion4.png"},
+      {"defender_firing1", "defender_firing1.png"},
+      {"defender_firing2", "defender_firing2.png"},
+      {"map1", "map1.png"},
+   };
+
+   for (const auto& spec : texures)
+      if (!m_resources.loadTexture(spec.tag, m_resources.texturePath() / spec.filename))
+         return false;
+   return true;
 }
 
 
@@ -175,26 +180,14 @@ bool Game2::setupAnimations()
    assert(!!m_coordSys);
    assert(!!m_spriteRenderer);
 
-   const SpriteForm form{PixDim{40.f, 40.f}, Angle_t{0.f}};
-   std::vector<Sprite> sprites{
-      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion1"}, form},
-      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion2"}, form},
-      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion3"}, form},
-      Sprite{m_spriteRenderer.get(), SpriteLook{"explosion4"}, form},
-   };
-   std::vector<int> frames{15, 15, 15, 15};
-   m_explosion = std::make_unique<Animation>(sprites, frames, false, m_coordSys.get());
+   AnimationFactory factory(m_spriteRenderer.get(), m_coordSys.get());
+
+   m_resources.addAnimation("explosion", factory.make("explosion", PixDim{40.f, 40.f}));
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
-   const SpriteForm form2{firingSize, Angle_t{0.f}};
-   std::vector<Sprite> sprites2{
-      Sprite{m_spriteRenderer.get(), SpriteLook{"defender_firing1"}, form2},
-      Sprite{m_spriteRenderer.get(), SpriteLook{"defender_firing2"}, form2},
-   };
-   std::vector<int> frames2{10, 10};
-   m_defenderFiring =
-      std::make_unique<Animation>(sprites2, frames2, true, m_coordSys.get());
+   m_resources.addAnimation("defender_firing",
+                            factory.make("defender_firing", firingSize));
 
    return true;
 }
@@ -208,31 +201,32 @@ bool Game2::setupAttackers()
 
    const std::string texId{"attacker"};
    SpriteLook look{texId};
+   const Animation& explosion = m_resources.getAnimation("explosion");
 
    Sprite sprite1{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0, *m_explosion,
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0, explosion,
       m_coordSys.get());
 
    Sprite sprite2{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite2,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0, *m_explosion,
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0, explosion,
       m_coordSys.get());
 
    Sprite sprite3{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite3, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100, *m_explosion,
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100, explosion,
       m_coordSys.get());
 
    Sprite sprite4{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
       sprite4,
       m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10, *m_explosion,
+      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10, explosion,
       m_coordSys.get());
 
    return true;
@@ -247,18 +241,19 @@ bool Game2::setupDefenders()
 
    const std::string texId{"defender"};
    SpriteLook look{texId};
+   const Animation& firing = m_resources.getAnimation("defender_firing");
 
    Sprite sprite{m_spriteRenderer.get(), look, SpriteForm{}};
 
    m_defenders.emplace_back(
       sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, .1f, 5, *m_defenderFiring, m_coordSys.get(), m_attackers);
+      NormPos{.387f, .476f}, .1f, 5, firing, m_coordSys.get(), m_attackers);
 
    Sprite sprite2{m_spriteRenderer.get(), look, SpriteForm{}};
 
    m_defenders.emplace_back(
       sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.45f, .276f}, .1f, 5, *m_defenderFiring, m_coordSys.get(), m_attackers);
+      NormPos{.45f, .276f}, .1f, 5, firing, m_coordSys.get(), m_attackers);
 
    return true;
 }

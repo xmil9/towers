@@ -67,6 +67,8 @@
     <ClCompile Include="..\..\animation.cpp">
       <Filter>Rendering\2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\animations.cpp" />
+    <ClCompile Include="..\..\animation_factory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -225,6 +227,8 @@
     <ClInclude Include="..\..\animation.h">
       <Filter>Rendering\2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\animations.h" />
+    <ClInclude Include="..\..\animation_factory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

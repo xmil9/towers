@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "animations.h"
 #include "textures.h"
 #include <string>
 
@@ -22,8 +23,13 @@ class Resources
    PixDim getTextureSize(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
+   void addAnimation(const std::string& tag, Animation&& a);
+   const Animation& getAnimation(const std::string& tag) const;
+   void clearAnimations() { m_animationRepos.clear(); }
+
  private:
    Textures m_texRepos;
+   Animations m_animationRepos;
    std::filesystem::path m_mainPath;
 };
 
@@ -42,4 +48,14 @@ inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
 inline PixDim Resources::getTextureSize(const std::string& tag) const
 {
    return m_texRepos.size(tag);
+}
+
+inline void Resources::addAnimation(const std::string& tag, Animation&& a)
+{
+   m_animationRepos.add(tag, std::move(a));
+}
+
+inline const Animation& Resources::getAnimation(const std::string& tag) const
+{
+   return m_animationRepos[tag];
 }

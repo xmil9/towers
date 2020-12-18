@@ -168,6 +168,8 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\animation.cpp" />
+    <ClCompile Include="..\..\animations.cpp" />
+    <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\defender.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
@@ -198,6 +200,8 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\animation.h" />
+    <ClInclude Include="..\..\animations.h" />
+    <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\attacker.h" />
     <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\coords.h" />

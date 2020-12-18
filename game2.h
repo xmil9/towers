@@ -31,7 +31,7 @@ class Game2
    bool setupMainWindow();
    bool setupInput();
    bool setupOutput();
-   bool setupResources();
+   bool setupTextures();
    bool setupRenderer();
    bool setupTerrain();
    bool setupSpriteData();
@@ -67,8 +67,6 @@ class Game2
    std::unique_ptr<SpriteRenderer> m_spriteRenderer;
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
-   std::unique_ptr<Animation> m_explosion;
-   std::unique_ptr<Animation> m_defenderFiring;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
 };
