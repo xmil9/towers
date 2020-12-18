@@ -189,7 +189,7 @@ bool Game2::setupAnimations()
       factory.make(ExplosionATag, m_coordSys->toRenderCoords(NormDim{.05, .05})));
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
-      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
+      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(DefenderTTag)));
    m_resources.addAnimation(FiringDefenderATag,
                             factory.make(FiringDefenderATag, firingSize));
 
