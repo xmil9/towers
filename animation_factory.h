@@ -9,23 +9,21 @@
 #include <unordered_map>
 
 class Animation;
-class MapCoordSys;
 class SpriteRenderer;
 
 
 class AnimationFactory
 {
  public:
-   AnimationFactory(SpriteRenderer* renderer, const MapCoordSys* cs);
+   explicit AnimationFactory(SpriteRenderer* renderer);
 
    Animation make(const std::string& tag, PixDim size);
 
  private:
    using FactoryFunc =
-      std::function<Animation(PixDim size, SpriteRenderer*, const MapCoordSys*)>;
+      std::function<Animation(PixDim, SpriteRenderer*)>;
 
  private:
    SpriteRenderer* m_renderer = nullptr;
-   const MapCoordSys* m_coordSys = nullptr;
    std::unordered_map<std::string, FactoryFunc> m_factories;
 };

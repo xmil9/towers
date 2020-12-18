@@ -80,7 +80,7 @@ inline Sprite& Sprite::rotate(Angle_t rot)
    return *this;
 }
 
-inline void Sprite::render(const gll::Program& shaders, PixPos at) const
+inline void Sprite::render(const gll::Program& shaders, PixPos atLeftTop) const
 {
-   m_renderer->render(shaders, m_look, m_form, at);
+   m_renderer->render(shaders, m_look, m_form, atLeftTop);
 }

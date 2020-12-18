@@ -10,19 +10,16 @@
 
 ///////////////////
 
-Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat,
-                     const MapCoordSys* cs, NormPos center)
+Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat)
 : m_sprites{std::move(sprites)}, m_frames{std::move(frames)}, m_repeat{repeat},
-  m_totalFrames{std::accumulate(m_frames.begin(), m_frames.end(), 0)},
-  m_coordSys{cs}, m_center{center}
+  m_totalFrames{std::accumulate(m_frames.begin(), m_frames.end(), 0)}
 {
    assert(m_frames.size() == m_sprites.size());
    populateMaxFrameIndices();
-   assert(m_coordSys);
 }
 
 
-void Animation::render(const gll::Program& shaders)
+void Animation::render(const gll::Program& shaders, PixPos atLeftTop)
 {
    if (m_totalFrames == 0)
       return;
@@ -34,8 +31,7 @@ void Animation::render(const gll::Program& shaders)
    {
       const auto idx = calcSpriteIndex(m_currFrame);
       if (idx)
-         m_sprites[*idx].render(shaders, m_coordSys->toRenderCoords(m_center) -
-                                            size(m_currFrame) / 2.f);
+         m_sprites[*idx].render(shaders, atLeftTop);
       ++m_currFrame;
    }
 }

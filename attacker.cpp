@@ -35,7 +35,8 @@ void Attacker::render(const gll::Program& shaders)
    m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
 
    if (!isAlive())
-      m_explosion.render(shaders);
+      m_explosion.render(
+         shaders, m_coordSys->toRenderCoords(*m_center) - m_explosion.size() / 2.f);
 }
 
 
@@ -54,9 +55,6 @@ void Attacker::hit(int amount)
       return;
 
    m_hp = std::max(0, m_hp - amount);
-
-   if (!isAlive())
-      m_explosion.setPosition(*m_center);
 }
 
 

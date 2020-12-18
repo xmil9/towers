@@ -57,7 +57,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 
 
 void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
-                            const SpriteForm& form, PixPos pos) const
+                            const SpriteForm& form, PixPos posLeftTop) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (look.hasTexture())
@@ -74,8 +74,8 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
-      modelUf.setValue(
-         calcModelMatrix(pos, form.size(), form.rotation(), form.rotationCenter()));
+      modelUf.setValue(calcModelMatrix(posLeftTop, form.size(), form.rotation(),
+                                       form.rotationCenter()));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);

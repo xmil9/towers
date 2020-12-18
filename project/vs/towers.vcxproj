@@ -204,6 +204,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />
     <ClInclude Include="..\..\attacker.h" />
+    <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\defender.h" />

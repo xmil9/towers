@@ -26,7 +26,8 @@ void Defender::render(const gll::Program& shaders)
    if (m_target)
    {
       calcRotation();
-      m_firing.render(shaders);
+      m_firing.render(shaders,
+                      m_coordSys->toRenderCoords(m_center) - m_firing.size() / 2.f);
    }
    else
    {
@@ -45,7 +46,6 @@ void Defender::update()
 void Defender::setPosition(NormPos center)
 {
    m_center = center;
-   m_firing.setPosition(center);
 }
 
 

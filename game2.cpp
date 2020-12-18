@@ -182,7 +182,7 @@ bool Game2::setupAnimations()
    assert(!!m_coordSys);
    assert(!!m_spriteRenderer);
 
-   AnimationFactory factory(m_spriteRenderer.get(), m_coordSys.get());
+   AnimationFactory factory(m_spriteRenderer.get());
 
    m_resources.addAnimation(
       ExplosionATag,

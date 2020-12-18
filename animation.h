@@ -3,7 +3,6 @@
 // MIT license
 //
 #pragma once
-#include "map_coord_sys.h"
 #include "sprite.h"
 #include <memory>
 #include <optional>
@@ -23,14 +22,14 @@ class Animation
 {
  public:
    Animation() = default;
-   Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat,
-             const MapCoordSys* cs, NormPos center = {});
+   Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat);
 
-   void render(const gll::Program& shaders);
+   void render(const gll::Program& shaders, PixPos atLeftTop);
    int numFrames() const { return m_totalFrames; }
    bool hasFinished() const { return m_currFrame >= numFrames(); }
-   
-   void setPosition(NormPos center) { m_center = center; }
+   // Returns the size of the current frame's sprite.
+   PixDim size() const { return size(m_currFrame); }
+
    void setRotation(Angle_t rot);
    // Sets size of all sprites in the animation.
    void setSize(PixDim size);
@@ -55,6 +54,4 @@ class Animation
    // Helps to find the step that a frame index falls into.
    std::vector<int> m_maxFrameIdx;
    int m_currFrame = 0;
-   const MapCoordSys* m_coordSys = nullptr;
-   NormPos m_center;
 };

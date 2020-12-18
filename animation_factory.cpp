@@ -15,8 +15,7 @@
 static Animation NullAnimation;
 
 
-static Animation makeExplosion(PixDim size, SpriteRenderer* renderer,
-                               const MapCoordSys* cs)
+static Animation makeExplosion(PixDim size, SpriteRenderer* renderer)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
@@ -27,12 +26,11 @@ static Animation makeExplosion(PixDim size, SpriteRenderer* renderer,
    };
    std::vector<int> frames{15, 15, 15, 15};
 
-   return Animation(sprites, frames, false, cs);
+   return Animation(sprites, frames, false);
 }
 
 
-static Animation makeFiringDefender(PixDim size, SpriteRenderer* renderer,
-                                    const MapCoordSys* cs)
+static Animation makeFiringDefender(PixDim size, SpriteRenderer* renderer)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
@@ -41,17 +39,16 @@ static Animation makeFiringDefender(PixDim size, SpriteRenderer* renderer,
    };
    std::vector<int> frames{10, 10};
 
-   return Animation(sprites, frames, true, cs);
+   return Animation(sprites, frames, true);
 }
 
 
 ///////////////////
 
-AnimationFactory::AnimationFactory(SpriteRenderer* renderer, const MapCoordSys* cs)
-: m_renderer{renderer}, m_coordSys{cs}
+AnimationFactory::AnimationFactory(SpriteRenderer* renderer)
+: m_renderer{renderer}
 {
    assert(m_renderer);
-   assert(m_coordSys);
 
    m_factories = {
       {ExplosionATag, makeExplosion},
@@ -66,5 +63,5 @@ Animation AnimationFactory::make(const std::string& tag, PixDim size)
    if (pos == m_factories.end())
       return NullAnimation;
    // Call factory function.
-   return pos->second(size, m_renderer, m_coordSys);
+   return pos->second(size, m_renderer);
 }
