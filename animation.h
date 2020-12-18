@@ -4,7 +4,6 @@
 //
 #pragma once
 #include "sprite.h"
-#include <memory>
 #include <optional>
 #include <vector>
 
@@ -16,25 +15,26 @@ class Program;
 
 ///////////////////
 
-// Animation of a sequence of sprites.
-// Keeps track of currently rendered frame and the position where it's rendered.
+// Animates of a sequence of sprites.
+// Keeps track of currently rendered frame.
 class Animation
 {
  public:
    Animation() = default;
    Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat);
 
-   void render(const gll::Program& shaders, PixPos atLeftTop);
-   int numFrames() const { return m_totalFrames; }
-   bool hasFinished() const { return m_currFrame >= numFrames(); }
    // Returns the size of the current frame's sprite.
    PixDim size() const { return size(m_currFrame); }
 
-   void setRotation(Angle_t rot);
+   Animation& setRotation(Angle_t rot);
    // Sets size of all sprites in the animation.
-   void setSize(PixDim size);
-   void scale(float factor);
-   void rotate(Angle_t rot);
+   Animation& setSize(PixDim size);
+   Animation& scale(float factor);
+   Animation& rotate(Angle_t rot);
+
+   void render(const gll::Program& shaders, PixPos atLeftTop);
+
+   bool hasFinished() const { return m_currFrame >= m_totalFrames; }
 
  private:
    void populateMaxFrameIndices();

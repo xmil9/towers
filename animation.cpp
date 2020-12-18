@@ -37,31 +37,35 @@ void Animation::render(const gll::Program& shaders, PixPos atLeftTop)
 }
 
 
-void Animation::setRotation(Angle_t rot)
+Animation& Animation::setRotation(Angle_t rot)
 {
    for (auto& sp : m_sprites)
       sp.setRotation(rot);
+   return *this;
 }
 
 
-void Animation::setSize(PixDim size)
+Animation& Animation::setSize(PixDim size)
 {
    for (auto& sp : m_sprites)
       sp.setSize(size);
+   return *this;
 }
 
 
-void Animation::scale(float factor)
+Animation& Animation::scale(float factor)
 {
    for (auto& sp : m_sprites)
       sp.scale(factor);
+   return *this;
 }
 
 
-void Animation::rotate(Angle_t rot)
+Animation& Animation::rotate(Angle_t rot)
 {
    for (auto& sp : m_sprites)
       sp.rotate(rot);
+   return *this;
 }
 
 
