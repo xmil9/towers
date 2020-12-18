@@ -182,7 +182,9 @@ bool Game2::setupAnimations()
 
    AnimationFactory factory(m_spriteRenderer.get(), m_coordSys.get());
 
-   m_resources.addAnimation("explosion", factory.make("explosion", PixDim{40.f, 40.f}));
+   m_resources.addAnimation(
+      "explosion",
+      factory.make("explosion", m_coordSys->toRenderCoords(NormDim{.05, .05})));
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize("defender")));
