@@ -11,12 +11,14 @@
 static constexpr NormVec Up{0., -1.};
 
 
-Attacker::Attacker(AttackerLook look, NormVec size, int hp, float speed,
+Attacker::Attacker(AttackerLook look, NormCoord length, int hp, float speed,
                    const OffsetPath& path, int delay, const MapCoordSys* cs)
 : m_look{std::move(look)}, m_hp{hp}, m_speed{speed}, m_delay{delay},
   m_center{path.start().center()}, m_currTurn{0}, m_path{path}, m_coordSys{cs}
 {
-   setSize(size);
+   assert(m_coordSys);
+
+   setSize(m_coordSys->makeEquivalentMapSize(length, m_look.size()));
    setPosition(path.start().center());
 }
 

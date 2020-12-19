@@ -17,7 +17,7 @@
 class Attacker
 {
  public:
-   Attacker(AttackerLook look, NormVec size, int hp, float speed, const OffsetPath& path,
+   Attacker(AttackerLook look, NormCoord dim, int hp, float speed, const OffsetPath& path,
             int delay, const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);

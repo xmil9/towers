@@ -13,6 +13,7 @@ class SpriteForm
 {
  public:
    SpriteForm() = default;
+   SpriteForm(PixDim size);
    SpriteForm(PixDim size, Angle_t rot);
    SpriteForm(PixDim size, Angle_t rot, PixPos rotCenter);
 
@@ -36,8 +37,12 @@ class SpriteForm
 };
 
 
+inline SpriteForm::SpriteForm(PixDim size) : SpriteForm{size, Angle_t{0}}
+{
+}
+
 inline SpriteForm::SpriteForm(PixDim size, Angle_t rot)
-: SpriteForm(size, rot, PixPos(size.x * .5f, size.y * .5f))
+: SpriteForm{size, rot, PixPos(size.x * .5f, size.y * .5f)}
 {
 }
 

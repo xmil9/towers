@@ -204,28 +204,25 @@ bool Game2::setupAttackers()
    assert(!!m_spriteRenderer);
 
    const std::string texId{AttackerTTag};
-   const Animation& explosion = m_resources.getAnimation(ExplosionATag);
-   const AttackerLook look{Sprite{m_spriteRenderer.get(), SpriteLook{texId}}, explosion};
+   const AttackerLook look{Sprite{m_spriteRenderer.get(), SpriteLook{texId},
+                                  SpriteForm{m_resources.getTextureSize(texId)}},
+                           m_resources.getAnimation(ExplosionATag)};
 
-   m_attackers.emplace_back(
-      look, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0,
-      m_coordSys.get());
+   m_attackers.emplace_back(look, .03f, 2000, .001f,
+                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0,
+                            m_coordSys.get());
 
-   m_attackers.emplace_back(
-      look, m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)),
-      800, .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0,
-      m_coordSys.get());
+   m_attackers.emplace_back(look, .015f, 800, .002f,
+                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0,
+                            m_coordSys.get());
 
-   m_attackers.emplace_back(
-      look, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100,
-      m_coordSys.get());
+   m_attackers.emplace_back(look, .03f, 2000, .001f,
+                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100,
+                            m_coordSys.get());
 
-   m_attackers.emplace_back(
-      look, m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)),
-      800, .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10,
-      m_coordSys.get());
+   m_attackers.emplace_back(look, .015f, 800, .002f,
+                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10,
+                            m_coordSys.get());
 
    return true;
 }

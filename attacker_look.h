@@ -15,6 +15,8 @@ class AttackerLook
    AttackerLook(const Sprite& shape, Animation explosion);
    AttackerLook(Sprite&& shape, Animation explosion);
 
+   PixDim size() const { return m_shape.size(); }
+
    AttackerLook& setSize(PixDim size);
    AttackerLook& setRotation(Angle_t rot);
 
