@@ -3,11 +3,10 @@
 // MIT license
 //
 #pragma once
-#include "animation.h"
 #include "attacker.h"
+#include "defender_look.h"
 #include "map_coord_sys.h"
 #include "path.h"
-#include "sprite.h"
 #include "glm/glm.hpp"
 #include <cstddef>
 #include <optional>
@@ -24,9 +23,8 @@ class Program;
 class Defender
 {
  public:
-   Defender(Sprite sp, NormVec size, NormPos center, NormCoord range, int damage,
-            Animation firing, const MapCoordSys* cs,
-            std::vector<Attacker>& attackers);
+   Defender(DefenderLook look, NormVec size, NormPos center, NormCoord range, int damage,
+            const MapCoordSys* cs, std::vector<Attacker>& attackers);
 
    void render(const gll::Program& shaders);
    void update();
@@ -41,13 +39,11 @@ class Defender
    void shoot();
 
  private:
+   DefenderLook m_look;
    NormCoord m_range = 0.f;
    int m_damage = 0;
-   NormVec m_size;
    NormPos m_center;
    const MapCoordSys* m_coordSys;
-   Sprite m_sprite;
-   Animation m_firing;
    std::vector<Attacker>& m_attackers;
    std::optional<Attacker*> m_target;
 };

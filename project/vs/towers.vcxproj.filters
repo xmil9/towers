@@ -235,6 +235,7 @@
     <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\attacker_factoy.h" />
     <ClInclude Include="..\..\attacker_models.h" />
+    <ClInclude Include="..\..\defender_look.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

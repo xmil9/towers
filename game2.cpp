@@ -247,20 +247,19 @@ bool Game2::setupDefenders()
    assert(!!m_spriteRenderer);
 
    const std::string texId{DefenderTTag};
-   SpriteLook look{texId};
    const Animation& firing = m_resources.getAnimation(FiringDefenderATag);
-
-   Sprite sprite{m_spriteRenderer.get(), look, SpriteForm{}};
-
-   m_defenders.emplace_back(
-      sprite, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, .1f, 5, firing, m_coordSys.get(), m_attackers);
-
-   Sprite sprite2{m_spriteRenderer.get(), look, SpriteForm{}};
+   Sprite sprite{m_spriteRenderer.get(), SpriteLook{texId}};
+   DefenderLook defenderLook{sprite, firing};
 
    m_defenders.emplace_back(
-      sprite2, m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.45f, .276f}, .1f, 5, firing, m_coordSys.get(), m_attackers);
+      defenderLook,
+      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
+      NormPos{.387f, .476f}, .1f, 5, m_coordSys.get(), m_attackers);
+
+   m_defenders.emplace_back(
+      defenderLook,
+      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
+      NormPos{.45f, .276f}, .1f, 5, m_coordSys.get(), m_attackers);
 
    return true;
 }

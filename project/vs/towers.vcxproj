@@ -211,6 +211,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\defender.h" />
+    <ClInclude Include="..\..\defender_look.h" />
     <ClInclude Include="..\..\int_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
