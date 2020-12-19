@@ -51,12 +51,12 @@ void Attacker::update()
 }
 
 
-void Attacker::hit(int amount)
+void Attacker::hit(int damage)
 {
    if (!isAlive())
       return;
 
-   m_currAttribs.hp = std::max(0, m_currAttribs.hp - amount);
+   m_currAttribs.hp = std::max(0, m_currAttribs.hp - damage);
 }
 
 

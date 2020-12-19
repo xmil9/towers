@@ -29,7 +29,7 @@ class Attacker
    void render(const gll::Program& shaders);
    void update();
    std::optional<NormPos> position() const { return m_center; }
-   void hit(int amount);
+   void hit(int damage);
    bool isAlive() const { return m_currAttribs.hp > 0; }
    bool hasStarted() const { return m_currAttribs.launchDelay == 0; }
    bool canBeRemoved() const;
@@ -40,7 +40,7 @@ class Attacker
    void setPosition(std::optional<NormPos> center);
    void setSize(NormVec size);
    void calcRotation();
-   // Returns normalized direction of movement.
+   // Returns direction of movement.
    NormVec direction() const;
    NormVec normedDirection() const { return glm::normalize(direction()); }
 
