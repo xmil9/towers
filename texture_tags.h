@@ -5,7 +5,6 @@
 #pragma once
 
 
-constexpr char AttackerTTag[] = "attacker";
 constexpr char DefenderTTag[] = "defender";
 constexpr char Explosion1TTag[] = "explosion1";
 constexpr char Explosion2TTag[] = "explosion2";

@@ -5,4 +5,6 @@
 #pragma once
 
 
+// AAT
 constexpr char AATModel[] = "Armored Assault Tank";
+constexpr char AATTexture[] = "aat";

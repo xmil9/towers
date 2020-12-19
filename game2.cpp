@@ -117,8 +117,8 @@ bool Game2::setupTextures()
       std::string tag;
       std::filesystem::path filename;
    };
-   const std::vector<TextureSpec> texures{
-      {AttackerTTag, "attacker.png"},
+   const std::vector<TextureSpec> textures{
+      {AATTexture, "aat.png"},
       {DefenderTTag, "defender.png"},
       {Explosion1TTag, "explosion1.png"},
       {Explosion2TTag, "explosion2.png"},
@@ -129,7 +129,7 @@ bool Game2::setupTextures()
       {Map1TTag, "map1.png"},
    };
 
-   for (const auto& spec : texures)
+   for (const auto& spec : textures)
       if (!m_resources.loadTexture(spec.tag, m_resources.texturePath() / spec.filename))
          return false;
    return true;
@@ -214,10 +214,9 @@ bool Game2::setupAttackers()
 
    m_attackFactory = std::make_unique<AttackerFactory>(m_coordSys.get());
 
-   const std::string texId{AttackerTTag};
    m_attackFactory->registerModel(
-      AATModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{texId},
-                                    SpriteForm{m_resources.getTextureSize(texId)}},
+      AATModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{AATTexture},
+                                    SpriteForm{m_resources.getTextureSize(AATTexture)}},
                              m_resources.getAnimation(ExplosionATag)});
 
    addAttacker(
