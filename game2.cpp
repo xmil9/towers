@@ -5,6 +5,7 @@
 #include "game2.h"
 #include "animation_factory.h"
 #include "animation_tags.h"
+#include "attacker_models.h"
 #include "map_data.h"
 #include "mesh2.h"
 #include "texture_tags.h"
@@ -197,32 +198,44 @@ bool Game2::setupAnimations()
 }
 
 
+static void addAttacker(const std::optional<Attacker>& attacker,
+                        std::vector<Attacker>& coll)
+{
+   if (attacker)
+      coll.push_back(*attacker);
+}
+
+
 bool Game2::setupAttackers()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
    assert(!!m_spriteRenderer);
 
+   m_attackFactory = std::make_unique<AttackerFactory>(m_coordSys.get());
+
    const std::string texId{AttackerTTag};
-   const AttackerLook look{Sprite{m_spriteRenderer.get(), SpriteLook{texId},
-                                  SpriteForm{m_resources.getTextureSize(texId)}},
-                           m_resources.getAnimation(ExplosionATag)};
+   m_attackFactory->registerModel(
+      AATModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{texId},
+                                    SpriteForm{m_resources.getTextureSize(texId)}},
+                             m_resources.getAnimation(ExplosionATag)});
 
-   m_attackers.emplace_back(look, .03f, Attacker::Attribs{2000, .001f, 0},
-                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}},
-                            m_coordSys.get());
-
-   m_attackers.emplace_back(look, .015f, Attacker::Attribs{800, .002f, 0},
-                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}},
-                            m_coordSys.get());
-
-   m_attackers.emplace_back(look, .03f, Attacker::Attribs{2000, .001f, 100},
-                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}},
-                            m_coordSys.get());
-
-   m_attackers.emplace_back(look, .015f, Attacker::Attribs{800, .002f, 10},
-                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.01}},
-                            m_coordSys.get());
+   addAttacker(
+      m_attackFactory->makeAttacker(AATModel, .03f, Attacker::Attribs{2000, .001f, 0},
+                                    OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}),
+      m_attackers);
+   addAttacker(
+      m_attackFactory->makeAttacker(AATModel, .015f, Attacker::Attribs{800, .002f, 0},
+                                    OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}),
+      m_attackers);
+   addAttacker(
+      m_attackFactory->makeAttacker(AATModel, .03f, Attacker::Attribs{2000, .001f, 100},
+                                    OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}),
+      m_attackers);
+   addAttacker(
+      m_attackFactory->makeAttacker(AATModel, .015f, Attacker::Attribs{800, .002f, 10},
+                                    OffsetPath{&m_map->path(), NormVec{-0.001, 0.01}}),
+      m_attackers);
 
    return true;
 }

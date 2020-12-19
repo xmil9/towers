@@ -23,7 +23,7 @@ class Attacker
     };
 
  public:
-   Attacker(AttackerLook look, NormCoord dim, const Attribs& attribs, const OffsetPath& path,
+   Attacker(AttackerLook look, NormCoord size, const Attribs& attribs, const OffsetPath& path,
             const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);

@@ -69,6 +69,7 @@
     </ClCompile>
     <ClCompile Include="..\..\animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
+    <ClCompile Include="..\..\attacker_factory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -232,6 +233,8 @@
     <ClInclude Include="..\..\animation_tags.h" />
     <ClInclude Include="..\..\texture_tags.h" />
     <ClInclude Include="..\..\attacker_look.h" />
+    <ClInclude Include="..\..\attacker_factoy.h" />
+    <ClInclude Include="..\..\attacker_models.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

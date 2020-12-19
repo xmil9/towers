@@ -171,6 +171,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClCompile Include="..\..\animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker.cpp" />
+    <ClCompile Include="..\..\attacker_factory.cpp" />
     <ClCompile Include="..\..\defender.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
@@ -204,7 +205,9 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />
     <ClInclude Include="..\..\attacker.h" />
+    <ClInclude Include="..\..\attacker_factoy.h" />
     <ClInclude Include="..\..\attacker_look.h" />
+    <ClInclude Include="..\..\attacker_models.h" />
     <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\defender.h" />

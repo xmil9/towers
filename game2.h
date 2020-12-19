@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "attacker.h"
+#include "attacker_factoy.h"
 #include "basic_types.h"
 #include "defender.h"
 #include "gfl_lib.h"
@@ -65,6 +66,7 @@ class Game2
    std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;
    std::unique_ptr<SpriteRenderer> m_spriteRenderer;
+   std::unique_ptr<AttackerFactory> m_attackFactory;
    std::vector<Attacker> m_attackers;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
