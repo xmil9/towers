@@ -3,19 +3,13 @@
 // MIT license
 //
 #pragma once
-#include "animation.h"
+#include "attacker_look.h"
 #include "map_coord_sys.h"
 #include "path.h"
-#include "sprite.h"
 #include "glm/glm.hpp"
 #include <cstddef>
 #include <memory>
 #include <vector>
-
-namespace gll
-{
-class Program;
-}
 
 
 ///////////////////
@@ -23,8 +17,8 @@ class Program;
 class Attacker
 {
  public:
-   Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-            int delay, Animation explosion, const MapCoordSys* cs);
+   Attacker(AttackerLook look, NormVec size, int hp, float speed, const OffsetPath& path,
+            int delay, const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();
@@ -45,7 +39,7 @@ class Attacker
    NormVec normedDirection() const { return glm::normalize(direction()); }
 
  private:
-   NormVec m_size;
+   AttackerLook m_look;
    int m_hp = 0;
    float m_speed = .001f;
    int m_delay = 0;
@@ -53,6 +47,4 @@ class Attacker
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
    const MapCoordSys* m_coordSys = nullptr;
-   Sprite m_sprite;
-   Animation m_explosion;
 };

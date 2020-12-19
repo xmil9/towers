@@ -11,11 +11,10 @@
 static constexpr NormVec Up{0., -1.};
 
 
-Attacker::Attacker(Sprite sp, NormVec size, int hp, float speed, const OffsetPath& path,
-                   int delay, Animation explosion, const MapCoordSys* cs)
-: m_size{size}, m_hp{hp}, m_speed{speed}, m_delay{delay}, m_center{path.start().center()},
-  m_currTurn{0}, m_path{path}, m_coordSys{cs}, m_sprite{std::move(sp)},
-  m_explosion{std::move(explosion)}
+Attacker::Attacker(AttackerLook look, NormVec size, int hp, float speed,
+                   const OffsetPath& path, int delay, const MapCoordSys* cs)
+: m_look{std::move(look)}, m_hp{hp}, m_speed{speed}, m_delay{delay},
+  m_center{path.start().center()}, m_currTurn{0}, m_path{path}, m_coordSys{cs}
 {
    setSize(size);
    setPosition(path.start().center());
@@ -27,16 +26,17 @@ void Attacker::render(const gll::Program& shaders)
    if (!hasStarted())
       return;
 
+   const PixPos center = m_coordSys->toRenderCoords(*m_center);
+
    if (isAlive())
+   {
       calcRotation();
-
-   // Even when not alive anymore continue drawing the attacker so that the explosion
-   // appears on top of it.
-   m_sprite.render(shaders, m_coordSys->toRenderCoords(*m_center - m_size / 2.f));
-
-   if (!isAlive())
-      m_explosion.render(
-         shaders, m_coordSys->toRenderCoords(*m_center) - m_explosion.size() / 2.f);
+      m_look.render(shaders, center);
+   }
+   else
+   {
+      m_look.renderExploded(shaders, center);
+   }
 }
 
 
@@ -61,7 +61,7 @@ void Attacker::hit(int amount)
 bool Attacker::canBeRemoved() const
 {
    const bool isAtGoal = !m_center;
-   const bool hasExploded = m_explosion.hasFinished();
+   const bool hasExploded = m_look.hasExplosionFinished();
    return isAtGoal || hasExploded;
 }
 
@@ -110,15 +110,14 @@ void Attacker::setPosition(std::optional<NormPos> center)
 
 void Attacker::setSize(NormVec size)
 {
-   m_size = size;
-   m_sprite.setSize(m_coordSys->toRenderCoords(size));
+   m_look.setSize(m_coordSys->toRenderCoords(size));
 }
 
 
 void Attacker::calcRotation()
 {
    const Angle_t rot{glm::angle(normedDirection(), Up)};
-   m_sprite.setRotation(rot);
+   m_look.setRotation(rot);
 }
 
 

@@ -204,33 +204,27 @@ bool Game2::setupAttackers()
    assert(!!m_spriteRenderer);
 
    const std::string texId{AttackerTTag};
-   SpriteLook look{texId};
    const Animation& explosion = m_resources.getAnimation(ExplosionATag);
+   const AttackerLook look{Sprite{m_spriteRenderer.get(), SpriteLook{texId}}, explosion};
 
-   Sprite sprite1{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
-      sprite1, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0, explosion,
+      look, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0,
       m_coordSys.get());
 
-   Sprite sprite2{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
-      sprite2,
-      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0, explosion,
+      look, m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)),
+      800, .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0,
       m_coordSys.get());
 
-   Sprite sprite3{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
-      sprite3, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
-      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100, explosion,
+      look, m_coordSys->makeEquivalentMapSize(.03f, m_resources.getTextureSize(texId)),
+      2000, .001f, OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100,
       m_coordSys.get());
 
-   Sprite sprite4{m_spriteRenderer.get(), look, SpriteForm{}};
    m_attackers.emplace_back(
-      sprite4,
-      m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)), 800,
-      .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10, explosion,
+      look, m_coordSys->makeEquivalentMapSize(.015f, m_resources.getTextureSize(texId)),
+      800, .002f, OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10,
       m_coordSys.get());
 
    return true;
