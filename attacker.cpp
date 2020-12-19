@@ -11,9 +11,9 @@
 static constexpr NormVec Up{0., -1.};
 
 
-Attacker::Attacker(AttackerLook look, NormCoord length, int hp, float speed,
-                   const OffsetPath& path, int delay, const MapCoordSys* cs)
-: m_look{std::move(look)}, m_hp{hp}, m_speed{speed}, m_delay{delay},
+Attacker::Attacker(AttackerLook look, NormCoord length, const Attribs& attribs,
+                   const OffsetPath& path, const MapCoordSys* cs)
+: m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},
   m_center{path.start().center()}, m_currTurn{0}, m_path{path}, m_coordSys{cs}
 {
    assert(m_coordSys);
@@ -44,10 +44,10 @@ void Attacker::render(const gll::Program& shaders)
 
 void Attacker::update()
 {
-   if (m_delay == 0)
+   if (m_currAttribs.launchDelay == 0)
       move();
    else
-      --m_delay;
+      --m_currAttribs.launchDelay;
 }
 
 
@@ -56,7 +56,7 @@ void Attacker::hit(int amount)
    if (!isAlive())
       return;
 
-   m_hp = std::max(0, m_hp - amount);
+   m_currAttribs.hp = std::max(0, m_currAttribs.hp - amount);
 }
 
 
@@ -84,7 +84,7 @@ void Attacker::move()
    assert(m_center && m_currTurn);
 
    const NormVec dir = direction();
-   NormVec offset = m_speed * glm::normalize(dir);
+   NormVec offset = m_currAttribs.speed * glm::normalize(dir);
    // Limit movement to next turn.
    if (sutil::greaterEqual(glm::length(offset), glm::length(dir)))
    {

@@ -208,20 +208,20 @@ bool Game2::setupAttackers()
                                   SpriteForm{m_resources.getTextureSize(texId)}},
                            m_resources.getAnimation(ExplosionATag)};
 
-   m_attackers.emplace_back(look, .03f, 2000, .001f,
-                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 0,
+   m_attackers.emplace_back(look, .03f, Attacker::Attribs{2000, .001f, 0},
+                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}},
                             m_coordSys.get());
 
-   m_attackers.emplace_back(look, .015f, 800, .002f,
-                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 0,
+   m_attackers.emplace_back(look, .015f, Attacker::Attribs{800, .002f, 0},
+                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}},
                             m_coordSys.get());
 
-   m_attackers.emplace_back(look, .03f, 2000, .001f,
-                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}, 100,
+   m_attackers.emplace_back(look, .03f, Attacker::Attribs{2000, .001f, 100},
+                            OffsetPath{&m_map->path(), NormVec{0.001, 0.002}},
                             m_coordSys.get());
 
-   m_attackers.emplace_back(look, .015f, 800, .002f,
-                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}, 10,
+   m_attackers.emplace_back(look, .015f, Attacker::Attribs{800, .002f, 10},
+                            OffsetPath{&m_map->path(), NormVec{-0.001, 0.01}},
                             m_coordSys.get());
 
    return true;

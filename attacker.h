@@ -7,9 +7,7 @@
 #include "map_coord_sys.h"
 #include "path.h"
 #include "glm/glm.hpp"
-#include <cstddef>
-#include <memory>
-#include <vector>
+#include <optional>
 
 
 ///////////////////
@@ -17,15 +15,23 @@
 class Attacker
 {
  public:
-   Attacker(AttackerLook look, NormCoord dim, int hp, float speed, const OffsetPath& path,
-            int delay, const MapCoordSys* cs);
+    struct Attribs
+    {
+      int hp = 0;
+      float speed = .001f;
+      int launchDelay = 0;
+    };
+
+ public:
+   Attacker(AttackerLook look, NormCoord dim, const Attribs& attribs, const OffsetPath& path,
+            const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();
    std::optional<NormPos> position() const { return m_center; }
    void hit(int amount);
-   bool isAlive() const { return m_hp > 0; }
-   bool hasStarted() const { return m_delay == 0; }
+   bool isAlive() const { return m_currAttribs.hp > 0; }
+   bool hasStarted() const { return m_currAttribs.launchDelay == 0; }
    bool canBeRemoved() const;
 
  private:
@@ -40,9 +46,8 @@ class Attacker
 
  private:
    AttackerLook m_look;
-   int m_hp = 0;
-   float m_speed = .001f;
-   int m_delay = 0;
+   Attribs m_initialAttribs;
+   Attribs m_currAttribs;
    std::optional<NormPos> m_center;
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
