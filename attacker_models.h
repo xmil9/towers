@@ -5,8 +5,8 @@
 #pragma once
 
 
-constexpr char AATModel[] = "Armored Assault Tank";
-constexpr char AATTexture[] = "aat";
+constexpr char AatModel[] = "Armored Assault Tank";
+constexpr char AatTexture[] = "aat";
 
 constexpr char MhcModel[] = "Mobile heavy cannon";
 constexpr char MhcTexture[] = "mhc";

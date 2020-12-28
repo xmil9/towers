@@ -118,7 +118,7 @@ bool Game2::setupTextures()
       std::filesystem::path filename;
    };
    const std::vector<TextureSpec> textures{
-      {AATTexture, "aat.png"},
+      {AatTexture, "aat.png"},
       {MhcTexture, "mhc.png"},
       {DefenderTTag, "defender.png"},
       {Explosion1TTag, "explosion1.png"},
@@ -216,8 +216,8 @@ bool Game2::setupAttackers()
    m_attackFactory = std::make_unique<AttackerFactory>(m_coordSys.get());
 
    m_attackFactory->registerModel(
-      AATModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{AATTexture},
-                                    SpriteForm{m_resources.getTextureSize(AATTexture)}},
+      AatModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{AatTexture},
+                                    SpriteForm{m_resources.getTextureSize(AatTexture)}},
                              m_resources.getAnimation(ExplosionATag)});
    m_attackFactory->registerModel(
       MhcModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{MhcTexture},
@@ -225,7 +225,7 @@ bool Game2::setupAttackers()
                              m_resources.getAnimation(ExplosionATag)});
 
    addAttacker(
-      m_attackFactory->makeAttacker(AATModel, .03f, Attacker::Attribs{2000, .001f, 0},
+      m_attackFactory->makeAttacker(AatModel, .03f, Attacker::Attribs{2000, .001f, 0},
                                     OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}),
       m_attackers);
    addAttacker(
@@ -233,7 +233,7 @@ bool Game2::setupAttackers()
                                     OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}),
       m_attackers);
    addAttacker(
-      m_attackFactory->makeAttacker(AATModel, .03f, Attacker::Attribs{2000, .001f, 100},
+      m_attackFactory->makeAttacker(AatModel, .03f, Attacker::Attribs{2000, .001f, 100},
                                     OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}),
       m_attackers);
    addAttacker(
