@@ -6,6 +6,7 @@
 #include "animation_factory.h"
 #include "animation_tags.h"
 #include "attacker_models.h"
+#include "defender_models.h"
 #include "map_data.h"
 #include "mesh2.h"
 #include "texture_tags.h"
@@ -120,13 +121,13 @@ bool Game2::setupTextures()
    const std::vector<TextureSpec> textures{
       {AatTexture, "aat.png"},
       {MhcTexture, "mhc.png"},
-      {DefenderTTag, "lt.png"},
+      {LtTexture, "lt.png"},
+      {LtFiring1Texture, "lt_firing1.png"},
+      {LtFiring2Texture, "lt_firing2.png"},
       {Explosion1TTag, "explosion1.png"},
       {Explosion2TTag, "explosion2.png"},
       {Explosion3TTag, "explosion3.png"},
       {Explosion4TTag, "explosion4.png"},
-      {FiringDefender1TTag, "lt_firing1.png"},
-      {FiringDefender2TTag, "lt_firing2.png"},
       {Map1TTag, "map1.png"},
    };
 
@@ -191,9 +192,9 @@ bool Game2::setupAnimations()
       factory.make(ExplosionATag, m_coordSys->toRenderCoords(NormDim{.05, .05})));
 
    const PixDim firingSize = m_coordSys->toRenderCoords(
-      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(DefenderTTag)));
-   m_resources.addAnimation(FiringDefenderATag,
-                            factory.make(FiringDefenderATag, firingSize));
+      m_coordSys->makeEquivalentMapSize(LtSize, m_resources.getTextureSize(LtTexture)));
+   m_resources.addAnimation(LtFiringAnimation,
+                            factory.make(LtFiringAnimation, firingSize));
 
    return true;
 }
@@ -245,26 +246,34 @@ bool Game2::setupAttackers()
 }
 
 
+static void addDefender(const std::optional<Defender>& defender,
+                        std::vector<Defender>& coll)
+{
+   if (defender)
+      coll.push_back(*defender);
+}
+
+
 bool Game2::setupDefenders()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
    assert(!!m_spriteRenderer);
 
-   const std::string texId{DefenderTTag};
-   const Animation& firing = m_resources.getAnimation(FiringDefenderATag);
-   Sprite sprite{m_spriteRenderer.get(), SpriteLook{texId}};
-   DefenderLook defenderLook{sprite, firing};
+   m_defenseFactory = std::make_unique<DefenderFactory>(m_coordSys.get(), &m_attackers);
 
-   m_defenders.emplace_back(
-      defenderLook,
-      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, Defender::Attribs{.1f, 5}, m_coordSys.get(), m_attackers);
+   m_defenseFactory->registerModel(
+      LtModel, DefenderLook{Sprite{m_spriteRenderer.get(), SpriteLook{LtTexture},
+                                   SpriteForm{m_resources.getTextureSize(LtTexture)}},
+                            m_resources.getAnimation(LtFiringAnimation)});
 
-   m_defenders.emplace_back(
-      defenderLook,
-      m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.45f, .276f}, Defender::Attribs{.1f, 5}, m_coordSys.get(), m_attackers);
+   Defender::Attribs ltAttribs{LtRange, LtDamage};
+   addDefender(
+      m_defenseFactory->makeDefender(LtModel, LtSize, NormPos{.387f, .476f}, ltAttribs),
+      m_defenders);
+   addDefender(
+      m_defenseFactory->makeDefender(LtModel, LtSize, NormPos{.45f, .276f}, ltAttribs),
+      m_defenders);
 
    return true;
 }

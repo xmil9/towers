@@ -10,15 +10,16 @@
 static constexpr NormVec Up{0., -1.};
 
 
-Defender::Defender(DefenderLook look, NormVec size, NormPos center,
+Defender::Defender(DefenderLook look, NormCoord size, NormPos center,
                    const Attribs& attribs, const MapCoordSys* cs,
-                   std::vector<Attacker>& attackers)
+                   std::vector<Attacker>* attackers)
 : m_look{std::move(look)}, m_attribs{attribs}, m_center{center}, m_coordSys{cs},
   m_attackers{attackers}
 {
    assert(m_coordSys);
+   assert(m_attackers);
 
-   setSize(size);
+   setSize(m_coordSys->makeEquivalentMapSize(size, m_look.size()));
    setPosition(center);
 }
 
@@ -62,7 +63,7 @@ bool Defender::findTarget()
 {
    m_target.reset();
 
-   for (auto& attacker : m_attackers)
+   for (auto& attacker : *m_attackers)
    {
       if (attacker.isAlive() && isInRange(attacker))
       {

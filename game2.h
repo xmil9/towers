@@ -7,6 +7,7 @@
 #include "attacker_factoy.h"
 #include "basic_types.h"
 #include "defender.h"
+#include "defender_factory.h"
 #include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
@@ -68,6 +69,7 @@ class Game2
    std::unique_ptr<SpriteRenderer> m_spriteRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
    std::vector<Attacker> m_attackers;
+   std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;

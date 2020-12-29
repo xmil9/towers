@@ -30,8 +30,8 @@ class Defender
     };
 
  public:
-   Defender(DefenderLook look, NormVec size, NormPos center, const Attribs& attribs,
-            const MapCoordSys* cs, std::vector<Attacker>& attackers);
+   Defender(DefenderLook look, NormCoord size, NormPos center, const Attribs& attribs,
+            const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
    void render(const gll::Program& shaders);
    void update();
@@ -50,6 +50,6 @@ class Defender
    Attribs m_attribs;
    NormPos m_center;
    const MapCoordSys* m_coordSys;
-   std::vector<Attacker>& m_attackers;
+   std::vector<Attacker>* m_attackers = nullptr;
    std::optional<Attacker*> m_target;
 };

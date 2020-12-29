@@ -6,4 +6,3 @@
 
 
 constexpr char ExplosionATag[] = "explosion";
-constexpr char FiringDefenderATag[] = "defender_firing";

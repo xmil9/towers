@@ -70,6 +70,7 @@
     <ClCompile Include="..\..\animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
+    <ClCompile Include="..\..\defender_factory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -237,6 +238,7 @@
     <ClInclude Include="..\..\attacker_models.h" />
     <ClInclude Include="..\..\defender_look.h" />
     <ClInclude Include="..\..\defender_models.h" />
+    <ClInclude Include="..\..\defender_factory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
