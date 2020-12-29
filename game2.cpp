@@ -120,13 +120,13 @@ bool Game2::setupTextures()
    const std::vector<TextureSpec> textures{
       {AatTexture, "aat.png"},
       {MhcTexture, "mhc.png"},
-      {DefenderTTag, "defender.png"},
+      {DefenderTTag, "lt.png"},
       {Explosion1TTag, "explosion1.png"},
       {Explosion2TTag, "explosion2.png"},
       {Explosion3TTag, "explosion3.png"},
       {Explosion4TTag, "explosion4.png"},
-      {FiringDefender1TTag, "defender_firing1.png"},
-      {FiringDefender2TTag, "defender_firing2.png"},
+      {FiringDefender1TTag, "lt_firing1.png"},
+      {FiringDefender2TTag, "lt_firing2.png"},
       {Map1TTag, "map1.png"},
    };
 
