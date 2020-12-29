@@ -23,7 +23,14 @@ class Program;
 class Defender
 {
  public:
-   Defender(DefenderLook look, NormVec size, NormPos center, NormCoord range, int damage,
+    struct Attribs
+    {
+      NormCoord range = 0.f;
+      int damage = 0;
+    };
+
+ public:
+   Defender(DefenderLook look, NormVec size, NormPos center, const Attribs& attribs,
             const MapCoordSys* cs, std::vector<Attacker>& attackers);
 
    void render(const gll::Program& shaders);
@@ -40,8 +47,7 @@ class Defender
 
  private:
    DefenderLook m_look;
-   NormCoord m_range = 0.f;
-   int m_damage = 0;
+   Attribs m_attribs;
    NormPos m_center;
    const MapCoordSys* m_coordSys;
    std::vector<Attacker>& m_attackers;

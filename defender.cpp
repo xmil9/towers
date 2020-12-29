@@ -10,10 +10,11 @@
 static constexpr NormVec Up{0., -1.};
 
 
-Defender::Defender(DefenderLook look, NormVec size, NormPos center, NormCoord range,
-                   int damage, const MapCoordSys* cs, std::vector<Attacker>& attackers)
-: m_look{std::move(look)}, m_range{range}, m_damage{damage}, m_center{center},
-  m_coordSys{cs}, m_attackers{attackers}
+Defender::Defender(DefenderLook look, NormVec size, NormPos center,
+                   const Attribs& attribs, const MapCoordSys* cs,
+                   std::vector<Attacker>& attackers)
+: m_look{std::move(look)}, m_attribs{attribs}, m_center{center}, m_coordSys{cs},
+  m_attackers{attackers}
 {
    assert(m_coordSys);
 
@@ -81,7 +82,7 @@ bool Defender::isInRange(const Attacker& attacker) const
       return false;
 
    const NormCoord dist = glm::length(m_center - *pos);
-   return sutil::lessEqual(dist, m_range);
+   return sutil::lessEqual(dist, m_attribs.range);
 }
 
 
@@ -112,5 +113,5 @@ std::optional<NormVec> Defender::targetDirection() const
 void Defender::shoot()
 {
    if (m_target)
-      (*m_target)->hit(m_damage);
+      (*m_target)->hit(m_attribs.damage);
 }

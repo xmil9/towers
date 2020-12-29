@@ -259,12 +259,12 @@ bool Game2::setupDefenders()
    m_defenders.emplace_back(
       defenderLook,
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.387f, .476f}, .1f, 5, m_coordSys.get(), m_attackers);
+      NormPos{.387f, .476f}, Defender::Attribs{.1f, 5}, m_coordSys.get(), m_attackers);
 
    m_defenders.emplace_back(
       defenderLook,
       m_coordSys->makeEquivalentMapSize(.04f, m_resources.getTextureSize(texId)),
-      NormPos{.45f, .276f}, .1f, 5, m_coordSys.get(), m_attackers);
+      NormPos{.45f, .276f}, Defender::Attribs{.1f, 5}, m_coordSys.get(), m_attackers);
 
    return true;
 }
