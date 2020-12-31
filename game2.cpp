@@ -294,11 +294,15 @@ bool Game2::setupBackground()
 
 bool Game2::setupDashboard()
 {
-   const std::string texId{DashboardTTag};
-   SpriteLook look{texId};
-   SpriteForm form{{DashboardWidth, DashboardHeight}, Angle_t{0.f}};
    assert(!!m_spriteRenderer);
-   m_dashboard = std::make_unique<Sprite>(m_spriteRenderer.get(), look, form);
+
+   m_dashboard =
+      std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{DashboardTTag},
+                               SpriteForm{{DashboardWidth, DashboardHeight}});
+
+   constexpr PixDim buttonDim{75.f, 75.f};
+   m_ltButton = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
+                                         SpriteForm{buttonDim});
 
    return true;
 }
@@ -328,8 +332,8 @@ void Game2::updateState()
 void Game2::render()
 {
    m_renderer.beginRendering();
-   m_background->render(m_renderer.shaders(), {0.f, 0.f});
-   m_dashboard->render(m_renderer.shaders(), {MapWidth - 1, 0.f});
+   renderMap();
+   renderDashboard();
 
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());
@@ -337,6 +341,20 @@ void Game2::render()
       defender.render(m_renderer.shaders());
 
    m_mainWnd.swapBuffers();
+}
+
+
+void Game2::renderMap()
+{
+   m_background->render(m_renderer.shaders(), {0.f, 0.f});
+}
+
+
+void Game2::renderDashboard()
+{
+   constexpr PixPos dashLeftTop{MapWidth - 1, 0.f};
+   m_dashboard->render(m_renderer.shaders(), dashLeftTop);
+   m_ltButton->render(m_renderer.shaders(), dashLeftTop + PixDim{15.f, 20.f});
 }
 
 

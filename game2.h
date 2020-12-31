@@ -47,6 +47,8 @@ class Game2
    void processInput();
    void updateState();
    void render();
+   void renderMap();
+   void renderDashboard();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);
@@ -81,4 +83,5 @@ class Game2
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
    std::unique_ptr<Sprite> m_dashboard;
+   std::unique_ptr<Sprite> m_ltButton;
 };
