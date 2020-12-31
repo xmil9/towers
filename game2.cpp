@@ -38,7 +38,7 @@ bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
            setupRenderer() && setupTerrain() && setupSpriteData() && setupAnimations() &&
-           setupAttackers() && setupDefenders() && setupBackground());
+           setupAttackers() && setupDefenders() && setupBackground() && setupDashboard());
 }
 
 
@@ -129,6 +129,7 @@ bool Game2::setupTextures()
       {Explosion3TTag, "explosion3.png"},
       {Explosion4TTag, "explosion4.png"},
       {Map1TTag, "map1.png"},
+      {DashboardTTag, "dashboard.png"},
    };
 
    for (const auto& spec : textures)
@@ -291,6 +292,18 @@ bool Game2::setupBackground()
 }
 
 
+bool Game2::setupDashboard()
+{
+   const std::string texId{DashboardTTag};
+   SpriteLook look{texId};
+   SpriteForm form{{DashboardWidth, DashboardHeight}, Angle_t{0.f}};
+   assert(!!m_spriteRenderer);
+   m_dashboard = std::make_unique<Sprite>(m_spriteRenderer.get(), look, form);
+
+   return true;
+}
+
+
 void Game2::processInput()
 {
    m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
@@ -316,6 +329,7 @@ void Game2::render()
 {
    m_renderer.beginRendering();
    m_background->render(m_renderer.shaders(), {0.f, 0.f});
+   m_dashboard->render(m_renderer.shaders(), {MapWidth - 1, 0.f});
 
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());

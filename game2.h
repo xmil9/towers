@@ -42,6 +42,7 @@ class Game2
    bool setupAttackers();
    bool setupDefenders();
    bool setupBackground();
+   bool setupDashboard();
    
    void processInput();
    void updateState();
@@ -79,4 +80,5 @@ class Game2
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
+   std::unique_ptr<Sprite> m_dashboard;
 };
