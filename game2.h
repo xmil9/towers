@@ -61,9 +61,9 @@ class Game2
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
  private:
-   static constexpr PixCoordi MapWidth = 1800 * 2/3;
-   static constexpr PixCoordi MapHeight = 1200 * 2/3;
-   static constexpr PixCoordi DashboardWidth = 200 * 2/3;
+   static constexpr PixCoordi MapWidth = 1800;
+   static constexpr PixCoordi MapHeight = 1200;
+   static constexpr PixCoordi DashboardWidth = 200;
    static constexpr PixCoordi DashboardHeight = MapHeight;
    static constexpr PixCoordi WndWidth = MapWidth + DashboardWidth;
    static constexpr PixCoordi WndHeight = MapHeight;

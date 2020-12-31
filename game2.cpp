@@ -282,11 +282,9 @@ bool Game2::setupDefenders()
 
 bool Game2::setupBackground()
 {
-   const std::string texId{Map1TTag};
-   SpriteLook look{texId};
-   SpriteForm form{{MapWidth, MapHeight}, Angle_t{0.f}};
    assert(!!m_spriteRenderer);
-   m_background = std::make_unique<Sprite>(m_spriteRenderer.get(), look, form);
+   m_background = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{Map1TTag},
+                                           SpriteForm{{MapWidth, MapHeight}});
 
    return true;
 }
