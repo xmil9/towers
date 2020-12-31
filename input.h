@@ -25,6 +25,7 @@ class Input : public InputController, public Observed<Input>
    // InputController overrides.
    void onMouseMoved(double xpos, double ypos) override;
    void onMouseScrolled(double xoffset, double yoffset) override;
+   void onMouseButtonChanged(gfl::MouseButton button, int action, int mods) override;
    void onKeyChanged(gfl::Key key, int scancode, int action, int mods) override;
 
    void pollKeys(gfl::Window& wnd, float frameLengthSecs);
@@ -51,6 +52,17 @@ constexpr char MouseScrolledMsg[] = "mouse-scrolled";
 struct MouseScrolledMsgData : public Observed<Input>::MsgData
 {
    glm::vec2 delta;
+};
+
+constexpr char MouseButtonChangedMsg[] = "mouse-button-changed";
+struct MouseButtonChangedMsgData : public Observed<Input>::MsgData
+{
+   // Button id: GLFW_MOUSE_BUTTON_1, GLFW_MOUSE_BUTTON_2, etc
+   gfl::MouseButton button;
+   // Key action: GLFW_PRESS or GLFW_RELEASE
+   int action;
+   // Modifier key flags: GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, ...
+   int mods;
 };
 
 constexpr char KeyChangedMsg[] = "key-changed";

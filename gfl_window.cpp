@@ -130,6 +130,7 @@ void Window::setupCallbacks()
    glfwSetCursorPosCallback(m_wnd, windowCursorPosCallback);
    glfwSetScrollCallback(m_wnd, windowScrollCallback);
    glfwSetKeyCallback(m_wnd, windowKeyCallback);
+   glfwSetMouseButtonCallback(m_wnd, windowMouseButtonCallback);
 }
 
 
@@ -239,6 +240,16 @@ void Window::windowKeyCallback(GLFWwindow* wnd, Key key, int scancode, int actio
    assert(self);
    if (self)
       self->onWindowKeyChanged(key, scancode, action, mods);
+}
+
+
+void Window::windowMouseButtonCallback(GLFWwindow* wnd, MouseButton button, int action,
+                                       int mods)
+{
+   Window* self = getSelf(wnd);
+   assert(self);
+   if (self)
+      self->onWindowMouseButtonChanged(button, action, mods);
 }
 
 } // namespace gfl

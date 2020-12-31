@@ -46,6 +46,16 @@ void Input::onMouseScrolled(double xoffset, double yoffset)
 }
 
 
+void Input::onMouseButtonChanged(gfl::MouseButton button, int action, int mods)
+{
+   MouseButtonChangedMsgData data;
+   data.button = button;
+   data.action = action;
+   data.mods = mods;
+   notify(*this, MouseButtonChangedMsg, data);
+}
+
+
 void Input::onKeyChanged(gfl::Key key, int scancode, int action, int mods)
 {
    KeyChangedMsgData data;

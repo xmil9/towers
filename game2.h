@@ -58,6 +58,7 @@ class Game2
                        const Observed<Input>::MsgData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
+   void onMouseButtonChanged(gfl::MouseButton button, int action);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
  private:

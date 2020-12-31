@@ -19,6 +19,8 @@ class MainWindow : public gfl::Window, public Observed<MainWindow>
    void onWindowMouseMoved(double xpos, double ypos) override;
    void onWindowScrolled(double xoffset, double yoffset) override;
    void onWindowKeyChanged(gfl::Key key, int scancode, int action, int mods) override;
+   void onWindowMouseButtonChanged(gfl::MouseButton button, int action,
+                                   int mods) override;
 
  private:
    InputController* m_inputController = nullptr;

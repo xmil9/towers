@@ -54,6 +54,10 @@ class Window
                                    int /*mods*/)
    {
    }
+   virtual void onWindowMouseButtonChanged(MouseButton /*button*/, int /*action*/,
+                                           int /*mods*/)
+   {
+   }
 
  private:
    void setupCallbacks();
@@ -70,6 +74,8 @@ class Window
    static void windowScrollCallback(GLFWwindow* wnd, double xoffset, double yoffset);
    static void windowKeyCallback(GLFWwindow* wnd, Key key, int scancode, int action,
                                  int mods);
+   static void windowMouseButtonCallback(GLFWwindow* window, MouseButton button,
+                                         int action, int mods);
 
  private:
    GLFWwindow* m_wnd = nullptr;
