@@ -300,9 +300,10 @@ bool Game2::setupDashboard()
       std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{DashboardTTag},
                                SpriteForm{{DashboardWidth, DashboardHeight}});
 
-   constexpr PixDim buttonDim{75.f, 75.f};
+   constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
+   constexpr NormDim buttonDim{.375f, .0625f};
    m_ltButton = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
-                                         SpriteForm{buttonDim});
+                                         SpriteForm{buttonDim * dashPixDim});
 
    return true;
 }
@@ -354,7 +355,10 @@ void Game2::renderDashboard()
 {
    constexpr PixPos dashLeftTop{MapWidth - 1, 0.f};
    m_dashboard->render(m_renderer.shaders(), dashLeftTop);
-   m_ltButton->render(m_renderer.shaders(), dashLeftTop + PixDim{15.f, 20.f});
+
+   constexpr NormDim ltPos{.075f, .0167f};
+   constexpr NormDim ltPixPos = ltPos * PixDim{DashboardWidth, DashboardHeight};
+   m_ltButton->render(m_renderer.shaders(), dashLeftTop + ltPixPos);
 }
 
 
