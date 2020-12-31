@@ -84,7 +84,7 @@ bool Game2::setupMainWindow()
       onMainWindowChanged(src, msg, data);
    });
 
-   if (m_mainWnd.create(MainWndWidth, MainWndHeight, "towers") != GLFW_NO_ERROR)
+   if (m_mainWnd.create(WndWidth, WndHeight, "towers") != GLFW_NO_ERROR)
       return false;
 
    // Hide mouse cursor and capture its events even outside the main window.
@@ -140,13 +140,13 @@ bool Game2::setupTextures()
 
 bool Game2::setupRenderer()
 {
-   return m_renderer.setup(&m_resources, MainWndWidth, MainWndHeight);
+   return m_renderer.setup(&m_resources, WndWidth, WndHeight);
 }
 
 
 bool Game2::setupTerrain()
 {
-   m_coordSys = std::make_unique<MapCoordSys>(PixDim{MainWndWidth, MainWndHeight});
+   m_coordSys = std::make_unique<MapCoordSys>(PixDim{MapWidth, MapHeight});
 
    std::optional<MapData> mapData = loadMapData(m_resources.mapPath() / "map.json");
    if (!mapData)
@@ -283,7 +283,7 @@ bool Game2::setupBackground()
 {
    const std::string texId{Map1TTag};
    SpriteLook look{texId};
-   SpriteForm form{{MainWndWidth, MainWndHeight}, Angle_t{0.f}};
+   SpriteForm form{{MapWidth, MapHeight}, Angle_t{0.f}};
    assert(!!m_spriteRenderer);
    m_background = std::make_unique<Sprite>(m_spriteRenderer.get(), look, form);
 

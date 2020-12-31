@@ -6,6 +6,7 @@
 #include "attacker.h"
 #include "attacker_factoy.h"
 #include "basic_types.h"
+#include "coords.h"
 #include "defender.h"
 #include "defender_factory.h"
 #include "gfl_lib.h"
@@ -57,8 +58,13 @@ class Game2
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
  private:
-   static constexpr int MainWndWidth = 1800;
-   static constexpr int MainWndHeight = 1200;
+   static constexpr PixCoordi MapWidth = 1800;
+   static constexpr PixCoordi MapHeight = 1200;
+   static constexpr PixCoordi DashboardWidth = 200;
+   static constexpr PixCoordi DashboardHeight = MapHeight;
+   static constexpr PixCoordi WndWidth = MapWidth + DashboardWidth;
+   static constexpr PixCoordi WndHeight = MapHeight;
+
    Resources m_resources;
    FrameClock m_frameClock;
    gfl::Lib m_glfw;
