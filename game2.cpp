@@ -140,6 +140,9 @@ bool Game2::setupTextures()
       {LtTexture, "lt.png"},
       {LtFiring1Texture, "lt_firing1.png"},
       {LtFiring2Texture, "lt_firing2.png"},
+      {SmTexture, "sm.png"},
+      {SmFiring1Texture, "sm_firing1.png"},
+      {SmFiring2Texture, "sm_firing2.png"},
       {Explosion1TTag, "explosion1.png"},
       {Explosion2TTag, "explosion2.png"},
       {Explosion3TTag, "explosion3.png"},
@@ -208,10 +211,15 @@ bool Game2::setupAnimations()
       ExplosionATag,
       factory.make(ExplosionATag, m_coordSys->toRenderCoords(NormDim{.05, .05})));
 
-   const PixDim firingSize = m_coordSys->toRenderCoords(
+   PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->makeEquivalentMapSize(LtSize, m_resources.getTextureSize(LtTexture)));
    m_resources.addAnimation(LtFiringAnimation,
                             factory.make(LtFiringAnimation, firingSize));
+
+   firingSize = m_coordSys->toRenderCoords(
+      m_coordSys->makeEquivalentMapSize(SmSize, m_resources.getTextureSize(SmTexture)));
+   m_resources.addAnimation(SmFiringAnimation,
+                            factory.make(SmFiringAnimation, firingSize));
 
    return true;
 }
@@ -284,6 +292,11 @@ bool Game2::setupDefenders()
                                    SpriteForm{m_resources.getTextureSize(LtTexture)}},
                             m_resources.getAnimation(LtFiringAnimation)});
 
+   m_defenseFactory->registerModel(
+      SmModel, DefenderLook{Sprite{m_spriteRenderer.get(), SpriteLook{SmTexture},
+                                   SpriteForm{m_resources.getTextureSize(SmTexture)}},
+                            m_resources.getAnimation(SmFiringAnimation)});
+
    return true;
 }
 
@@ -309,6 +322,8 @@ bool Game2::setupDashboard()
    constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
    constexpr NormDim buttonDim{.375f, .0625f};
    m_ltButton = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
+                                         SpriteForm{buttonDim * dashPixDim});
+   m_smButton = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{SmTexture},
                                          SpriteForm{buttonDim * dashPixDim});
 
    return true;
@@ -366,6 +381,10 @@ void Game2::renderDashboard()
    constexpr NormDim ltPos{.075f, .0167f};
    constexpr NormDim ltPixPos = ltPos * PixDim{DashboardWidth, DashboardHeight};
    m_ltButton->render(m_renderer.shaders(), dashLeftTop + ltPixPos);
+
+   constexpr NormDim smPos{.535f, .0167f};
+   constexpr NormDim smPixPos = smPos * PixDim{DashboardWidth, DashboardHeight};
+   m_smButton->render(m_renderer.shaders(), dashLeftTop + smPixPos);
 }
 
 
@@ -498,9 +517,19 @@ bool Game2::mapOnLeftButtonPressed(const glm::vec2& pos)
    if (m_placeSess)
    {
       const NormPos location = pos / PixDim{MapWidth, MapHeight};
-      const Defender::Attribs ltAttribs{LtRange, LtDamage};
-      addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, location, ltAttribs),
-                  m_defenders);
+
+      if (m_placeSess->model == LtModel)
+      {
+         constexpr Defender::Attribs attribs{LtRange, LtDamage};
+         addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, location, attribs),
+                     m_defenders);
+      }
+      else if (m_placeSess->model == SmModel)
+      {
+         constexpr Defender::Attribs attribs{SmRange, SmDamage};
+         addDefender(m_defenseFactory->makeDefender(SmModel, SmSize, location, attribs),
+                     m_defenders);
+      }
 
       m_placeSess = std::nullopt;
    }
@@ -528,22 +557,39 @@ bool Game2::dashboardOnLeftButtonPressed(const glm::vec2& pos)
       m_placeSess = std::nullopt;
       return true;
    }
-   
-   constexpr NormDim ltPos{.075f, .0167f};
+
    constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
    constexpr NormDim buttonDim{.375f, .0625f};
+   constexpr PixDim buttonPixDim = buttonDim * dashPixDim;
+   constexpr NormDim indicatorDim{.375f, .0625f};
 
+   constexpr NormDim ltPos{.075f, .0167f};
    const NormDim ltPixPos = {MapWidth + ltPos.x * DashboardWidth,
                              ltPos.y * DashboardHeight};
-   constexpr PixDim buttonPixDim = buttonDim * dashPixDim;
    const bool isInLtButton = pos.x > ltPixPos.x && pos.x <= ltPixPos.x + buttonPixDim.x &&
                              pos.y > ltPixPos.y && pos.y <= ltPixPos.y + buttonPixDim.y;
    if (isInLtButton)
    {
       PlaceSession sess;
-      constexpr NormDim indicatorDim{.375f, .0625f};
+      sess.model = LtModel;
       sess.indicator =
          std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
+                                  SpriteForm{indicatorDim * dashPixDim});
+      m_placeSess = std::move(sess);
+      return true;
+   }
+
+   constexpr NormDim smPos{.535f, .0167f};
+   const NormDim smPixPos = {MapWidth + smPos.x * DashboardWidth,
+                             smPos.y * DashboardHeight};
+   const bool isInSmButton = pos.x > smPixPos.x && pos.x <= smPixPos.x + buttonPixDim.x &&
+                             pos.y > smPixPos.y && pos.y <= smPixPos.y + buttonPixDim.y;
+   if (isInSmButton)
+   {
+      PlaceSession sess;
+      sess.model = SmModel;
+      sess.indicator =
+         std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{SmTexture},
                                   SpriteForm{indicatorDim * dashPixDim});
       m_placeSess = std::move(sess);
       return true;

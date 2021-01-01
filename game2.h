@@ -18,6 +18,7 @@
 #include "resources.h"
 #include <memory>
 #include <optional>
+#include <string>
 #include <vector>
 
 
@@ -96,9 +97,11 @@ class Game2
    std::unique_ptr<Sprite> m_background;
    std::unique_ptr<Sprite> m_dashboard;
    std::unique_ptr<Sprite> m_ltButton;
+   std::unique_ptr<Sprite> m_smButton;
 
    struct PlaceSession
    {
+      std::string model;
       std::unique_ptr<Sprite> indicator;
    };
    std::optional<PlaceSession> m_placeSess;
