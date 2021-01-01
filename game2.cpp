@@ -268,14 +268,6 @@ bool Game2::setupDefenders()
                                    SpriteForm{m_resources.getTextureSize(LtTexture)}},
                             m_resources.getAnimation(LtFiringAnimation)});
 
-   Defender::Attribs ltAttribs{LtRange, LtDamage};
-   addDefender(
-      m_defenseFactory->makeDefender(LtModel, LtSize, NormPos{.387f, .476f}, ltAttribs),
-      m_defenders);
-   addDefender(
-      m_defenseFactory->makeDefender(LtModel, LtSize, NormPos{.45f, .276f}, ltAttribs),
-      m_defenders);
-
    return true;
 }
 
@@ -414,12 +406,110 @@ void Game2::onMouseScrolled(const glm::vec2& /*delta*/)
 }
 
 
-void Game2::onMouseButtonChanged(gfl::MouseButton /*button*/, int /*action*/,
-                                 const glm::vec2& /*pos*/)
+void Game2::onMouseButtonChanged(gfl::MouseButton button, int action,
+                                 const glm::vec2& pos)
+{
+   if (button == GLFW_MOUSE_BUTTON_1)
+   {
+      if (action == GLFW_PRESS)
+         onLeftButtonPressed(pos);
+      else
+         onLeftButtonReleased(pos);
+   }
+   else
+   {
+      if (action == GLFW_PRESS)
+         onRightButtonPressed(pos);
+      else
+         onRightButtonReleased(pos);
+   }
+}
+
+
+void Game2::onLeftButtonPressed(const glm::vec2& pos)
+{
+   if (mapOnLeftButtonPressed(pos))
+      return;
+   dashboardOnLeftButtonPressed(pos);
+}
+
+
+void Game2::onLeftButtonReleased(const glm::vec2& pos)
+{
+   if (mapOnLeftButtonReleased(pos))
+      return;
+   dashboardOnLeftButtonReleased(pos);
+}
+
+
+void Game2::onRightButtonPressed(const glm::vec2& /*pos*/)
+{
+}
+
+
+void Game2::onRightButtonReleased(const glm::vec2& /*pos*/)
 {
 }
 
 
 void Game2::onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/)
 {
+}
+
+
+bool Game2::mapOnLeftButtonPressed(const glm::vec2& pos)
+{
+   const bool isInMap = pos.x > 0 && pos.x <= MapWidth && pos.y > 0 && pos.y <= MapHeight;
+   if (!isInMap)
+      return false;
+
+   if (m_locationSess)
+   {
+      const NormPos location = pos / PixDim{MapWidth, MapHeight};
+      const Defender::Attribs ltAttribs{LtRange, LtDamage};
+      addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, location, ltAttribs),
+                  m_defenders);
+
+      m_locationSess = std::nullopt;
+   }
+
+   return true;
+}
+
+
+bool Game2::mapOnLeftButtonReleased(const glm::vec2& /*pos*/)
+{
+   return false;
+}
+
+
+bool Game2::dashboardOnLeftButtonPressed(const glm::vec2& pos)
+{
+   const bool isInDash = pos.x > MapWidth && pos.x <= MapWidth + DashboardWidth &&
+                         pos.y > 0 && pos.y <= DashboardHeight;
+   if (!isInDash)
+      return false;
+
+   constexpr NormDim ltPos{.075f, .0167f};
+   constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
+   constexpr NormDim buttonDim{.375f, .0625f};
+
+   const NormDim ltPixPos = {MapWidth + ltPos.x * DashboardWidth,
+                             ltPos.y * DashboardHeight};
+   constexpr PixDim buttonPixDim = buttonDim * dashPixDim;
+   const bool isInLtButton = pos.x > ltPixPos.x && pos.x <= ltPixPos.x + buttonPixDim.x &&
+                             pos.y > ltPixPos.y && pos.y <= ltPixPos.y + buttonPixDim.y;
+   if (isInLtButton)
+   {
+      m_locationSess = LocationSession{1};
+      return true;
+   }
+
+   return false;
+}
+
+
+bool Game2::dashboardOnLeftButtonReleased(const glm::vec2& /*pos*/)
+{
+   return false;
 }

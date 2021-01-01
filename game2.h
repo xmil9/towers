@@ -17,6 +17,7 @@
 #include "renderer2.h"
 #include "resources.h"
 #include <memory>
+#include <optional>
 #include <vector>
 
 
@@ -43,7 +44,7 @@ class Game2
    bool setupDefenders();
    bool setupBackground();
    bool setupDashboard();
-   
+
    void processInput();
    void updateState();
    void render();
@@ -59,7 +60,16 @@ class Game2
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
    void onMouseButtonChanged(gfl::MouseButton button, int action, const glm::vec2& pos);
+   void onLeftButtonPressed(const glm::vec2& pos);
+   void onLeftButtonReleased(const glm::vec2& pos);
+   void onRightButtonPressed(const glm::vec2& pos);
+   void onRightButtonReleased(const glm::vec2& pos);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
+
+   bool mapOnLeftButtonPressed(const glm::vec2& pos);
+   bool mapOnLeftButtonReleased(const glm::vec2& pos);
+   bool dashboardOnLeftButtonPressed(const glm::vec2& pos);
+   bool dashboardOnLeftButtonReleased(const glm::vec2& pos);
 
  private:
    static constexpr PixCoordi MapWidth = 1800;
@@ -85,4 +95,10 @@ class Game2
    std::unique_ptr<Sprite> m_background;
    std::unique_ptr<Sprite> m_dashboard;
    std::unique_ptr<Sprite> m_ltButton;
+
+   struct LocationSession
+   {
+      int something = 0;
+   };
+   std::optional<LocationSession> m_locationSess;
 };
