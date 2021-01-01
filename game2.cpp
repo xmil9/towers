@@ -12,6 +12,7 @@
 #include "texture_tags.h"
 #include "gll_debug.h"
 #include <iostream>
+#include <thread>
 
 
 namespace
@@ -49,11 +50,26 @@ void Game2::cleanup()
 
 void Game2::run()
 {
+   m_frameClock.nextLap();
+   float processLag = 0.f;
+
    while (!m_mainWnd.shouldClose())
    {
       m_frameClock.nextLap();
+      processLag += m_frameClock.lapLength();
+
       processInput();
-      updateState();
+
+      // Catch up with the game state for the time that was used for rendering and
+      // processing input. This standardizes the game speed across machines with
+      // various processing speeds.
+      constexpr float UpdateGranularityMs = 25.f;
+      while (processLag >= UpdateGranularityMs)
+      {
+         updateState();
+         processLag -= UpdateGranularityMs;
+      }
+
       render();
    }
 }
@@ -355,15 +371,15 @@ void Game2::renderDashboard()
 
 void Game2::renderLocationSession()
 {
-   if (m_locationSess)
+   if (m_placeSess)
    {
       double x = 0.;
       double y = 0.;
       glfwGetCursorPos(m_mainWnd.handle(), &x, &y);
 
-      const PixDim halfSize = m_locationSess->indicator->size() / 2.f;
-      m_locationSess->indicator->render(m_renderer.shaders(),
-                                        {x - halfSize.x, y - halfSize.y});
+      const PixDim halfSize = m_placeSess->indicator->size() / 2.f;
+      m_placeSess->indicator->render(m_renderer.shaders(),
+                                     {x - halfSize.x, y - halfSize.y});
    }
 }
 
@@ -479,14 +495,14 @@ bool Game2::mapOnLeftButtonPressed(const glm::vec2& pos)
    if (!isInMap)
       return false;
 
-   if (m_locationSess)
+   if (m_placeSess)
    {
       const NormPos location = pos / PixDim{MapWidth, MapHeight};
       const Defender::Attribs ltAttribs{LtRange, LtDamage};
       addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, location, ltAttribs),
                   m_defenders);
 
-      m_locationSess = std::nullopt;
+      m_placeSess = std::nullopt;
    }
 
    return true;
@@ -517,12 +533,12 @@ bool Game2::dashboardOnLeftButtonPressed(const glm::vec2& pos)
                              pos.y > ltPixPos.y && pos.y <= ltPixPos.y + buttonPixDim.y;
    if (isInLtButton)
    {
-      LocationSession sess;
+      PlaceSession sess;
       constexpr NormDim indicatorDim{.375f, .0625f};
       sess.indicator =
          std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
                                   SpriteForm{indicatorDim * dashPixDim});
-      m_locationSess = std::move(sess);
+      m_placeSess = std::move(sess);
       return true;
    }
 

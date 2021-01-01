@@ -97,9 +97,9 @@ class Game2
    std::unique_ptr<Sprite> m_dashboard;
    std::unique_ptr<Sprite> m_ltButton;
 
-   struct LocationSession
+   struct PlaceSession
    {
       std::unique_ptr<Sprite> indicator;
    };
-   std::optional<LocationSession> m_locationSess;
+   std::optional<PlaceSession> m_placeSess;
 };
