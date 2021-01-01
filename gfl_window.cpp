@@ -246,10 +246,14 @@ void Window::windowKeyCallback(GLFWwindow* wnd, Key key, int scancode, int actio
 void Window::windowMouseButtonCallback(GLFWwindow* wnd, MouseButton button, int action,
                                        int mods)
 {
+   double x = 0.;
+   double y = 0.;
+   glfwGetCursorPos(wnd, &x, &y);
+
    Window* self = getSelf(wnd);
    assert(self);
    if (self)
-      self->onWindowMouseButtonChanged(button, action, mods);
+      self->onWindowMouseButtonChanged(button, action, mods, x, y);
 }
 
 } // namespace gfl

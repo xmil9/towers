@@ -55,7 +55,7 @@ class Window
    {
    }
    virtual void onWindowMouseButtonChanged(MouseButton /*button*/, int /*action*/,
-                                           int /*mods*/)
+                                           int /*mods*/, double /*xpos*/, double /*ypos*/)
    {
    }
 

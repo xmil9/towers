@@ -58,9 +58,10 @@ void MainWindow::onWindowKeyChanged(gfl::Key key, int scancode, int action, int 
 }
 
 
-void MainWindow::onWindowMouseButtonChanged(gfl::MouseButton button, int action, int mods)
+void MainWindow::onWindowMouseButtonChanged(gfl::MouseButton button, int action, int mods,
+                                            double xpos, double ypos)
 {
    assert(m_inputController);
    if (m_inputController)
-      m_inputController->onMouseButtonChanged(button, action, mods);
+      m_inputController->onMouseButtonChanged(button, action, mods, xpos, ypos);
 }

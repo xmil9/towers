@@ -46,12 +46,14 @@ void Input::onMouseScrolled(double xoffset, double yoffset)
 }
 
 
-void Input::onMouseButtonChanged(gfl::MouseButton button, int action, int mods)
+void Input::onMouseButtonChanged(gfl::MouseButton button, int action, int mods,
+                                 double xpos, double ypos)
 {
    MouseButtonChangedMsgData data;
    data.button = button;
    data.action = action;
    data.mods = mods;
+   data.pos = {xpos, ypos};
    notify(*this, MouseButtonChangedMsg, data);
 }
 

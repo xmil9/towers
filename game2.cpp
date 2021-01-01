@@ -394,7 +394,7 @@ void Game2::onInputChanged(Input& /*src*/, std::string_view msg,
    else if (msg == MouseButtonChangedMsg)
    {
       const auto buttonData = static_cast<const MouseButtonChangedMsgData&>(data);
-      onMouseButtonChanged(buttonData.button, buttonData.action);
+      onMouseButtonChanged(buttonData.button, buttonData.action, buttonData.pos);
    }
    else if (msg == KeyPolledMsg)
    {
@@ -414,7 +414,8 @@ void Game2::onMouseScrolled(const glm::vec2& /*delta*/)
 }
 
 
-void Game2::onMouseButtonChanged(gfl::MouseButton /*button*/, int /*action*/)
+void Game2::onMouseButtonChanged(gfl::MouseButton /*button*/, int /*action*/,
+                                 const glm::vec2& /*pos*/)
 {
 }
 
