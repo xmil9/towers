@@ -50,6 +50,7 @@ class Game2
    void render();
    void renderMap();
    void renderDashboard();
+   void renderLocationSession();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);
@@ -98,7 +99,7 @@ class Game2
 
    struct LocationSession
    {
-      int something = 0;
+      std::unique_ptr<Sprite> indicator;
    };
    std::optional<LocationSession> m_locationSess;
 };

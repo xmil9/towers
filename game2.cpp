@@ -322,9 +322,10 @@ void Game2::updateState()
 
 void Game2::render()
 {
-   m_renderer.beginRendering();
+   m_renderer.beginRendering(true);
    renderMap();
    renderDashboard();
+   renderLocationSession();
 
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());
@@ -349,6 +350,21 @@ void Game2::renderDashboard()
    constexpr NormDim ltPos{.075f, .0167f};
    constexpr NormDim ltPixPos = ltPos * PixDim{DashboardWidth, DashboardHeight};
    m_ltButton->render(m_renderer.shaders(), dashLeftTop + ltPixPos);
+}
+
+
+void Game2::renderLocationSession()
+{
+   if (m_locationSess)
+   {
+      double x = 0.;
+      double y = 0.;
+      glfwGetCursorPos(m_mainWnd.handle(), &x, &y);
+
+      const PixDim halfSize = m_locationSess->indicator->size() / 2.f;
+      m_locationSess->indicator->render(m_renderer.shaders(),
+                                        {x - halfSize.x, y - halfSize.y});
+   }
 }
 
 
@@ -501,7 +517,12 @@ bool Game2::dashboardOnLeftButtonPressed(const glm::vec2& pos)
                              pos.y > ltPixPos.y && pos.y <= ltPixPos.y + buttonPixDim.y;
    if (isInLtButton)
    {
-      m_locationSess = LocationSession{1};
+      LocationSession sess;
+      constexpr NormDim indicatorDim{.375f, .0625f};
+      sess.indicator =
+         std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
+                                  SpriteForm{indicatorDim * dashPixDim});
+      m_locationSess = std::move(sess);
       return true;
    }
 
