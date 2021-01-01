@@ -51,9 +51,10 @@ bool Renderer2::setupSetting(int viewWidth, int viewHeight)
 }
 
 
-void Renderer2::beginRendering() const
+void Renderer2::beginRendering(bool clear) const
 {
-   glClear(GL_COLOR_BUFFER_BIT);
+   if (clear)
+      glClear(GL_COLOR_BUFFER_BIT);
    m_shaders.use();
 
    gll::Uniform viewUf = m_shaders.uniform("view");
