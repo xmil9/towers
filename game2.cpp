@@ -522,6 +522,13 @@ bool Game2::dashboardOnLeftButtonPressed(const glm::vec2& pos)
    if (!isInDash)
       return false;
 
+   // Cancel existing placement session.
+   if (m_placeSess)
+   {
+      m_placeSess = std::nullopt;
+      return true;
+   }
+   
    constexpr NormDim ltPos{.075f, .0167f};
    constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
    constexpr NormDim buttonDim{.375f, .0625f};
