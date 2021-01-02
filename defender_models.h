@@ -22,5 +22,5 @@ constexpr char SmFiring1Texture[] = "sm_firing1";
 constexpr char SmFiring2Texture[] = "sm_firing2";
 constexpr char SmFiringAnimation[] = "sm_firing";
 constexpr NormCoord SmSize = .04f;
-constexpr NormCoord SmRange = .3f;
+constexpr NormCoord SmRange = .2f;
 constexpr int SmDamage = 3;
