@@ -104,4 +104,6 @@ class Game2 : private Commands
    std::unique_ptr<Sprite> m_background;
    Dashboard m_dashboard;
    std::optional<PlaceSession> m_placeSess;
+   std::unique_ptr<Sprite> m_validFieldOverlay;
+   std::unique_ptr<Sprite> m_invalidFieldOverlay;
 };

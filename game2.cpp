@@ -151,6 +151,8 @@ bool Game2::setupTextures()
       {Explosion3TTag, "explosion3.png"},
       {Explosion4TTag, "explosion4.png"},
       {Map1TTag, "map1.png"},
+      {ValidFieldTTag, "valid_field.png"},
+      {InvalidFieldTTag, "invalid_field.png"},
       {DashboardTTag, "dashboard.png"},
    };
 
@@ -314,6 +316,12 @@ bool Game2::setupBackground()
    m_background = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{Map1TTag},
                                            SpriteForm{{MapWidth, MapHeight}});
 
+   const PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
+   m_validFieldOverlay = std::make_unique<Sprite>(
+      m_spriteRenderer.get(), SpriteLook{ValidFieldTTag}, SpriteForm{fieldPixDim});
+   m_invalidFieldOverlay = std::make_unique<Sprite>(
+      m_spriteRenderer.get(), SpriteLook{InvalidFieldTTag}, SpriteForm{fieldPixDim});
+
    return true;
 }
 
@@ -363,6 +371,12 @@ void Game2::renderMap()
 }
 
 
+static MapPos truncate(MapPos pos)
+{
+   return MapPos(static_cast<int>(pos.x), static_cast<int>(pos.y));
+}
+
+
 void Game2::renderPlaceSession()
 {
    if (m_placeSess)
@@ -370,6 +384,10 @@ void Game2::renderPlaceSession()
       double x = 0.;
       double y = 0.;
       glfwGetCursorPos(m_mainWnd.handle(), &x, &y);
+
+      const MapPos fieldPos = truncate(m_coordSys->toMapCoords(PixPos(x, y)));
+      const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
+      m_validFieldOverlay->render(m_renderer.shaders(), fieldPixPos);
 
       const PixDim halfSize = m_placeSess->indicator->size() / 2.f;
       m_placeSess->indicator->render(m_renderer.shaders(),
