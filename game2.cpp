@@ -483,13 +483,13 @@ void Game2::onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/)
 }
 
 
-bool Game2::isInMap(const PixDim& pos) const
+bool Game2::isInMap(const PixPos& pos) const
 {
    return pos.x > 0 && pos.x <= MapWidth && pos.y > 0 && pos.y <= MapHeight;
 }
 
 
-bool Game2::isInDashboard(const PixDim& pos) const
+bool Game2::isInDashboard(const PixPos& pos) const
 {
    return pos.x > MapWidth && pos.x <= MapWidth + DashboardWidth && pos.y > 0 &&
           pos.y <= DashboardHeight;
