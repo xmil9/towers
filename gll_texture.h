@@ -21,10 +21,10 @@ class Texture2D : public Object<Texture2D>
    explicit Texture2D(ObjId id);
    ~Texture2D() = default;
    Texture2D(const Texture2D&) = delete;
-   Texture2D(Texture2D&& other) = default;
+   Texture2D(Texture2D&& other) noexcept = default;
 
    Texture2D& operator=(const Texture2D&) = delete;
-   Texture2D& operator=(Texture2D&& other) = default;
+   Texture2D& operator=(Texture2D&& other) noexcept = default;
 
    void bind() const;
    // Unbinds currently bound texture for the given target.

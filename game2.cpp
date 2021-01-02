@@ -193,9 +193,9 @@ bool Game2::setupSpriteData()
    const std::vector<Mesh2::Point> texCoords = positions;
 
    Mesh2 mesh;
-   mesh.setPositions(std::move(positions));
-   mesh.setIndices(std::move(indices));
-   mesh.setTextureCoords(std::move(texCoords));
+   mesh.setPositions(positions);
+   mesh.setIndices(indices);
+   mesh.setTextureCoords(texCoords);
    m_spriteRenderer = std::make_unique<SpriteRenderer>(&m_resources);
    m_spriteRenderer->setMesh(mesh);
 
@@ -397,22 +397,22 @@ void Game2::onInputChanged(Input& /*src*/, std::string_view msg,
 {
    if (msg == MouseMovedMsg)
    {
-      const auto movedData = static_cast<const MouseMovedMsgData&>(data);
+      const auto& movedData = static_cast<const MouseMovedMsgData&>(data);
       onMouseMoved(movedData.delta);
    }
    else if (msg == MouseScrolledMsg)
    {
-      const auto scrolledData = static_cast<const MouseScrolledMsgData&>(data);
+      const auto& scrolledData = static_cast<const MouseScrolledMsgData&>(data);
       onMouseScrolled(scrolledData.delta);
    }
    else if (msg == MouseButtonChangedMsg)
    {
-      const auto buttonData = static_cast<const MouseButtonChangedMsgData&>(data);
+      const auto& buttonData = static_cast<const MouseButtonChangedMsgData&>(data);
       onMouseButtonChanged(buttonData.button, buttonData.action, buttonData.pos);
    }
    else if (msg == KeyPolledMsg)
    {
-      const auto polledData = static_cast<const KeyPolledMsgData&>(data);
+      const auto& polledData = static_cast<const KeyPolledMsgData&>(data);
       onKeyPolled(polledData.key, polledData.frameLengthSecs);
    }
 }

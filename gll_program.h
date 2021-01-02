@@ -28,10 +28,10 @@ class Program : public Object<Program>
    explicit Program(ObjId id);
    ~Program() = default;
    Program(const Program&) = delete;
-   Program(Program&& other) = default;
+   Program(Program&& other) noexcept = default;
 
    Program& operator=(const Program&) = delete;
-   Program& operator=(Program&& other) = default;
+   Program& operator=(Program&& other) noexcept = default;
 
    void attachShader(const Shader& shader);
    void detachShader(const Shader& shader);

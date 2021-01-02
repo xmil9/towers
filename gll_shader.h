@@ -23,10 +23,10 @@ class Shader : public Object<Shader>
    explicit Shader(ObjId id);
    ~Shader() = default;
    Shader(const Shader&) = delete;
-   Shader(Shader&& other) = default;
+   Shader(Shader&& other) noexcept = default;
 
    Shader& operator=(const Shader&) = delete;
-   Shader& operator=(Shader&& other) = default;
+   Shader& operator=(Shader&& other) noexcept = default;
 
    bool create(GLenum shaderType);
    void setSource(const GLchar* code) { setSource(1, &code, nullptr); }

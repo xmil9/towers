@@ -18,10 +18,10 @@ class Window
    Window() = default;
    virtual ~Window();
    Window(const Window&) = delete;
-   Window(Window&& other);
+   Window(Window&& other) noexcept;
 
    Window& operator=(const Window&) = delete;
-   Window& operator=(Window&& other);
+   Window& operator=(Window&& other) noexcept;
    explicit operator bool() const { return m_wnd != nullptr; }
    bool operator!() const { return !operator bool(); }
 

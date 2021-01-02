@@ -16,12 +16,12 @@
 struct MapData
 {
    // Number of rows and columns in the map.
-   IntDim mapSize;
+   IntDim mapSize{0, 0};
    std::vector<Field> terrain;
    // Coordinates of start fields.
    std::vector<IntPos> starts;
    // Coordinates of finish field.
-   IntPos finish;
+   IntPos finish{0, 0};
    // Coordinates for paths through the map.
    std::vector<Path> paths;
 };

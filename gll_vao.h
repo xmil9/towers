@@ -34,10 +34,10 @@ class Vao : public Object<Vao>
    explicit Vao(ObjId id);
    ~Vao() = default;
    Vao(const Vao&) = delete;
-   Vao(Vao&& other) = default;
+   Vao(Vao&& other) noexcept = default;
 
    Vao& operator=(const Vao&) = delete;
-   Vao& operator=(Vao&& other) = default;
+   Vao& operator=(Vao&& other) noexcept = default;
 
    void bind() const;
    static void unbind();

@@ -91,9 +91,9 @@ class VboBindingScope
    VboBindingScope(const Vbo& bound, GLenum target);
    ~VboBindingScope() { unbind(); }
    VboBindingScope(const VboBindingScope&) = delete;
-   VboBindingScope(VboBindingScope&& other);
+   VboBindingScope(VboBindingScope&& other) noexcept;
    VboBindingScope& operator=(const VboBindingScope&) = delete;
-   VboBindingScope& operator=(VboBindingScope&& other);
+   VboBindingScope& operator=(VboBindingScope&& other) noexcept;
 
    void bind(const Vbo& bound, GLenum target);
    void unbind();
@@ -114,12 +114,12 @@ inline VboBindingScope::VboBindingScope(const Vbo& bound, GLenum target)
    bind(bound, m_target);
 }
 
-inline VboBindingScope::VboBindingScope(VboBindingScope&& other)
+inline VboBindingScope::VboBindingScope(VboBindingScope&& other) noexcept
 {
    swap(*this, other);
 }
 
-inline VboBindingScope& VboBindingScope::operator=(VboBindingScope&& other)
+inline VboBindingScope& VboBindingScope::operator=(VboBindingScope&& other) noexcept
 {
    unbind();
    swap(*this, other);

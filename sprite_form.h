@@ -29,11 +29,11 @@ class SpriteForm
    void rotate(Angle_t rot) { m_rot += rot; }
 
  private:
-   PixDim m_size;
+   PixDim m_size{0.f, 0.f};
    Angle_t m_rot{0.f};
    // Center of rotation relative to the size of the sprite, e.g. (size.x/2, size.y/2)
    // would be the center point of the sprite.
-   PixPos m_rotCenter;
+   PixPos m_rotCenter{0.f, 0.f};
 };
 
 

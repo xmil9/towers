@@ -26,10 +26,10 @@ json readFile(const std::filesystem::path& path)
 
 struct ParsedMapData
 {
-   IntDim mapSize;
+   IntDim mapSize{0, 0};
    std::string terrain;
    std::vector<IntPos> starts;
-   IntPos finish;
+   IntPos finish{0, 0};
    std::vector<std::vector<IntPos>> paths;
 
    bool isValid() const;
@@ -124,7 +124,8 @@ MapData populateData(const ParsedMapData& parsed)
    map.starts = parsed.starts;
    map.finish = parsed.finish;
 
-   map.terrain.reserve(map.mapSize.x * map.mapSize.y);
+   map.terrain.reserve(static_cast<std::size_t>(map.mapSize.x) *
+                       static_cast<std::size_t>(map.mapSize.y));
    std::transform(parsed.terrain.cbegin(), parsed.terrain.cend(),
                   std::back_inserter(map.terrain),
                   [](char fieldSymbol) { return makeField(fieldSymbol); });

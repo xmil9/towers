@@ -15,10 +15,10 @@ class PngTexture
    explicit PngTexture(const std::filesystem::path& texFile, bool flipVert = false);
    ~PngTexture();
    PngTexture(const PngTexture&) = delete;
-   PngTexture(PngTexture&& other);
+   PngTexture(PngTexture&& other) noexcept;
 
    PngTexture& operator=(const PngTexture&) = delete;
-   PngTexture& operator=(PngTexture&& other);
+   PngTexture& operator=(PngTexture&& other) noexcept;
    explicit operator bool() const { return m_data != nullptr; }
    bool operator!() const { return !operator bool(); }
 

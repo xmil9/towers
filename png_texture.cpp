@@ -18,14 +18,14 @@ PngTexture::~PngTexture()
 }
 
 
-PngTexture::PngTexture(PngTexture&& other)
+PngTexture::PngTexture(PngTexture&& other) noexcept
    : m_width{other.m_width}, m_height{other.m_height}, m_data{other.m_data}
 {
    other.clear();
 }
 
 
-PngTexture& PngTexture::operator=(PngTexture&& other)
+PngTexture& PngTexture::operator=(PngTexture&& other) noexcept
 {
    release();
    swap(*this, other);

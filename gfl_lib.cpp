@@ -22,13 +22,13 @@ Lib::~Lib()
 }
 
 
-Lib::Lib(Lib&& other)
+Lib::Lib(Lib&& other) noexcept
 {
    swap(*this, other);
 }
 
 
-Lib& Lib::operator=(Lib&& other)
+Lib& Lib::operator=(Lib&& other) noexcept
 {
    terminate();
    m_ver = other.m_ver;

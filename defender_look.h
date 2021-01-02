@@ -30,7 +30,7 @@ class DefenderLook
 
 
 inline DefenderLook::DefenderLook(const Sprite& shape, Animation firing)
-: m_shape{std::move(shape)}, m_firing{std::move(firing)}
+: m_shape{shape}, m_firing{std::move(firing)}
 {
 }
 

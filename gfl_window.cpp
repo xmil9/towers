@@ -36,13 +36,13 @@ Window::~Window()
 }
 
 
-Window::Window(Window&& other) : m_wnd{other.m_wnd}
+Window::Window(Window&& other) noexcept : m_wnd{other.m_wnd}
 {
    other.m_wnd = nullptr;
 }
 
 
-Window& Window::operator=(Window&& other)
+Window& Window::operator=(Window&& other) noexcept
 {
    destroy();
    m_wnd = other.m_wnd;

@@ -24,7 +24,7 @@ class MainWindow : public gfl::Window, public Observed<MainWindow>
 
  private:
    InputController* m_inputController = nullptr;
-   glm::ivec2 m_wndSize;
+   glm::ivec2 m_wndSize{0, 0};
 };
 
 
@@ -35,7 +35,7 @@ class MainWindow : public gfl::Window, public Observed<MainWindow>
 constexpr char WindowResizedMsg[] = "window_resized";
 struct WindowResizedMsgData : public Observed<MainWindow>::MsgData
 {
-   glm::ivec2 newSize;
+   glm::ivec2 newSize{0, 0};
    // Difference to previous size.
-   glm::ivec2 diff;
+   glm::ivec2 diff{0, 0};
 };

@@ -107,10 +107,10 @@ class Uniform
    Uniform(ObjId program, GLint location);
    ~Uniform() = default;
    Uniform(const Uniform&) = default;
-   Uniform(Uniform&& other) = default;
+   Uniform(Uniform&& other) noexcept = default;
 
    Uniform& operator=(const Uniform&) = default;
-   Uniform& operator=(Uniform&& other) = default;
+   Uniform& operator=(Uniform&& other) noexcept = default;
 
    ObjId programId() const { return m_program; }
    GLint location() const { return m_location; }

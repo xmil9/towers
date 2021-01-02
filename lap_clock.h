@@ -27,7 +27,7 @@ template <typename T, typename Unit = std::chrono::milliseconds> class LapClock
  private:
    std::chrono::steady_clock m_clock;
    TimePoint m_lastLap;
-   Unit m_lapLength;
+   Unit m_lapLength{0};
 };
 
 

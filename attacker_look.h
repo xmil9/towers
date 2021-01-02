@@ -32,7 +32,7 @@ class AttackerLook
 
 
 inline AttackerLook::AttackerLook(const Sprite& shape, Animation explosion)
-: m_shape{std::move(shape)}, m_explosion{std::move(explosion)}
+: m_shape{shape}, m_explosion{std::move(explosion)}
 {
 }
 

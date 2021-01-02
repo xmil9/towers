@@ -34,7 +34,7 @@ class Input : public InputController, public Observed<Input>
 
  private:
    bool m_isFirstMouseMove = true;
-   glm::vec2 m_mousePos{0.0, 0.0};
+   glm::vec2 m_mousePos{0.f, 0.f};
 };
 
 
@@ -45,27 +45,27 @@ class Input : public InputController, public Observed<Input>
 constexpr char MouseMovedMsg[] = "mouse-moved";
 struct MouseMovedMsgData : public Observed<Input>::MsgData
 {
-   glm::vec2 pos;
-   glm::vec2 delta;
+   glm::vec2 pos{0.f, 0.f};
+   glm::vec2 delta{0.f, 0.f};
 };
 
 constexpr char MouseScrolledMsg[] = "mouse-scrolled";
 struct MouseScrolledMsgData : public Observed<Input>::MsgData
 {
-   glm::vec2 delta;
+   glm::vec2 delta{0.f, 0.f};
 };
 
 constexpr char MouseButtonChangedMsg[] = "mouse-button-changed";
 struct MouseButtonChangedMsgData : public Observed<Input>::MsgData
 {
    // Button id: GLFW_MOUSE_BUTTON_1, GLFW_MOUSE_BUTTON_2, etc
-   gfl::MouseButton button;
+   gfl::MouseButton button = 0;
    // Key action: GLFW_PRESS or GLFW_RELEASE
-   int action;
+   int action = 0;
    // Modifier key flags: GLFW_MOD_SHIFT, GLFW_MOD_CONTROL, ...
-   int mods;
+   int mods = 0;
    // Mouse position relative to window.
-   glm::vec2 pos;
+   glm::vec2 pos{0.f, 0.f};
 };
 
 constexpr char KeyChangedMsg[] = "key-changed";
@@ -87,5 +87,5 @@ struct KeyPolledMsgData : public Observed<Input>::MsgData
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;
    // Frame length in seconds.
-   float frameLengthSecs = 0.0;
+   float frameLengthSecs = 0.f;
 };

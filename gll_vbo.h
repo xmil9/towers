@@ -20,10 +20,10 @@ class Vbo : public Object<Vbo>
    explicit Vbo(ObjId id);
    ~Vbo() = default;
    Vbo(const Vbo&) = delete;
-   Vbo(Vbo&& other) = default;
+   Vbo(Vbo&& other) noexcept = default;
 
    Vbo& operator=(const Vbo&) = delete;
-   Vbo& operator=(Vbo&& other) = default;
+   Vbo& operator=(Vbo&& other) noexcept = default;
 
    void bind(GLenum target) const;
    // Unbinds currently bound vbo for the given target.

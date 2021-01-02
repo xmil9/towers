@@ -22,7 +22,7 @@ class Lib
       unsigned int minor = 0;
    };
 
-   enum DebugOuput
+   enum class DebugOuput
    {
       Off,
       On
@@ -32,10 +32,10 @@ class Lib
    Lib(ContextVersion ver, int profile);
    ~Lib();
    Lib(const Lib&) = delete;
-   Lib(Lib&& other);
+   Lib(Lib&& other) noexcept;
 
    Lib& operator=(const Lib&) = delete;
-   Lib& operator=(Lib&& other);
+   Lib& operator=(Lib&& other) noexcept;
 
    Err init(DebugOuput dbgOutput = DebugOuput::Off);
    void terminate();

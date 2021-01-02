@@ -39,10 +39,10 @@ template <typename Derived> class Object
    Object() = default;
    Object(ObjId id);
    Object(const Object&) = delete;
-   Object(Object&& other);
+   Object(Object&& other) noexcept;
 
    Object& operator=(const Object&) = delete;
-   Object& operator=(Object&& other);
+   Object& operator=(Object&& other) noexcept;
 
    void setId(ObjId id) { m_id = id; }
    friend inline void swap(Object& a, Object& b) { std::swap(a.m_id, b.m_id); }
@@ -67,13 +67,14 @@ template <typename Derived> Object<Derived>::~Object()
 }
 
 
-template <typename Derived> Object<Derived>::Object(Object&& other)
+template <typename Derived> Object<Derived>::Object(Object&& other) noexcept
 {
    swap(GetDerived(), other.GetDerived());
 }
 
 
-template <typename Derived> Object<Derived>& Object<Derived>::operator=(Object&& other)
+template <typename Derived>
+Object<Derived>& Object<Derived>::operator=(Object&& other) noexcept
 {
    destroy();
    swap(GetDerived(), other.GetDerived());
