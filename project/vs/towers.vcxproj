@@ -207,7 +207,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />
     <ClInclude Include="..\..\attacker.h" />
-    <ClInclude Include="..\..\attacker_factoy.h" />
+    <ClInclude Include="..\..\attacker_factory.h" />
     <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\attacker_models.h" />
     <ClInclude Include="..\..\basic_types.h" />
@@ -219,6 +219,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\defender_look.h" />
     <ClInclude Include="..\..\defender_models.h" />
     <ClInclude Include="..\..\int_coords.h" />
+    <ClInclude Include="..\..\map_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\main_window.h" />

@@ -12,6 +12,7 @@ class Map
 public:
    explicit Map(MapData&& data);
 
+   IntDim sizeInFields() const { return m_rep.mapSize; }
    const Path& path() const { return m_rep.paths[0]; }
 
 private:

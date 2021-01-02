@@ -169,12 +169,16 @@ bool Game2::setupRenderer()
 
 bool Game2::setupTerrain()
 {
-   m_coordSys = std::make_unique<MapCoordSys>(PixDim{MapWidth, MapHeight});
-
    std::optional<MapData> mapData = loadMapData(m_resources.mapPath() / "map.json");
    if (!mapData)
       return false;
    m_map = std::make_unique<Map>(std::move(*mapData));
+
+   const PixDim mapPixDim{MapWidth, MapHeight};
+   const IntDim mapSizeInFields = m_map->sizeInFields();
+   const PixDim fieldPixDim{mapPixDim.x / mapSizeInFields.x,
+                            mapPixDim.y / mapSizeInFields.y};
+   m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
 
    return true;
 }
@@ -212,15 +216,15 @@ bool Game2::setupAnimations()
 
    m_resources.addAnimation(
       ExplosionATag,
-      factory.make(ExplosionATag, m_coordSys->toRenderCoords(NormDim{.05, .05})));
+      factory.make(ExplosionATag, m_coordSys->toRenderCoords(MapDim{1.f, 1.f})));
 
    PixDim firingSize = m_coordSys->toRenderCoords(
-      m_coordSys->makeEquivalentMapSize(LtSize, m_resources.getTextureSize(LtTexture)));
+      m_coordSys->scaleToSize(LtSize, m_resources.getTextureSize(LtTexture)));
    m_resources.addAnimation(LtFiringAnimation,
                             factory.make(LtFiringAnimation, firingSize));
 
    firingSize = m_coordSys->toRenderCoords(
-      m_coordSys->makeEquivalentMapSize(SmSize, m_resources.getTextureSize(SmTexture)));
+      m_coordSys->scaleToSize(SmSize, m_resources.getTextureSize(SmTexture)));
    m_resources.addAnimation(SmFiringAnimation,
                             factory.make(SmFiringAnimation, firingSize));
 
@@ -254,20 +258,20 @@ bool Game2::setupAttackers()
                              m_resources.getAnimation(ExplosionATag)});
 
    addAttacker(
-      m_attackFactory->makeAttacker(AatModel, .03f, Attacker::Attribs{2000, .001f, 0},
-                                    OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}),
+      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 0},
+                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}),
       m_attackers);
    addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .012f, Attacker::Attribs{800, .002f, 0},
-                                    OffsetPath{&m_map->path(), NormVec{-0.001, 0.003}}),
+      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 100},
+                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}),
       m_attackers);
    addAttacker(
-      m_attackFactory->makeAttacker(AatModel, .03f, Attacker::Attribs{2000, .001f, 100},
-                                    OffsetPath{&m_map->path(), NormVec{0.001, 0.002}}),
+      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 0},
+                                    OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}),
       m_attackers);
    addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .012f, Attacker::Attribs{800, .002f, 10},
-                                    OffsetPath{&m_map->path(), NormVec{-0.001, 0.01}}),
+      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 10},
+                                    OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}),
       m_attackers);
 
    return true;
@@ -499,7 +503,7 @@ bool Game2::mapOnLeftButtonPressed(const PixPos& pos)
 
    if (m_placeSess)
    {
-      const NormPos location = pos / PixDim{MapWidth, MapHeight};
+      const MapPos location = m_coordSys->toMapCoords(pos);
 
       if (m_placeSess->model == LtModel)
       {

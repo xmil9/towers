@@ -23,8 +23,8 @@ class DefenderFactory
    explicit DefenderFactory(const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
    void registerModel(const std::string& name, DefenderLook look);
-   std::optional<Defender> makeDefender(const std::string& model, NormCoord size,
-                                        NormPos center,
+   std::optional<Defender> makeDefender(const std::string& model, MapCoord size,
+                                        MapPos center,
                                         const Defender::Attribs& attribs) const;
 
  private:

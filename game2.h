@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "attacker.h"
-#include "attacker_factoy.h"
+#include "attacker_factory.h"
 #include "basic_types.h"
 #include "commands.h"
 #include "coords.h"

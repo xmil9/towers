@@ -11,8 +11,8 @@ constexpr char LtTexture[] = "lt";
 constexpr char LtFiring1Texture[] = "lt_firing1";
 constexpr char LtFiring2Texture[] = "lt_firing2";
 constexpr char LtFiringAnimation[] = "lt_firing";
-constexpr NormCoord LtSize = .04f;
-constexpr NormCoord LtRange = .1f;
+constexpr MapCoord LtSize = 1.f;
+constexpr MapCoord LtRange = 1.5f;
 constexpr int LtDamage = 5;
 
 // Sonic mortar
@@ -21,6 +21,6 @@ constexpr char SmTexture[] = "sm";
 constexpr char SmFiring1Texture[] = "sm_firing1";
 constexpr char SmFiring2Texture[] = "sm_firing2";
 constexpr char SmFiringAnimation[] = "sm_firing";
-constexpr NormCoord SmSize = .04f;
-constexpr NormCoord SmRange = .2f;
+constexpr MapCoord SmSize = 1.f;
+constexpr MapCoord SmRange = 3.f;
 constexpr int SmDamage = 3;

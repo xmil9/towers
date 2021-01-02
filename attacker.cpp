@@ -8,18 +8,18 @@
 #include "essentutils/fputil.h"
 
 
-static constexpr NormVec Up{0., -1.};
+static constexpr MapVec Up{0., -1.};
 
 
-Attacker::Attacker(AttackerLook look, NormCoord size, const Attribs& attribs,
+Attacker::Attacker(AttackerLook look, MapCoord size, const Attribs& attribs,
                    const OffsetPath& path, const MapCoordSys* cs)
 : m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},
-  m_center{path.start().center()}, m_currTurn{0}, m_path{path}, m_coordSys{cs}
+  m_center{path.start()}, m_currTurn{0}, m_path{path}, m_coordSys{cs}
 {
    assert(m_coordSys);
 
-   setSize(m_coordSys->makeEquivalentMapSize(size, m_look.size()));
-   setPosition(path.start().center());
+   setSize(m_coordSys->scaleToSize(size, m_look.size()));
+   setPosition(path.start());
 }
 
 
@@ -83,8 +83,8 @@ void Attacker::move()
 
    assert(m_center && m_currTurn);
 
-   const NormVec dir = direction();
-   NormVec offset = m_currAttribs.speed * glm::normalize(dir);
+   const MapVec dir = direction();
+   MapVec offset = m_currAttribs.speed * glm::normalize(dir);
    // Limit movement to next turn.
    if (sutil::greaterEqual(glm::length(offset), glm::length(dir)))
    {
@@ -100,17 +100,17 @@ bool Attacker::isAtLastPosition() const
 {
    if (!m_center)
       return true;
-   return isEqual(*m_center, m_path.finish().center());
+   return isEqual(*m_center, m_path.finish());
 }
 
 
-void Attacker::setPosition(std::optional<NormPos> center)
+void Attacker::setPosition(std::optional<MapPos> center)
 {
    m_center = center;
 }
 
 
-void Attacker::setSize(NormVec size)
+void Attacker::setSize(MapVec size)
 {
    m_look.setSize(m_coordSys->toRenderCoords(size));
 }
@@ -123,21 +123,21 @@ void Attacker::calcRotation()
 }
 
 
-NormVec Attacker::direction() const
+MapVec Attacker::direction() const
 {
    if (!m_center || !m_currTurn)
       return Up;
 
-   NormPos pos = *m_center;
-   NormPos nextPos = pos;
+   MapPos pos = *m_center;
+   MapPos nextPos = pos;
    if (*m_currTurn < m_path.size() - 1)
    {
-      nextPos = m_path[*m_currTurn + 1].center();
+      nextPos = m_path[*m_currTurn + 1];
    }
    else
    {
-      pos = m_path[*m_currTurn - 1].center();
-      nextPos = m_path[*m_currTurn].center();
+      pos = m_path[*m_currTurn - 1];
+      nextPos = m_path[*m_currTurn];
    }
 
    return nextPos - pos;

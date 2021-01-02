@@ -8,31 +8,17 @@
 #include <stdexcept>
 
 
-namespace
-{
 ///////////////////
 
-std::vector<NormRect> generateTerrainTurns(const std::vector<IntPos>& turns,
-                                           NormDim fieldSize)
+Path::Path(const std::vector<IntPos>& turns)
 {
-   std::vector<NormRect> terrainTurns;
-   terrainTurns.reserve(turns.size());
-   std::transform(turns.begin(), turns.end(), std::back_inserter(terrainTurns),
-                  [&fieldSize](IntPos pos) {
-                     const NormPos lt = NormPos(pos) * fieldSize;
-                     return NormRect{lt, lt + fieldSize};
-                  });
-   return terrainTurns;
-}
-
-} // namespace
-
-
-///////////////////
-
-Path::Path(const std::vector<IntPos>& turns, NormDim fieldSize)
-: m_turns{generateTerrainTurns(turns, fieldSize)}
-{
-   if (m_turns.empty())
+   if (turns.empty())
       throw std::runtime_error("An empty path is illegal.");
+
+   m_turns.reserve(turns.size());
+   std::transform(turns.begin(), turns.end(), std::back_inserter(m_turns),
+                  [](IntPos pos) {
+                     constexpr MapPos fieldCenter{.5f, .5f};
+                     return MapPos(pos) + fieldCenter;
+                  });
 }

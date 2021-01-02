@@ -20,7 +20,7 @@ class AttackerFactory
    explicit AttackerFactory(const MapCoordSys* cs);
 
    void registerModel(const std::string& name, AttackerLook look);
-   std::optional<Attacker> makeAttacker(const std::string& model, NormCoord size,
+   std::optional<Attacker> makeAttacker(const std::string& model, MapCoord size,
                                         const Attacker::Attribs& attribs,
                                         const OffsetPath& path) const;
 

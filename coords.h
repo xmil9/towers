@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "int_coords.h"
+#include "map_coords.h"
 #include "norm_coords.h"
 #include "pixel_coords.h"
 #include "essentutils/angle.h"

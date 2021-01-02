@@ -15,20 +15,20 @@
 class Attacker
 {
  public:
-    struct Attribs
-    {
+   struct Attribs
+   {
       int hp = 0;
-      float speed = .001f;
+      float speed = .1f;
       int launchDelay = 0;
-    };
+   };
 
  public:
-   Attacker(AttackerLook look, NormCoord size, const Attribs& attribs, const OffsetPath& path,
-            const MapCoordSys* cs);
+   Attacker(AttackerLook look, MapCoord size, const Attribs& attribs,
+            const OffsetPath& path, const MapCoordSys* cs);
 
    void render(const gll::Program& shaders);
    void update();
-   std::optional<NormPos> position() const { return m_center; }
+   std::optional<MapPos> position() const { return m_center; }
    void hit(int damage);
    bool isAlive() const { return m_currAttribs.hp > 0; }
    bool hasStarted() const { return m_currAttribs.launchDelay == 0; }
@@ -37,18 +37,18 @@ class Attacker
  private:
    void move();
    bool isAtLastPosition() const;
-   void setPosition(std::optional<NormPos> center);
-   void setSize(NormVec size);
+   void setPosition(std::optional<MapPos> center);
+   void setSize(MapVec size);
    void calcRotation();
    // Returns direction of movement.
-   NormVec direction() const;
-   NormVec normedDirection() const { return glm::normalize(direction()); }
+   MapVec direction() const;
+   MapVec normedDirection() const { return glm::normalize(direction()); }
 
  private:
    AttackerLook m_look;
    Attribs m_initialAttribs;
    Attribs m_currAttribs;
-   std::optional<NormPos> m_center;
+   std::optional<MapPos> m_center;
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
    const MapCoordSys* m_coordSys = nullptr;

@@ -23,32 +23,32 @@ class Program;
 class Defender
 {
  public:
-    struct Attribs
-    {
-      NormCoord range = 0.f;
+   struct Attribs
+   {
+      MapCoord range = 0.f;
       int damage = 0;
-    };
+   };
 
  public:
-   Defender(DefenderLook look, NormCoord size, NormPos center, const Attribs& attribs,
+   Defender(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
             const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
    void render(const gll::Program& shaders);
    void update();
 
  private:
-   void setPosition(NormPos center);
-   void setSize(NormVec size);
+   void setPosition(MapPos center);
+   void setSize(MapVec size);
    bool findTarget();
    bool isInRange(const Attacker& attacker) const;
    void calcRotation();
-   std::optional<NormVec> targetDirection() const;
+   std::optional<MapVec> targetDirection() const;
    void shoot();
 
  private:
    DefenderLook m_look;
    Attribs m_attribs;
-   NormPos m_center;
+   MapPos m_center;
    const MapCoordSys* m_coordSys;
    std::vector<Attacker>* m_attackers = nullptr;
    std::optional<Attacker*> m_target;

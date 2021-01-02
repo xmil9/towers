@@ -5,7 +5,6 @@
 #pragma once
 #include "coords.h"
 #include "field.h"
-#include "map_coord_sys.h"
 #include "path.h"
 #include <cstddef>
 #include <filesystem>

@@ -130,15 +130,10 @@ MapData populateData(const ParsedMapData& parsed)
                   std::back_inserter(map.terrain),
                   [](char fieldSymbol) { return makeField(fieldSymbol); });
 
-   const NormDim fieldSize{1.f / static_cast<float>(map.mapSize.x),
-                           1.f / static_cast<float>(map.mapSize.y)};
-
    map.paths.reserve(parsed.paths.size());
    std::transform(parsed.paths.cbegin(), parsed.paths.cend(),
                   std::back_inserter(map.paths),
-                  [&fieldSize](const std::vector<IntPos>& turns) {
-                     return Path{turns, fieldSize};
-                  });
+                  [](const std::vector<IntPos>& turns) { return Path{turns}; });
 
    return map;
 }

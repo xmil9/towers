@@ -8,7 +8,7 @@
 ///////////////////
 
 std::optional<Defender>
-DefenderFactory::makeDefender(const std::string& model, NormCoord size, NormPos center,
+DefenderFactory::makeDefender(const std::string& model, MapCoord size, MapPos center,
                               const Defender::Attribs& attribs) const
 {
    const auto pos = m_models.find(model);

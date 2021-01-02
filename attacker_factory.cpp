@@ -2,13 +2,13 @@
 // Dec-2020, Michael Lindner
 // MIT license
 //
-#include "attacker_factoy.h"
+#include "attacker_factory.h"
 
 
 ///////////////////
 
 std::optional<Attacker> AttackerFactory::makeAttacker(const std::string& model,
-                                                      NormCoord size,
+                                                      MapCoord size,
                                                       const Attacker::Attribs& attribs,
                                                       const OffsetPath& path) const
 {

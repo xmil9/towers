@@ -7,10 +7,10 @@
 #include "glm/gtx/vector_angle.hpp"
 
 
-static constexpr NormVec Up{0., -1.};
+static constexpr MapVec Up{0.f, -1.f};
 
 
-Defender::Defender(DefenderLook look, NormCoord size, NormPos center,
+Defender::Defender(DefenderLook look, MapCoord size, MapPos center,
                    const Attribs& attribs, const MapCoordSys* cs,
                    std::vector<Attacker>* attackers)
 : m_look{std::move(look)}, m_attribs{attribs}, m_center{center}, m_coordSys{cs},
@@ -19,7 +19,7 @@ Defender::Defender(DefenderLook look, NormCoord size, NormPos center,
    assert(m_coordSys);
    assert(m_attackers);
 
-   setSize(m_coordSys->makeEquivalentMapSize(size, m_look.size()));
+   setSize(m_coordSys->scaleToSize(size, m_look.size()));
    setPosition(center);
 }
 
@@ -47,13 +47,13 @@ void Defender::update()
 }
 
 
-void Defender::setPosition(NormPos center)
+void Defender::setPosition(MapPos center)
 {
    m_center = center;
 }
 
 
-void Defender::setSize(NormVec size)
+void Defender::setSize(MapVec size)
 {
    m_look.setSize(m_coordSys->toRenderCoords(size));
 }
@@ -82,7 +82,7 @@ bool Defender::isInRange(const Attacker& attacker) const
    if (!pos)
       return false;
 
-   const NormCoord dist = glm::length(m_center - *pos);
+   const MapCoord dist = glm::length(m_center - *pos);
    return sutil::lessEqual(dist, m_attribs.range);
 }
 
@@ -98,7 +98,7 @@ void Defender::calcRotation()
 }
 
 
-std::optional<NormVec> Defender::targetDirection() const
+std::optional<MapVec> Defender::targetDirection() const
 {
    if (!m_target)
       return std::nullopt;
