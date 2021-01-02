@@ -30,7 +30,9 @@ constexpr float MovementSpeed = 2.5f;
 
 ///////////////////
 
-Game2::Game2() : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}
+Game2::Game2()
+: m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}, m_dashboard{DashboardWidth,
+                                                               DashboardHeight, this}
 {
 }
 
@@ -39,7 +41,8 @@ bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
            setupRenderer() && setupTerrain() && setupSpriteData() && setupAnimations() &&
-           setupAttackers() && setupDefenders() && setupBackground() && setupDashboard());
+           setupAttackers() && setupDefenders() && setupBackground() &&
+           m_dashboard.setup(m_spriteRenderer.get()));
 }
 
 
@@ -311,25 +314,6 @@ bool Game2::setupBackground()
 }
 
 
-bool Game2::setupDashboard()
-{
-   assert(!!m_spriteRenderer);
-
-   m_dashboard =
-      std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{DashboardTTag},
-                               SpriteForm{{DashboardWidth, DashboardHeight}});
-
-   constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
-   constexpr NormDim buttonDim{.375f, .0625f};
-   m_ltButton = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
-                                         SpriteForm{buttonDim * dashPixDim});
-   m_smButton = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{SmTexture},
-                                         SpriteForm{buttonDim * dashPixDim});
-
-   return true;
-}
-
-
 void Game2::processInput()
 {
    m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
@@ -355,7 +339,7 @@ void Game2::render()
 {
    m_renderer.beginRendering(true);
    renderMap();
-   renderDashboard();
+   m_dashboard.render(m_renderer.shaders(), PixPos{MapWidth - 1, 0.f});
 
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());
@@ -372,21 +356,6 @@ void Game2::render()
 void Game2::renderMap()
 {
    m_background->render(m_renderer.shaders(), {0.f, 0.f});
-}
-
-
-void Game2::renderDashboard()
-{
-   constexpr PixPos dashLeftTop{MapWidth - 1, 0.f};
-   m_dashboard->render(m_renderer.shaders(), dashLeftTop);
-
-   constexpr NormDim ltPos{.075f, .0167f};
-   constexpr NormDim ltPixPos = ltPos * PixDim{DashboardWidth, DashboardHeight};
-   m_ltButton->render(m_renderer.shaders(), dashLeftTop + ltPixPos);
-
-   constexpr NormDim smPos{.535f, .0167f};
-   constexpr NormDim smPixPos = smPos * PixDim{DashboardWidth, DashboardHeight};
-   m_smButton->render(m_renderer.shaders(), dashLeftTop + smPixPos);
 }
 
 
@@ -510,10 +479,22 @@ void Game2::onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/)
 }
 
 
-bool Game2::mapOnLeftButtonPressed(const glm::vec2& pos)
+bool Game2::isInMap(const PixDim& pos) const
 {
-   const bool isInMap = pos.x > 0 && pos.x <= MapWidth && pos.y > 0 && pos.y <= MapHeight;
-   if (!isInMap)
+   return pos.x > 0 && pos.x <= MapWidth && pos.y > 0 && pos.y <= MapHeight;
+}
+
+
+bool Game2::isInDashboard(const PixDim& pos) const
+{
+   return pos.x > MapWidth && pos.x <= MapWidth + DashboardWidth && pos.y > 0 &&
+          pos.y <= DashboardHeight;
+}
+
+
+bool Game2::mapOnLeftButtonPressed(const PixPos& pos)
+{
+   if (!isInMap(pos))
       return false;
 
    if (m_placeSess)
@@ -533,75 +514,54 @@ bool Game2::mapOnLeftButtonPressed(const glm::vec2& pos)
                      m_defenders);
       }
 
-      m_placeSess = std::nullopt;
+      endPlaceSession();
    }
 
    return true;
 }
 
 
-bool Game2::mapOnLeftButtonReleased(const glm::vec2& /*pos*/)
+bool Game2::mapOnLeftButtonReleased(const PixPos& pos)
 {
+   if (!isInMap(pos))
+      return false;
    return false;
 }
 
 
-bool Game2::dashboardOnLeftButtonPressed(const glm::vec2& pos)
+bool Game2::dashboardOnLeftButtonPressed(const PixPos& pos)
 {
-   const bool isInDash = pos.x > MapWidth && pos.x <= MapWidth + DashboardWidth &&
-                         pos.y > 0 && pos.y <= DashboardHeight;
-   if (!isInDash)
+   if (!isInDashboard(pos))
       return false;
 
-   // Cancel existing placement session.
-   if (m_placeSess)
-   {
-      m_placeSess = std::nullopt;
-      return true;
-   }
-
-   constexpr PixDim dashPixDim{DashboardWidth, DashboardHeight};
-   constexpr NormDim buttonDim{.375f, .0625f};
-   constexpr PixDim buttonPixDim = buttonDim * dashPixDim;
-   constexpr NormDim indicatorDim{.375f, .0625f};
-
-   constexpr NormDim ltPos{.075f, .0167f};
-   const NormDim ltPixPos = {MapWidth + ltPos.x * DashboardWidth,
-                             ltPos.y * DashboardHeight};
-   const bool isInLtButton = pos.x > ltPixPos.x && pos.x <= ltPixPos.x + buttonPixDim.x &&
-                             pos.y > ltPixPos.y && pos.y <= ltPixPos.y + buttonPixDim.y;
-   if (isInLtButton)
-   {
-      PlaceSession sess;
-      sess.model = LtModel;
-      sess.indicator =
-         std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{LtTexture},
-                                  SpriteForm{indicatorDim * dashPixDim});
-      m_placeSess = std::move(sess);
-      return true;
-   }
-
-   constexpr NormDim smPos{.535f, .0167f};
-   const NormDim smPixPos = {MapWidth + smPos.x * DashboardWidth,
-                             smPos.y * DashboardHeight};
-   const bool isInSmButton = pos.x > smPixPos.x && pos.x <= smPixPos.x + buttonPixDim.x &&
-                             pos.y > smPixPos.y && pos.y <= smPixPos.y + buttonPixDim.y;
-   if (isInSmButton)
-   {
-      PlaceSession sess;
-      sess.model = SmModel;
-      sess.indicator =
-         std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{SmTexture},
-                                  SpriteForm{indicatorDim * dashPixDim});
-      m_placeSess = std::move(sess);
-      return true;
-   }
-
-   return false;
+   const PixPos posInDashboard = pos - PixPos{MapWidth, 0.f};
+   return m_dashboard.onLeftButtonPressed(posInDashboard);
 }
 
 
-bool Game2::dashboardOnLeftButtonReleased(const glm::vec2& /*pos*/)
+bool Game2::dashboardOnLeftButtonReleased(const PixPos& pos)
 {
-   return false;
+   if (!isInDashboard(pos))
+      return false;
+
+   const PixPos posInDashboard = pos - PixPos{MapWidth, 0.f};
+   return m_dashboard.onLeftButtonReleased(posInDashboard);
+}
+
+
+void Game2::startPlaceSession(std::string_view model, std::string_view indicatorTex,
+                              PixDim indicatorDim)
+{
+   PlaceSession sess;
+   sess.model = model;
+   sess.indicator = std::make_unique<Sprite>(
+      m_spriteRenderer.get(), SpriteLook{indicatorTex}, SpriteForm{indicatorDim});
+
+   m_placeSess = std::move(sess);
+}
+
+
+void Game2::endPlaceSession()
+{
+   m_placeSess = std::nullopt;
 }

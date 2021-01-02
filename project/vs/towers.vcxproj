@@ -172,6 +172,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
+    <ClCompile Include="..\..\dashboard.cpp" />
     <ClCompile Include="..\..\defender.cpp" />
     <ClCompile Include="..\..\defender_factory.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
@@ -210,7 +211,9 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\attacker_models.h" />
     <ClInclude Include="..\..\basic_types.h" />
+    <ClInclude Include="..\..\commands.h" />
     <ClInclude Include="..\..\coords.h" />
+    <ClInclude Include="..\..\dashboard.h" />
     <ClInclude Include="..\..\defender.h" />
     <ClInclude Include="..\..\defender_factory.h" />
     <ClInclude Include="..\..\defender_look.h" />
@@ -247,6 +250,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\norm_coords.h" />
     <ClInclude Include="..\..\path.h" />
     <ClInclude Include="..\..\pixel_coords.h" />
+    <ClInclude Include="..\..\place_session.h" />
     <ClInclude Include="..\..\rect.h" />
     <ClInclude Include="..\..\sprite_form.h" />
     <ClInclude Include="..\..\sprite_look.h" />

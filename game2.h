@@ -6,7 +6,9 @@
 #include "attacker.h"
 #include "attacker_factoy.h"
 #include "basic_types.h"
+#include "commands.h"
 #include "coords.h"
+#include "dashboard.h"
 #include "defender.h"
 #include "defender_factory.h"
 #include "gfl_lib.h"
@@ -14,15 +16,15 @@
 #include "main_window.h"
 #include "map.h"
 #include "map_coord_sys.h"
+#include "place_session.h"
 #include "renderer2.h"
 #include "resources.h"
 #include <memory>
 #include <optional>
-#include <string>
 #include <vector>
 
 
-class Game2
+class Game2 : private Commands
 {
  public:
    Game2();
@@ -44,13 +46,11 @@ class Game2
    bool setupAttackers();
    bool setupDefenders();
    bool setupBackground();
-   bool setupDashboard();
 
    void processInput();
    void updateState();
    void render();
    void renderMap();
-   void renderDashboard();
    void renderPlaceSession();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
@@ -68,10 +68,17 @@ class Game2
    void onRightButtonReleased(const glm::vec2& pos);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
-   bool mapOnLeftButtonPressed(const glm::vec2& pos);
-   bool mapOnLeftButtonReleased(const glm::vec2& pos);
-   bool dashboardOnLeftButtonPressed(const glm::vec2& pos);
-   bool dashboardOnLeftButtonReleased(const glm::vec2& pos);
+   bool isInMap(const PixPos& pos) const;
+   bool isInDashboard(const PixPos& pos) const;
+   bool mapOnLeftButtonPressed(const PixPos& pos);
+   bool mapOnLeftButtonReleased(const PixPos& pos);
+   bool dashboardOnLeftButtonPressed(const PixPos& pos);
+   bool dashboardOnLeftButtonReleased(const PixPos& pos);
+
+   // Commands overrides.
+   void startPlaceSession(std::string_view model, std::string_view indicatorTex,
+                          PixDim indicatorDim) override;
+   void endPlaceSession() override;
 
  private:
    static constexpr PixCoordi MapWidth = 1800;
@@ -95,14 +102,6 @@ class Game2
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
    std::unique_ptr<Sprite> m_background;
-   std::unique_ptr<Sprite> m_dashboard;
-   std::unique_ptr<Sprite> m_ltButton;
-   std::unique_ptr<Sprite> m_smButton;
-
-   struct PlaceSession
-   {
-      std::string model;
-      std::unique_ptr<Sprite> indicator;
-   };
+   Dashboard m_dashboard;
    std::optional<PlaceSession> m_placeSess;
 };

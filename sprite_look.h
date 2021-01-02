@@ -12,9 +12,9 @@ class SpriteLook
 {
  public:
    SpriteLook() = default;
-   explicit SpriteLook(const std::string& texTag);
+   explicit SpriteLook(std::string_view texTag);
    explicit SpriteLook(const glm::vec3& color);
-   SpriteLook(const std::string& texTag, const glm::vec3& color);
+   SpriteLook(std::string_view texTag, const glm::vec3& color);
    ~SpriteLook() = default;
    SpriteLook(const SpriteLook&) = default;
    SpriteLook(SpriteLook&&) = default;
@@ -34,7 +34,7 @@ class SpriteLook
 };
 
 
-inline SpriteLook::SpriteLook(const std::string& texTag) : SpriteLook{texTag, White}
+inline SpriteLook::SpriteLook(std::string_view texTag) : SpriteLook{texTag, White}
 {
 }
 
@@ -42,7 +42,7 @@ inline SpriteLook::SpriteLook(const glm::vec3& color) : m_color{color}
 {
 }
 
-inline SpriteLook::SpriteLook(const std::string& texTag, const glm::vec3& color)
+inline SpriteLook::SpriteLook(std::string_view texTag, const glm::vec3& color)
 : m_textureTag{texTag}, m_color{color}
 {
 }
