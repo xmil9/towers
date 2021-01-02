@@ -51,7 +51,7 @@ class Game2
    void render();
    void renderMap();
    void renderDashboard();
-   void renderLocationSession();
+   void renderPlaceSession();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);

@@ -356,12 +356,14 @@ void Game2::render()
    m_renderer.beginRendering(true);
    renderMap();
    renderDashboard();
-   renderLocationSession();
 
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer.shaders());
    for (auto& defender : m_defenders)
       defender.render(m_renderer.shaders());
+
+   // Draw placed content on top of everything else.
+   renderPlaceSession();
 
    m_mainWnd.swapBuffers();
 }
@@ -388,7 +390,7 @@ void Game2::renderDashboard()
 }
 
 
-void Game2::renderLocationSession()
+void Game2::renderPlaceSession()
 {
    if (m_placeSess)
    {
