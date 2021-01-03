@@ -47,6 +47,11 @@ bool Renderer2::setupSetting(int viewWidth, int viewHeight)
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+
+   // Blending settings.
+   glEnable(GL_BLEND);
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   
    return true;
 }
 
