@@ -392,17 +392,21 @@ void Game2::renderPlaceSession()
       double x = 0.;
       double y = 0.;
       glfwGetCursorPos(m_mainWnd.handle(), &x, &y);
+      const PixPos mousePixPos(x, y);
 
-      const MapPos fieldPos = truncate(m_coordSys->toMapCoords(PixPos(x, y)));
-      if (m_map->isOnMap(fieldPos))
-      {
-         const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
+      const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
+      const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
+      const PixPos fieldCenterPixPos =
+         fieldPixPos + m_coordSys->toRenderCoords(MapPos{.5f, .5f});
+
+      const bool isOnMap = m_map->isOnMap(fieldPos);
+      if (isOnMap)
          m_validFieldOverlay->render(m_renderer.shaders(), fieldPixPos);
-      }
 
-      const PixDim halfSize = m_placeSess->indicator->size() / 2.f;
+      const PixDim halfIndicatorSize = m_placeSess->indicator->size() / 2.f;
+      const PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
       m_placeSess->indicator->render(m_renderer.shaders(),
-                                     {x - halfSize.x, y - halfSize.y});
+                                     indicatorCenter - halfIndicatorSize);
    }
 }
 
