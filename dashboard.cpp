@@ -4,16 +4,19 @@
 //
 #include "dashboard.h"
 #include "defender_models.h"
+#include "map_coord_sys.h"
 #include "place_session.h"
 #include "sprite.h"
 #include "texture_tags.h"
 #include <memory>
 
 
-bool Dashboard::setup(SpriteRenderer* renderer)
+bool Dashboard::setup(SpriteRenderer* renderer, const MapCoordSys* cs)
 {
    assert(renderer);
+   assert(cs);
 
+   m_mapCoordSys = cs;
    m_background =
       std::make_unique<Sprite>(renderer, SpriteLook{DashboardTTag}, SpriteForm{m_dim});
 
@@ -48,8 +51,9 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
 
    constexpr NormDim buttonDim{.375f, .0625f};
    const PixDim buttonPixDim = buttonDim * m_dim;
-   constexpr NormDim indicatorDim{.375f, .0625f};
-   const NormDim indicatorPixDim = indicatorDim * m_dim;
+   // Set size of indicator to size of one field on map.
+   constexpr MapDim indicatorDim{1.f, 1.f};
+   const PixDim indicatorPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);
 
    constexpr NormDim ltPos{.075f, .0167f};
    const NormDim ltPixPos = ltPos * m_dim;

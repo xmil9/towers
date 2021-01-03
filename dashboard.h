@@ -10,6 +10,7 @@
 #include <memory>
 #include <optional>
 
+class MapCoordSys;
 struct PlaceSession;
 
 
@@ -20,7 +21,7 @@ class Dashboard
  public:
    Dashboard(PixCoordi width, PixCoordi height, Commands* commands);
 
-   bool setup(SpriteRenderer* renderer);
+   bool setup(SpriteRenderer* renderer, const MapCoordSys* cs);
    void render(const gll::Program& shaders, const PixPos& at);
    bool onLeftButtonPressed(const PixPos& mousePosInDash);
    bool onLeftButtonReleased(const PixPos& mousePosInDash);
@@ -28,6 +29,7 @@ class Dashboard
  private:
    PixDim m_dim;
    Commands* m_commands = nullptr;
+   const MapCoordSys* m_mapCoordSys = nullptr;
    std::unique_ptr<Sprite> m_background;
    std::unique_ptr<Sprite> m_ltButton;
    std::unique_ptr<Sprite> m_smButton;

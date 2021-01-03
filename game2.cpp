@@ -56,7 +56,7 @@ bool Game2::setup()
    return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
            setupRenderer() && setupTerrain() && setupSpriteData() && setupAnimations() &&
            setupAttackers() && setupDefenders() && setupBackground() &&
-           m_dashboard.setup(m_spriteRenderer.get()));
+           m_dashboard.setup(m_spriteRenderer.get(), m_coordSys.get()));
 }
 
 
