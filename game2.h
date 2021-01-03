@@ -53,6 +53,8 @@ class Game2 : private Commands
    void renderMap();
    void renderPlaceSession();
 
+   void placeDefender(const PixPos& mousePos);
+
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);
    void onMainWindowResize(const glm::ivec2& newSize);

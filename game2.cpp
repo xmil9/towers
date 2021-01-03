@@ -399,6 +399,25 @@ void Game2::renderPlaceSession()
 }
 
 
+void Game2::placeDefender(const PixPos& mousePos)
+{
+   const MapPos location = m_coordSys->toMapCoords(mousePos);
+
+   if (m_placeSess->model == LtModel)
+   {
+      constexpr Defender::Attribs attribs{LtRange, LtDamage};
+      addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, location, attribs),
+                  m_defenders);
+   }
+   else if (m_placeSess->model == SmModel)
+   {
+      constexpr Defender::Attribs attribs{SmRange, SmDamage};
+      addDefender(m_defenseFactory->makeDefender(SmModel, SmSize, location, attribs),
+                  m_defenders);
+   }
+}
+
+
 void Game2::onMainWindowChanged(MainWindow& /*src*/, std::string_view msg,
                                 const Observed<MainWindow>::MsgData& data)
 {
@@ -524,21 +543,7 @@ bool Game2::mapOnLeftButtonPressed(const PixPos& pos)
 
    if (m_placeSess)
    {
-      const MapPos location = m_coordSys->toMapCoords(pos);
-
-      if (m_placeSess->model == LtModel)
-      {
-         constexpr Defender::Attribs attribs{LtRange, LtDamage};
-         addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, location, attribs),
-                     m_defenders);
-      }
-      else if (m_placeSess->model == SmModel)
-      {
-         constexpr Defender::Attribs attribs{SmRange, SmDamage};
-         addDefender(m_defenseFactory->makeDefender(SmModel, SmSize, location, attribs),
-                     m_defenders);
-      }
-
+      placeDefender(pos);
       endPlaceSession();
    }
 
