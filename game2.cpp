@@ -386,8 +386,11 @@ void Game2::renderPlaceSession()
       glfwGetCursorPos(m_mainWnd.handle(), &x, &y);
 
       const MapPos fieldPos = truncate(m_coordSys->toMapCoords(PixPos(x, y)));
-      const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
-      m_validFieldOverlay->render(m_renderer.shaders(), fieldPixPos);
+      if (m_map->isOnMap(fieldPos))
+      {
+         const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
+         m_validFieldOverlay->render(m_renderer.shaders(), fieldPixPos);
+      }
 
       const PixDim halfSize = m_placeSess->indicator->size() / 2.f;
       m_placeSess->indicator->render(m_renderer.shaders(),
