@@ -401,7 +401,12 @@ void Game2::renderPlaceSession()
 
       const bool isOnMap = m_map->isOnMap(fieldPos);
       if (isOnMap)
-         m_validFieldOverlay->render(m_renderer.shaders(), fieldPixPos);
+      {
+         const Sprite& overlay = canPlaceDefenderOnField(m_placeSess->model, fieldPos)
+                                    ? *m_validFieldOverlay
+                                    : *m_invalidFieldOverlay;
+         overlay.render(m_renderer.shaders(), fieldPixPos);
+      }
 
       const PixDim halfIndicatorSize = m_placeSess->indicator->size() / 2.f;
       const PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
@@ -411,10 +416,17 @@ void Game2::renderPlaceSession()
 }
 
 
+bool Game2::canPlaceDefenderOnField(const std::string& /*defenderModel*/,
+                                    MapPos field) const
+{
+   return m_map->canBuildOnField(field);
+}
+
+
 void Game2::placeDefender(const PixPos& mousePos)
 {
    const MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
-   if (!m_map->isOnMap(pos))
+   if (!m_map->isOnMap(pos) || !canPlaceDefenderOnField(m_placeSess->model, pos))
       return;
 
    if (m_placeSess->model == LtModel)

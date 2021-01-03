@@ -5,6 +5,7 @@
 #pragma once
 #include "map_data.h"
 #include "glm/vec2.hpp"
+#include <cassert>
 
 
 ///////////////////
@@ -15,8 +16,9 @@ class Map
    explicit Map(MapData&& data);
 
    IntDim sizeInFields() const { return m_rep.mapSize; }
-   bool isOnMap(MapPos pos) const;
    const Path& path() const { return m_rep.paths[0]; }
+   bool isOnMap(MapPos pos) const;
+   bool canBuildOnField(MapPos pos) const;
 
  private:
    MapData m_rep;
@@ -31,4 +33,13 @@ inline bool Map::isOnMap(MapPos pos) const
 {
    return pos.x >= 0.f && pos.x < sizeInFields().x && pos.y >= 0.f &&
           pos.y < sizeInFields().y;
+}
+
+inline bool Map::canBuildOnField(MapPos pos) const
+{
+   const int col = static_cast<int>(pos.x);
+   const int row = static_cast<int>(pos.y);
+   const int fieldIdx = row * sizeInFields().x + col;
+   assert(fieldIdx >= 0 && fieldIdx < m_rep.terrain.size());
+   return m_rep.terrain[fieldIdx].canBuildOn();
 }

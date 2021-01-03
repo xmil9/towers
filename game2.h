@@ -53,6 +53,7 @@ class Game2 : private Commands
    void renderMap();
    void renderPlaceSession();
 
+   bool canPlaceDefenderOnField(const std::string& defenderModel, MapPos field) const;
    void placeDefender(const PixPos& mousePos);
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
