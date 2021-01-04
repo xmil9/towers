@@ -53,6 +53,9 @@ class Game2 : private Commands
    void renderMap();
    void renderPlaceSession();
 
+   void resetDefenderPlacements();
+   bool hasDefenderOnField(MapPos field) const;
+   void setDefenderOnField(MapPos field, bool hasDefender);
    bool canPlaceDefenderOnField(const std::string& defenderModel, MapPos field) const;
    void placeDefender(const PixPos& mousePos);
 
@@ -109,4 +112,5 @@ class Game2 : private Commands
    std::optional<PlaceSession> m_placeSess;
    std::unique_ptr<Sprite> m_validFieldOverlay;
    std::unique_ptr<Sprite> m_invalidFieldOverlay;
+   std::vector<bool> m_defenderMatrix;
 };

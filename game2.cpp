@@ -320,6 +320,7 @@ bool Game2::setupDefenders()
                                    SpriteForm{m_resources.getTextureSize(SmTexture)}},
                             m_resources.getAnimation(SmFiringAnimation)});
 
+   resetDefenderPlacements();
    return true;
 }
 
@@ -416,10 +417,37 @@ void Game2::renderPlaceSession()
 }
 
 
+void Game2::resetDefenderPlacements()
+{
+   assert(m_map);
+   const IntDim mapDim = m_map->sizeInFields();
+   m_defenderMatrix.resize(mapDim.x * mapDim.y);
+   std::fill(m_defenderMatrix.begin(), m_defenderMatrix.end(), false);
+}
+
+
+bool Game2::hasDefenderOnField(MapPos field) const
+{
+   const int idx =
+      static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
+   assert(idx >= 0 && idx < m_defenderMatrix.size());
+   return m_defenderMatrix[idx];
+}
+
+
+void Game2::setDefenderOnField(MapPos field, bool hasDefender)
+{
+   const int idx =
+      static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
+   assert(idx >= 0 && idx < m_defenderMatrix.size());
+   m_defenderMatrix[idx] = hasDefender;
+}
+
+
 bool Game2::canPlaceDefenderOnField(const std::string& /*defenderModel*/,
                                     MapPos field) const
 {
-   return m_map->canBuildOnField(field);
+   return m_map->canBuildOnField(field) && !hasDefenderOnField(field);
 }
 
 
@@ -427,19 +455,23 @@ void Game2::placeDefender(const PixPos& mousePos)
 {
    const MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
    if (!m_map->isOnMap(pos) || !canPlaceDefenderOnField(m_placeSess->model, pos))
+   {
       return;
+   }
 
    if (m_placeSess->model == LtModel)
    {
       constexpr Defender::Attribs attribs{LtRange, LtDamage};
       addDefender(m_defenseFactory->makeDefender(LtModel, LtSize, pos, attribs),
                   m_defenders);
+      setDefenderOnField(pos, true);
    }
    else if (m_placeSess->model == SmModel)
    {
       constexpr Defender::Attribs attribs{SmRange, SmDamage};
       addDefender(m_defenseFactory->makeDefender(SmModel, SmSize, pos, attribs),
                   m_defenders);
+      setDefenderOnField(pos, true);
    }
 }
 
