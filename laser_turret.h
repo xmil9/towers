@@ -37,6 +37,6 @@ inline LaserTurret::LaserTurret(DefenderLook look, MapCoord size, MapPos center,
 
 inline void LaserTurret::shoot()
 {
-   if (m_target)
+   if (m_target || !(*m_target)->isAlive())
       (*m_target)->hit(m_attribs.damage);
 }

@@ -467,7 +467,8 @@ void Game2::placeDefender(const PixPos& mousePos)
    }
    else if (m_placeSess->model == SmModel)
    {
-      constexpr SonicMortar::Attribs attribs{SmRange, SmDamage};
+      constexpr SonicMortar::Attribs attribs{SmRange, SmDamage, SmCollateralRange,
+                                             SmCollateralDamage};
       addDefender(m_defenseFactory->makeSonicMortar(SmSize, pos, attribs), m_defenders);
       setDefenderOnField(pos, true);
    }
