@@ -21,13 +21,16 @@ class LaserTurret : public DefenderBase<LaserTurret>
 
  private:
    void shoot();
+
+ private:
+   Attribs m_attribs;
 };
 
 
 inline LaserTurret::LaserTurret(DefenderLook look, MapCoord size, MapPos center,
                                 const Attribs& attribs, const MapCoordSys* cs,
                                 std::vector<Attacker>* attackers)
-: DefenderBase<LaserTurret>{look, size, center, attribs, cs, attackers}
+: DefenderBase<LaserTurret>{look, size, center, cs, attackers}, m_attribs{attribs}
 
 {
 }

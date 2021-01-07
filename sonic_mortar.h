@@ -21,13 +21,16 @@ class SonicMortar : public DefenderBase<SonicMortar>
 
  private:
    void shoot();
+
+ private:
+   Attribs m_attribs;
 };
 
 
 inline SonicMortar::SonicMortar(DefenderLook look, MapCoord size, MapPos center,
                                 const Attribs& attribs, const MapCoordSys* cs,
                                 std::vector<Attacker>* attackers)
-: DefenderBase<SonicMortar>{look, size, center, attribs, cs, attackers}
+: DefenderBase<SonicMortar>{look, size, center, cs, attackers}, m_attribs{attribs}
 
 {
 }

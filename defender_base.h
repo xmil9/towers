@@ -22,8 +22,7 @@ class Program;
 
 ///////////////////
 
-template<typename Derived>
-class DefenderBase
+template <typename Derived> class DefenderBase
 {
  public:
    struct Attribs
@@ -33,8 +32,8 @@ class DefenderBase
    };
 
  public:
-   DefenderBase(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
-                const MapCoordSys* cs, std::vector<Attacker>* attackers);
+   DefenderBase(DefenderLook look, MapCoord size, MapPos center, const MapCoordSys* cs,
+                std::vector<Attacker>* attackers);
 
    void render(const gll::Program& shaders);
    void update();
@@ -49,10 +48,10 @@ class DefenderBase
 
    Derived& derived() { return static_cast<Derived&>(*this); }
    const Derived& derived() const { return static_cast<const Derived&>(*this); }
+   const Attribs& baseAttribs() const { return derived().m_attribs; }
 
  protected:
    DefenderLook m_look;
-   Attribs m_attribs;
    MapPos m_center;
    const MapCoordSys* m_coordSys;
    std::vector<Attacker>* m_attackers = nullptr;
@@ -60,12 +59,11 @@ class DefenderBase
 };
 
 
-template<typename Derived>
+template <typename Derived>
 DefenderBase<Derived>::DefenderBase(DefenderLook look, MapCoord size, MapPos center,
-                           const Attribs& attribs, const MapCoordSys* cs,
-                           std::vector<Attacker>* attackers)
-: m_look{std::move(look)}, m_attribs{attribs}, m_center{center}, m_coordSys{cs},
-  m_attackers{attackers}
+                                    const MapCoordSys* cs,
+                                    std::vector<Attacker>* attackers)
+: m_look{std::move(look)}, m_center{center}, m_coordSys{cs}, m_attackers{attackers}
 {
    assert(m_coordSys);
    assert(m_attackers);
@@ -75,7 +73,7 @@ DefenderBase<Derived>::DefenderBase(DefenderLook look, MapCoord size, MapPos cen
 }
 
 
-template<typename Derived>
+template <typename Derived>
 void DefenderBase<Derived>::render(const gll::Program& shaders)
 {
    const PixPos center = m_coordSys->toRenderCoords(m_center);
@@ -92,30 +90,26 @@ void DefenderBase<Derived>::render(const gll::Program& shaders)
 }
 
 
-template<typename Derived>
-void DefenderBase<Derived>::update()
+template <typename Derived> void DefenderBase<Derived>::update()
 {
    if (findTarget())
       derived().shoot();
 }
 
 
-template<typename Derived>
-void DefenderBase<Derived>::setPosition(MapPos center)
+template <typename Derived> void DefenderBase<Derived>::setPosition(MapPos center)
 {
    m_center = center;
 }
 
 
-template<typename Derived>
-void DefenderBase<Derived>::setSize(MapVec size)
+template <typename Derived> void DefenderBase<Derived>::setSize(MapVec size)
 {
    m_look.setSize(m_coordSys->toRenderCoords(size));
 }
 
 
-template<typename Derived>
-bool DefenderBase<Derived>::findTarget()
+template <typename Derived> bool DefenderBase<Derived>::findTarget()
 {
    m_target.reset();
 
@@ -132,7 +126,7 @@ bool DefenderBase<Derived>::findTarget()
 }
 
 
-template<typename Derived>
+template <typename Derived>
 bool DefenderBase<Derived>::isInRange(const Attacker& attacker) const
 {
    const auto pos = attacker.position();
@@ -140,12 +134,11 @@ bool DefenderBase<Derived>::isInRange(const Attacker& attacker) const
       return false;
 
    const MapCoord dist = glm::length(m_center - *pos);
-   return sutil::lessEqual(dist, m_attribs.range);
+   return sutil::lessEqual(dist, baseAttribs().range);
 }
 
 
-template<typename Derived>
-void DefenderBase<Derived>::calcRotation()
+template <typename Derived> void DefenderBase<Derived>::calcRotation()
 {
    const auto targetDir = targetDirection();
    if (!targetDir)
@@ -156,7 +149,7 @@ void DefenderBase<Derived>::calcRotation()
 }
 
 
-template<typename Derived>
+template <typename Derived>
 std::optional<MapVec> DefenderBase<Derived>::targetDirection() const
 {
    if (!m_target)
