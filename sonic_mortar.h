@@ -52,7 +52,7 @@ inline void SonicMortar::shoot()
    // Hit other attackers in collateral range with the collateral damage.
    for (auto& attacker : *m_attackers)
    {
-      const bool isPrimaryTarget = &attacker != *m_target;
+      const bool isPrimaryTarget = &attacker == *m_target;
       if (!isPrimaryTarget && attacker.isAlive() && isInCollateralRange(attacker))
          attacker.hit(m_attribs.collateralDamage);
    }
