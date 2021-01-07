@@ -25,4 +25,4 @@ constexpr MapCoord SmSize = 1.f;
 constexpr MapCoord SmRange = 3.f;
 constexpr int SmDamage = 3;
 constexpr MapCoord SmCollateralRange = 1.f;
-constexpr int SmCollateralDamage = 10000;
+constexpr int SmCollateralDamage = 1;
