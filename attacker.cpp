@@ -8,9 +8,6 @@
 #include "essentutils/fputil.h"
 
 
-static constexpr MapVec Up{0., -1.};
-
-
 Attacker::Attacker(AttackerLook look, MapCoord size, const Attribs& attribs,
                    const OffsetPath& path, const MapCoordSys* cs)
 : m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},

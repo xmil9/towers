@@ -6,8 +6,8 @@
 #include "attacker.h"
 #include "defender.h"
 #include "defender_look.h"
+#include "defender_models.h"
 #include <cassert>
-#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -17,15 +17,20 @@ class MapCoordSys;
 
 ///////////////////
 
+// Simplifies creating defender instances by storing some data that is always the same
+// for either all defender models (e.g. map coordinate system) or for all instances of one
+// defender model (e.g. sprites).
 class DefenderFactory
 {
  public:
    explicit DefenderFactory(const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
    void registerModel(const std::string& name, DefenderLook look);
-   std::optional<Defender> makeDefender(const std::string& model, MapCoord size,
-                                        MapPos center,
-                                        const Defender::Attribs& attribs) const;
+
+   Defender makeLaserTurret(MapCoord size, MapPos center,
+                            const LaserTurret::Attribs& attribs) const;
+   Defender makeSonicMortar(MapCoord size, MapPos center,
+                            const SonicMortar::Attribs& attribs) const;
 
  private:
    struct Model
@@ -33,6 +38,8 @@ class DefenderFactory
       std::string name;
       DefenderLook look;
    };
+
+   const Model& lookupModel(const std::string& modelName) const;
 
  private:
    const MapCoordSys* m_coordSys = nullptr;

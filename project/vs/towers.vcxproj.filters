@@ -63,7 +63,6 @@
     <ClCompile Include="..\..\gfl_window.cpp">
       <Filter>Glfw Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\defender.cpp" />
     <ClCompile Include="..\..\animation.cpp">
       <Filter>Rendering\2d</Filter>
     </ClCompile>
@@ -226,7 +225,6 @@
     <ClInclude Include="..\..\gfl_window.h">
       <Filter>Glfw Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\defender.h" />
     <ClInclude Include="..\..\animation.h">
       <Filter>Rendering\2d</Filter>
     </ClInclude>
@@ -244,6 +242,10 @@
     <ClInclude Include="..\..\commands.h" />
     <ClInclude Include="..\..\map_coords.h" />
     <ClInclude Include="..\..\attacker_factory.h" />
+    <ClInclude Include="..\..\laser_turret.h" />
+    <ClInclude Include="..\..\sonic_mortar.h" />
+    <ClInclude Include="..\..\defender_base.h" />
+    <ClInclude Include="..\..\defender.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

@@ -1,16 +1,12 @@
 //
-// Dec-2020, Michael Lindner
+// Jan-2021, Michael Lindner
 // MIT license
 //
 #pragma once
-#include "attacker.h"
-#include "defender_look.h"
-#include "map_coord_sys.h"
-#include "path.h"
-#include "glm/glm.hpp"
-#include <cstddef>
+#include "laser_turret.h"
+#include "sonic_mortar.h"
 #include <optional>
-#include <vector>
+#include <variant>
 
 namespace gll
 {
@@ -20,36 +16,35 @@ class Program;
 
 ///////////////////
 
+// Wrapper around specific defender type.
+// Deals with dispatching calls to specific defender type.
 class Defender
 {
  public:
-   struct Attribs
-   {
-      MapCoord range = 0.f;
-      int damage = 0;
-   };
-
- public:
-   Defender(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
-            const MapCoordSys* cs, std::vector<Attacker>* attackers);
+   Defender() = default;
+   template <typename SpecificDefender> explicit Defender(SpecificDefender&& d);
 
    void render(const gll::Program& shaders);
    void update();
 
  private:
-   void setPosition(MapPos center);
-   void setSize(MapVec size);
-   bool findTarget();
-   bool isInRange(const Attacker& attacker) const;
-   void calcRotation();
-   std::optional<MapVec> targetDirection() const;
-   void shoot();
-
- private:
-   DefenderLook m_look;
-   Attribs m_attribs;
-   MapPos m_center;
-   const MapCoordSys* m_coordSys;
-   std::vector<Attacker>* m_attackers = nullptr;
-   std::optional<Attacker*> m_target;
+   std::optional<std::variant<LaserTurret, SonicMortar>> m_defender;
 };
+
+
+template <typename SpecificDefender>
+Defender::Defender(SpecificDefender&& d) : m_defender{std::move(d)}
+{
+}
+
+inline void Defender::render(const gll::Program& shaders)
+{
+   if (m_defender)
+      std::visit([&shaders](auto& defender) { defender.render(shaders); }, *m_defender);
+}
+
+inline void Defender::update()
+{
+   if (m_defender)
+      std::visit([](auto& defender) { defender.update(); }, *m_defender);
+}

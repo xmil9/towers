@@ -173,7 +173,6 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
     <ClCompile Include="..\..\dashboard.cpp" />
-    <ClCompile Include="..\..\defender.cpp" />
     <ClCompile Include="..\..\defender_factory.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
@@ -215,10 +214,12 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\dashboard.h" />
     <ClInclude Include="..\..\defender.h" />
+    <ClInclude Include="..\..\defender_base.h" />
     <ClInclude Include="..\..\defender_factory.h" />
     <ClInclude Include="..\..\defender_look.h" />
     <ClInclude Include="..\..\defender_models.h" />
     <ClInclude Include="..\..\int_coords.h" />
+    <ClInclude Include="..\..\laser_turret.h" />
     <ClInclude Include="..\..\map_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
@@ -253,6 +254,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
     <ClInclude Include="..\..\pixel_coords.h" />
     <ClInclude Include="..\..\place_session.h" />
     <ClInclude Include="..\..\rect.h" />
+    <ClInclude Include="..\..\sonic_mortar.h" />
     <ClInclude Include="..\..\sprite_form.h" />
     <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\mesh2.h" />
