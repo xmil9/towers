@@ -10,6 +10,8 @@
 
 class SonicMortar : public DefenderBase<SonicMortar>
 {
+   friend class DefenderBase<SonicMortar>;
+
  public:
    using Attribs = DefenderBase<SonicMortar>::Attribs;
 
@@ -17,6 +19,7 @@ class SonicMortar : public DefenderBase<SonicMortar>
    SonicMortar(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
                const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
+ private:
    void shoot();
 };
 

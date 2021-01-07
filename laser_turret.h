@@ -10,6 +10,8 @@
 
 class LaserTurret : public DefenderBase<LaserTurret>
 {
+   friend class DefenderBase<LaserTurret>;
+
  public:
    using Attribs = DefenderBase<LaserTurret>::Attribs;
 
@@ -17,6 +19,7 @@ class LaserTurret : public DefenderBase<LaserTurret>
    LaserTurret(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
                const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
+ private:
    void shoot();
 };
 
