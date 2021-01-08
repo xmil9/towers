@@ -8,29 +8,35 @@ Project (www.freetype.org).  All rights reserved.
 
 GLAD
 ----
+https://glad.dav1d.de/
+https://github.com/Dav1dde/glad
 Copyright (c) 2013-2020 David Herberth
 
 GLFW
 ----
+https://www.glfw.org/
 Copyright © 2002-2006 Marcus Geelnard
 Copyright © 2006-2019 Camilla Löwy
 
 GLM
 ---
+https://github.com/g-truc/glm
 Copyright (c) 2005 - G-Truc Creation
 
 nlohmann json
 -------------
+https://github.com/nlohmann/json
 Copyright (c) 2013-2021 Niels Lohmann
 
 OpenGL
 ------
 The OpenGL code, concepts, and techniques are adapted from Joey de Vries'
 excellent tutorial 'Learn OpenGL'.
-Link: https://learnopengl.com/
+https://learnopengl.com/
 Copyright (c) Joey de Vries
 Twitter: https://twitter.com/JoeyDeVriez
 
 stb
 ---
+https://github.com/nothings/stb
 Copyright (c) 2017 Sean Barrett
