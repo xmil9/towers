@@ -1,0 +1,36 @@
+CREDITS
+=======
+
+FreeType
+--------
+Portions of this software are copyright © 2021 The FreeType
+Project (www.freetype.org).  All rights reserved.
+
+GLAD
+----
+Copyright (c) 2013-2020 David Herberth
+
+GLFW
+----
+Copyright © 2002-2006 Marcus Geelnard
+Copyright © 2006-2019 Camilla Löwy
+
+GLM
+---
+Copyright (c) 2005 - G-Truc Creation
+
+nlohmann json
+-------------
+Copyright (c) 2013-2021 Niels Lohmann
+
+OpenGL
+------
+The OpenGL code, concepts, and techniques are adapted from Joey de Vries'
+excellent tutorial 'Learn OpenGL'.
+Link: https://learnopengl.com/
+Copyright (c) Joey de Vries
+Twitter: https://twitter.com/JoeyDeVriez
+
+stb
+---
+Copyright (c) 2017 Sean Barrett
