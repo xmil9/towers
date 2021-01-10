@@ -30,6 +30,7 @@ class Vbo : public Object<Vbo>
    static void unbind(GLenum target);
    // Vbo needs to be active/bound in order to set data.
    void setData(GLenum target, GLsizeiptr size, const void* data, GLenum usage);
+   void setSubData(GLenum target, GLintptr offset, GLsizeiptr size, const void* data);
 
    friend inline void swap(Vbo& a, Vbo& b)
    {
@@ -62,6 +63,13 @@ inline void Vbo::setData(GLenum target, GLsizeiptr size, const void* data, GLenu
 {
    if (hasId())
       glBufferData(target, size, data, usage);
+}
+
+inline void Vbo::setSubData(GLenum target, GLintptr offset, GLsizeiptr size,
+                            const void* data)
+{
+   if (hasId())
+      glBufferSubData(target, offset, size, data);
 }
 
 inline ObjId Vbo::create_()

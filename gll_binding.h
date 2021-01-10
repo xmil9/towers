@@ -26,9 +26,9 @@ template <typename T> struct BindingScope
    explicit BindingScope(const T& bound);
    ~BindingScope();
    BindingScope(const BindingScope&) = delete;
-   BindingScope(BindingScope&& other);
+   BindingScope(BindingScope&& other) noexcept;
    BindingScope& operator=(const BindingScope&) = delete;
-   BindingScope& operator=(BindingScope&& other);
+   BindingScope& operator=(BindingScope&& other) noexcept;
 
    void bind(const T& bound);
    void unbind();
@@ -53,12 +53,13 @@ template <typename T> BindingScope<T>::~BindingScope()
    unbind();
 }
 
-template <typename T> BindingScope<T>::BindingScope(BindingScope&& other)
+template <typename T> BindingScope<T>::BindingScope(BindingScope&& other) noexcept
 {
    swap(*this, other);
 }
 
-template <typename T> BindingScope<T>& BindingScope<T>::operator=(BindingScope&& other)
+template <typename T>
+BindingScope<T>& BindingScope<T>::operator=(BindingScope&& other) noexcept
 {
    unbind();
    swap(*this, other);
@@ -169,10 +170,12 @@ inline void BoundVbo::setData(GLenum target, GLsizeiptr size, const void* data,
 ///////////////////
 
 // Binds array vbo to current vao.
+// Usage values: GL_STATIC_DRAW, GL_DYNAMIC_DRAW
 void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
-                  const gll::DataFormat& format, BoundVbo& buf);
+                  const gll::DataFormat& format, GLenum usage, BoundVbo& buf);
 
 // Binds element vbo to current vao.
-void bindElementVbo(const void* data, std::size_t dataSize, BoundVbo& buf);
+// Usage values: GL_STATIC_DRAW, GL_DYNAMIC_DRAW
+void bindElementVbo(const void* data, std::size_t dataSize, GLenum usage, BoundVbo& buf);
 
 } // namespace gll

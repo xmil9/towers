@@ -157,12 +157,15 @@ bool Renderer3::setupData()
       constexpr GLuint ColorAttribIdx = 2;
       constexpr GLuint TexCoordsAttribIdx = 3;
 
-      bindArrayVbo(PosAttribIdx, positions, sizeof(positions), posFormat, posBuf);
-      bindArrayVbo(NormalAttribIdx, normals, sizeof(normals), normalFormat, normalBuf);
-      bindArrayVbo(ColorAttribIdx, colors, sizeof(colors), colorFormat, colorBuf);
+      bindArrayVbo(PosAttribIdx, positions, sizeof(positions), posFormat, GL_STATIC_DRAW,
+                   posBuf);
+      bindArrayVbo(NormalAttribIdx, normals, sizeof(normals), normalFormat,
+                   GL_STATIC_DRAW, normalBuf);
+      bindArrayVbo(ColorAttribIdx, colors, sizeof(colors), colorFormat, GL_STATIC_DRAW,
+                   colorBuf);
       bindArrayVbo(TexCoordsAttribIdx, texCoords, sizeof(texCoords), texCoordFormat,
-                   texCoordBuf);
-      bindElementVbo(indices, sizeof(indices), elemBuf);
+                   GL_STATIC_DRAW, texCoordBuf);
+      bindElementVbo(indices, sizeof(indices), GL_STATIC_DRAW, elemBuf);
    }
 
    return true;

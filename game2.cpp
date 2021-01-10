@@ -10,7 +10,9 @@
 #include "map_data.h"
 #include "mesh2.h"
 #include "texture_tags.h"
+// External
 #include "gll_debug.h"
+// Runtime
 #include <iostream>
 #include <thread>
 

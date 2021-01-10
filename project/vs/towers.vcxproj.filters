@@ -71,6 +71,9 @@
     <ClCompile Include="..\..\attacker_factory.cpp" />
     <ClCompile Include="..\..\defender_factory.cpp" />
     <ClCompile Include="..\..\dashboard.cpp" />
+    <ClCompile Include="..\..\text_renderer.cpp">
+      <Filter>Rendering\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -102,6 +105,9 @@
     </Filter>
     <Filter Include="OpenGL Utilities">
       <UniqueIdentifier>{83b7ab7a-7ef2-4e24-bee1-513529922f10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rendering\Text">
+      <UniqueIdentifier>{2e5ea87d-f94c-4886-8bab-a2685ce4d3e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +252,9 @@
     <ClInclude Include="..\..\sonic_mortar.h" />
     <ClInclude Include="..\..\defender_base.h" />
     <ClInclude Include="..\..\defender.h" />
+    <ClInclude Include="..\..\text_renderer.h">
+      <Filter>Rendering\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
@@ -261,6 +270,12 @@
       <Filter>Rendering\2d</Filter>
     </None>
     <None Include="..\..\shaders\sprite_shader.vs">
+      <Filter>Rendering\2d</Filter>
+    </None>
+    <None Include="..\..\shaders\text_shader.fs">
+      <Filter>Rendering\2d</Filter>
+    </None>
+    <None Include="..\..\shaders\text_shader.vs">
       <Filter>Rendering\2d</Filter>
     </None>
   </ItemGroup>

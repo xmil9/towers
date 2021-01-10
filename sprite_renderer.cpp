@@ -57,7 +57,7 @@ void SpriteRenderer::setMesh(const Mesh2& mesh)
 
 
 void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
-                            const SpriteForm& form, PixPos posLeftTop) const
+                            const SpriteForm& form, PixPos leftTop) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (look.hasTexture())
@@ -74,8 +74,8 @@ void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = shaders.uniform("model");
-      modelUf.setValue(calcModelMatrix(posLeftTop, form.size(), form.rotation(),
-                                       form.rotationCenter()));
+      modelUf.setValue(
+         calcModelMatrix(leftTop, form.size(), form.rotation(), form.rotationCenter()));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);
@@ -101,9 +101,9 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
       constexpr GLuint TexCoordsAttribIdx = 1;
 
       bindArrayVbo(PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
-                   mesh.positionsFormat(), posBuf);
+                   mesh.positionsFormat(), GL_STATIC_DRAW, posBuf);
       bindArrayVbo(TexCoordsAttribIdx, mesh.textureCoords(), mesh.numTextureCoordBytes(),
-                   mesh.textureCoordsFormat(), texCoordBuf);
-      bindElementVbo(mesh.indices(), mesh.numIndexBytes(), elemBuf);
+                   mesh.textureCoordsFormat(), GL_STATIC_DRAW, texCoordBuf);
+      bindElementVbo(mesh.indices(), mesh.numIndexBytes(), GL_STATIC_DRAW, elemBuf);
    }
 }
