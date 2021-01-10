@@ -272,11 +272,11 @@
     <None Include="..\..\shaders\sprite_shader.vs">
       <Filter>Rendering\2d</Filter>
     </None>
-    <None Include="..\..\shaders\text_shader.fs">
-      <Filter>Rendering\2d</Filter>
-    </None>
     <None Include="..\..\shaders\text_shader.vs">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Rendering\Text</Filter>
+    </None>
+    <None Include="..\..\shaders\text_shader.fs">
+      <Filter>Rendering\Text</Filter>
     </None>
   </ItemGroup>
 </Project>
