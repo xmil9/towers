@@ -14,6 +14,7 @@ class Resources
    Resources();
 
    std::filesystem::path texturePath() const;
+   std::filesystem::path fontPath() const;
    std::filesystem::path shaderPath() const;
    std::filesystem::path mapPath() const;
 

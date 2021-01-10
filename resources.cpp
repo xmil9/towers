@@ -18,6 +18,12 @@ std::filesystem::path Resources::texturePath() const
 }
 
 
+std::filesystem::path Resources::fontPath() const
+{
+   return m_mainPath / "resources" / "fonts";
+}
+
+
 std::filesystem::path Resources::shaderPath() const
 {
    return m_mainPath / "shaders";

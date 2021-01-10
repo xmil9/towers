@@ -13,6 +13,11 @@ mkdir "%resDest%"
 robocopy "%resSrc%" "%resDest%" *.json
 robocopy "%resSrc%" "%resDest%" *.png
 
+set fontsSrc=%resSrc%\fonts
+set fontsDest=%resDest%\fonts
+mkdir "%fontsDest%"
+robocopy "%fontsSrc%" "%fontsDest%" *.ttf
+
 set shaderSrc=%thisDir%..\..\shaders
 set shaderDest=%destDir%\shaders
 mkdir "%shaderDest%"

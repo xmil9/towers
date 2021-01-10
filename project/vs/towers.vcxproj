@@ -128,11 +128,7 @@
       <AdditionalDependencies>freetype\2.10.4\release static\win64\freetype.lib;glfw\lib\Debug\glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /A /Y "$(ProjectDir)..\..\cube3_shader.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
-call "$(ProjectDir)deploy.bat" "$(OutDir)"
+      <Command>call "$(ProjectDir)deploy.bat" "$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -158,11 +154,7 @@ call "$(ProjectDir)deploy.bat" "$(OutDir)"
       <AdditionalDependencies>freetype\2.10.4\release static\win64\freetype.lib;glfw\lib\Release\glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /A /Y "$(ProjectDir)..\..\cube3_shader.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\cube3_shader.fs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\sprite_shader.vs" "$(OutDir)"
-copy /A /Y "$(ProjectDir)..\..\sprite_shader.fs" "$(OutDir)"
-call "$(ProjectDir)deploy.bat" "$(OutDir)"
+      <Command>call "$(ProjectDir)deploy.bat" "$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

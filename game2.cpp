@@ -335,17 +335,22 @@ void Game2::updateState()
 
 void Game2::render()
 {
-   m_renderer.beginRendering(true);
-   renderMap();
-   m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
+   m_renderer.clearScene();
 
-   for (auto& attacker : m_attackers)
-      attacker.render(m_renderer);
-   for (auto& defender : m_defenders)
-      defender.render(m_renderer);
+   //m_renderer.beginSpriteRendering();
+   //renderMap();
+   //m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
+   //
+   //for (auto& attacker : m_attackers)
+   //   attacker.render(m_renderer);
+   //for (auto& defender : m_defenders)
+   //   defender.render(m_renderer);
+   //
+   //// Draw placed content on top of everything else.
+   //renderPlaceSession();
 
-   // Draw placed content on top of everything else.
-   renderPlaceSession();
+   m_renderer.beginTextRendering();
+   m_renderer.renderText("test", {100.f, 100.f}, 1.f, {1.f, .5f, .5f});
 
    m_mainWnd.swapBuffers();
 }

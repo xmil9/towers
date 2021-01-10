@@ -29,7 +29,15 @@ class TextRenderer
    TextRenderer& operator=(const TextRenderer&) = delete;
    TextRenderer& operator=(TextRenderer&&) noexcept = default;
 
+   // Initial setup.
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
+
+   // Prepare a render session.
+   void activateShaders() { m_shaders.use(); }
+   template<typename Value>
+   void makeUniform(const GLchar* name, const Value& v) const;
+   
+   // Individual render operations.
    void render(const std::string& text, PixPos pos, float scale, glm::vec3 color);
 
  private:
@@ -68,4 +76,11 @@ inline TextRenderer::TextRenderer(Resources* resources) : m_resources{resources}
 inline bool TextRenderer::setup(const std::filesystem::path& font, unsigned int fontSize)
 {
    return setupCharTextures(font, fontSize) && setupShaders() && setupVao();
+}
+
+template<typename Value>
+void TextRenderer::makeUniform(const GLchar* name, const Value& v) const
+{
+   gll::Uniform u = m_shaders.uniform(name);
+   u.setValue(v);
 }

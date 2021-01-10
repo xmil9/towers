@@ -94,9 +94,7 @@ void TextRenderer::render(const std::string& text, PixPos pos, float scale,
                           glm::vec3 color)
 {
    m_shaders.use();
-
-   gll::Uniform colorUf = m_shaders.uniform("textColor");
-   colorUf.setValue(color);
+   makeUniform("textColor", color);
 
    glActiveTexture(GL_TEXTURE0);
    m_vao.bind();
@@ -143,7 +141,7 @@ bool TextRenderer::setupShaders()
    const std::filesystem::path path = m_resources->shaderPath();
 
    gll::Shader vs{gll::makeVertexShader(path / "text_shader.vs")};
-   gll::Shader fs{gll::makeFragmentShader(path / "tex_shader.fs")};
+   gll::Shader fs{gll::makeFragmentShader(path / "text_shader.fs")};
    if (!vs || !fs)
       return false;
 
