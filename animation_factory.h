@@ -9,21 +9,18 @@
 #include <unordered_map>
 
 class Animation;
-class SpriteRenderer;
 
 
 class AnimationFactory
 {
  public:
-   explicit AnimationFactory(SpriteRenderer* renderer);
+   AnimationFactory();
 
    Animation make(const std::string& tag, PixDim size);
 
  private:
-   using FactoryFunc =
-      std::function<Animation(PixDim, SpriteRenderer*)>;
+   using FactoryFunc = std::function<Animation(PixDim)>;
 
  private:
-   SpriteRenderer* m_renderer = nullptr;
    std::unordered_map<std::string, FactoryFunc> m_factories;
 };

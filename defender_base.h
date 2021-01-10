@@ -7,17 +7,13 @@
 #include "defender_look.h"
 #include "map_coord_sys.h"
 #include "path.h"
+#include "renderer2.h"
 #include "essentutils/fputil.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
 #include <cstddef>
 #include <optional>
 #include <vector>
-
-namespace gll
-{
-class Program;
-}
 
 
 ///////////////////
@@ -35,7 +31,7 @@ template <typename Derived> class DefenderBase
    DefenderBase(DefenderLook look, MapCoord size, MapPos center, const MapCoordSys* cs,
                 std::vector<Attacker>* attackers);
 
-   void render(const gll::Program& shaders);
+   void render(const Renderer2& renderer);
    void update();
 
  private:
@@ -74,18 +70,18 @@ DefenderBase<Derived>::DefenderBase(DefenderLook look, MapCoord size, MapPos cen
 
 
 template <typename Derived>
-void DefenderBase<Derived>::render(const gll::Program& shaders)
+void DefenderBase<Derived>::render(const Renderer2& renderer)
 {
    const PixPos center = m_coordSys->toRenderCoords(m_center);
 
    if (m_target)
    {
       calcRotation();
-      m_look.renderFiring(shaders, center);
+      m_look.renderFiring(renderer, center);
    }
    else
    {
-      m_look.render(shaders, center);
+      m_look.render(renderer, center);
    }
 }
 

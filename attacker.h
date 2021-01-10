@@ -9,6 +9,8 @@
 #include "glm/glm.hpp"
 #include <optional>
 
+class Renderer2;
+
 
 ///////////////////
 
@@ -26,7 +28,7 @@ class Attacker
    Attacker(AttackerLook look, MapCoord size, const Attribs& attribs,
             const OffsetPath& path, const MapCoordSys* cs);
 
-   void render(const gll::Program& shaders);
+   void render(const Renderer2& renderer);
    void update();
    std::optional<MapPos> position() const { return m_center; }
    void hit(int damage);

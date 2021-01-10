@@ -5,12 +5,14 @@
 #pragma once
 #include "camera_2d.h"
 #include "frustum2.h"
-#include "sprite.h"
-#include "gll_program.h"
-#include <vector>
+#include "sprite_renderer.h"
 
+class Animation;
 class Resources;
+class Sprite;
 
+
+///////////////////
 
 class Renderer2
 {
@@ -19,15 +21,21 @@ public:
    void setFrustumSize(int width, int height) { m_frustum.setSize(width, height); }
 
    void beginRendering(bool clear) const;
-   const gll::Program& shaders() const { return m_shaders; }
+   void renderSprite(const Sprite& sprite, PixPos leftTop) const;
+   void renderAnimation(Animation& anim, PixPos leftTop) const;
 
 private:
-   bool setupShaders();
    bool setupSetting(int viewWidth, int viewHeight);
 
 private:
    Resources* m_resources = nullptr;
    Camera2d m_cam;
    Frustum2 m_frustum;
-   gll::Program m_shaders;
+   std::unique_ptr<SpriteRenderer> m_spriteRenderer;
 };
+
+
+inline void Renderer2::renderSprite(const Sprite& sprite, PixPos leftTop) const
+{
+   m_spriteRenderer->render(sprite, leftTop);
+}

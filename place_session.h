@@ -13,5 +13,5 @@
 struct PlaceSession
 {
    std::string model;
-   std::unique_ptr<Sprite> indicator;
+   Sprite indicator;
 };

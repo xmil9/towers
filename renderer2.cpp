@@ -4,38 +4,17 @@
 //
 #include "renderer2.h"
 #include "resources.h"
-#include "gll_shader.h"
 
 
 bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
 {
+   assert(resources);
+
    m_resources = resources;
-   return setupShaders() && setupSetting(viewWidth, viewHeight);
-}
+   m_spriteRenderer = std::make_unique<SpriteRenderer>(resources);
 
-
-bool Renderer2::setupShaders()
-{
-   const std::filesystem::path path = m_resources->shaderPath();
-
-   gll::Shader vs{gll::makeVertexShader(path / "sprite_shader.vs")};
-   gll::Shader fs{gll::makeFragmentShader(path / "sprite_shader.fs")};
-   if (!vs || !fs)
-      return false;
-
-   if (!vs.compile() || !fs.compile())
-      return false;
-
-   if (!m_shaders.create())
-      return false;
-
-   m_shaders.attachShader(vs);
-   m_shaders.attachShader(fs);
-
-   if (!m_shaders.link())
-      return false;
-
-   return true;
+   return m_spriteRenderer->setup(m_resources->shaderPath()) &&
+          setupSetting(viewWidth, viewHeight);
 }
 
 
@@ -51,7 +30,7 @@ bool Renderer2::setupSetting(int viewWidth, int viewHeight)
    // Blending settings.
    glEnable(GL_BLEND);
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-   
+
    return true;
 }
 
@@ -60,10 +39,16 @@ void Renderer2::beginRendering(bool clear) const
 {
    if (clear)
       glClear(GL_COLOR_BUFFER_BIT);
-   m_shaders.use();
+   
+   m_spriteRenderer->activateShaders();
+   m_spriteRenderer->makeUniform("view", m_cam.viewMatrix());
+   m_spriteRenderer->makeUniform("projection", m_frustum.projectionMatrix());
+}
 
-   gll::Uniform viewUf = m_shaders.uniform("view");
-   viewUf.setValue(m_cam.viewMatrix());
-   gll::Uniform projUf = m_shaders.uniform("projection");
-   projUf.setValue(m_frustum.projectionMatrix());
+
+void Renderer2::renderAnimation(Animation& anim, PixPos leftTop) const
+{
+   const auto sprite = anim.nextFrame();
+   if (sprite)
+      m_spriteRenderer->render(**sprite, leftTop);
 }

@@ -4,14 +4,10 @@
 //
 #pragma once
 #include "laser_turret.h"
+#include "renderer2.h"
 #include "sonic_mortar.h"
 #include <optional>
 #include <variant>
-
-namespace gll
-{
-class Program;
-}
 
 
 ///////////////////
@@ -24,7 +20,7 @@ class Defender
    Defender() = default;
    template <typename SpecificDefender> explicit Defender(SpecificDefender&& d);
 
-   void render(const gll::Program& shaders);
+   void render(const Renderer2& renderer);
    void update();
 
  private:
@@ -37,10 +33,10 @@ Defender::Defender(SpecificDefender&& d) : m_defender{std::move(d)}
 {
 }
 
-inline void Defender::render(const gll::Program& shaders)
+inline void Defender::render(const Renderer2& renderer)
 {
    if (m_defender)
-      std::visit([&shaders](auto& defender) { defender.render(shaders); }, *m_defender);
+      std::visit([&renderer](auto& defender) { defender.render(renderer); }, *m_defender);
 }
 
 inline void Defender::update()

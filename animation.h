@@ -3,14 +3,10 @@
 // MIT license
 //
 #pragma once
+#include "coords.h"
 #include "sprite.h"
 #include <optional>
 #include <vector>
-
-namespace gll
-{
-class Program;
-}
 
 
 ///////////////////
@@ -32,9 +28,8 @@ class Animation
    Animation& scale(float factor);
    Animation& rotate(Angle_t rot);
 
-   void render(const gll::Program& shaders, PixPos atLeftTop);
-
    bool hasFinished() const { return m_currFrame >= m_totalFrames; }
+   std::optional<const Sprite*> nextFrame();
 
  private:
    void populateMaxFrameIndices();

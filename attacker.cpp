@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "attacker.h"
+#include "renderer2.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/vector_angle.hpp"
 #include "essentutils/fputil.h"
@@ -20,7 +21,7 @@ Attacker::Attacker(AttackerLook look, MapCoord size, const Attribs& attribs,
 }
 
 
-void Attacker::render(const gll::Program& shaders)
+void Attacker::render(const Renderer2& renderer)
 {
    if (!hasStarted())
       return;
@@ -30,11 +31,11 @@ void Attacker::render(const gll::Program& shaders)
    if (isAlive())
    {
       calcRotation();
-      m_look.render(shaders, center);
+      m_look.render(renderer, center);
    }
    else
    {
-      m_look.renderExploded(shaders, center);
+      m_look.renderExploded(renderer, center);
    }
 }
 

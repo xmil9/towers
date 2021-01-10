@@ -7,7 +7,6 @@
 #include "animation_tags.h"
 #include "defender_models.h"
 #include "map_coord_sys.h"
-#include "sprite_renderer.h"
 #include "texture_tags.h"
 
 
@@ -16,14 +15,14 @@
 static Animation NullAnimation;
 
 
-static Animation makeExplosion(PixDim size, SpriteRenderer* renderer)
+static Animation makeExplosion(PixDim size)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{renderer, SpriteLook{Explosion1TTag}, form},
-      Sprite{renderer, SpriteLook{Explosion2TTag}, form},
-      Sprite{renderer, SpriteLook{Explosion3TTag}, form},
-      Sprite{renderer, SpriteLook{Explosion4TTag}, form},
+      Sprite{SpriteLook{Explosion1TTag}, form},
+      Sprite{SpriteLook{Explosion2TTag}, form},
+      Sprite{SpriteLook{Explosion3TTag}, form},
+      Sprite{SpriteLook{Explosion4TTag}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
 
@@ -31,12 +30,12 @@ static Animation makeExplosion(PixDim size, SpriteRenderer* renderer)
 }
 
 
-static Animation makeFiringLaserTurret(PixDim size, SpriteRenderer* renderer)
+static Animation makeFiringLaserTurret(PixDim size)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{renderer, SpriteLook{LtFiring1Texture}, form},
-      Sprite{renderer, SpriteLook{LtFiring2Texture}, form},
+      Sprite{SpriteLook{LtFiring1Texture}, form},
+      Sprite{SpriteLook{LtFiring2Texture}, form},
    };
    std::vector<int> frames{10, 10};
 
@@ -44,12 +43,12 @@ static Animation makeFiringLaserTurret(PixDim size, SpriteRenderer* renderer)
 }
 
 
-static Animation makeFiringSonicMortar(PixDim size, SpriteRenderer* renderer)
+static Animation makeFiringSonicMortar(PixDim size)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
-      Sprite{renderer, SpriteLook{SmFiring1Texture}, form},
-      Sprite{renderer, SpriteLook{SmFiring2Texture}, form},
+      Sprite{SpriteLook{SmFiring1Texture}, form},
+      Sprite{SpriteLook{SmFiring2Texture}, form},
    };
    std::vector<int> frames{10, 10};
 
@@ -59,11 +58,8 @@ static Animation makeFiringSonicMortar(PixDim size, SpriteRenderer* renderer)
 
 ///////////////////
 
-AnimationFactory::AnimationFactory(SpriteRenderer* renderer)
-: m_renderer{renderer}
+AnimationFactory::AnimationFactory()
 {
-   assert(m_renderer);
-
    m_factories = {
       {ExplosionATag, makeExplosion},
       {LtFiringAnimation, makeFiringLaserTurret},
@@ -78,5 +74,5 @@ Animation AnimationFactory::make(const std::string& tag, PixDim size)
    if (pos == m_factories.end())
       return NullAnimation;
    // Call factory function.
-   return pos->second(size, m_renderer);
+   return pos->second(size);
 }

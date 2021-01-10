@@ -19,6 +19,7 @@
 #include "place_session.h"
 #include "renderer2.h"
 #include "resources.h"
+#include "sprite.h"
 #include <memory>
 #include <optional>
 #include <vector>
@@ -41,7 +42,6 @@ class Game2 : private Commands
    bool setupTextures();
    bool setupRenderer();
    bool setupTerrain();
-   bool setupSpriteData();
    bool setupAnimations();
    bool setupAttackers();
    bool setupDefenders();
@@ -101,16 +101,15 @@ class Game2 : private Commands
    Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;
-   std::unique_ptr<SpriteRenderer> m_spriteRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
    std::vector<Attacker> m_attackers;
    std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
-   std::unique_ptr<Sprite> m_background;
+   Sprite m_background;
    Dashboard m_dashboard;
    std::optional<PlaceSession> m_placeSess;
-   std::unique_ptr<Sprite> m_validFieldOverlay;
-   std::unique_ptr<Sprite> m_invalidFieldOverlay;
+   Sprite m_validFieldOverlay;
+   Sprite m_invalidFieldOverlay;
    std::vector<bool> m_defenderMatrix;
 };

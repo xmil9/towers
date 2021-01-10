@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "animation.h"
+#include "renderer2.h"
 #include "sprite.h"
 
 
@@ -20,8 +21,8 @@ class AttackerLook
    AttackerLook& setSize(PixDim size);
    AttackerLook& setRotation(Angle_t rot);
 
-   void render(const gll::Program& shaders, PixPos atCenter);
-   void renderExploded(const gll::Program& shaders, PixPos atCenter);
+   void render(const Renderer2& renderer, PixPos atCenter);
+   void renderExploded(const Renderer2& renderer, PixPos atCenter);
 
    bool hasExplosionFinished() const { return m_explosion.hasFinished(); }
 
@@ -55,14 +56,14 @@ inline AttackerLook& AttackerLook::setRotation(Angle_t rot)
    return *this;
 }
 
-inline void AttackerLook::render(const gll::Program& shaders, PixPos atCenter)
+inline void AttackerLook::render(const Renderer2& renderer, PixPos atCenter)
 {
-   m_shape.render(shaders, atCenter - .5f * m_shape.size());
+   renderer.renderSprite(m_shape, atCenter - .5f * m_shape.size());
 }
 
-inline void AttackerLook::renderExploded(const gll::Program& shaders, PixPos atCenter)
+inline void AttackerLook::renderExploded(const Renderer2& renderer, PixPos atCenter)
 {
    // Also draw the attacker so that the explosion appears on top of it.
-   m_shape.render(shaders, atCenter - .5f * m_shape.size());
-   m_explosion.render(shaders, atCenter - .5f * m_explosion.size());
+   render(renderer, atCenter);
+   renderer.renderAnimation(m_explosion, atCenter - .5f * m_explosion.size());
 }

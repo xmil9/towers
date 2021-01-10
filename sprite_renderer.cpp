@@ -4,11 +4,11 @@
 //
 #include "sprite_renderer.h"
 #include "resources.h"
-#include "sprite_form.h"
-#include "sprite_look.h"
+#include "sprite.h"
 #include "gll_binding.h"
 #include "gll_data_format.h"
 #include "gll_program.h"
+#include "gll_shader.h"
 #include "gll_vbo.h"
 
 
@@ -49,37 +49,81 @@ glm::mat4x4 calcModelMatrix(const PixPos& pos, const PixDim& size, Angle_t rot,
 
 ///////////////////
 
-void SpriteRenderer::setMesh(const Mesh2& mesh)
+bool SpriteRenderer::setup(const std::filesystem::path& shaderPath)
 {
-   m_numElements = mesh.numIndices();
-   makeVao(mesh);
+   return setupShaders(shaderPath) && setupData();
 }
 
 
-void SpriteRenderer::render(const gll::Program& shaders, const SpriteLook& look,
-                            const SpriteForm& form, PixPos leftTop) const
+void SpriteRenderer::render(const Sprite& sprite, PixPos leftTop) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
-   if (look.hasTexture())
+   if (sprite.hasTexture())
    {
       glActiveTexture(GL_TEXTURE0);
-      texBinding.bind(m_resources->getTexture(look.texture()));
+      texBinding.bind(m_resources->getTexture(sprite.texture()));
    }
 
-   gll::Uniform colorUf = shaders.uniform("spriteColor");
-   colorUf.setValue(look.color());
+   makeUniform("spriteColor", sprite.color());
 
    // Scope for vao binding.
    {
       gll::BindingScope vaoBinding{m_vao};
 
-      gll::Uniform modelUf = shaders.uniform("model");
+      gll::Uniform modelUf = m_shaders.uniform("model");
       modelUf.setValue(
-         calcModelMatrix(leftTop, form.size(), form.rotation(), form.rotationCenter()));
+         calcModelMatrix(leftTop, sprite.size(), sprite.rotation(), sprite.rotationCenter()));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);
    }
+}
+
+
+bool SpriteRenderer::setupShaders(const std::filesystem::path& shaderPath)
+{
+   gll::Shader vs{gll::makeVertexShader(shaderPath / "sprite_shader.vs")};
+   gll::Shader fs{gll::makeFragmentShader(shaderPath / "sprite_shader.fs")};
+   if (!vs || !fs)
+      return false;
+
+   if (!vs.compile() || !fs.compile())
+      return false;
+
+   if (!m_shaders.create())
+      return false;
+
+   m_shaders.attachShader(vs);
+   m_shaders.attachShader(fs);
+
+   if (!m_shaders.link())
+      return false;
+
+   return true;
+}
+
+
+bool SpriteRenderer::setupData()
+{
+   // Coord system for vertex coordinates is:
+   // (0, 0) - left-top, (1, 1) - right-bottom
+   const std::vector<Mesh2::Point> positions = {
+      {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
+   // Triangle vertices are ordered ccw.
+   const std::vector<Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
+   // Coord system for texture coordinates is:
+   // (0, 0) - left-bottom, (1, 1) - right-top
+   const std::vector<Mesh2::Point> texCoords = positions;
+
+   Mesh2 mesh;
+   mesh.setPositions(positions);
+   mesh.setIndices(indices);
+   mesh.setTextureCoords(texCoords);
+
+   m_numElements = mesh.numIndices();
+   makeVao(mesh);
+
+   return true;
 }
 
 

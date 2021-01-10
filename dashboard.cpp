@@ -6,41 +6,45 @@
 #include "defender_models.h"
 #include "map_coord_sys.h"
 #include "place_session.h"
+#include "renderer2.h"
 #include "sprite.h"
 #include "texture_tags.h"
 #include <memory>
 
 
-bool Dashboard::setup(SpriteRenderer* renderer, const MapCoordSys* cs)
+static constexpr NormDim ButtonDim{.375f, .0625f};
+
+
+Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands)
+: m_dim{width, height}, m_commands{commands}, m_background{SpriteLook{DashboardTTag},
+                                                           SpriteForm{m_dim}},
+  m_ltButton{SpriteLook{LtTexture}, SpriteForm{ButtonDim * m_dim}},
+  m_smButton{SpriteLook{SmTexture}, SpriteForm{ButtonDim * m_dim}}
+
 {
-   assert(renderer);
+   assert(m_commands);
+}
+
+
+bool Dashboard::setup(const MapCoordSys* cs)
+{
    assert(cs);
-
    m_mapCoordSys = cs;
-   m_background =
-      std::make_unique<Sprite>(renderer, SpriteLook{DashboardTTag}, SpriteForm{m_dim});
-
-   constexpr NormDim buttonDim{.375f, .0625f};
-   m_ltButton = std::make_unique<Sprite>(renderer, SpriteLook{LtTexture},
-                                         SpriteForm{buttonDim * m_dim});
-   m_smButton = std::make_unique<Sprite>(renderer, SpriteLook{SmTexture},
-                                         SpriteForm{buttonDim * m_dim});
-
    return true;
 }
 
 
-void Dashboard::render(const gll::Program& shaders, const PixPos& at)
+void Dashboard::render(const Renderer2& renderer, const PixPos& at)
 {
-   m_background->render(shaders, at);
+   renderer.renderSprite(m_background, at);
 
    constexpr NormDim ltPos{.075f, .0167f};
    const NormDim ltPixPos = ltPos * m_dim;
-   m_ltButton->render(shaders, at + ltPixPos);
+   renderer.renderSprite(m_ltButton, at + ltPixPos);
 
    constexpr NormDim smPos{.535f, .0167f};
    const NormDim smPixPos = smPos * m_dim;
-   m_smButton->render(shaders, at + smPixPos);
+   renderer.renderSprite(m_smButton, at + smPixPos);
 }
 
 
@@ -49,8 +53,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    // Cancel existing placement session.
    m_commands->endPlaceSession();
 
-   constexpr NormDim buttonDim{.375f, .0625f};
-   const PixDim buttonPixDim = buttonDim * m_dim;
+   const PixDim buttonPixDim = ButtonDim * m_dim;
    // Set size of indicator to size of one field on map.
    constexpr MapDim indicatorDim{1.f, 1.f};
    const PixDim indicatorPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);

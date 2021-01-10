@@ -19,24 +19,6 @@ Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool 
 }
 
 
-void Animation::render(const gll::Program& shaders, PixPos atLeftTop)
-{
-   if (m_totalFrames == 0)
-      return;
-
-   if (hasFinished() && m_repeat)
-      reset();
-
-   if (!hasFinished())
-   {
-      const auto idx = calcSpriteIndex(m_currFrame);
-      if (idx)
-         m_sprites[*idx].render(shaders, atLeftTop);
-      ++m_currFrame;
-   }
-}
-
-
 Animation& Animation::setRotation(Angle_t rot)
 {
    for (auto& sp : m_sprites)
@@ -66,6 +48,19 @@ Animation& Animation::rotate(Angle_t rot)
    for (auto& sp : m_sprites)
       sp.rotate(rot);
    return *this;
+}
+
+
+std::optional<const Sprite*> Animation::nextFrame()
+{
+   if (m_totalFrames == 0 || (hasFinished() && !m_repeat))
+      return std::nullopt;
+
+   if (m_repeat)
+      reset();
+
+   const auto idx = calcSpriteIndex(m_currFrame++);
+   return idx ? std::make_optional(&m_sprites[*idx]) : std::nullopt;
 }
 
 

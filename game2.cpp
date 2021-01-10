@@ -56,9 +56,8 @@ Game2::Game2()
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
-           setupRenderer() && setupTerrain() && setupSpriteData() && setupAnimations() &&
-           setupAttackers() && setupDefenders() && setupBackground() &&
-           m_dashboard.setup(m_spriteRenderer.get(), m_coordSys.get()));
+           setupRenderer() && setupTerrain() && setupAnimations() && setupAttackers() &&
+           setupDefenders() && setupBackground() && m_dashboard.setup(m_coordSys.get()));
 }
 
 
@@ -202,35 +201,11 @@ bool Game2::setupTerrain()
 }
 
 
-bool Game2::setupSpriteData()
-{
-   // Coord system for vertex coordinates is:
-   // (0, 0) - left-top, (1, 1) - right-bottom
-   const std::vector<Mesh2::Point> positions = {
-      {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
-   // Triangle vertices are ordered ccw.
-   const std::vector<Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
-   // Coord system for texture coordinates is:
-   // (0, 0) - left-bottom, (1, 1) - right-top
-   const std::vector<Mesh2::Point> texCoords = positions;
-
-   Mesh2 mesh;
-   mesh.setPositions(positions);
-   mesh.setIndices(indices);
-   mesh.setTextureCoords(texCoords);
-   m_spriteRenderer = std::make_unique<SpriteRenderer>(&m_resources);
-   m_spriteRenderer->setMesh(mesh);
-
-   return true;
-}
-
-
 bool Game2::setupAnimations()
 {
    assert(!!m_coordSys);
-   assert(!!m_spriteRenderer);
 
-   AnimationFactory factory(m_spriteRenderer.get());
+   AnimationFactory factory;
 
    m_resources.addAnimation(
       ExplosionATag,
@@ -262,16 +237,15 @@ bool Game2::setupAttackers()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
-   assert(!!m_spriteRenderer);
 
    m_attackFactory = std::make_unique<AttackerFactory>(m_coordSys.get());
 
    m_attackFactory->registerModel(
-      AatModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{AatTexture},
+      AatModel, AttackerLook{Sprite{SpriteLook{AatTexture},
                                     SpriteForm{m_resources.getTextureSize(AatTexture)}},
                              m_resources.getAnimation(ExplosionATag)});
    m_attackFactory->registerModel(
-      MhcModel, AttackerLook{Sprite{m_spriteRenderer.get(), SpriteLook{MhcTexture},
+      MhcModel, AttackerLook{Sprite{SpriteLook{MhcTexture},
                                     SpriteForm{m_resources.getTextureSize(MhcTexture)}},
                              m_resources.getAnimation(ExplosionATag)});
 
@@ -308,17 +282,16 @@ bool Game2::setupDefenders()
 {
    assert(!!m_coordSys);
    assert(!!m_map);
-   assert(!!m_spriteRenderer);
 
    m_defenseFactory = std::make_unique<DefenderFactory>(m_coordSys.get(), &m_attackers);
 
    m_defenseFactory->registerModel(
-      LtModel, DefenderLook{Sprite{m_spriteRenderer.get(), SpriteLook{LtTexture},
+      LtModel, DefenderLook{Sprite{SpriteLook{LtTexture},
                                    SpriteForm{m_resources.getTextureSize(LtTexture)}},
                             m_resources.getAnimation(LtFiringAnimation)});
 
    m_defenseFactory->registerModel(
-      SmModel, DefenderLook{Sprite{m_spriteRenderer.get(), SpriteLook{SmTexture},
+      SmModel, DefenderLook{Sprite{SpriteLook{SmTexture},
                                    SpriteForm{m_resources.getTextureSize(SmTexture)}},
                             m_resources.getAnimation(SmFiringAnimation)});
 
@@ -329,15 +302,11 @@ bool Game2::setupDefenders()
 
 bool Game2::setupBackground()
 {
-   assert(!!m_spriteRenderer);
-   m_background = std::make_unique<Sprite>(m_spriteRenderer.get(), SpriteLook{Map1TTag},
-                                           SpriteForm{{MapWidth, MapHeight}});
+   m_background = Sprite{SpriteLook{Map1TTag}, SpriteForm{{MapWidth, MapHeight}}};
 
    const PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
-   m_validFieldOverlay = std::make_unique<Sprite>(
-      m_spriteRenderer.get(), SpriteLook{ValidFieldTTag}, SpriteForm{fieldPixDim});
-   m_invalidFieldOverlay = std::make_unique<Sprite>(
-      m_spriteRenderer.get(), SpriteLook{InvalidFieldTTag}, SpriteForm{fieldPixDim});
+   m_validFieldOverlay = Sprite{SpriteLook{ValidFieldTTag}, SpriteForm{fieldPixDim}};
+   m_invalidFieldOverlay = Sprite{SpriteLook{InvalidFieldTTag}, SpriteForm{fieldPixDim}};
 
    return true;
 }
@@ -368,12 +337,12 @@ void Game2::render()
 {
    m_renderer.beginRendering(true);
    renderMap();
-   m_dashboard.render(m_renderer.shaders(), PixPos{MapWidth - 1, 0.f});
+   m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
 
    for (auto& attacker : m_attackers)
-      attacker.render(m_renderer.shaders());
+      attacker.render(m_renderer);
    for (auto& defender : m_defenders)
-      defender.render(m_renderer.shaders());
+      defender.render(m_renderer);
 
    // Draw placed content on top of everything else.
    renderPlaceSession();
@@ -384,7 +353,7 @@ void Game2::render()
 
 void Game2::renderMap()
 {
-   m_background->render(m_renderer.shaders(), {0.f, 0.f});
+   m_renderer.renderSprite(m_background, {0.f, 0.f});
 }
 
 
@@ -406,15 +375,15 @@ void Game2::renderPlaceSession()
       if (isOnMap)
       {
          const Sprite& overlay = canPlaceDefenderOnField(m_placeSess->model, fieldPos)
-                                    ? *m_validFieldOverlay
-                                    : *m_invalidFieldOverlay;
-         overlay.render(m_renderer.shaders(), fieldPixPos);
+                                    ? m_validFieldOverlay
+                                    : m_invalidFieldOverlay;
+         m_renderer.renderSprite(overlay, fieldPixPos);
       }
 
-      const PixDim halfIndicatorSize = m_placeSess->indicator->size() / 2.f;
+      const PixDim halfIndicatorSize = m_placeSess->indicator.size() / 2.f;
       const PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
-      m_placeSess->indicator->render(m_renderer.shaders(),
-                                     indicatorCenter - halfIndicatorSize);
+      m_renderer.renderSprite(m_placeSess->indicator,
+                              indicatorCenter - halfIndicatorSize);
    }
 }
 
@@ -643,8 +612,7 @@ void Game2::startPlaceSession(std::string_view model, std::string_view indicator
 {
    PlaceSession sess;
    sess.model = model;
-   sess.indicator = std::make_unique<Sprite>(
-      m_spriteRenderer.get(), SpriteLook{indicatorTex}, SpriteForm{indicatorDim});
+   sess.indicator = Sprite{SpriteLook{indicatorTex}, SpriteForm{indicatorDim}};
 
    m_placeSess = std::move(sess);
 }

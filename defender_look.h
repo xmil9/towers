@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "animation.h"
+#include "renderer2.h"
 #include "sprite.h"
 
 
@@ -20,8 +21,8 @@ class DefenderLook
    DefenderLook& setSize(PixDim size);
    DefenderLook& setRotation(Angle_t rot);
 
-   void render(const gll::Program& shaders, PixPos atCenter);
-   void renderFiring(const gll::Program& shaders, PixPos atCenter);
+   void render(const Renderer2& renderer, PixPos atCenter);
+   void renderFiring(const Renderer2& renderer, PixPos atCenter);
 
  private:
    Sprite m_shape;
@@ -53,12 +54,12 @@ inline DefenderLook& DefenderLook::setRotation(Angle_t rot)
    return *this;
 }
 
-inline void DefenderLook::render(const gll::Program& shaders, PixPos atCenter)
+inline void DefenderLook::render(const Renderer2& renderer, PixPos atCenter)
 {
-   m_shape.render(shaders, atCenter - .5f * m_shape.size());
+   renderer.renderSprite(m_shape, atCenter - .5f * m_shape.size());
 }
 
-inline void DefenderLook::renderFiring(const gll::Program& shaders, PixPos atCenter)
+inline void DefenderLook::renderFiring(const Renderer2& renderer, PixPos atCenter)
 {
-   m_firing.render(shaders, atCenter - .5f * m_firing.size());
+   renderer.renderAnimation(m_firing, atCenter - .5f * m_firing.size());
 }
