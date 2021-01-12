@@ -57,7 +57,7 @@ class TextRenderer
  private:
    bool setupShaders();
    bool setupCharTextures(const std::filesystem::path& font, unsigned int fontSize);
-   bool setupVao();
+   bool setupBuffers();
 
  private:
    Resources* m_resources = nullptr;
@@ -75,7 +75,7 @@ inline TextRenderer::TextRenderer(Resources* resources) : m_resources{resources}
 
 inline bool TextRenderer::setup(const std::filesystem::path& font, unsigned int fontSize)
 {
-   return setupCharTextures(font, fontSize) && setupShaders() && setupVao();
+   return setupCharTextures(font, fontSize) && setupShaders() && setupBuffers();
 }
 
 template<typename Value>

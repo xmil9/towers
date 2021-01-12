@@ -4,6 +4,8 @@
 //
 #include "renderer2.h"
 #include "resources.h"
+#include "glm/gtc/matrix_transform.hpp"
+
 
 
 bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
@@ -33,7 +35,7 @@ bool Renderer2::setupSettings(int viewWidth, int viewHeight)
 
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-   glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+   glClearColor(1.f, 1.f, 1.f, 1.0f);
 
    // Blending settings.
    glEnable(GL_BLEND);
@@ -62,6 +64,8 @@ void Renderer2::renderAnimation(Animation& anim, PixPos leftTop) const
 void Renderer2::beginTextRendering() const
 {
    m_textRenderer->activateShaders();
-   m_textRenderer->makeUniform("view", m_cam.viewMatrix());
-   m_textRenderer->makeUniform("projection", m_frustum.projectionMatrix());
+   //m_textRenderer->makeUniform("view", m_cam.viewMatrix());
+   glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1800), 0.0f, static_cast<float>(1200));
+   m_textRenderer->makeUniform("projection", projection);
+   //m_textRenderer->makeUniform("projection", m_frustum.projectionMatrix());
 }

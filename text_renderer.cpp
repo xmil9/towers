@@ -207,24 +207,23 @@ bool TextRenderer::setupCharTextures(const std::filesystem::path& font,
    }
 }
 
-bool TextRenderer::setupVao()
+bool TextRenderer::setupBuffers()
 {
-   // VBOs and their binding scopes. They have to be unbound after the vao.
-   gll::BoundVbo posBuf;
+   m_vao.create();
+   m_vao.bind();
 
-   // Scope for vao binding.
-   // Needs to be unbound before the vbos.
-   {
-      m_vao.create();
-      gll::BindingScope vaoBinding{m_vao};
+   m_vbo.create();
+   m_vbo.bind(GL_ARRAY_BUFFER);
+   m_vbo.setData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
 
-      // Each attribute index has to match the 'location' value in the vertex shader code.
-      constexpr GLuint PosAttribIdx = 0;
+   // Each attribute index has to match the 'location' value in the vertex shader code.
+   constexpr GLuint PosAttribIdx = 0;
 
-      bindArrayVbo(PosAttribIdx, nullptr, 0,
-                   {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr}, GL_DYNAMIC_DRAW,
-                   posBuf);
-   }
+   gll::Vao::enableAttrib(PosAttribIdx);
+   gll::Vao::setAttribFormat(PosAttribIdx, {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr});
+
+   m_vao.unbind();
+   m_vbo.unbind(GL_ARRAY_BUFFER);
 
    return true;
 }
