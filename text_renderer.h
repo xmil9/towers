@@ -25,7 +25,7 @@ class TextRenderer
    ~TextRenderer() = default;
    TextRenderer(const TextRenderer&) = delete;
    TextRenderer(TextRenderer&&) noexcept = default;
-   
+
    TextRenderer& operator=(const TextRenderer&) = delete;
    TextRenderer& operator=(TextRenderer&&) noexcept = default;
 
@@ -34,11 +34,10 @@ class TextRenderer
 
    // Prepare a render session.
    void activateShaders() { m_shaders.use(); }
-   template<typename Value>
-   void makeUniform(const GLchar* name, const Value& v) const;
-   
+   template <typename Value> void makeUniform(const GLchar* name, const Value& v) const;
+
    // Individual render operations.
-   void render(const std::string& text, PixPos pos, float scale, glm::vec3 color);
+   void render(const std::string& text, PixPos baseline, float scale, glm::vec3 color);
 
  private:
    // Information about how to draw each character.
@@ -78,7 +77,7 @@ inline bool TextRenderer::setup(const std::filesystem::path& font, unsigned int 
    return setupCharTextures(font, fontSize) && setupShaders() && setupBuffers();
 }
 
-template<typename Value>
+template <typename Value>
 void TextRenderer::makeUniform(const GLchar* name, const Value& v) const
 {
    gll::Uniform u = m_shaders.uniform(name);

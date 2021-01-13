@@ -64,8 +64,8 @@ void Renderer2::renderAnimation(Animation& anim, PixPos leftTop) const
 void Renderer2::beginTextRendering() const
 {
    m_textRenderer->activateShaders();
-   //m_textRenderer->makeUniform("view", m_cam.viewMatrix());
-   glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1800), 0.0f, static_cast<float>(1200));
-   m_textRenderer->makeUniform("projection", projection);
-   //m_textRenderer->makeUniform("projection", m_frustum.projectionMatrix());
+   m_textRenderer->makeUniform("view", m_cam.viewMatrix());
+   //glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(1800), 0.0f, static_cast<float>(1200));
+   //m_textRenderer->makeUniform("projection", projection);
+   m_textRenderer->makeUniform("projection", m_frustum.projectionMatrix());
 }

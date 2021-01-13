@@ -350,7 +350,7 @@ void Game2::render()
    renderPlaceSession();
 
    m_renderer.beginTextRendering();
-   m_renderer.renderText("test", {100.f, 100.f}, 1.f, {1.f, .5f, .5f});
+   m_renderer.renderText("testp", {0.f, 48.f}, 1.f, {1.f, .5f, .5f});
 
    m_mainWnd.swapBuffers();
 }

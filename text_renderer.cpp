@@ -90,7 +90,7 @@ const FT_GlyphSlot Face::glyph() const
 
 ///////////////////
 
-void TextRenderer::render(const std::string& text, PixPos pos, float scale,
+void TextRenderer::render(const std::string& text, PixPos baseline, float scale,
                           glm::vec3 color)
 {
    m_shaders.use();
@@ -99,24 +99,25 @@ void TextRenderer::render(const std::string& text, PixPos pos, float scale,
    glActiveTexture(GL_TEXTURE0);
    m_vao.bind();
 
-   // Render each character in given text.
-   float x = pos.x;
+   // Render each character of given text.
+   float x = baseline.x;
    for (char c : text)
    {
       const Char& ch = m_chars[c];
 
       const float xpos = x + ch.bearing.x * scale;
-      const float ypos = pos.y - (ch.size.y - ch.bearing.y) * scale;
+      const float decend = (ch.size.y - ch.bearing.y) * scale;
+      const float ypos = baseline.y + decend;
 
       const float w = ch.size.x * scale;
       const float h = ch.size.y * scale;
 
       float vertices[6][4] = {
-         {xpos, ypos + h, 0.0f, 0.0f},    {xpos, ypos, 0.0f, 1.0f},
+         {xpos, ypos - h, 0.0f, 0.0f},    {xpos, ypos, 0.0f, 1.0f},
          {xpos + w, ypos, 1.0f, 1.0f},
 
-         {xpos, ypos + h, 0.0f, 0.0f},    {xpos + w, ypos, 1.0f, 1.0f},
-         {xpos + w, ypos + h, 1.0f, 0.0f}};
+         {xpos, ypos - h, 0.0f, 0.0f},    {xpos + w, ypos, 1.0f, 1.0f},
+         {xpos + w, ypos - h, 1.0f, 0.0f}};
 
       ch.tex.bind();
       m_vbo.bind(GL_ARRAY_BUFFER);
@@ -220,7 +221,8 @@ bool TextRenderer::setupBuffers()
    constexpr GLuint PosAttribIdx = 0;
 
    gll::Vao::enableAttrib(PosAttribIdx);
-   gll::Vao::setAttribFormat(PosAttribIdx, {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr});
+   gll::Vao::setAttribFormat(PosAttribIdx,
+                             {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr});
 
    m_vao.unbind();
    m_vbo.unbind(GL_ARRAY_BUFFER);
