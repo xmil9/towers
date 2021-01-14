@@ -3,11 +3,18 @@
 // MIT license
 //
 #include "text_renderer.h"
+#include "mesh2.h"
 #include "resources.h"
 #include "gll_binding.h"
 #include "gll_shader.h"
 #include "ft2build.h"
 #include "freetype/freetype.h"
+#include <array>
+
+
+///////////////////
+
+static constexpr std::size_t NumCharVertices = 6;
 
 
 // Helper functionality for TreeType library.
@@ -112,19 +119,19 @@ void TextRenderer::render(const std::string& text, PixPos baseline, float scale,
       const float w = ch.size.x * scale;
       const float h = ch.size.y * scale;
 
-      float vertices[6][4] = {
-         {xpos, ypos - h, 0.0f, 0.0f},    {xpos, ypos, 0.0f, 1.0f},
-         {xpos + w, ypos, 1.0f, 1.0f},
-
-         {xpos, ypos - h, 0.0f, 0.0f},    {xpos + w, ypos, 1.0f, 1.0f},
-         {xpos + w, ypos - h, 1.0f, 0.0f}};
+      const std::array<Mesh2::Point, NumCharVertices> positions{
+         Mesh2::Point{xpos, ypos - h}, Mesh2::Point{xpos, ypos},
+         Mesh2::Point{xpos + w, ypos}, Mesh2::Point{xpos, ypos - h},
+         Mesh2::Point{xpos + w, ypos}, Mesh2::Point{xpos + w, ypos - h}};
 
       ch.tex.bind();
-      m_vbo.bind(GL_ARRAY_BUFFER);
-      m_vbo.setSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-      m_vbo.unbind(GL_ARRAY_BUFFER);
 
-      glDrawArrays(GL_TRIANGLES, 0, 6);
+      m_posVbo.bind(GL_ARRAY_BUFFER);
+      m_posVbo.setSubData(GL_ARRAY_BUFFER, 0, sizeof(Mesh2::Point) * positions.size(),
+                          positions.data());
+      m_posVbo.unbind(GL_ARRAY_BUFFER);
+
+      glDrawArrays(GL_TRIANGLES, 0, NumCharVertices);
 
       // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
       // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of
@@ -213,19 +220,30 @@ bool TextRenderer::setupBuffers()
    m_vao.create();
    m_vao.bind();
 
-   m_vbo.create();
-   m_vbo.bind(GL_ARRAY_BUFFER);
-   m_vbo.setData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
-
    // Each attribute index has to match the 'location' value in the vertex shader code.
    constexpr GLuint PosAttribIdx = 0;
+   constexpr GLuint TexCoordsAttribIdx = 1;
 
-   gll::Vao::enableAttrib(PosAttribIdx);
-   gll::Vao::setAttribFormat(PosAttribIdx,
-                             {4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr});
+   // Same data format for position and texture coordinates.
+   const gll::DataFormat VertexDataFormat{2, GL_FLOAT, GL_FALSE, sizeof(Mesh2::Point),
+                                          nullptr};
 
+   m_posVbo.create();
+   bindArrayVbo(m_posVbo, PosAttribIdx, nullptr, NumCharVertices * sizeof(Mesh2::Point),
+                VertexDataFormat, GL_STATIC_DRAW);
+
+   static const std::array<Mesh2::Point, NumCharVertices> CharTextureCoords{
+      Mesh2::Point{0.f, 0.f}, Mesh2::Point{0.f, 1.f}, Mesh2::Point{1.f, 1.f},
+      Mesh2::Point{0.f, 0.f}, Mesh2::Point{1.f, 1.f}, Mesh2::Point{1.f, 0.f}};
+   m_texCoordVbo.create();
+   bindArrayVbo(m_texCoordVbo, TexCoordsAttribIdx, CharTextureCoords.data(),
+                NumCharVertices * sizeof(Mesh2::Point), VertexDataFormat, GL_STATIC_DRAW);
+
+   // Unbind before the vbos.
    m_vao.unbind();
-   m_vbo.unbind(GL_ARRAY_BUFFER);
+   // Unbind vbos after vao.
+   m_posVbo.unbind(GL_ARRAY_BUFFER);
+   m_texCoordVbo.unbind(GL_ARRAY_BUFFER);
 
    return true;
 }

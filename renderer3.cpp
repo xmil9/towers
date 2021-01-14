@@ -83,11 +83,11 @@ bool Renderer3::setupShaders()
    const std::filesystem::path appPath = sutil::appDirectory();
    bool ok = !appPath.empty();
 
-   gll::Shader vs{gll::makeVertexShader(appPath / "cube3_shader.vs")};
+   gll::Shader vs{gll::makeVertexShader(appPath / "shaders" / "cube3_shader.vs")};
    if (ok)
       ok = vs.compile();
 
-   gll::Shader fs{gll::makeFragmentShader(appPath / "cube3_shader.fs")};
+   gll::Shader fs{gll::makeFragmentShader(appPath / "shaders" / "cube3_shader.fs")};
    if (ok)
       ok = fs.compile();
 
@@ -117,14 +117,14 @@ bool Renderer3::setupTextures()
    m_tex.bind();
    m_tex.setWrapPolicy(GL_REPEAT, GL_REPEAT);
    m_tex.setScaleFiltering(GL_NEAREST, GL_NEAREST);
-   m_tex.loadData(appPath / "directions.png", true, 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
+   m_tex.loadData(appPath / "resources" / "directions.png", true, 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
    m_tex.generateMipmap();
 
    m_tex2.create();
    m_tex2.bind();
    m_tex2.setWrapPolicy(GL_REPEAT, GL_REPEAT);
    m_tex2.setScaleFiltering(GL_NEAREST, GL_NEAREST);
-   m_tex2.loadData(appPath / "red_marble.png", true, 0, GL_RGB, GL_RGBA,
+   m_tex2.loadData(appPath / "resources" / "red_marble.png", true, 0, GL_RGB, GL_RGBA,
                    GL_UNSIGNED_BYTE);
    m_tex2.generateMipmap();
 
@@ -138,35 +138,47 @@ bool Renderer3::setupTextures()
 
 bool Renderer3::setupData()
 {
-   // VBOs and their binding scopes. They have to be unbound after the vao.
-   gll::BoundVbo posBuf;
-   gll::BoundVbo normalBuf;
-   gll::BoundVbo colorBuf;
-   gll::BoundVbo texCoordBuf;
-   gll::BoundVbo elemBuf;
+   m_vao.create();
+   m_vao.bind();
 
-   // Scope for vao binding.
-   // Needs to be unbound before the vbos.
-   {
-      m_vao.create();
-      gll::BindingScope vaoBinding{m_vao};
+   // Each attribute index has to match the 'location' value in the vertex shader code.
+   constexpr GLuint PosAttribIdx = 0;
+   constexpr GLuint NormalAttribIdx = 1;
+   constexpr GLuint ColorAttribIdx = 2;
+   constexpr GLuint TexCoordsAttribIdx = 3;
 
-      // Each attribute index has to match the 'location' value in the vertex shader code.
-      constexpr GLuint PosAttribIdx = 0;
-      constexpr GLuint NormalAttribIdx = 1;
-      constexpr GLuint ColorAttribIdx = 2;
-      constexpr GLuint TexCoordsAttribIdx = 3;
+   gll::Vbo posVbo;
+   posVbo.create();
+   bindArrayVbo(posVbo, PosAttribIdx, positions, sizeof(positions), posFormat,
+                GL_STATIC_DRAW);
 
-      bindArrayVbo(PosAttribIdx, positions, sizeof(positions), posFormat, GL_STATIC_DRAW,
-                   posBuf);
-      bindArrayVbo(NormalAttribIdx, normals, sizeof(normals), normalFormat,
-                   GL_STATIC_DRAW, normalBuf);
-      bindArrayVbo(ColorAttribIdx, colors, sizeof(colors), colorFormat, GL_STATIC_DRAW,
-                   colorBuf);
-      bindArrayVbo(TexCoordsAttribIdx, texCoords, sizeof(texCoords), texCoordFormat,
-                   GL_STATIC_DRAW, texCoordBuf);
-      bindElementVbo(indices, sizeof(indices), GL_STATIC_DRAW, elemBuf);
-   }
+   gll::Vbo normalVbo;
+   normalVbo.create();
+   bindArrayVbo(normalVbo, NormalAttribIdx, normals, sizeof(normals), normalFormat,
+                GL_STATIC_DRAW);
+
+   gll::Vbo colorVbo;
+   colorVbo.create();
+   bindArrayVbo(colorVbo, ColorAttribIdx, colors, sizeof(colors), colorFormat,
+                GL_STATIC_DRAW);
+
+   gll::Vbo texCoordVbo;
+   texCoordVbo.create();
+   bindArrayVbo(texCoordVbo, TexCoordsAttribIdx, texCoords, sizeof(texCoords),
+                texCoordFormat, GL_STATIC_DRAW);
+   
+   gll::Vbo elemVbo;
+   elemVbo.create();
+   bindElementVbo(elemVbo, indices, sizeof(indices), GL_STATIC_DRAW);
+
+   // Unbind before the vbos.
+   m_vao.unbind();
+   // Unbind vbos after vao.
+   posVbo.unbind(GL_ARRAY_BUFFER);
+   normalVbo.unbind(GL_ARRAY_BUFFER);
+   colorVbo.unbind(GL_ARRAY_BUFFER);
+   texCoordVbo.unbind(GL_ARRAY_BUFFER);
+   elemVbo.unbind(GL_ELEMENT_ARRAY_BUFFER);
 
    return true;
 }

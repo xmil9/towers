@@ -63,7 +63,8 @@ class TextRenderer
    std::map<GLchar, Char> m_chars;
    gll::Program m_shaders;
    gll::Vao m_vao;
-   gll::Vbo m_vbo;
+   gll::Vbo m_posVbo;
+   gll::Vbo m_texCoordVbo;
 };
 
 

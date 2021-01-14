@@ -25,6 +25,7 @@ class Game3
    bool setupUi();
    bool setupMainWindow();
    bool setupInput();
+   bool setupOutput();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
                             const Observed<MainWindow>::MsgData& data);

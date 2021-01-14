@@ -145,37 +145,13 @@ inline void VboBindingScope::unbind()
 
 ///////////////////
 
-// Combines a vbo and its binding scope.
-// Helper class for vbo binding functions below.
-class BoundVbo
-{
- public:
-   bool create() { return m_vbo.create(); }
-   void bind(GLenum target) { m_binding.bind(m_vbo, target); }
-   void setData(GLenum target, GLsizeiptr size, const void* data, GLenum usage);
-
- private:
-   gll::Vbo m_vbo;
-   gll::VboBindingScope m_binding;
-};
-
-
-inline void BoundVbo::setData(GLenum target, GLsizeiptr size, const void* data,
-                              GLenum usage)
-{
-   m_vbo.setData(target, size, data, usage);
-}
-
-
-///////////////////
-
 // Binds array vbo to current vao.
 // Usage values: GL_STATIC_DRAW, GL_DYNAMIC_DRAW
-void bindArrayVbo(GLuint attribIdx, const void* data, std::size_t dataSize,
-                  const gll::DataFormat& format, GLenum usage, BoundVbo& buf);
+void bindArrayVbo(gll::Vbo& vbo, GLuint attribIdx, const void* data, std::size_t dataSize,
+                  const gll::DataFormat& format, GLenum usage);
 
 // Binds element vbo to current vao.
 // Usage values: GL_STATIC_DRAW, GL_DYNAMIC_DRAW
-void bindElementVbo(const void* data, std::size_t dataSize, GLenum usage, BoundVbo& buf);
+void bindElementVbo(gll::Vbo& vbo, const void* data, std::size_t dataSize, GLenum usage);
 
 } // namespace gll

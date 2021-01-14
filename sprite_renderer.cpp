@@ -71,8 +71,8 @@ void SpriteRenderer::render(const Sprite& sprite, PixPos leftTop) const
       gll::BindingScope vaoBinding{m_vao};
 
       gll::Uniform modelUf = m_shaders.uniform("model");
-      modelUf.setValue(
-         calcModelMatrix(leftTop, sprite.size(), sprite.rotation(), sprite.rotationCenter()));
+      modelUf.setValue(calcModelMatrix(leftTop, sprite.size(), sprite.rotation(),
+                                       sprite.rotationCenter()));
 
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);
@@ -129,25 +129,31 @@ bool SpriteRenderer::setupData()
 
 void SpriteRenderer::makeVao(const Mesh2& mesh)
 {
-   // VBOs and their binding scopes. They have to be unbound after the vao.
-   gll::BoundVbo posBuf;
-   gll::BoundVbo texCoordBuf;
-   gll::BoundVbo elemBuf;
+   m_vao.create();
+   m_vao.bind();
 
-   // Scope for vao binding.
-   // Needs to be unbound before the vbos.
-   {
-      m_vao.create();
-      gll::BindingScope vaoBinding{m_vao};
+   // Each attribute index has to match the 'location' value in the vertex shader code.
+   constexpr GLuint PosAttribIdx = 0;
+   constexpr GLuint TexCoordsAttribIdx = 1;
 
-      // Each attribute index has to match the 'location' value in the vertex shader code.
-      constexpr GLuint PosAttribIdx = 0;
-      constexpr GLuint TexCoordsAttribIdx = 1;
+   gll::Vbo posVbo;
+   posVbo.create();
+   bindArrayVbo(posVbo, PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
+                mesh.positionsFormat(), GL_STATIC_DRAW);
 
-      bindArrayVbo(PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
-                   mesh.positionsFormat(), GL_STATIC_DRAW, posBuf);
-      bindArrayVbo(TexCoordsAttribIdx, mesh.textureCoords(), mesh.numTextureCoordBytes(),
-                   mesh.textureCoordsFormat(), GL_STATIC_DRAW, texCoordBuf);
-      bindElementVbo(mesh.indices(), mesh.numIndexBytes(), GL_STATIC_DRAW, elemBuf);
-   }
+   gll::Vbo texCoordVbo;
+   texCoordVbo.create();
+   bindArrayVbo(texCoordVbo, TexCoordsAttribIdx, mesh.textureCoords(),
+                mesh.numTextureCoordBytes(), mesh.textureCoordsFormat(), GL_STATIC_DRAW);
+
+   gll::Vbo elemVbo;
+   elemVbo.create();
+   bindElementVbo(elemVbo, mesh.indices(), mesh.numIndexBytes(), GL_STATIC_DRAW);
+
+   // Unbind before the vbos.
+   m_vao.unbind();
+   // Unbind vbos after vao.
+   posVbo.unbind(GL_ARRAY_BUFFER);
+   texCoordVbo.unbind(GL_ARRAY_BUFFER);
+   elemVbo.unbind(GL_ELEMENT_ARRAY_BUFFER);
 }

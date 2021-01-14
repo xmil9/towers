@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "game3.h"
+#include "gll_debug.h"
 
 
 namespace
@@ -31,6 +32,8 @@ bool Game3::setup()
       return false;
    if (!setupInput())
       return false;
+   if (!setupOutput())
+      return false;
    if (!m_renderer.setup())
       return false;
    return true;
@@ -58,7 +61,7 @@ void Game3::run()
 
 bool Game3::setupUi()
 {
-   if (m_glfw.init() != GLFW_NO_ERROR)
+   if (m_glfw.init(gfl::Lib::DebugOuput::On) != GLFW_NO_ERROR)
       return false;
 
    if (!setupMainWindow())
@@ -95,6 +98,14 @@ bool Game3::setupInput()
       [this](Input& /*src*/, std::string_view msg, const Observed<Input>::MsgData& data) {
          onInputChanged(m_input, msg, data);
       });
+   return true;
+}
+
+
+bool Game3::setupOutput()
+{
+   if (gll::haveDebugContext())
+      gll::setDebugOutputCallback();
    return true;
 }
 
