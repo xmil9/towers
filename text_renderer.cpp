@@ -133,10 +133,7 @@ void TextRenderer::render(const std::string& text, PixPos baseline, float scale,
 
       glDrawArrays(GL_TRIANGLES, 0, NumCharVertices);
 
-      // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-      // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of
-      // 1/64th pixels by 64 to get amount of pixels))
-      x += (ch.advanceX >> 6) * scale;
+      x += ch.advanceX * scale;
    }
 
    m_vao.unbind();
@@ -202,7 +199,9 @@ bool TextRenderer::setupCharTextures(const std::filesystem::path& font,
          ch.tex = std::move(tex);
          ch.size = glm::ivec2{face.bitmap().width, face.bitmap().rows};
          ch.bearing = glm::ivec2{face.glyph()->bitmap_left, face.glyph()->bitmap_top};
-         ch.advanceX = static_cast<unsigned int>(face.glyph()->advance.x);
+         // The unit for the 'advance' vector is 1/64 of a pixel, so if the horizontal
+         // advance distance is 4 pixel then advance.x = 256. Divide by 64 to get pixels.
+         ch.advanceX = static_cast<unsigned int>(face.glyph()->advance.x) / 64;
          m_chars[c] = std::move(ch);
       }
 
