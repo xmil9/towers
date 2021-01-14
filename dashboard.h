@@ -6,9 +6,6 @@
 #include "commands.h"
 #include "coords.h"
 #include "sprite.h"
-#include <cassert>
-#include <memory>
-#include <optional>
 
 class MapCoordSys;
 struct PlaceSession;
