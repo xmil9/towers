@@ -218,7 +218,7 @@ bool TextRenderer::setupCharTextures(const std::filesystem::path& font,
 bool TextRenderer::setupBuffers()
 {
    m_vao.create();
-   m_vao.bind();
+   gll::BindingScope vaoScope{m_vao};
 
    // Each attribute index has to match the 'location' value in the vertex shader code.
    constexpr GLuint PosAttribIdx = 0;
@@ -230,18 +230,17 @@ bool TextRenderer::setupBuffers()
 
    m_posVbo.create();
    bindArrayVbo(m_posVbo, PosAttribIdx, nullptr, NumCharVertices * sizeof(Mesh2::Point),
-                VertexDataFormat, GL_STATIC_DRAW);
+                VertexDataFormat, GL_DYNAMIC_DRAW);
 
+   // Texture coordinates are the same for all chars and never change.
    static const std::array<Mesh2::Point, NumCharVertices> CharTextureCoords{
       Mesh2::Point{0.f, 0.f}, Mesh2::Point{0.f, 1.f}, Mesh2::Point{1.f, 1.f},
       Mesh2::Point{0.f, 0.f}, Mesh2::Point{1.f, 1.f}, Mesh2::Point{1.f, 0.f}};
    m_texCoordVbo.create();
    bindArrayVbo(m_texCoordVbo, TexCoordsAttribIdx, CharTextureCoords.data(),
-                NumCharVertices * sizeof(Mesh2::Point), VertexDataFormat, GL_STATIC_DRAW);
+                NumCharVertices * sizeof(Mesh2::Point), VertexDataFormat,
+                GL_DYNAMIC_DRAW);
 
-   // Unbind before the vbos.
-   m_vao.unbind();
-   // Unbind vbos after vao.
    m_posVbo.unbind(GL_ARRAY_BUFFER);
    m_texCoordVbo.unbind(GL_ARRAY_BUFFER);
 
