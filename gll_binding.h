@@ -145,13 +145,21 @@ inline void VboBindingScope::unbind()
 
 ///////////////////
 
+// Policy for unbinding.
+enum class Unbind
+{
+   Immediately,
+   LeaveBound
+};
+
 // Binds array vbo to current vao.
 // Usage values: GL_STATIC_DRAW, GL_DYNAMIC_DRAW
 void bindArrayVbo(gll::Vbo& vbo, GLuint attribIdx, const void* data, std::size_t dataSize,
-                  const gll::DataFormat& format, GLenum usage);
+                  const gll::DataFormat& format, GLenum usage, Unbind unbind);
 
 // Binds element vbo to current vao.
 // Usage values: GL_STATIC_DRAW, GL_DYNAMIC_DRAW
-void bindElementVbo(gll::Vbo& vbo, const void* data, std::size_t dataSize, GLenum usage);
+void bindElementVbo(gll::Vbo& vbo, const void* data, std::size_t dataSize, GLenum usage,
+                    Unbind unbind);
 
 } // namespace gll

@@ -139,16 +139,18 @@ void SpriteRenderer::makeVao(const Mesh2& mesh)
    gll::Vbo posVbo;
    posVbo.create();
    bindArrayVbo(posVbo, PosAttribIdx, mesh.positions(), mesh.numPositionBytes(),
-                mesh.positionsFormat(), GL_STATIC_DRAW);
+                mesh.positionsFormat(), GL_STATIC_DRAW, gll::Unbind::LeaveBound);
 
    gll::Vbo texCoordVbo;
    texCoordVbo.create();
    bindArrayVbo(texCoordVbo, TexCoordsAttribIdx, mesh.textureCoords(),
-                mesh.numTextureCoordBytes(), mesh.textureCoordsFormat(), GL_STATIC_DRAW);
+                mesh.numTextureCoordBytes(), mesh.textureCoordsFormat(), GL_STATIC_DRAW,
+                gll::Unbind::LeaveBound);
 
    gll::Vbo elemVbo;
    elemVbo.create();
-   bindElementVbo(elemVbo, mesh.indices(), mesh.numIndexBytes(), GL_STATIC_DRAW);
+   bindElementVbo(elemVbo, mesh.indices(), mesh.numIndexBytes(), GL_STATIC_DRAW,
+                  gll::Unbind::LeaveBound);
 
    // Unbind before the vbos.
    m_vao.unbind();

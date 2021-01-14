@@ -225,12 +225,12 @@ bool TextRenderer::setupBuffers()
    constexpr GLuint TexCoordsAttribIdx = 1;
 
    // Same data format for position and texture coordinates.
-   const gll::DataFormat VertexDataFormat{2, GL_FLOAT, GL_FALSE, sizeof(Mesh2::Point),
-                                          nullptr};
+   const gll::DataFormat VertexFormat{2, GL_FLOAT, GL_FALSE, sizeof(Mesh2::Point),
+                                      nullptr};
 
    m_posVbo.create();
    bindArrayVbo(m_posVbo, PosAttribIdx, nullptr, NumCharVertices * sizeof(Mesh2::Point),
-                VertexDataFormat, GL_DYNAMIC_DRAW);
+                VertexFormat, GL_DYNAMIC_DRAW, gll::Unbind::Immediately);
 
    // Texture coordinates are the same for all chars and never change.
    static const std::array<Mesh2::Point, NumCharVertices> CharTextureCoords{
@@ -238,11 +238,8 @@ bool TextRenderer::setupBuffers()
       Mesh2::Point{0.f, 0.f}, Mesh2::Point{1.f, 1.f}, Mesh2::Point{1.f, 0.f}};
    m_texCoordVbo.create();
    bindArrayVbo(m_texCoordVbo, TexCoordsAttribIdx, CharTextureCoords.data(),
-                NumCharVertices * sizeof(Mesh2::Point), VertexDataFormat,
-                GL_DYNAMIC_DRAW);
-
-   m_posVbo.unbind(GL_ARRAY_BUFFER);
-   m_texCoordVbo.unbind(GL_ARRAY_BUFFER);
+                NumCharVertices * sizeof(Mesh2::Point), VertexFormat, GL_DYNAMIC_DRAW,
+                gll::Unbind::Immediately);
 
    return true;
 }

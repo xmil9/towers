@@ -117,7 +117,8 @@ bool Renderer3::setupTextures()
    m_tex.bind();
    m_tex.setWrapPolicy(GL_REPEAT, GL_REPEAT);
    m_tex.setScaleFiltering(GL_NEAREST, GL_NEAREST);
-   m_tex.loadData(appPath / "resources" / "directions.png", true, 0, GL_RGB, GL_RGBA, GL_UNSIGNED_BYTE);
+   m_tex.loadData(appPath / "resources" / "directions.png", true, 0, GL_RGB, GL_RGBA,
+                  GL_UNSIGNED_BYTE);
    m_tex.generateMipmap();
 
    m_tex2.create();
@@ -150,26 +151,27 @@ bool Renderer3::setupData()
    gll::Vbo posVbo;
    posVbo.create();
    bindArrayVbo(posVbo, PosAttribIdx, positions, sizeof(positions), posFormat,
-                GL_STATIC_DRAW);
+                GL_STATIC_DRAW, gll::Unbind::LeaveBound);
 
    gll::Vbo normalVbo;
    normalVbo.create();
    bindArrayVbo(normalVbo, NormalAttribIdx, normals, sizeof(normals), normalFormat,
-                GL_STATIC_DRAW);
+                GL_STATIC_DRAW, gll::Unbind::LeaveBound);
 
    gll::Vbo colorVbo;
    colorVbo.create();
    bindArrayVbo(colorVbo, ColorAttribIdx, colors, sizeof(colors), colorFormat,
-                GL_STATIC_DRAW);
+                GL_STATIC_DRAW, gll::Unbind::LeaveBound);
 
    gll::Vbo texCoordVbo;
    texCoordVbo.create();
    bindArrayVbo(texCoordVbo, TexCoordsAttribIdx, texCoords, sizeof(texCoords),
-                texCoordFormat, GL_STATIC_DRAW);
-   
+                texCoordFormat, GL_STATIC_DRAW, gll::Unbind::LeaveBound);
+
    gll::Vbo elemVbo;
    elemVbo.create();
-   bindElementVbo(elemVbo, indices, sizeof(indices), GL_STATIC_DRAW);
+   bindElementVbo(elemVbo, indices, sizeof(indices), GL_STATIC_DRAW,
+                  gll::Unbind::LeaveBound);
 
    // Unbind before the vbos.
    m_vao.unbind();
