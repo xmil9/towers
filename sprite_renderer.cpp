@@ -49,13 +49,14 @@ glm::mat4x4 calcModelMatrix(const PixPos& pos, const PixDim& size, Angle_t rot,
 
 ///////////////////
 
-bool SpriteRenderer::setup(const std::filesystem::path& shaderPath)
+bool SpriteRenderer::setup()
 {
-   return setupShaders(shaderPath) && setupData();
+   return setupData();
 }
 
 
-void SpriteRenderer::render(const Sprite& sprite, PixPos leftTop) const
+void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite,
+                            PixPos leftTop) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (sprite.hasTexture())
@@ -64,42 +65,19 @@ void SpriteRenderer::render(const Sprite& sprite, PixPos leftTop) const
       texBinding.bind(m_resources->getTexture(sprite.texture()));
    }
 
-   makeUniform("spriteColor", sprite.color());
+   shaders.setUniform("spriteColor", sprite.color());
+   shaders.setUniform("isText", false);
 
    // Scope for vao binding.
    {
       gll::BindingScope vaoBinding{m_vao};
 
-      gll::Uniform modelUf = m_shaders.uniform("model");
-      modelUf.setValue(calcModelMatrix(leftTop, sprite.size(), sprite.rotation(),
-                                       sprite.rotationCenter()));
-
+      shaders.setUniform("model",
+                         calcModelMatrix(leftTop, sprite.size(), sprite.rotation(),
+                                         sprite.rotationCenter()));
       glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_numElements), GL_UNSIGNED_INT,
                      nullptr);
    }
-}
-
-
-bool SpriteRenderer::setupShaders(const std::filesystem::path& shaderPath)
-{
-   gll::Shader vs{gll::makeVertexShader(shaderPath / "sprite_shader.vs")};
-   gll::Shader fs{gll::makeFragmentShader(shaderPath / "sprite_shader.fs")};
-   if (!vs || !fs)
-      return false;
-
-   if (!vs.compile() || !fs.compile())
-      return false;
-
-   if (!m_shaders.create())
-      return false;
-
-   m_shaders.attachShader(vs);
-   m_shaders.attachShader(fs);
-
-   if (!m_shaders.link())
-      return false;
-
-   return true;
 }
 
 

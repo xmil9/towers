@@ -20,7 +20,7 @@ class Defender
    Defender() = default;
    template <typename SpecificDefender> explicit Defender(SpecificDefender&& d);
 
-   void render(const Renderer2& renderer);
+   void render(Renderer2& renderer);
    void update();
 
  private:
@@ -33,7 +33,7 @@ Defender::Defender(SpecificDefender&& d) : m_defender{std::move(d)}
 {
 }
 
-inline void Defender::render(const Renderer2& renderer)
+inline void Defender::render(Renderer2& renderer)
 {
    if (m_defender)
       std::visit([&renderer](auto& defender) { defender.render(renderer); }, *m_defender);

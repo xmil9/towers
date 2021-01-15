@@ -46,11 +46,9 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
 {
    renderer.renderSprite(m_background, at);
 
-   renderer.beginTextRendering();
    const NormDim creditsPixPos = CreditsPos * m_dim;
    renderer.renderText("Credits:", at + creditsPixPos, .8f, {.3f, .3f, .3f});
 
-   renderer.beginSpriteRendering();
    const NormDim ltPixPos = LaserTurretPos * m_dim;
    renderer.renderSprite(m_buttonBackground, at + ltPixPos);
    renderer.renderSprite(m_ltButton, at + ltPixPos);

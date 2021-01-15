@@ -145,8 +145,6 @@ class Uniform
 };
 
 
-///////////////////
-
 inline Uniform::Uniform(ObjId program, GLint location)
 : m_program{program}, m_location{location}
 {

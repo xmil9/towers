@@ -40,6 +40,9 @@ class Program : public Object<Program>
    void use() const;
    // The program must be successully linked to access uniforms.
    Uniform uniform(const GLchar* name) const;
+   // Creates a uniform with a given name and value.
+   template<typename Value>
+   void setUniform(const GLchar* name, const Value& v);
    // Set the texture sampler to use a texture bound to the unit with the given index.
    // Program must be in-use.
    void setTextureUnit(const GLchar* samplerName, GLint unitIdx) const;
@@ -58,6 +61,13 @@ class Program : public Object<Program>
 
 inline Program::Program(ObjId id) : Object<Program>{id}
 {
+}
+
+template<typename Value>
+void Program::setUniform(const GLchar* name, const Value& v)
+{
+   gll::Uniform u = uniform(name);
+   u.setValue(v);
 }
 
 } // namespace gll

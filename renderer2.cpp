@@ -4,8 +4,8 @@
 //
 #include "renderer2.h"
 #include "resources.h"
+#include "gll_shader.h"
 #include "glm/gtc/matrix_transform.hpp"
-
 
 
 bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
@@ -17,14 +17,56 @@ bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
    m_textRenderer = std::make_unique<TextRenderer>(resources);
 
    const std::filesystem::path fontPath = m_resources->fontPath() / "arial.ttf";
-   return m_spriteRenderer->setup(m_resources->shaderPath()) &&
-          m_textRenderer->setup(fontPath, 20) && setupSettings(viewWidth, viewHeight);
+   constexpr unsigned int fontSize = 20;
+
+   return setupShaders(m_resources->shaderPath()) && m_spriteRenderer->setup() &&
+          m_textRenderer->setup(fontPath, fontSize) &&
+          setupSettings(viewWidth, viewHeight);
 }
 
 
 void Renderer2::clearScene() const
 {
    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+
+void Renderer2::beginRendering()
+{
+   m_shaders.use();
+   m_shaders.setUniform("view", m_cam.viewMatrix());
+   m_shaders.setUniform("projection", m_frustum.projectionMatrix());
+}
+
+
+void Renderer2::renderAnimation(Animation& anim, PixPos leftTop)
+{
+   const auto sprite = anim.nextFrame();
+   if (sprite)
+      m_spriteRenderer->render(m_shaders, **sprite, leftTop);
+}
+
+
+bool Renderer2::setupShaders(const std::filesystem::path& shaderPath)
+{
+   gll::Shader vs{gll::makeVertexShader(shaderPath / "sprite_shader.vs")};
+   gll::Shader fs{gll::makeFragmentShader(shaderPath / "sprite_shader.fs")};
+   if (!vs || !fs)
+      return false;
+
+   if (!vs.compile() || !fs.compile())
+      return false;
+
+   if (!m_shaders.create())
+      return false;
+
+   m_shaders.attachShader(vs);
+   m_shaders.attachShader(fs);
+
+   if (!m_shaders.link())
+      return false;
+
+   return true;
 }
 
 
@@ -42,28 +84,4 @@ bool Renderer2::setupSettings(int viewWidth, int viewHeight)
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
    return true;
-}
-
-
-void Renderer2::beginSpriteRendering() const
-{
-   m_spriteRenderer->activateShaders();
-   m_spriteRenderer->makeUniform("view", m_cam.viewMatrix());
-   m_spriteRenderer->makeUniform("projection", m_frustum.projectionMatrix());
-}
-
-
-void Renderer2::renderAnimation(Animation& anim, PixPos leftTop) const
-{
-   const auto sprite = anim.nextFrame();
-   if (sprite)
-      m_spriteRenderer->render(**sprite, leftTop);
-}
-
-
-void Renderer2::beginTextRendering() const
-{
-   m_textRenderer->activateShaders();
-   m_textRenderer->makeUniform("view", m_cam.viewMatrix());
-   m_textRenderer->makeUniform("projection", m_frustum.projectionMatrix());
 }

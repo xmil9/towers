@@ -6,6 +6,7 @@
 #include "mesh2.h"
 #include "resources.h"
 #include "gll_binding.h"
+#include "gll_program.h"
 #include "gll_shader.h"
 #include "ft2build.h"
 #include "freetype/freetype.h"
@@ -97,14 +98,16 @@ const FT_GlyphSlot Face::glyph() const
 
 ///////////////////
 
-void TextRenderer::render(const std::string& text, PixPos baseline, float scale,
-                          glm::vec3 color)
+void TextRenderer::render(gll::Program& shaders, const std::string& text, PixPos baseline,
+                          float scale, glm::vec3 color)
 {
-   m_shaders.use();
-   makeUniform("textColor", color);
-
    glActiveTexture(GL_TEXTURE0);
    m_vao.bind();
+
+   constexpr glm::mat4 identity{1.f};
+   shaders.setUniform("model", identity);
+   shaders.setUniform("spriteColor", color);
+   shaders.setUniform("isText", true);
 
    // Render each character of given text.
    float x = baseline.x;
@@ -138,31 +141,6 @@ void TextRenderer::render(const std::string& text, PixPos baseline, float scale,
 
    m_vao.unbind();
    gll::Texture2D::unbind();
-}
-
-
-bool TextRenderer::setupShaders()
-{
-   const std::filesystem::path path = m_resources->shaderPath();
-
-   gll::Shader vs{gll::makeVertexShader(path / "text_shader.vs")};
-   gll::Shader fs{gll::makeFragmentShader(path / "text_shader.fs")};
-   if (!vs || !fs)
-      return false;
-
-   if (!vs.compile() || !fs.compile())
-      return false;
-
-   if (!m_shaders.create())
-      return false;
-
-   m_shaders.attachShader(vs);
-   m_shaders.attachShader(fs);
-
-   if (!m_shaders.link())
-      return false;
-
-   return true;
 }
 
 

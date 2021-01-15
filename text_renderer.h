@@ -4,7 +4,6 @@
 //
 #pragma once
 #include "coords.h"
-#include "gll_program.h"
 #include "gll_texture.h"
 #include "gll_vao.h"
 #include "gll_vbo.h"
@@ -13,6 +12,10 @@
 #include <filesystem>
 #include <map>
 
+namespace gll
+{
+class Program;
+}
 class Resources;
 
 
@@ -29,15 +32,9 @@ class TextRenderer
    TextRenderer& operator=(const TextRenderer&) = delete;
    TextRenderer& operator=(TextRenderer&&) noexcept = default;
 
-   // Initial setup.
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
-
-   // Prepare a render session.
-   void activateShaders() { m_shaders.use(); }
-   template <typename Value> void makeUniform(const GLchar* name, const Value& v) const;
-
-   // Individual render operations.
-   void render(const std::string& text, PixPos baseline, float scale, glm::vec3 color);
+   void render(gll::Program& shaders, const std::string& text, PixPos baseline,
+               float scale, glm::vec3 color);
 
  private:
    // Information about how to draw each character.
@@ -54,14 +51,12 @@ class TextRenderer
    };
 
  private:
-   bool setupShaders();
    bool setupCharTextures(const std::filesystem::path& font, unsigned int fontSize);
    bool setupBuffers();
 
  private:
    Resources* m_resources = nullptr;
    std::map<GLchar, Char> m_chars;
-   gll::Program m_shaders;
    gll::Vao m_vao;
    gll::Vbo m_posVbo;
    gll::Vbo m_texCoordVbo;
@@ -75,12 +70,5 @@ inline TextRenderer::TextRenderer(Resources* resources) : m_resources{resources}
 
 inline bool TextRenderer::setup(const std::filesystem::path& font, unsigned int fontSize)
 {
-   return setupCharTextures(font, fontSize) && setupShaders() && setupBuffers();
-}
-
-template <typename Value>
-void TextRenderer::makeUniform(const GLchar* name, const Value& v) const
-{
-   gll::Uniform u = m_shaders.uniform(name);
-   u.setValue(v);
+   return setupCharTextures(font, fontSize) && setupBuffers();
 }

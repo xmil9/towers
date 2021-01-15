@@ -338,7 +338,7 @@ void Game2::render()
 {
    m_renderer.clearScene();
 
-   m_renderer.beginSpriteRendering();
+   m_renderer.beginRendering();
    renderMap();
    m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
    

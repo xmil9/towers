@@ -21,8 +21,8 @@ class DefenderLook
    DefenderLook& setSize(PixDim size);
    DefenderLook& setRotation(Angle_t rot);
 
-   void render(const Renderer2& renderer, PixPos atCenter);
-   void renderFiring(const Renderer2& renderer, PixPos atCenter);
+   void render(Renderer2& renderer, PixPos atCenter);
+   void renderFiring(Renderer2& renderer, PixPos atCenter);
 
  private:
    Sprite m_shape;
@@ -54,12 +54,12 @@ inline DefenderLook& DefenderLook::setRotation(Angle_t rot)
    return *this;
 }
 
-inline void DefenderLook::render(const Renderer2& renderer, PixPos atCenter)
+inline void DefenderLook::render(Renderer2& renderer, PixPos atCenter)
 {
    renderer.renderSprite(m_shape, atCenter - .5f * m_shape.size());
 }
 
-inline void DefenderLook::renderFiring(const Renderer2& renderer, PixPos atCenter)
+inline void DefenderLook::renderFiring(Renderer2& renderer, PixPos atCenter)
 {
    renderer.renderAnimation(m_firing, atCenter - .5f * m_firing.size());
 }

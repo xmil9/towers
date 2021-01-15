@@ -31,7 +31,7 @@ template <typename Derived> class DefenderBase
    DefenderBase(DefenderLook look, MapCoord size, MapPos center, const MapCoordSys* cs,
                 std::vector<Attacker>* attackers);
 
-   void render(const Renderer2& renderer);
+   void render(Renderer2& renderer);
    void update();
 
  private:
@@ -70,7 +70,7 @@ DefenderBase<Derived>::DefenderBase(DefenderLook look, MapCoord size, MapPos cen
 
 
 template <typename Derived>
-void DefenderBase<Derived>::render(const Renderer2& renderer)
+void DefenderBase<Derived>::render(Renderer2& renderer)
 {
    const PixPos center = m_coordSys->toRenderCoords(m_center);
 

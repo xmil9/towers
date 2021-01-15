@@ -21,7 +21,7 @@ Attacker::Attacker(AttackerLook look, MapCoord size, const Attribs& attribs,
 }
 
 
-void Attacker::render(const Renderer2& renderer)
+void Attacker::render(Renderer2& renderer)
 {
    if (!hasStarted())
       return;
