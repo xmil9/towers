@@ -169,6 +169,7 @@ bool Game2::setupTextures()
       {ValidFieldTTag, "valid_field.png"},
       {InvalidFieldTTag, "invalid_field.png"},
       {DashboardTTag, "dashboard.png"},
+      {ButtonBackgroundTTag, "defender_button_bgrd.png"},
    };
 
    for (const auto& spec : textures)
@@ -348,9 +349,6 @@ void Game2::render()
    
    // Draw placed content on top of everything else.
    renderPlaceSession();
-
-   m_renderer.beginTextRendering();
-   m_renderer.renderText("testp", {0.f, 48.f}, 1.f, {1.f, .5f, .5f});
 
    m_mainWnd.swapBuffers();
 }

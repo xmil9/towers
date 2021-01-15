@@ -13,3 +13,4 @@ constexpr char Map1TTag[] = "map1";
 constexpr char ValidFieldTTag[] = "valid_field";
 constexpr char InvalidFieldTTag[] = "invalid_field";
 constexpr char DashboardTTag[] = "dashboard";
+constexpr char ButtonBackgroundTTag[] = "button_bgrd";

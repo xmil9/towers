@@ -20,7 +20,7 @@ class Dashboard
    Dashboard(PixCoordi width, PixCoordi height, Commands* commands);
 
    bool setup(const MapCoordSys* cs);
-   void render(const Renderer2& renderer, const PixPos& at);
+   void render(Renderer2& renderer, const PixPos& at);
    bool onLeftButtonPressed(const PixPos& mousePosInDash);
    bool onLeftButtonReleased(const PixPos& mousePosInDash);
 
@@ -29,6 +29,7 @@ class Dashboard
    Commands* m_commands = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;
    Sprite m_background;
+   Sprite m_buttonBackground;
    Sprite m_ltButton;
    Sprite m_smButton;
 };

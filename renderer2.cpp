@@ -18,7 +18,7 @@ bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
 
    const std::filesystem::path fontPath = m_resources->fontPath() / "arial.ttf";
    return m_spriteRenderer->setup(m_resources->shaderPath()) &&
-          m_textRenderer->setup(fontPath, 48) && setupSettings(viewWidth, viewHeight);
+          m_textRenderer->setup(fontPath, 20) && setupSettings(viewWidth, viewHeight);
 }
 
 

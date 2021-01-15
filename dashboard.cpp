@@ -12,12 +12,20 @@
 #include <memory>
 
 
-static constexpr NormDim ButtonDim{.375f, .0625f};
+///////////////////
 
+static constexpr NormDim CreditsPos{.075f, .025f};
+static constexpr NormDim ButtonDim{.375f, .0625f};
+static constexpr NormDim LaserTurretPos{.075f, .05f};
+static constexpr NormDim SonarMortarPos{.535f, .05f};
+
+
+///////////////////
 
 Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands)
 : m_dim{width, height}, m_commands{commands}, m_background{SpriteLook{DashboardTTag},
                                                            SpriteForm{m_dim}},
+  m_buttonBackground{SpriteLook{ButtonBackgroundTTag}, SpriteForm{ButtonDim * m_dim}},
   m_ltButton{SpriteLook{LtTexture}, SpriteForm{ButtonDim * m_dim}},
   m_smButton{SpriteLook{SmTexture}, SpriteForm{ButtonDim * m_dim}}
 
@@ -34,16 +42,21 @@ bool Dashboard::setup(const MapCoordSys* cs)
 }
 
 
-void Dashboard::render(const Renderer2& renderer, const PixPos& at)
+void Dashboard::render(Renderer2& renderer, const PixPos& at)
 {
    renderer.renderSprite(m_background, at);
 
-   constexpr NormDim ltPos{.075f, .0167f};
-   const NormDim ltPixPos = ltPos * m_dim;
+   renderer.beginTextRendering();
+   const NormDim creditsPixPos = CreditsPos * m_dim;
+   renderer.renderText("Credits:", at + creditsPixPos, .8f, {.3f, .3f, .3f});
+
+   renderer.beginSpriteRendering();
+   const NormDim ltPixPos = LaserTurretPos * m_dim;
+   renderer.renderSprite(m_buttonBackground, at + ltPixPos);
    renderer.renderSprite(m_ltButton, at + ltPixPos);
 
-   constexpr NormDim smPos{.535f, .0167f};
-   const NormDim smPixPos = smPos * m_dim;
+   const NormDim smPixPos = SonarMortarPos * m_dim;
+   renderer.renderSprite(m_buttonBackground, at + smPixPos);
    renderer.renderSprite(m_smButton, at + smPixPos);
 }
 
@@ -58,8 +71,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    constexpr MapDim indicatorDim{1.f, 1.f};
    const PixDim indicatorPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);
 
-   constexpr NormDim ltPos{.075f, .0167f};
-   const NormDim ltPixPos = ltPos * m_dim;
+   const NormDim ltPixPos = LaserTurretPos * m_dim;
    const bool isInLtButton =
       mousePosInDash.x > ltPixPos.x && mousePosInDash.x <= ltPixPos.x + buttonPixDim.x &&
       mousePosInDash.y > ltPixPos.y && mousePosInDash.y <= ltPixPos.y + buttonPixDim.y;
@@ -69,8 +81,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
       return true;
    }
 
-   constexpr NormDim smPos{.535f, .0167f};
-   const NormDim smPixPos = smPos * m_dim;
+   const NormDim smPixPos = SonarMortarPos * m_dim;
    const bool isInSmButton =
       mousePosInDash.x > smPixPos.x && mousePosInDash.x <= smPixPos.x + buttonPixDim.x &&
       mousePosInDash.y > smPixPos.y && mousePosInDash.y <= smPixPos.y + buttonPixDim.y;
