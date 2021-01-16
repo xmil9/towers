@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "dashboard.h"
+#include "basic_types.h"
 #include "commands.h"
 #include "defender_models.h"
 #include "map_coord_sys.h"
@@ -18,6 +19,7 @@
 
 static constexpr NormDim CreditsPos{.075f, .025f};
 static constexpr NormDim ButtonDim{.375f, .0625f};
+static constexpr NormDim LabelValueGap{.03f, 0.f};
 static constexpr NormDim LaserTurretPos{.075f, .05f};
 static constexpr NormDim SonarMortarPos{.535f, .05f};
 
@@ -49,14 +51,18 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
 {
    renderer.renderSprite(m_background, at);
 
-   constexpr float TextScale = .8f * 2/3;
+   constexpr float TextScale = .8f * UiScale(1.f);
    constexpr glm::vec3 TextColor{.3f, .3f, .3f};
 
-   const PixDim creditsPixPos = CreditsPos * m_dim;
-   renderer.renderText("Credits:", at + creditsPixPos, TextScale, TextColor);
-   const PixDim creditsWidth = PixDim{60.f, 0.f} * 2.f/3.f;
-   renderer.renderText(std::to_string(m_state->credits()),
-                       at + creditsPixPos + creditsWidth, TextScale, TextColor);
+   const std::string label{"Credits:"};
+   const PixDim labelPixPos = CreditsPos * m_dim;
+   renderer.renderText(label, at + labelPixPos, TextScale, TextColor);
+   const PixDim labelWidth = {renderer.measureText(label, TextScale).x, 0.f};
+
+   const PixDim gap = LabelValueGap * m_dim;
+   const PixDim creditsPixPos = labelPixPos + gap + labelWidth;
+   renderer.renderText(std::to_string(m_state->credits()), at + creditsPixPos, TextScale,
+                       TextColor);
 
    const PixDim ltPixPos = LaserTurretPos * m_dim;
    renderer.renderSprite(m_buttonBackground, at + ltPixPos);
