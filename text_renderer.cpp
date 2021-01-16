@@ -151,9 +151,9 @@ PixDim TextRenderer::measure(const std::string& text, float scale) const
    {
       const auto pos = m_chars.find(c);
       if (pos != m_chars.end())
-         dim += PixDim{pos->second.size + pos->second.bearing} * scale;
+         dim += PixDim{pos->second.size + pos->second.bearing};
    }
-   return dim;
+   return dim * scale;
 }
 
 
