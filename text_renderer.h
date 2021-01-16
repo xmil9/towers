@@ -35,6 +35,7 @@ class TextRenderer
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
    void render(gll::Program& shaders, const std::string& text, PixPos baseline,
                float scale, glm::vec3 color);
+   PixDim measure(const std::string& text, float scale) const;
 
  private:
    // Information about how to draw each character.

@@ -30,6 +30,8 @@ class Renderer2
    void renderAnimation(Animation& anim, PixPos leftTop);
    void renderText(const std::string& text, PixPos pos, float scale,
                    const glm::vec3& color);
+   PixDim measureText(const std::string& text, float scale) const;
+
 
  private:
    bool setupShaders(const std::filesystem::path& shaderPath);
@@ -54,4 +56,9 @@ inline void Renderer2::renderText(const std::string& text, PixPos pos, float sca
                                   const glm::vec3& color)
 {
    m_textRenderer->render(m_shaders, text, pos, scale, color);
+}
+
+inline PixDim Renderer2::measureText(const std::string& text, float scale) const
+{
+   return m_textRenderer->measure(text, scale);
 }

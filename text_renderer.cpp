@@ -144,6 +144,19 @@ void TextRenderer::render(gll::Program& shaders, const std::string& text, PixPos
 }
 
 
+PixDim TextRenderer::measure(const std::string& text, float scale) const
+{
+   PixDim dim{0.f, 0.f};
+   for (char c : text)
+   {
+      const auto pos = m_chars.find(c);
+      if (pos != m_chars.end())
+         dim += PixDim{pos->second.size} * scale;
+   }
+   return dim;
+}
+
+
 bool TextRenderer::setupCharTextures(const std::filesystem::path& font,
                                      unsigned int fontSize)
 {
