@@ -20,12 +20,13 @@
 #include "renderer2.h"
 #include "resources.h"
 #include "sprite.h"
+#include "state.h"
 #include <memory>
 #include <optional>
 #include <vector>
 
 
-class Game2 : private Commands
+class Game2 : private Commands, private State
 {
  public:
    Game2();
@@ -81,15 +82,18 @@ class Game2 : private Commands
    bool dashboardOnLeftButtonPressed(const PixPos& pos);
    bool dashboardOnLeftButtonReleased(const PixPos& pos);
 
+   // State overrides.
+   int credits() const override { return m_credits; }
+
    // Commands overrides.
    void startPlaceSession(std::string_view model, std::string_view indicatorTex,
                           PixDim indicatorDim) override;
    void endPlaceSession() override;
 
  private:
-   static constexpr PixCoordi MapWidth = 1800;
-   static constexpr PixCoordi MapHeight = 1200;
-   static constexpr PixCoordi DashboardWidth = 200;
+   static constexpr PixCoordi MapWidth = 1800 * 2/3;
+   static constexpr PixCoordi MapHeight = 1200 * 2/3;
+   static constexpr PixCoordi DashboardWidth = 200 * 2/3;
    static constexpr PixCoordi DashboardHeight = MapHeight;
    static constexpr PixCoordi WndWidth = MapWidth + DashboardWidth;
    static constexpr PixCoordi WndHeight = MapHeight;
@@ -112,4 +116,5 @@ class Game2 : private Commands
    Sprite m_validFieldOverlay;
    Sprite m_invalidFieldOverlay;
    std::vector<bool> m_defenderMatrix;
+   int m_credits = 0;
 };

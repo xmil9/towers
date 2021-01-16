@@ -3,13 +3,14 @@
 // MIT license
 //
 #pragma once
-#include "commands.h"
 #include "coords.h"
 #include "sprite.h"
 
+struct Commands;
 class MapCoordSys;
 struct PlaceSession;
 class Renderer2;
+struct State;
 
 
 ///////////////////
@@ -17,7 +18,7 @@ class Renderer2;
 class Dashboard
 {
  public:
-   Dashboard(PixCoordi width, PixCoordi height, Commands* commands);
+   Dashboard(PixCoordi width, PixCoordi height, Commands* commands, State* state);
 
    bool setup(const MapCoordSys* cs);
    void render(Renderer2& renderer, const PixPos& at);
@@ -27,6 +28,7 @@ class Dashboard
  private:
    PixDim m_dim;
    Commands* m_commands = nullptr;
+   State* m_state = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;
    Sprite m_background;
    Sprite m_buttonBackground;

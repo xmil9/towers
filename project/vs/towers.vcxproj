@@ -261,6 +261,7 @@
     <ClInclude Include="..\..\sprite_renderer.h" />
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
+    <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\textures.h" />
     <ClInclude Include="..\..\texture_tags.h" />
     <ClInclude Include="..\..\text_renderer.h" />

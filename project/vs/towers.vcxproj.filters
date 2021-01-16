@@ -255,6 +255,7 @@
     <ClInclude Include="..\..\text_renderer.h">
       <Filter>Rendering\Text</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\state.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

@@ -3,11 +3,13 @@
 // MIT license
 //
 #include "dashboard.h"
+#include "commands.h"
 #include "defender_models.h"
 #include "map_coord_sys.h"
 #include "place_session.h"
 #include "renderer2.h"
 #include "sprite.h"
+#include "state.h"
 #include "texture_tags.h"
 #include <memory>
 
@@ -22,15 +24,16 @@ static constexpr NormDim SonarMortarPos{.535f, .05f};
 
 ///////////////////
 
-Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands)
-: m_dim{width, height}, m_commands{commands}, m_background{SpriteLook{DashboardTTag},
-                                                           SpriteForm{m_dim}},
+Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands, State* state)
+: m_dim{width, height}, m_commands{commands}, m_state{state},
+  m_background{SpriteLook{DashboardTTag}, SpriteForm{m_dim}},
   m_buttonBackground{SpriteLook{ButtonBackgroundTTag}, SpriteForm{ButtonDim * m_dim}},
   m_ltButton{SpriteLook{LtTexture}, SpriteForm{ButtonDim * m_dim}},
   m_smButton{SpriteLook{SmTexture}, SpriteForm{ButtonDim * m_dim}}
 
 {
    assert(m_commands);
+   assert(m_state);
 }
 
 
@@ -46,14 +49,20 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
 {
    renderer.renderSprite(m_background, at);
 
-   const NormDim creditsPixPos = CreditsPos * m_dim;
-   renderer.renderText("Credits:", at + creditsPixPos, .8f, {.3f, .3f, .3f});
+   constexpr float TextScale = .8f * 2/3;
+   constexpr glm::vec3 TextColor{.3f, .3f, .3f};
 
-   const NormDim ltPixPos = LaserTurretPos * m_dim;
+   const PixDim creditsPixPos = CreditsPos * m_dim;
+   renderer.renderText("Credits:", at + creditsPixPos, TextScale, TextColor);
+   const PixDim creditsWidth = PixDim{60.f, 0.f} * 2.f/3.f;
+   renderer.renderText(std::to_string(m_state->credits()),
+                       at + creditsPixPos + creditsWidth, TextScale, TextColor);
+
+   const PixDim ltPixPos = LaserTurretPos * m_dim;
    renderer.renderSprite(m_buttonBackground, at + ltPixPos);
    renderer.renderSprite(m_ltButton, at + ltPixPos);
 
-   const NormDim smPixPos = SonarMortarPos * m_dim;
+   const PixDim smPixPos = SonarMortarPos * m_dim;
    renderer.renderSprite(m_buttonBackground, at + smPixPos);
    renderer.renderSprite(m_smButton, at + smPixPos);
 }

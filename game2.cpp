@@ -48,7 +48,8 @@ static MapPos centerInField(MapPos pos)
 
 Game2::Game2()
 : m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}, m_dashboard{DashboardWidth,
-                                                               DashboardHeight, this}
+                                                               DashboardHeight, this,
+                                                               this}
 {
 }
 
@@ -341,12 +342,12 @@ void Game2::render()
    m_renderer.beginRendering();
    renderMap();
    m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
-   
+
    for (auto& attacker : m_attackers)
       attacker.render(m_renderer);
    for (auto& defender : m_defenders)
       defender.render(m_renderer);
-   
+
    // Draw placed content on top of everything else.
    renderPlaceSession();
 
