@@ -56,8 +56,12 @@ std::optional<const Sprite*> Animation::nextFrame()
    if (m_totalFrames == 0 || (hasFinished() && !m_repeat))
       return std::nullopt;
 
-   if (m_repeat)
+   if (hasFinished())
+   {
+      if (!m_repeat)
+         return std::nullopt;
       reset();
+   }
 
    const auto idx = calcSpriteIndex(m_currFrame++);
    return idx ? std::make_optional(&m_sprites[*idx]) : std::nullopt;
