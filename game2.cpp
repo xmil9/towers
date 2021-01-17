@@ -148,33 +148,38 @@ bool Game2::setupOutput()
 
 bool Game2::setupTextures()
 {
+   const std::filesystem::path scene = m_resources.scenePath();
+   const std::filesystem::path ui = m_resources.uiPath();
+
    struct TextureSpec
    {
       std::string tag;
+      const std::filesystem::path& path;
       std::filesystem::path filename;
    };
+
    const std::vector<TextureSpec> textures{
-      {AatTexture, "aat.png"},
-      {MhcTexture, "mhc.png"},
-      {LtTexture, "lt.png"},
-      {LtFiring1Texture, "lt_firing1.png"},
-      {LtFiring2Texture, "lt_firing2.png"},
-      {SmTexture, "sm.png"},
-      {SmFiring1Texture, "sm_firing1.png"},
-      {SmFiring2Texture, "sm_firing2.png"},
-      {Explosion1TTag, "explosion1.png"},
-      {Explosion2TTag, "explosion2.png"},
-      {Explosion3TTag, "explosion3.png"},
-      {Explosion4TTag, "explosion4.png"},
-      {Map1TTag, "map1.png"},
-      {ValidFieldTTag, "valid_field.png"},
-      {InvalidFieldTTag, "invalid_field.png"},
-      {DashboardTTag, "dashboard.png"},
-      {ButtonBackgroundTTag, "defender_button_bgrd.png"},
+      {AatTexture, scene, "aat.png"},
+      {MhcTexture, scene, "mhc.png"},
+      {LtTexture, scene, "lt.png"},
+      {LtFiring1Texture, scene, "lt_firing1.png"},
+      {LtFiring2Texture, scene, "lt_firing2.png"},
+      {SmTexture, scene, "sm.png"},
+      {SmFiring1Texture, scene, "sm_firing1.png"},
+      {SmFiring2Texture, scene, "sm_firing2.png"},
+      {Explosion1TTag, scene, "explosion1.png"},
+      {Explosion2TTag, scene, "explosion2.png"},
+      {Explosion3TTag, scene, "explosion3.png"},
+      {Explosion4TTag, scene, "explosion4.png"},
+      {Map1TTag, scene, "map1.png"},
+      {ValidFieldTTag, ui, "valid_field.png"},
+      {InvalidFieldTTag, ui, "invalid_field.png"},
+      {DashboardTTag, ui, "dashboard.png"},
+      {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
    };
 
    for (const auto& spec : textures)
-      if (!m_resources.loadTexture(spec.tag, m_resources.texturePath() / spec.filename))
+      if (!m_resources.loadTexture(spec.tag, spec.path / spec.filename))
          return false;
    return true;
 }

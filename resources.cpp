@@ -14,7 +14,19 @@ Resources::Resources()
 
 std::filesystem::path Resources::texturePath() const
 {
-   return m_mainPath / "resources";
+   return m_mainPath / "resources" / "textures";
+}
+
+
+std::filesystem::path Resources::scenePath() const
+{
+   return texturePath() / "scenes" / "abstract";
+}
+
+
+std::filesystem::path Resources::uiPath() const
+{
+   return texturePath() / "ui";
 }
 
 

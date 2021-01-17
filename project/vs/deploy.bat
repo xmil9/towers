@@ -10,8 +10,8 @@ set thisDir=%~dp0
 set resSrc=%thisDir%..\..\resources
 set resDest=%destDir%\resources
 mkdir "%resDest%"
-robocopy "%resSrc%" "%resDest%" *.json
-robocopy "%resSrc%" "%resDest%" *.png
+robocopy "%resSrc%" "%resDest%" *.json /s
+robocopy "%resSrc%" "%resDest%" *.png /s
 
 set fontsSrc=%resSrc%\fonts
 set fontsDest=%resDest%\fonts
