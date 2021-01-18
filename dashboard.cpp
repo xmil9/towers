@@ -92,7 +92,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    const bool isInLtButton =
       mousePosInDash.x > ltPixPos.x && mousePosInDash.x <= ltPixPos.x + buttonPixDim.x &&
       mousePosInDash.y > ltPixPos.y && mousePosInDash.y <= ltPixPos.y + buttonPixDim.y;
-   if (isInLtButton)
+   if (isInLtButton && m_state->canAffordDefender(LtModel))
    {
       m_commands->startPlaceSession(LtModel, LtTexture, indicatorPixDim);
       return true;
@@ -102,7 +102,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    const bool isInSmButton =
       mousePosInDash.x > smPixPos.x && mousePosInDash.x <= smPixPos.x + buttonPixDim.x &&
       mousePosInDash.y > smPixPos.y && mousePosInDash.y <= smPixPos.y + buttonPixDim.y;
-   if (isInSmButton)
+   if (isInSmButton && m_state->canAffordDefender(SmModel))
    {
       m_commands->startPlaceSession(SmModel, SmTexture, indicatorPixDim);
       return true;
