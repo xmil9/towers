@@ -29,11 +29,7 @@ class DefenderFactory
    template <typename Attribs>
    void registerModel(const std::string& name, DefenderLook look, Attribs&& attribs);
 
-   Defender makeLaserTurret(MapCoord size, MapPos center,
-                            const LaserTurret::Attribs& attribs) const;
-   Defender makeSonicMortar(MapCoord size, MapPos center,
-                            const SonicMortar::Attribs& attribs) const;
-
+   Defender makeDefender(const std::string& model, MapPos center) const;
    DefenderAttribs defaultAttributes(const std::string& model) const;
 
  private:

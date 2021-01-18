@@ -456,17 +456,7 @@ void Game2::placeDefender(const PixPos& mousePos)
       return;
    }
 
-   if (m_placeSess->model == LtModel)
-   {
-      constexpr LaserTurret::Attribs attribs{LtRange, LtDamage, LtCost};
-      addDefender(m_defenseFactory->makeLaserTurret(LtSize, pos, attribs), pos);
-   }
-   else if (m_placeSess->model == SmModel)
-   {
-      constexpr SonicMortar::Attribs attribs{SmRange, SmDamage, SmCost, SmCollateralRange,
-                                             SmCollateralDamage};
-      addDefender(m_defenseFactory->makeSonicMortar(SmSize, pos, attribs), pos);
-   }
+   addDefender(m_defenseFactory->makeDefender(m_placeSess->model, pos), pos);
 }
 
 

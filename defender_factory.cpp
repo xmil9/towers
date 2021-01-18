@@ -19,19 +19,23 @@ DefenderFactory::lookupModel(const std::string& modelName) const
 }
 
 
-Defender DefenderFactory::makeLaserTurret(MapCoord size, MapPos center,
-                                          const LaserTurret::Attribs& attribs) const
+Defender DefenderFactory::makeDefender(const std::string& model, MapPos center) const
 {
    const Model& data = lookupModel(LtModel);
-   return Defender{
-      LaserTurret{data.look, size, center, attribs, m_coordSys, m_attackers}};
-}
 
+   if (model == LtModel)
+   {
+      return Defender{LaserTurret{data.look, LtSize, center,
+                                  data.attribs.get<LaserTurret::Attribs>(), m_coordSys,
+                                  m_attackers}};
+   }
+   else if (model == SmModel)
+   {
+      return Defender{SonicMortar{data.look, SmSize, center,
+                                  data.attribs.get<SonicMortar::Attribs>(), m_coordSys,
+                                  m_attackers}};
+   }
 
-Defender DefenderFactory::makeSonicMortar(MapCoord size, MapPos center,
-                                          const SonicMortar::Attribs& attribs) const
-{
-   const Model& data = lookupModel(SmModel);
-   return Defender{
-      SonicMortar{data.look, size, center, attribs, m_coordSys, m_attackers}};
+   assert(false && "Unknown defender model.");
+   return {};
 }
