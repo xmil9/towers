@@ -23,7 +23,7 @@ static constexpr NormDim LabelValueGap{.03f, 0.f};
 static constexpr NormDim LaserTurretPos{.075f, .05f};
 static constexpr NormDim SonarMortarPos{.535f, .05f};
 
-static constexpr Color DisabledTint{.5f, .5f, .5f};
+static constexpr Color DisabledTint{.8f, .8f, .8f};
 
 
 ///////////////////
