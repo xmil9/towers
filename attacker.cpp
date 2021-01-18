@@ -55,6 +55,9 @@ void Attacker::hit(int damage)
       return;
 
    m_currAttribs.hp = std::max(0, m_currAttribs.hp - damage);
+
+   if (!isAlive())
+      notify(*this, AttackerDestroyedMsg, AttackerDestroyedMsgData{});
 }
 
 

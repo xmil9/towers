@@ -232,14 +232,6 @@ bool Game2::setupAnimations()
 }
 
 
-static void addAttacker(const std::optional<Attacker>& attacker,
-                        std::vector<Attacker>& coll)
-{
-   if (attacker)
-      coll.push_back(*attacker);
-}
-
-
 bool Game2::setupAttackers()
 {
    assert(!!m_coordSys);
@@ -257,21 +249,17 @@ bool Game2::setupAttackers()
                              m_resources.getAnimation(ExplosionATag)});
 
    addAttacker(
-      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 0},
-                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}),
-      m_attackers);
+      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 0, 50},
+                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
    addAttacker(
-      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 100},
-                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}),
-      m_attackers);
+      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 100, 50},
+                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
    addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 0},
-                                    OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}),
-      m_attackers);
+      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 0, 20},
+                                    OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}));
    addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 10},
-                                    OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}),
-      m_attackers);
+      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 10, 20},
+                                    OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}));
 
    return true;
 }
@@ -394,6 +382,27 @@ void Game2::renderPlaceSession()
       m_renderer.renderSprite(m_placeSess->indicator,
                               indicatorCenter - halfIndicatorSize);
    }
+}
+
+
+void Game2::addAttacker(std::optional<Attacker>&& attacker)
+{
+   if (attacker)
+   {
+      attacker->addObserver([this](Attacker& src, std::string_view msg,
+                                   const Observed<Attacker>::MsgData& data) {
+         onAttackerDestroyed(src, msg, data);
+      });
+
+      m_attackers.push_back(*attacker);
+   }
+}
+
+
+void Game2::onAttackerDestroyed(Attacker& src, std::string_view /*msg*/,
+                                const Observed<Attacker>::MsgData& /*data*/)
+{
+   m_credits += src.reward();
 }
 
 

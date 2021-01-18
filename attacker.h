@@ -5,6 +5,7 @@
 #pragma once
 #include "attacker_look.h"
 #include "map_coord_sys.h"
+#include "observed.h"
 #include "path.h"
 #include "glm/glm.hpp"
 #include <optional>
@@ -14,7 +15,7 @@ class Renderer2;
 
 ///////////////////
 
-class Attacker
+class Attacker : public Observed<Attacker>
 {
  public:
    struct Attribs
@@ -22,6 +23,7 @@ class Attacker
       int hp = 0;
       float speed = .1f;
       int launchDelay = 0;
+      int reward = 0;
    };
 
  public:
@@ -35,6 +37,7 @@ class Attacker
    bool isAlive() const { return m_currAttribs.hp > 0; }
    bool hasStarted() const { return m_currAttribs.launchDelay == 0; }
    bool canBeRemoved() const;
+   int reward() const { return m_currAttribs.reward; }
 
  private:
    void move();
@@ -54,4 +57,14 @@ class Attacker
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
    const MapCoordSys* m_coordSys = nullptr;
+};
+
+
+///////////////////
+
+// Notifications sent to observers.
+
+constexpr char AttackerDestroyedMsg[] = "attacker_destroyed";
+struct AttackerDestroyedMsgData : public Observed<Attacker>::MsgData
+{
 };

@@ -54,6 +54,10 @@ class Game2 : private Commands, private State
    void renderMap();
    void renderPlaceSession();
 
+   void addAttacker(std::optional<Attacker>&& attacker);
+   void onAttackerDestroyed(Attacker& src, std::string_view msg,
+                            const Observed<Attacker>::MsgData& data);
+
    void resetDefenderPlacements();
    bool hasDefenderOnField(MapPos field) const;
    void setDefenderOnField(MapPos field, bool hasDefender);
