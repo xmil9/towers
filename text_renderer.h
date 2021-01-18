@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "basic_types.h"
 #include "coords.h"
 #include "gll_texture.h"
 #include "gll_vao.h"
@@ -34,7 +35,7 @@ class TextRenderer
 
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
    void render(gll::Program& shaders, const std::string& text, PixPos baseline,
-               float scale, glm::vec3 color);
+               float scale, Color color);
    PixDim measure(const std::string& text, float scale) const;
 
  private:

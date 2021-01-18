@@ -52,7 +52,7 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
    renderer.renderSprite(m_background, at);
 
    constexpr float TextScale = .8f * UiScale(1.f);
-   constexpr glm::vec3 TextColor{.3f, .3f, .3f};
+   constexpr Color TextColor{.3f, .3f, .3f};
 
    const std::string label{"Credits:"};
    const PixDim labelPixPos = CreditsPos * m_dim;

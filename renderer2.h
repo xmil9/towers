@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "basic_types.h"
 #include "camera_2d.h"
 #include "frustum2.h"
 #include "sprite_renderer.h"
@@ -29,7 +30,7 @@ class Renderer2
    void renderSprite(const Sprite& sprite, PixPos leftTop);
    void renderAnimation(Animation& anim, PixPos leftTop);
    void renderText(const std::string& text, PixPos pos, float scale,
-                   const glm::vec3& color);
+                   const Color& color);
    PixDim measureText(const std::string& text, float scale) const;
 
 
@@ -53,7 +54,7 @@ inline void Renderer2::renderSprite(const Sprite& sprite, PixPos leftTop)
 }
 
 inline void Renderer2::renderText(const std::string& text, PixPos pos, float scale,
-                                  const glm::vec3& color)
+                                  const Color& color)
 {
    m_textRenderer->render(m_shaders, text, pos, scale, color);
 }

@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "basic_types.h"
 #include "glm/vec3.hpp"
 #include <optional>
 #include <string>
@@ -13,8 +14,8 @@ class SpriteLook
  public:
    SpriteLook() = default;
    explicit SpriteLook(std::string_view texTag);
-   explicit SpriteLook(const glm::vec3& color);
-   SpriteLook(std::string_view texTag, const glm::vec3& color);
+   explicit SpriteLook(const Color& color);
+   SpriteLook(std::string_view texTag, const Color& color);
    ~SpriteLook() = default;
    SpriteLook(const SpriteLook&) = default;
    SpriteLook(SpriteLook&&) = default;
@@ -25,12 +26,11 @@ class SpriteLook
    bool hasTexture() const { return m_textureTag.has_value(); }
    std::string texture() const;
    bool hasColor() const { return m_color != White; }
-   glm::vec3 color() const { return m_color; }
+   Color color() const { return m_color; }
 
  private:
-   static constexpr glm::vec3 White{1.f, 1.f, 1.f};
    std::optional<std::string> m_textureTag;
-   glm::vec3 m_color;
+   Color m_color;
 };
 
 
@@ -38,11 +38,11 @@ inline SpriteLook::SpriteLook(std::string_view texTag) : SpriteLook{texTag, Whit
 {
 }
 
-inline SpriteLook::SpriteLook(const glm::vec3& color) : m_color{color}
+inline SpriteLook::SpriteLook(const Color& color) : m_color{color}
 {
 }
 
-inline SpriteLook::SpriteLook(std::string_view texTag, const glm::vec3& color)
+inline SpriteLook::SpriteLook(std::string_view texTag, const Color& color)
 : m_textureTag{texTag}, m_color{color}
 {
 }

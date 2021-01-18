@@ -21,7 +21,7 @@ class Sprite
    PixPos rotationCenter() const { return m_form.rotationCenter(); }
    bool hasTexture() const { return m_look.hasTexture(); }
    std::string texture() const { return m_look.texture(); }
-   glm::vec3 color() const { return m_look.color(); }
+   Color color() const { return m_look.color(); }
 
    Sprite& setSize(PixDim size);
    Sprite& setRotation(Angle_t rot);

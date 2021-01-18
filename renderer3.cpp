@@ -204,9 +204,9 @@ bool Renderer3::setupRendering()
 
 bool Renderer3::setupLighting()
 {
-   const glm::vec3 lightColor{1.0f, 1.0f, 1.0f};
+   const Color lightColor{1.0f, 1.0f, 1.0f};
    constexpr float ambientIntensity = 0.1f;
-   const glm::vec3 ambient = lightColor * ambientIntensity;
+   const Color ambient = lightColor * ambientIntensity;
 
    m_prog.use();
    gll::Uniform lightColorUf = m_prog.uniform("lightColor");
