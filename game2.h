@@ -62,6 +62,7 @@ class Game2 : private Commands, private State
    bool hasDefenderOnField(MapPos field) const;
    void setDefenderOnField(MapPos field, bool hasDefender);
    bool canPlaceDefenderOnField(const std::string& defenderModel, MapPos field) const;
+   void addDefender(std::optional<Defender>&& defender, const PixPos& pos);
    void placeDefender(const PixPos& mousePos);
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
@@ -120,5 +121,5 @@ class Game2 : private Commands, private State
    Sprite m_validFieldOverlay;
    Sprite m_invalidFieldOverlay;
    std::vector<bool> m_defenderMatrix;
-   int m_credits = 0;
+   int m_credits = 150;
 };

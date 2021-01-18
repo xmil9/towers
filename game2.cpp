@@ -265,14 +265,6 @@ bool Game2::setupAttackers()
 }
 
 
-static void addDefender(const std::optional<Defender>& defender,
-                        std::vector<Defender>& coll)
-{
-   if (defender)
-      coll.push_back(*defender);
-}
-
-
 bool Game2::setupDefenders()
 {
    assert(!!m_coordSys);
@@ -440,6 +432,17 @@ bool Game2::canPlaceDefenderOnField(const std::string& /*defenderModel*/,
 }
 
 
+void Game2::addDefender(std::optional<Defender>&& defender, const PixPos& pos)
+{
+   if (defender)
+   {
+      m_credits -= defender->cost();
+      m_defenders.push_back(*defender);
+      setDefenderOnField(pos, true);
+   }
+}
+
+
 void Game2::placeDefender(const PixPos& mousePos)
 {
    const MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
@@ -450,16 +453,14 @@ void Game2::placeDefender(const PixPos& mousePos)
 
    if (m_placeSess->model == LtModel)
    {
-      constexpr LaserTurret::Attribs attribs{LtRange, LtDamage};
-      addDefender(m_defenseFactory->makeLaserTurret(LtSize, pos, attribs), m_defenders);
-      setDefenderOnField(pos, true);
+      constexpr LaserTurret::Attribs attribs{LtRange, LtDamage, LtCost};
+      addDefender(m_defenseFactory->makeLaserTurret(LtSize, pos, attribs), pos);
    }
    else if (m_placeSess->model == SmModel)
    {
-      constexpr SonicMortar::Attribs attribs{SmRange, SmDamage, SmCollateralRange,
+      constexpr SonicMortar::Attribs attribs{SmRange, SmDamage, SmCost, SmCollateralRange,
                                              SmCollateralDamage};
-      addDefender(m_defenseFactory->makeSonicMortar(SmSize, pos, attribs), m_defenders);
-      setDefenderOnField(pos, true);
+      addDefender(m_defenseFactory->makeSonicMortar(SmSize, pos, attribs), pos);
    }
 }
 

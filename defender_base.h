@@ -25,12 +25,14 @@ template <typename Derived> class DefenderBase
    {
       MapCoord range = 0.f;
       int damage = 0;
+      int cost = 0;
    };
 
  public:
    DefenderBase(DefenderLook look, MapCoord size, MapPos center, const MapCoordSys* cs,
                 std::vector<Attacker>* attackers);
 
+   int cost() const { return baseAttribs().cost; }
    void render(Renderer2& renderer);
    void update();
 

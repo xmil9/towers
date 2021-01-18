@@ -20,6 +20,7 @@ class Defender
    Defender() = default;
    template <typename SpecificDefender> explicit Defender(SpecificDefender&& d);
 
+   int cost() const;
    void render(Renderer2& renderer);
    void update();
 
@@ -31,6 +32,14 @@ class Defender
 template <typename SpecificDefender>
 Defender::Defender(SpecificDefender&& d) : m_defender{std::move(d)}
 {
+}
+
+inline int Defender::cost() const
+{
+   if (m_defender)
+      return std::visit([](const auto& defender) { return defender.cost(); },
+                        *m_defender);
+   return 0;
 }
 
 inline void Defender::render(Renderer2& renderer)
