@@ -273,14 +273,19 @@ bool Game2::setupDefenders()
    m_defenseFactory = std::make_unique<DefenderFactory>(m_coordSys.get(), &m_attackers);
 
    m_defenseFactory->registerModel(
-      LtModel, DefenderLook{Sprite{SpriteLook{LtTexture},
-                                   SpriteForm{m_resources.getTextureSize(LtTexture)}},
-                            m_resources.getAnimation(LtFiringAnimation)});
+      LtModel,
+      DefenderLook{
+         Sprite{SpriteLook{LtTexture}, SpriteForm{m_resources.getTextureSize(LtTexture)}},
+         m_resources.getAnimation(LtFiringAnimation)},
+      LaserTurret::Attribs{LtRange, LtDamage, LtCost});
 
    m_defenseFactory->registerModel(
-      SmModel, DefenderLook{Sprite{SpriteLook{SmTexture},
-                                   SpriteForm{m_resources.getTextureSize(SmTexture)}},
-                            m_resources.getAnimation(SmFiringAnimation)});
+      SmModel,
+      DefenderLook{
+         Sprite{SpriteLook{SmTexture}, SpriteForm{m_resources.getTextureSize(SmTexture)}},
+         m_resources.getAnimation(SmFiringAnimation)},
+      SonicMortar::Attribs{SmRange, SmDamage, SmCost, SmCollateralRange,
+                           SmCollateralDamage});
 
    resetDefenderPlacements();
    return true;
@@ -623,6 +628,13 @@ bool Game2::dashboardOnLeftButtonReleased(const PixPos& pos)
 
    const PixPos posInDashboard = pos - PixPos{MapWidth, 0.f};
    return m_dashboard.onLeftButtonReleased(posInDashboard);
+}
+
+
+bool Game2::canAffordDefender(const std::string& model) const
+{
+   const DefenderAttribs attribs = m_defenseFactory->defaultAttributes(model);
+   return attribs.cost() < m_credits;
 }
 
 

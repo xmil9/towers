@@ -23,6 +23,8 @@ static constexpr NormDim LabelValueGap{.03f, 0.f};
 static constexpr NormDim LaserTurretPos{.075f, .05f};
 static constexpr NormDim SonarMortarPos{.535f, .05f};
 
+static constexpr Color DisabledTint{.5f, .5f, .5f};
+
 
 ///////////////////
 
@@ -66,11 +68,13 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
 
    const PixDim ltPixPos = LaserTurretPos * m_dim;
    renderer.renderSprite(m_buttonBackground, at + ltPixPos);
-   renderer.renderSprite(m_ltButton, at + ltPixPos);
+   Color tint = m_state->canAffordDefender(LtModel) ? NoColor : DisabledTint;
+   renderer.renderSprite(m_ltButton, at + ltPixPos, tint);
 
    const PixDim smPixPos = SonarMortarPos * m_dim;
    renderer.renderSprite(m_buttonBackground, at + smPixPos);
-   renderer.renderSprite(m_smButton, at + smPixPos);
+   tint = m_state->canAffordDefender(SmModel) ? NoColor : DisabledTint;
+   renderer.renderSprite(m_smButton, at + smPixPos, tint);
 }
 
 

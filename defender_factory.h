@@ -10,6 +10,7 @@
 #include <cassert>
 #include <string>
 #include <unordered_map>
+#include <variant>
 #include <vector>
 
 class MapCoordSys;
@@ -25,18 +26,22 @@ class DefenderFactory
  public:
    explicit DefenderFactory(const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
-   void registerModel(const std::string& name, DefenderLook look);
+   template <typename Attribs>
+   void registerModel(const std::string& name, DefenderLook look, Attribs&& attribs);
 
    Defender makeLaserTurret(MapCoord size, MapPos center,
                             const LaserTurret::Attribs& attribs) const;
    Defender makeSonicMortar(MapCoord size, MapPos center,
                             const SonicMortar::Attribs& attribs) const;
 
+   DefenderAttribs defaultAttributes(const std::string& model) const;
+
  private:
    struct Model
    {
       std::string name;
       DefenderLook look;
+      DefenderAttribs attribs;
    };
 
    const Model& lookupModel(const std::string& modelName) const;
@@ -57,7 +62,16 @@ inline DefenderFactory::DefenderFactory(const MapCoordSys* cs,
    assert(attackers);
 }
 
-inline void DefenderFactory::registerModel(const std::string& name, DefenderLook look)
+template <typename Attribs>
+void DefenderFactory::registerModel(const std::string& name, DefenderLook look,
+                                    Attribs&& attribs)
 {
-   m_models.insert(std::pair{name, Model{name, std::move(look)}});
+   m_models.insert(
+      std::pair{name, Model{name, std::move(look), DefenderAttribs{std::move(attribs)}}});
+}
+
+inline DefenderAttribs DefenderFactory::defaultAttributes(const std::string& model) const
+{
+   const Model& data = lookupModel(model);
+   return data.attribs;
 }

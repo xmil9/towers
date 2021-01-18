@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "defender_base.h"
+#include "defender_models.h"
 
 
 ///////////////////
@@ -18,6 +19,8 @@ class LaserTurret : public DefenderBase<LaserTurret>
  public:
    LaserTurret(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
                const MapCoordSys* cs, std::vector<Attacker>* attackers);
+
+   static Attribs defaultAttributes();
 
  private:
    void shoot();
@@ -39,4 +42,9 @@ inline void LaserTurret::shoot()
 {
    if (m_target || !(*m_target)->isAlive())
       (*m_target)->hit(m_attribs.damage);
+}
+
+inline LaserTurret::Attribs LaserTurret::defaultAttributes()
+{
+   return Attribs{LtRange, LtDamage, LtCost};
 }

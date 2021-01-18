@@ -4,6 +4,7 @@
 //
 #pragma once
 #include "defender_base.h"
+#include "defender_models.h"
 
 
 ///////////////////
@@ -23,6 +24,8 @@ class SonicMortar : public DefenderBase<SonicMortar>
    SonicMortar(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
                const MapCoordSys* cs, std::vector<Attacker>* attackers);
 
+   static Attribs defaultAttributes();
+
  private:
    void shoot();
    bool isInCollateralRange(const Attacker& attacker) const;
@@ -39,6 +42,11 @@ inline SonicMortar::SonicMortar(DefenderLook look, MapCoord size, MapPos center,
 : DefenderBase<SonicMortar>{look, size, center, cs, attackers}, m_attribs{attribs}
 
 {
+}
+
+inline SonicMortar::Attribs SonicMortar::defaultAttributes()
+{
+   return Attribs{SmRange, SmDamage, SmCost, SmCollateralRange, SmCollateralDamage};
 }
 
 inline void SonicMortar::shoot()
