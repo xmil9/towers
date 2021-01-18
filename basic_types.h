@@ -26,3 +26,4 @@ constexpr T UiScale(T val)
 
 using Color = glm::vec3;
 constexpr Color White{1.f, 1.f, 1.f};
+constexpr Color NoColor = White;

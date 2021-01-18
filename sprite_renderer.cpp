@@ -55,8 +55,8 @@ bool SpriteRenderer::setup()
 }
 
 
-void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite,
-                            PixPos leftTop) const
+void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop,
+                            const Color& tint) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (sprite.hasTexture())
@@ -65,7 +65,7 @@ void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite,
       texBinding.bind(m_resources->getTexture(sprite.texture()));
    }
 
-   shaders.setUniform("spriteColor", sprite.color());
+   shaders.setUniform("spriteColor", tint);
    shaders.setUniform("isText", false);
 
    // Scope for vao binding.

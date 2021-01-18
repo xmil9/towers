@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "basic_types.h"
 #include "mesh2.h"
 #include "gll_vao.h"
 #include "glm/vec2.hpp"
@@ -31,7 +32,8 @@ class SpriteRenderer
    SpriteRenderer& operator=(SpriteRenderer&&) = default;
 
    bool setup();
-   void render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop) const;
+   void render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop,
+               const Color& tint = NoColor) const;
 
  private:
    bool setupData();
