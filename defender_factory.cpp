@@ -21,7 +21,7 @@ DefenderFactory::lookupModel(const std::string& modelName) const
 
 Defender DefenderFactory::makeDefender(const std::string& model, MapPos center) const
 {
-   const Model& data = lookupModel(LtModel);
+   const Model& data = lookupModel(model);
 
    if (model == LtModel)
    {
