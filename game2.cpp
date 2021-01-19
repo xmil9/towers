@@ -624,7 +624,7 @@ bool Game2::dashboardOnLeftButtonReleased(const PixPos& pos)
 bool Game2::canAffordDefender(const std::string& model) const
 {
    const DefenderAttribs attribs = m_defenseFactory->defaultAttributes(model);
-   return attribs.cost() < m_credits;
+   return attribs.cost() <= m_credits;
 }
 
 
