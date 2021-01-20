@@ -40,16 +40,18 @@ bool Dashboard::setup(const MapCoordSys* cs)
    assert(cs);
    m_mapCoordSys = cs;
 
-   Sprite buttonBkg{SpriteLook{ButtonBackgroundTTag}, SpriteForm{ButtonDim * m_dim}};
+   const PixDim buttonPixDim = ButtonDim * m_dim;
+   Sprite buttonBkg{SpriteLook{ButtonBackgroundTTag}, SpriteForm{buttonPixDim}};
+   SpriteForm contentForm{buttonPixDim};
 
    m_ltButton.setup(
-      buttonBkg, Sprite{SpriteLook{LtTexture}, SpriteForm{ButtonDim * m_dim}},
+      buttonBkg, Sprite{SpriteLook{LtTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(LtModel); }, LaserTurretPos * m_dim,
-      ButtonDim * m_dim);
+      buttonPixDim);
    m_smButton.setup(
-      buttonBkg, Sprite{SpriteLook{SmTexture}, SpriteForm{ButtonDim * m_dim}},
+      buttonBkg, Sprite{SpriteLook{SmTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(SmModel); }, SonarMortarPos * m_dim,
-      ButtonDim * m_dim);
+      buttonPixDim);
 
    return true;
 }
@@ -82,7 +84,6 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    // Cancel existing placement session.
    m_commands->endPlaceSession();
 
-   const PixDim buttonPixDim = ButtonDim * m_dim;
    // Set size of indicator to size of one field on map.
    constexpr MapDim indicatorDim{1.f, 1.f};
    const PixDim indicatorPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);
