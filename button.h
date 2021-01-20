@@ -4,10 +4,13 @@
 //
 #pragma once
 #include "coords.h"
-#include "renderer2.h"
 #include "sprite.h"
 #include <functional>
 
+class Renderer2;
+
+
+///////////////////
 
 class Button
 {

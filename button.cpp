@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "button.h"
+#include "renderer2.h"
 
 
 ///////////////////
@@ -15,6 +16,8 @@ static constexpr Color DisabledTint{.8f, .8f, .8f};
 void Button::setup(const Sprite& background, Sprite&& content, IsEnabledFn isEnabledFn,
                    const PixPos& leftTop, const PixDim& dim)
 {
+   assert(isEnabledFn);
+
    m_background = background;
    m_content = std::move(content);
    m_isEnabledFn = isEnabledFn;

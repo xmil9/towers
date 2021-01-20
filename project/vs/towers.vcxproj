@@ -167,6 +167,7 @@
     <ClCompile Include="..\..\button.cpp" />
     <ClCompile Include="..\..\dashboard.cpp" />
     <ClCompile Include="..\..\defender_factory.cpp" />
+    <ClCompile Include="..\..\label.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
@@ -214,6 +215,7 @@
     <ClInclude Include="..\..\defender_look.h" />
     <ClInclude Include="..\..\defender_models.h" />
     <ClInclude Include="..\..\int_coords.h" />
+    <ClInclude Include="..\..\label.h" />
     <ClInclude Include="..\..\laser_turret.h" />
     <ClInclude Include="..\..\map_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />

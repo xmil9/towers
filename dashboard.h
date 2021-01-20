@@ -5,6 +5,7 @@
 #pragma once
 #include "button.h"
 #include "coords.h"
+#include "label.h"
 #include "sprite.h"
 
 struct Commands;
@@ -21,10 +22,14 @@ class Dashboard
  public:
    Dashboard(PixCoordi width, PixCoordi height, Commands* commands, State* state);
 
-   bool setup(const MapCoordSys* cs);
+   bool setup(const Renderer2& renderer, const MapCoordSys* cs);
    void render(Renderer2& renderer, const PixPos& at);
    bool onLeftButtonPressed(const PixPos& mousePosInDash);
    bool onLeftButtonReleased(const PixPos& mousePosInDash);
+
+ private:
+   void setupCreditsElements(const Renderer2& renderer);
+   void setupDefenderElements();
 
  private:
    PixDim m_dim;
@@ -32,6 +37,8 @@ class Dashboard
    State* m_state = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;
    Sprite m_background;
+   Label m_creditsLabel;
+   Label m_creditsValue;
    Button m_ltButton;
    Button m_smButton;
 };

@@ -75,6 +75,7 @@
       <Filter>Rendering\Text</Filter>
     </ClCompile>
     <ClCompile Include="..\..\button.cpp" />
+    <ClCompile Include="..\..\label.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Glfw Utilities">
@@ -258,6 +259,7 @@
     </ClInclude>
     <ClInclude Include="..\..\state.h" />
     <ClInclude Include="..\..\button.h" />
+    <ClInclude Include="..\..\label.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
