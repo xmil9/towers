@@ -23,18 +23,12 @@ static constexpr NormDim LabelValueGap{.03f, 0.f};
 static constexpr NormDim LaserTurretPos{.075f, .05f};
 static constexpr NormDim SonarMortarPos{.535f, .05f};
 
-static constexpr Color DisabledTint{.8f, .8f, .8f};
-
 
 ///////////////////
 
 Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands, State* state)
 : m_dim{width, height}, m_commands{commands}, m_state{state},
-  m_background{SpriteLook{DashboardTTag}, SpriteForm{m_dim}},
-  m_buttonBackground{SpriteLook{ButtonBackgroundTTag}, SpriteForm{ButtonDim * m_dim}},
-  m_ltButton{SpriteLook{LtTexture}, SpriteForm{ButtonDim * m_dim}},
-  m_smButton{SpriteLook{SmTexture}, SpriteForm{ButtonDim * m_dim}}
-
+  m_background{SpriteLook{DashboardTTag}, SpriteForm{m_dim}}
 {
    assert(m_commands);
    assert(m_state);
@@ -45,6 +39,18 @@ bool Dashboard::setup(const MapCoordSys* cs)
 {
    assert(cs);
    m_mapCoordSys = cs;
+
+   Sprite buttonBkg{SpriteLook{ButtonBackgroundTTag}, SpriteForm{ButtonDim * m_dim}};
+
+   m_ltButton.setup(
+      buttonBkg, Sprite{SpriteLook{LtTexture}, SpriteForm{ButtonDim * m_dim}},
+      [this]() { return m_state->canAffordDefender(LtModel); }, LaserTurretPos * m_dim,
+      ButtonDim * m_dim);
+   m_smButton.setup(
+      buttonBkg, Sprite{SpriteLook{SmTexture}, SpriteForm{ButtonDim * m_dim}},
+      [this]() { return m_state->canAffordDefender(SmModel); }, SonarMortarPos * m_dim,
+      ButtonDim * m_dim);
+
    return true;
 }
 
@@ -66,15 +72,8 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
    renderer.renderText(std::to_string(m_state->credits()), at + creditsPixPos, TextScale,
                        TextColor);
 
-   const PixDim ltPixPos = LaserTurretPos * m_dim;
-   renderer.renderSprite(m_buttonBackground, at + ltPixPos);
-   Color tint = m_state->canAffordDefender(LtModel) ? NoColor : DisabledTint;
-   renderer.renderSprite(m_ltButton, at + ltPixPos, tint);
-
-   const PixDim smPixPos = SonarMortarPos * m_dim;
-   renderer.renderSprite(m_buttonBackground, at + smPixPos);
-   tint = m_state->canAffordDefender(SmModel) ? NoColor : DisabledTint;
-   renderer.renderSprite(m_smButton, at + smPixPos, tint);
+   m_ltButton.render(renderer, at);
+   m_smButton.render(renderer, at);
 }
 
 
@@ -88,21 +87,13 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    constexpr MapDim indicatorDim{1.f, 1.f};
    const PixDim indicatorPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);
 
-   const NormDim ltPixPos = LaserTurretPos * m_dim;
-   const bool isInLtButton =
-      mousePosInDash.x > ltPixPos.x && mousePosInDash.x <= ltPixPos.x + buttonPixDim.x &&
-      mousePosInDash.y > ltPixPos.y && mousePosInDash.y <= ltPixPos.y + buttonPixDim.y;
-   if (isInLtButton && m_state->canAffordDefender(LtModel))
+   if (m_ltButton.isHit(mousePosInDash) && m_ltButton.isEnabled())
    {
       m_commands->startPlaceSession(LtModel, LtTexture, indicatorPixDim);
       return true;
    }
 
-   const NormDim smPixPos = SonarMortarPos * m_dim;
-   const bool isInSmButton =
-      mousePosInDash.x > smPixPos.x && mousePosInDash.x <= smPixPos.x + buttonPixDim.x &&
-      mousePosInDash.y > smPixPos.y && mousePosInDash.y <= smPixPos.y + buttonPixDim.y;
-   if (isInSmButton && m_state->canAffordDefender(SmModel))
+   if (m_smButton.isHit(mousePosInDash) && m_smButton.isEnabled())
    {
       m_commands->startPlaceSession(SmModel, SmTexture, indicatorPixDim);
       return true;

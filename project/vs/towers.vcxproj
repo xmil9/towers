@@ -164,6 +164,7 @@
     <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
+    <ClCompile Include="..\..\button.cpp" />
     <ClCompile Include="..\..\dashboard.cpp" />
     <ClCompile Include="..\..\defender_factory.cpp" />
     <ClCompile Include="..\..\main_window.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\attacker_models.h" />
     <ClInclude Include="..\..\basic_types.h" />
+    <ClInclude Include="..\..\button.h" />
     <ClInclude Include="..\..\commands.h" />
     <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\dashboard.h" />

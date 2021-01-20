@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "button.h"
 #include "coords.h"
 #include "sprite.h"
 
@@ -31,7 +32,6 @@ class Dashboard
    State* m_state = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;
    Sprite m_background;
-   Sprite m_buttonBackground;
-   Sprite m_ltButton;
-   Sprite m_smButton;
+   Button m_ltButton;
+   Button m_smButton;
 };
