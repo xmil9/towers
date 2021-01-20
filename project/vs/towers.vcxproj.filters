@@ -3,279 +3,406 @@
   <ItemGroup>
     <ClCompile Include="..\..\towers.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c">
-      <Filter>Glad</Filter>
+      <Filter>Infrastructure\Glad</Filter>
     </ClCompile>
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
-      <Filter>Stb</Filter>
+      <Filter>Infrastructure\Stb</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_shader.cpp">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_program.cpp">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_texture.cpp">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\input.cpp">
-      <Filter>Ui</Filter>
+      <Filter>Infrastructure\Ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\game3.cpp" />
     <ClCompile Include="..\..\png_texture.cpp">
-      <Filter>Utilities</Filter>
+      <Filter>Infrastructure\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\resources.cpp" />
-    <ClCompile Include="..\..\textures.cpp" />
-    <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\gll_debug.cpp">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gll_binding.cpp">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\camera_fps.cpp">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\frustum3.cpp">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\renderer3.cpp">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sprite_renderer.cpp">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\renderer2.cpp">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\main_window.cpp">
-      <Filter>Ui</Filter>
+      <Filter>Infrastructure\Ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\path.cpp" />
-    <ClCompile Include="..\..\attacker.cpp" />
-    <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\sprite_form.cpp">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gfl_lib.cpp">
-      <Filter>Glfw Utilities</Filter>
+      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\gfl_window.cpp">
-      <Filter>Glfw Utilities</Filter>
+      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\animation.cpp">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\animations.cpp" />
-    <ClCompile Include="..\..\animation_factory.cpp" />
-    <ClCompile Include="..\..\attacker_factory.cpp" />
-    <ClCompile Include="..\..\defender_factory.cpp" />
-    <ClCompile Include="..\..\dashboard.cpp" />
     <ClCompile Include="..\..\text_renderer.cpp">
-      <Filter>Rendering\Text</Filter>
+      <Filter>Infrastructure\Rendering\Text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\button.cpp" />
-    <ClCompile Include="..\..\label.cpp" />
+    <ClCompile Include="..\..\game2.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dashboard.cpp">
+      <Filter>Game\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\button.cpp">
+      <Filter>Game\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\label.cpp">
+      <Filter>Game\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\animation_factory.cpp">
+      <Filter>Game\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\animations.cpp">
+      <Filter>Game\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\resources.cpp">
+      <Filter>Game\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\textures.cpp">
+      <Filter>Game\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\path.cpp">
+      <Filter>Game\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\map_data.cpp">
+      <Filter>Game\Maps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\attacker.cpp">
+      <Filter>Game\Attackers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\attacker_factory.cpp">
+      <Filter>Game\Attackers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\defender_factory.cpp">
+      <Filter>Game\Defenders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\game3.cpp">
+      <Filter>3D Sample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Glfw Utilities">
-      <UniqueIdentifier>{afc1cc97-7a35-4d4b-8969-73c54d9bdb8a}</UniqueIdentifier>
+    <Filter Include="Infrastructure">
+      <UniqueIdentifier>{a131a271-bdda-4881-8d06-864af4b3c7e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Glad">
+    <Filter Include="Infrastructure\Glad">
       <UniqueIdentifier>{e3626774-826b-4350-8f5e-5eb4e04c0390}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Stb">
-      <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
+    <Filter Include="Infrastructure\Glfw Utilities">
+      <UniqueIdentifier>{afc1cc97-7a35-4d4b-8969-73c54d9bdb8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Rendering">
-      <UniqueIdentifier>{4589b49b-6d2f-4cf1-bb21-0224ce69757b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui">
-      <UniqueIdentifier>{130ef901-d481-4ccf-836d-83d29dd1dd08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities">
-      <UniqueIdentifier>{6be38c80-5e3f-4c4b-98b5-bef3f5c98975}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Rendering\3d">
-      <UniqueIdentifier>{9b77bbb6-9618-4356-93dd-9e1df30e1f92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Rendering\2d">
-      <UniqueIdentifier>{90907dfb-daf6-4040-b3a8-0fd88a104460}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resources">
-      <UniqueIdentifier>{f8e70f2e-2aea-47ec-a92d-745ddc8e374e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL Utilities">
+    <Filter Include="Infrastructure\OpenGL Utilities">
       <UniqueIdentifier>{83b7ab7a-7ef2-4e24-bee1-513529922f10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Rendering\Text">
+    <Filter Include="Infrastructure\Rendering">
+      <UniqueIdentifier>{4589b49b-6d2f-4cf1-bb21-0224ce69757b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Rendering\3d">
+      <UniqueIdentifier>{9b77bbb6-9618-4356-93dd-9e1df30e1f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Rendering\2d">
+      <UniqueIdentifier>{90907dfb-daf6-4040-b3a8-0fd88a104460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Rendering\Text">
       <UniqueIdentifier>{2e5ea87d-f94c-4886-8bab-a2685ce4d3e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Stb">
+      <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Ui">
+      <UniqueIdentifier>{130ef901-d481-4ccf-836d-83d29dd1dd08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Infrastructure\Utilities">
+      <UniqueIdentifier>{6be38c80-5e3f-4c4b-98b5-bef3f5c98975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{f8e70f2e-2aea-47ec-a92d-745ddc8e374e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{b441d1fd-e2b6-4ec7-8b2f-83383004b677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Ui">
+      <UniqueIdentifier>{25d978c1-03fc-4d2b-9a73-1d057f7bf3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Resource Management">
+      <UniqueIdentifier>{0ef78dfc-bb69-4216-97f2-6a03fcf6a026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Maps">
+      <UniqueIdentifier>{b02c9099-005b-47ae-b206-82d99b25732f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Attackers">
+      <UniqueIdentifier>{90bdc4c3-70e2-4ee4-bc04-0b12455e67f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Defenders">
+      <UniqueIdentifier>{9456d01c-162a-4cbc-8658-f07a49081e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coordinates">
+      <UniqueIdentifier>{340b917c-65ad-44dd-8854-29edf7c349fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D Sample">
+      <UniqueIdentifier>{b7611137-2d86-4976-aa2f-2fa787fb2f5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
-      <Filter>Stb</Filter>
+      <Filter>Infrastructure\Stb</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_types.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_object.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_data_format.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_shader.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_program.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_uniform.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_texture.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\lap_clock.h">
-      <Filter>Utilities</Filter>
+      <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\observed.h">
-      <Filter>Utilities</Filter>
+      <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\input.h">
-      <Filter>Ui</Filter>
+      <Filter>Infrastructure\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\input_controller.h">
-      <Filter>Ui</Filter>
+      <Filter>Infrastructure\Ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\game3.h" />
     <ClInclude Include="..\..\png_texture.h">
-      <Filter>Utilities</Filter>
+      <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\resources.h" />
-    <ClInclude Include="..\..\textures.h" />
-    <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\gll_debug.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_binding.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_vbo.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gll_vao.h">
-      <Filter>OpenGL Utilities</Filter>
+      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\camera_2d.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\camera_fps.h">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\frustum2.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\frustum3.h">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer3.h">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sprite_renderer.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cube3_data.h">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer2.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sprite.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sprite_look.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sprite_form.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\mesh2.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\main_window.h">
-      <Filter>Ui</Filter>
+      <Filter>Infrastructure\Ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\field.h" />
-    <ClInclude Include="..\..\attacker.h" />
-    <ClInclude Include="..\..\path.h" />
-    <ClInclude Include="..\..\map.h" />
-    <ClInclude Include="..\..\map_data.h" />
-    <ClInclude Include="..\..\norm_coords.h" />
-    <ClInclude Include="..\..\pixel_coords.h" />
-    <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\rect.h">
-      <Filter>Utilities</Filter>
+      <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\int_coords.h" />
-    <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\point2.h">
-      <Filter>Utilities</Filter>
+      <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gfl_types.h">
-      <Filter>Glfw Utilities</Filter>
+      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gfl_lib.h">
-      <Filter>Glfw Utilities</Filter>
+      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\gfl_window.h">
-      <Filter>Glfw Utilities</Filter>
+      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\animation.h">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\animations.h" />
-    <ClInclude Include="..\..\animation_factory.h" />
-    <ClInclude Include="..\..\animation_tags.h" />
-    <ClInclude Include="..\..\texture_tags.h" />
-    <ClInclude Include="..\..\attacker_look.h" />
-    <ClInclude Include="..\..\attacker_models.h" />
-    <ClInclude Include="..\..\defender_look.h" />
-    <ClInclude Include="..\..\defender_models.h" />
-    <ClInclude Include="..\..\defender_factory.h" />
-    <ClInclude Include="..\..\dashboard.h" />
-    <ClInclude Include="..\..\place_session.h" />
-    <ClInclude Include="..\..\commands.h" />
-    <ClInclude Include="..\..\map_coords.h" />
-    <ClInclude Include="..\..\attacker_factory.h" />
-    <ClInclude Include="..\..\laser_turret.h" />
-    <ClInclude Include="..\..\sonic_mortar.h" />
-    <ClInclude Include="..\..\defender_base.h" />
-    <ClInclude Include="..\..\defender.h" />
     <ClInclude Include="..\..\text_renderer.h">
-      <Filter>Rendering\Text</Filter>
+      <Filter>Infrastructure\Rendering\Text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\state.h" />
-    <ClInclude Include="..\..\button.h" />
-    <ClInclude Include="..\..\label.h" />
+    <ClInclude Include="..\..\basic_types.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\commands.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game2.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\place_session.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\state.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dashboard.h">
+      <Filter>Game\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\button.h">
+      <Filter>Game\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\label.h">
+      <Filter>Game\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\animation_factory.h">
+      <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\animation_tags.h">
+      <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\animations.h">
+      <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resources.h">
+      <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\texture_tags.h">
+      <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\textures.h">
+      <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\path.h">
+      <Filter>Game\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\map_data.h">
+      <Filter>Game\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\map.h">
+      <Filter>Game\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\field.h">
+      <Filter>Game\Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker_factory.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker_look.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker_models.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\defender.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\defender_base.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\defender_factory.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\defender_look.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\defender_models.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sonic_mortar.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\laser_turret.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\int_coords.h">
+      <Filter>Game\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\norm_coords.h">
+      <Filter>Game\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pixel_coords.h">
+      <Filter>Game\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\coords.h">
+      <Filter>Game\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\map_coords.h">
+      <Filter>Game\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\map_coord_sys.h">
+      <Filter>Game\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\game3.h">
+      <Filter>3D Sample</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
-      <Filter>resources</Filter>
+      <Filter>Resources</Filter>
     </None>
     <None Include="..\..\shaders\cube3_shader.fs">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </None>
     <None Include="..\..\shaders\cube3_shader.vs">
-      <Filter>Rendering\3d</Filter>
+      <Filter>Infrastructure\Rendering\3d</Filter>
     </None>
     <None Include="..\..\shaders\sprite_shader.fs">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </None>
     <None Include="..\..\shaders\sprite_shader.vs">
-      <Filter>Rendering\2d</Filter>
+      <Filter>Infrastructure\Rendering\2d</Filter>
     </None>
   </ItemGroup>
 </Project>
