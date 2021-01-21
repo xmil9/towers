@@ -104,6 +104,9 @@
     <ClCompile Include="..\..\game3.cpp">
       <Filter>3D Sample</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\hp_renderer.cpp">
+      <Filter>Game\Attackers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Infrastructure">
@@ -386,6 +389,9 @@
     </ClInclude>
     <ClInclude Include="..\..\game3.h">
       <Filter>3D Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hp_renderer.h">
+      <Filter>Game\Attackers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

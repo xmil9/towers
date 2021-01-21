@@ -57,8 +57,9 @@ Game2::Game2()
 bool Game2::setup()
 {
    return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
-           setupRenderer() && setupTerrain() && setupAnimations() && setupAttackers() &&
-           setupDefenders() && setupBackground() && m_dashboard.setup(m_renderer, m_coordSys.get()));
+           setupTerrain() && setupRenderer() && setupAnimations() && setupAttackers() &&
+           setupDefenders() && setupBackground() &&
+           m_dashboard.setup(m_renderer, m_coordSys.get()));
 }
 
 
@@ -176,18 +177,14 @@ bool Game2::setupTextures()
       {InvalidFieldTTag, ui, "invalid_field.png"},
       {DashboardTTag, ui, "dashboard.png"},
       {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
+      {HpMeterTTag, scene, "hp_meter.png"},
+      {HpStatusTTag, scene, "hp_status.png"},
    };
 
    for (const auto& spec : textures)
       if (!m_resources.loadTexture(spec.tag, spec.path / spec.filename))
          return false;
    return true;
-}
-
-
-bool Game2::setupRenderer()
-{
-   return m_renderer.setup(&m_resources, WndWidth, WndHeight);
 }
 
 
@@ -205,6 +202,16 @@ bool Game2::setupTerrain()
    m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
 
    return true;
+}
+
+
+bool Game2::setupRenderer()
+{
+   constexpr NormDim hpMeterDim{.5f, .1f};
+   const PixDim hpMeterPixDim = m_coordSys->toRenderCoords(hpMeterDim);
+   m_hpRenderer.setup(Sprite{SpriteLook{HpMeterTTag}, SpriteForm{hpMeterPixDim}},
+                      Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpMeterPixDim}});
+   return m_renderer.setup(&m_resources, WndWidth, WndHeight);
 }
 
 
@@ -242,11 +249,11 @@ bool Game2::setupAttackers()
    m_attackFactory->registerModel(
       AatModel, AttackerLook{Sprite{SpriteLook{AatTexture},
                                     SpriteForm{m_resources.getTextureSize(AatTexture)}},
-                             m_resources.getAnimation(ExplosionATag)});
+                             m_resources.getAnimation(ExplosionATag), &m_hpRenderer});
    m_attackFactory->registerModel(
       MhcModel, AttackerLook{Sprite{SpriteLook{MhcTexture},
                                     SpriteForm{m_resources.getTextureSize(MhcTexture)}},
-                             m_resources.getAnimation(ExplosionATag)});
+                             m_resources.getAnimation(ExplosionATag), &m_hpRenderer});
 
    addAttacker(
       m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 0, 50},

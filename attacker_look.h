@@ -4,8 +4,10 @@
 //
 #pragma once
 #include "animation.h"
+#include "hp_renderer.h"
 #include "renderer2.h"
 #include "sprite.h"
+#include "texture_tags.h"
 
 
 ///////////////////
@@ -13,8 +15,8 @@
 class AttackerLook
 {
  public:
-   AttackerLook(const Sprite& shape, Animation explosion);
-   AttackerLook(Sprite&& shape, Animation explosion);
+   AttackerLook(const Sprite& shape, Animation explosion, HpRenderer* hpRenderer);
+   AttackerLook(Sprite&& shape, Animation explosion, HpRenderer* hpRenderer);
 
    PixDim size() const { return m_shape.size(); }
 
@@ -29,17 +31,22 @@ class AttackerLook
  private:
    Sprite m_shape;
    Animation m_explosion;
+   HpRenderer* m_hpRenderer = nullptr;
 };
 
 
-inline AttackerLook::AttackerLook(const Sprite& shape, Animation explosion)
-: m_shape{shape}, m_explosion{std::move(explosion)}
+inline AttackerLook::AttackerLook(const Sprite& shape, Animation explosion,
+                                  HpRenderer* hpRenderer)
+: m_shape{shape}, m_explosion{std::move(explosion)}, m_hpRenderer{hpRenderer}
 {
+   assert(m_hpRenderer);
 }
 
-inline AttackerLook::AttackerLook(Sprite&& shape, Animation explosion)
-: m_shape{std::move(shape)}, m_explosion{std::move(explosion)}
+inline AttackerLook::AttackerLook(Sprite&& shape, Animation explosion,
+                                  HpRenderer* hpRenderer)
+: m_shape{std::move(shape)}, m_explosion{std::move(explosion)}, m_hpRenderer{hpRenderer}
 {
+   assert(m_hpRenderer);
 }
 
 inline AttackerLook& AttackerLook::setSize(PixDim size)
@@ -58,7 +65,9 @@ inline AttackerLook& AttackerLook::setRotation(Angle_t rot)
 
 inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter)
 {
-   renderer.renderSprite(m_shape, atCenter - .5f * m_shape.size());
+   const PixPos leftTop = atCenter - .5f * m_shape.size();
+   renderer.renderSprite(m_shape, leftTop);
+   m_hpRenderer->render(renderer, leftTop - PixVec{0.f, 20.f});
 }
 
 inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter)

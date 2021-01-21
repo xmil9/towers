@@ -12,6 +12,7 @@
 #include "defender.h"
 #include "defender_factory.h"
 #include "gfl_lib.h"
+#include "hp_renderer.h"
 #include "input.h"
 #include "main_window.h"
 #include "map.h"
@@ -41,8 +42,8 @@ class Game2 : private Commands, private State
    bool setupInput();
    bool setupOutput();
    bool setupTextures();
-   bool setupRenderer();
    bool setupTerrain();
+   bool setupRenderer();
    bool setupAnimations();
    bool setupAttackers();
    bool setupDefenders();
@@ -111,6 +112,7 @@ class Game2 : private Commands, private State
    Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;
+   HpRenderer m_hpRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
    std::vector<Attacker> m_attackers;
    std::unique_ptr<DefenderFactory> m_defenseFactory;
