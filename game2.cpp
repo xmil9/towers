@@ -272,10 +272,10 @@ bool Game2::setupAttackers()
       m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 100, 50},
                                     OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
    addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 0, 20},
+      m_attackFactory->makeAttacker(MhcModel, .5f, Attacker::Attribs{800, .05f, 0, 20},
                                     OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}));
    addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .4f, Attacker::Attribs{800, .05f, 10, 20},
+      m_attackFactory->makeAttacker(MhcModel, .5f, Attacker::Attribs{800, .05f, 10, 20},
                                     OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}));
 
    return true;
