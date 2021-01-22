@@ -177,7 +177,6 @@ bool Game2::setupTextures()
       {InvalidFieldTTag, ui, "invalid_field.png"},
       {DashboardTTag, ui, "dashboard.png"},
       {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
-      {HpMeterTTag, scene, "hp_meter.png"},
       {HpStatusTTag, scene, "hp_status.png"},
    };
 
@@ -209,10 +208,9 @@ bool Game2::setupRenderer()
 {
    constexpr NormDim hpMeterDim{.5f, .1f};
    const PixDim hpMeterPixDim = m_coordSys->toRenderCoords(hpMeterDim);
-   constexpr NormVec hpOffset{-.25f, -.5f};
+   constexpr NormVec hpOffset{-.25f, -.4f};
    const PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
-   m_hpRenderer.setup(Sprite{SpriteLook{HpMeterTTag}, SpriteForm{hpMeterPixDim}},
-                      Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpMeterPixDim}},
+   m_hpRenderer.setup(Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpMeterPixDim}},
                       hpPixOffset);
 
    return m_renderer.setup(&m_resources, WndWidth, WndHeight);

@@ -14,5 +14,4 @@ constexpr char ValidFieldTTag[] = "valid_field";
 constexpr char InvalidFieldTTag[] = "invalid_field";
 constexpr char DashboardTTag[] = "dashboard";
 constexpr char ButtonBackgroundTTag[] = "button_bgrd";
-constexpr char HpMeterTTag[] = "hp_meter";
 constexpr char HpStatusTTag[] = "hp_status";

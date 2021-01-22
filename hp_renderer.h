@@ -12,11 +12,10 @@ class Renderer2;
 class HpRenderer
 {
 public:
-   void setup(Sprite&& hpMeter, Sprite&& hpStatus, PixVec offset);
+   void setup(Sprite&& status, PixVec offset);
    void render(Renderer2& renderer, PixPos atSpriteCenter, float ratio);
 
 private:
-   Sprite m_hpMeter;
-   Sprite m_hpStatus;
+   Sprite m_status;
    PixVec m_offset{0.f, 0.f};
 };

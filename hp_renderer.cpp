@@ -7,23 +7,20 @@
 
 
 
-void HpRenderer::setup(Sprite&& hpMeter, Sprite&& hpStatus, PixVec offset)
+void HpRenderer::setup(Sprite&& status, PixVec offset)
 {
-   m_hpMeter = std::move(hpMeter);
-   m_hpStatus = std::move(hpStatus);
+   m_status = std::move(status);
    m_offset = offset;
 }
 
 
 void HpRenderer::render(Renderer2& renderer, PixPos atSpriteCenter, float ratio)
 {
-   //renderer.renderSprite(m_hpMeter, at);
-   const PixDim fullDim = m_hpStatus.size();
-   PixDim dim = fullDim;
-   dim.x = fullDim.x * ratio;
-   m_hpStatus.setSize(dim);
+   const PixDim fullDim = m_status.size();
+   m_status.setSize(PixDim{fullDim.x * ratio, fullDim.y});
 
-   renderer.renderSprite(m_hpStatus, atSpriteCenter + m_offset);
+   renderer.renderSprite(m_status, atSpriteCenter + m_offset);
 
-   m_hpStatus.setSize(fullDim);
+   // Reset size.
+   m_status.setSize(fullDim);
 }
