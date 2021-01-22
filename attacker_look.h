@@ -23,7 +23,7 @@ class AttackerLook
    AttackerLook& setSize(PixDim size);
    AttackerLook& setRotation(Angle_t rot);
 
-   void render(Renderer2& renderer, PixPos atCenter);
+   void render(Renderer2& renderer, PixPos atCenter, bool isAlive, float hpRatio);
    void renderExploded(Renderer2& renderer, PixPos atCenter);
 
    bool hasExplosionFinished() const { return m_explosion.hasFinished(); }
@@ -63,16 +63,19 @@ inline AttackerLook& AttackerLook::setRotation(Angle_t rot)
    return *this;
 }
 
-inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter)
+inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAlive,
+                                 float hpRatio)
 {
    const PixPos leftTop = atCenter - .5f * m_shape.size();
    renderer.renderSprite(m_shape, leftTop);
-   m_hpRenderer->render(renderer, leftTop - PixVec{0.f, 20.f});
+
+   if (isAlive)
+      m_hpRenderer->render(renderer, atCenter, hpRatio);
 }
 
 inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter)
 {
    // Also draw the attacker so that the explosion appears on top of it.
-   render(renderer, atCenter);
+   render(renderer, atCenter, false, 0.f);
    renderer.renderAnimation(m_explosion, atCenter - .5f * m_explosion.size());
 }

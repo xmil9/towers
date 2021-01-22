@@ -31,7 +31,9 @@ void Attacker::render(Renderer2& renderer)
    if (isAlive())
    {
       calcRotation();
-      m_look.render(renderer, center);
+      m_look.render(renderer, center, true,
+                    static_cast<float>(m_currAttribs.hp) /
+                       static_cast<float>(m_initialAttribs.hp));
    }
    else
    {
