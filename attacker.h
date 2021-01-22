@@ -57,6 +57,7 @@ class Attacker : public Observed<Attacker>
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
    const MapCoordSys* m_coordSys = nullptr;
+   bool m_isHit = false;
 };
 
 

@@ -161,7 +161,9 @@ bool Game2::setupTextures()
 
    const std::vector<TextureSpec> textures{
       {AatTexture, scene, "aat.png"},
+      {AatHitTexture, scene, "aat_hit.png"},
       {MhcTexture, scene, "mhc.png"},
+      {MhcHitTexture, scene, "mhc_hit.png"},
       {LtTexture, scene, "lt.png"},
       {LtFiring1Texture, scene, "lt_firing1.png"},
       {LtFiring2Texture, scene, "lt_firing2.png"},
@@ -252,11 +254,15 @@ bool Game2::setupAttackers()
       AatModel,
       AttackerLook{Sprite{SpriteLook{AatTexture},
                           SpriteForm{m_resources.getTextureSize(AatTexture)}},
+                   Sprite{SpriteLook{AatHitTexture},
+                          SpriteForm{m_resources.getTextureSize(AatHitTexture)}},
                    m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()});
    m_attackFactory->registerModel(
       MhcModel,
       AttackerLook{Sprite{SpriteLook{MhcTexture},
                           SpriteForm{m_resources.getTextureSize(MhcTexture)}},
+                   Sprite{SpriteLook{MhcHitTexture},
+                          SpriteForm{m_resources.getTextureSize(MhcHitTexture)}},
                    m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()});
 
    addAttacker(

@@ -15,36 +15,32 @@
 class AttackerLook
 {
  public:
-   AttackerLook(const Sprite& shape, Animation explosion, HpRenderer* hpRenderer);
-   AttackerLook(Sprite&& shape, Animation explosion, HpRenderer* hpRenderer);
+   AttackerLook(Sprite&& shape, Sprite&& shapeHit, Animation explosion,
+                HpRenderer* hpRenderer);
 
    PixDim size() const { return m_shape.size(); }
 
    AttackerLook& setSize(PixDim size);
    AttackerLook& setRotation(Angle_t rot);
 
-   void render(Renderer2& renderer, PixPos atCenter, bool isAlive, float hpRatio);
+   void render(Renderer2& renderer, PixPos atCenter, bool isAlive, float hpRatio,
+               bool isHit);
    void renderExploded(Renderer2& renderer, PixPos atCenter);
 
    bool hasExplosionFinished() const { return m_explosion.hasFinished(); }
 
  private:
    Sprite m_shape;
+   Sprite m_shapeHit;
    Animation m_explosion;
    HpRenderer* m_hpRenderer = nullptr;
 };
 
 
-inline AttackerLook::AttackerLook(const Sprite& shape, Animation explosion,
+inline AttackerLook::AttackerLook(Sprite&& shape, Sprite&& shapeHit, Animation explosion,
                                   HpRenderer* hpRenderer)
-: m_shape{shape}, m_explosion{std::move(explosion)}, m_hpRenderer{hpRenderer}
-{
-   assert(m_hpRenderer);
-}
-
-inline AttackerLook::AttackerLook(Sprite&& shape, Animation explosion,
-                                  HpRenderer* hpRenderer)
-: m_shape{std::move(shape)}, m_explosion{std::move(explosion)}, m_hpRenderer{hpRenderer}
+: m_shape{std::move(shape)}, m_shapeHit{std::move(shapeHit)},
+  m_explosion{std::move(explosion)}, m_hpRenderer{hpRenderer}
 {
    assert(m_hpRenderer);
 }
@@ -52,22 +48,29 @@ inline AttackerLook::AttackerLook(Sprite&& shape, Animation explosion,
 inline AttackerLook& AttackerLook::setSize(PixDim size)
 {
    m_shape.setSize(size);
+   m_shapeHit.setSize(size);
    // Explosion stays the same size.
+   // Hp bar stays the same size.
    return *this;
 }
 
 inline AttackerLook& AttackerLook::setRotation(Angle_t rot)
 {
    m_shape.setRotation(rot);
+   m_shapeHit.setRotation(rot);
    // Explosion is not rotated.
+   // Hp bar is not rotated.
    return *this;
 }
 
 inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAlive,
-                                 float hpRatio)
+                                 float hpRatio, bool isHit)
 {
    const PixPos leftTop = atCenter - .5f * m_shape.size();
-   renderer.renderSprite(m_shape, leftTop);
+   if (isHit)
+      renderer.renderSprite(m_shapeHit, leftTop);
+   else
+      renderer.renderSprite(m_shape, leftTop);
 
    if (isAlive)
       m_hpRenderer->render(renderer, atCenter, hpRatio);
@@ -76,6 +79,6 @@ inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAl
 inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter)
 {
    // Also draw the attacker so that the explosion appears on top of it.
-   render(renderer, atCenter, false, 0.f);
+   render(renderer, atCenter, false, 0.f, true);
    renderer.renderAnimation(m_explosion, atCenter - .5f * m_explosion.size());
 }

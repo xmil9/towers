@@ -33,7 +33,8 @@ void Attacker::render(Renderer2& renderer)
       calcRotation();
       m_look.render(renderer, center, true,
                     static_cast<float>(m_currAttribs.hp) /
-                       static_cast<float>(m_initialAttribs.hp));
+                       static_cast<float>(m_initialAttribs.hp),
+                    m_isHit);
    }
    else
    {
@@ -44,6 +45,7 @@ void Attacker::render(Renderer2& renderer)
 
 void Attacker::update()
 {
+   m_isHit = false;
    if (m_currAttribs.launchDelay == 0)
       move();
    else
@@ -57,6 +59,7 @@ void Attacker::hit(int damage)
       return;
 
    m_currAttribs.hp = std::max(0, m_currAttribs.hp - damage);
+   m_isHit = true;
 
    if (!isAlive())
       notify(*this, AttackerDestroyedMsg, AttackerDestroyedMsgData{});
