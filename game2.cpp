@@ -206,12 +206,12 @@ bool Game2::setupTerrain()
 
 bool Game2::setupRenderer()
 {
-   constexpr NormDim hpMeterDim{.5f, .1f};
-   const PixDim hpMeterPixDim = m_coordSys->toRenderCoords(hpMeterDim);
+   constexpr NormDim hpStatusDim{.5f, .05f};
+   const PixDim hpStatusPixDim = m_coordSys->toRenderCoords(hpStatusDim);
    constexpr NormVec hpOffset{-.25f, -.4f};
    const PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
    m_hpRenderer = std::make_unique<HpRenderer>(
-      Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpMeterPixDim}}, hpPixOffset);
+      Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpStatusPixDim}}, hpPixOffset);
 
    return m_renderer.setup(&m_resources, WndWidth, WndHeight);
 }
