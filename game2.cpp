@@ -210,8 +210,8 @@ bool Game2::setupRenderer()
    const PixDim hpMeterPixDim = m_coordSys->toRenderCoords(hpMeterDim);
    constexpr NormVec hpOffset{-.25f, -.4f};
    const PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
-   m_hpRenderer.setup(Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpMeterPixDim}},
-                      hpPixOffset);
+   m_hpRenderer = std::make_unique<HpRenderer>(
+      Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpMeterPixDim}}, hpPixOffset);
 
    return m_renderer.setup(&m_resources, WndWidth, WndHeight);
 }
@@ -249,13 +249,15 @@ bool Game2::setupAttackers()
    m_attackFactory = std::make_unique<AttackerFactory>(m_coordSys.get());
 
    m_attackFactory->registerModel(
-      AatModel, AttackerLook{Sprite{SpriteLook{AatTexture},
-                                    SpriteForm{m_resources.getTextureSize(AatTexture)}},
-                             m_resources.getAnimation(ExplosionATag), &m_hpRenderer});
+      AatModel,
+      AttackerLook{Sprite{SpriteLook{AatTexture},
+                          SpriteForm{m_resources.getTextureSize(AatTexture)}},
+                   m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()});
    m_attackFactory->registerModel(
-      MhcModel, AttackerLook{Sprite{SpriteLook{MhcTexture},
-                                    SpriteForm{m_resources.getTextureSize(MhcTexture)}},
-                             m_resources.getAnimation(ExplosionATag), &m_hpRenderer});
+      MhcModel,
+      AttackerLook{Sprite{SpriteLook{MhcTexture},
+                          SpriteForm{m_resources.getTextureSize(MhcTexture)}},
+                   m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()});
 
    addAttacker(
       m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 0, 50},

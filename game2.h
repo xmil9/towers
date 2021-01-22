@@ -112,7 +112,7 @@ class Game2 : private Commands, private State
    Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;
-   HpRenderer m_hpRenderer;
+   std::unique_ptr<HpRenderer> m_hpRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
    std::vector<Attacker> m_attackers;
    std::unique_ptr<DefenderFactory> m_defenseFactory;

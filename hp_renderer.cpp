@@ -7,15 +7,9 @@
 
 
 
-void HpRenderer::setup(Sprite&& status, PixVec offset)
-{
-   m_status = std::move(status);
-   m_offset = offset;
-}
-
-
 void HpRenderer::render(Renderer2& renderer, PixPos atSpriteCenter, float ratio)
 {
+   // Adjust hp size to given ratio.
    const PixDim fullDim = m_status.size();
    m_status.setSize(PixDim{fullDim.x * ratio, fullDim.y});
 
