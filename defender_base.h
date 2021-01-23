@@ -32,7 +32,7 @@ template <typename Derived> class DefenderBase
    DefenderBase(DefenderLook look, MapCoord size, MapPos center, const MapCoordSys* cs,
                 std::vector<Attacker>* attackers);
 
-   int cost() const { return baseAttribs().cost; }
+   int cost() const { return derivedAttribs().cost; }
    void render(Renderer2& renderer);
    void update();
 
@@ -46,7 +46,7 @@ template <typename Derived> class DefenderBase
 
    Derived& derived() { return static_cast<Derived&>(*this); }
    const Derived& derived() const { return static_cast<const Derived&>(*this); }
-   const Attribs& baseAttribs() const { return derived().m_attribs; }
+   const Attribs& derivedAttribs() const { return derived().m_attribs; }
 
  protected:
    DefenderLook m_look;
@@ -132,7 +132,7 @@ bool DefenderBase<Derived>::isInRange(const Attacker& attacker) const
       return false;
 
    const MapCoord dist = glm::length(m_center - *pos);
-   return sutil::lessEqual(dist, baseAttribs().range);
+   return sutil::lessEqual(dist, derivedAttribs().range);
 }
 
 
