@@ -40,5 +40,7 @@ class Dashboard
    Label m_creditsLabel;
    Label m_creditsValue;
    Button m_ltButton;
+   Label m_ltStats;
    Button m_smButton;
+   Label m_smStats;
 };
