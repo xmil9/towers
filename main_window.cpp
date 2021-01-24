@@ -23,10 +23,10 @@ void MainWindow::onWindowResized(int width, int height)
 
    if (diff.x != 0 || diff.y != 0)
    {
-      WindowResizedMsgData data;
+      WindowResizedData data;
       data.newSize = newSize;
       data.diff = diff;
-      notify(*this, WindowResizedMsg, data);
+      notify(*this, WindowResizedEvent, data);
    }
 }
 

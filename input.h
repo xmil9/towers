@@ -42,21 +42,21 @@ class Input : public InputController, public Observed<Input>
 
 // Notifications sent to input state observers.
 
-constexpr char MouseMovedMsg[] = "mouse-moved";
-struct MouseMovedMsgData : public ObservedMsgData
+constexpr char MouseMovedEvent[] = "mouse-moved";
+struct MouseMovedData : public ObservedEventData
 {
    glm::vec2 pos{0.f, 0.f};
    glm::vec2 delta{0.f, 0.f};
 };
 
-constexpr char MouseScrolledMsg[] = "mouse-scrolled";
-struct MouseScrolledMsgData : public ObservedMsgData
+constexpr char MouseScrolledEvent[] = "mouse-scrolled";
+struct MouseScrolledData : public ObservedEventData
 {
    glm::vec2 delta{0.f, 0.f};
 };
 
-constexpr char MouseButtonChangedMsg[] = "mouse-button-changed";
-struct MouseButtonChangedMsgData : public ObservedMsgData
+constexpr char MouseButtonChangedEvent[] = "mouse-button-changed";
+struct MouseButtonChangedData : public ObservedEventData
 {
    // Button id: GLFW_MOUSE_BUTTON_1, GLFW_MOUSE_BUTTON_2, etc
    gfl::MouseButton button = 0;
@@ -68,8 +68,8 @@ struct MouseButtonChangedMsgData : public ObservedMsgData
    glm::vec2 pos{0.f, 0.f};
 };
 
-constexpr char KeyChangedMsg[] = "key-changed";
-struct KeyChangedMsgData : public ObservedMsgData
+constexpr char KeyChangedEvent[] = "key-changed";
+struct KeyChangedData : public ObservedEventData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;
@@ -81,8 +81,8 @@ struct KeyChangedMsgData : public ObservedMsgData
    int mods = 0;
 };
 
-constexpr char KeyPolledMsg[] = "key-polled";
-struct KeyPolledMsgData : public ObservedMsgData
+constexpr char KeyPolledEvent[] = "key-polled";
+struct KeyPolledData : public ObservedEventData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;

@@ -57,8 +57,8 @@ class Game2 : private Commands, private State
 
    void addAttacker(std::optional<Attacker>&& attacker);
    template<typename SpecificAttacker>
-   void onAttackerDestroyed(SpecificAttacker& src, std::string_view msg,
-                            const ObservedMsgData& data);
+   void onAttackerDestroyed(SpecificAttacker& src, std::string_view event,
+                            const ObservedEventData& data);
 
    void resetDefenderPlacements();
    bool hasDefenderOnField(MapPos field) const;
@@ -67,11 +67,11 @@ class Game2 : private Commands, private State
    void addDefender(std::optional<Defender>&& defender, const PixPos& pos);
    void placeDefender(const PixPos& mousePos);
 
-   void onMainWindowChanged(MainWindow& src, std::string_view msg,
-                            const ObservedMsgData& data);
+   void onMainWindowChanged(MainWindow& src, std::string_view event,
+                            const ObservedEventData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
-   void onInputChanged(Input& src, std::string_view msg, const ObservedMsgData& data);
+   void onInputChanged(Input& src, std::string_view event, const ObservedEventData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
    void onMouseButtonChanged(gfl::MouseButton button, int action, const glm::vec2& pos);

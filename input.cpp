@@ -29,10 +29,10 @@ void Input::onMouseMoved(double xpos, double ypos)
 
    if (delta.x != 0.0 || delta.y != 0.0)
    {
-      MouseMovedMsgData data;
+      MouseMovedData data;
       data.pos = m_mousePos;
       data.delta = delta;
-      notify(*this, MouseMovedMsg, data);
+      notify(*this, MouseMovedEvent, data);
    }
 }
 
@@ -40,32 +40,32 @@ void Input::onMouseMoved(double xpos, double ypos)
 void Input::onMouseScrolled(double xoffset, double yoffset)
 {
    const glm::vec2 delta(xoffset, yoffset);
-   MouseScrolledMsgData data;
+   MouseScrolledData data;
    data.delta = delta;
-   notify(*this, MouseScrolledMsg, data);
+   notify(*this, MouseScrolledEvent, data);
 }
 
 
 void Input::onMouseButtonChanged(gfl::MouseButton button, int action, int mods,
                                  double xpos, double ypos)
 {
-   MouseButtonChangedMsgData data;
+   MouseButtonChangedData data;
    data.button = button;
    data.action = action;
    data.mods = mods;
    data.pos = {xpos, ypos};
-   notify(*this, MouseButtonChangedMsg, data);
+   notify(*this, MouseButtonChangedEvent, data);
 }
 
 
 void Input::onKeyChanged(gfl::Key key, int scancode, int action, int mods)
 {
-   KeyChangedMsgData data;
+   KeyChangedData data;
    data.key = key;
    data.scancode = scancode;
    data.action = action;
    data.mods = mods;
-   notify(*this, KeyChangedMsg, data);
+   notify(*this, KeyChangedEvent, data);
 }
 
 
@@ -84,8 +84,8 @@ void Input::pollKeys(gfl::Window& wnd, float frameLengthSecs)
 
 void Input::notifyKeyPolled(gfl::Key key, float frameLengthSecs)
 {
-   KeyPolledMsgData data;
+   KeyPolledData data;
    data.key = key;
    data.frameLengthSecs = frameLengthSecs;
-   notify(*this, KeyPolledMsg, data);
+   notify(*this, KeyPolledEvent, data);
 }

@@ -126,8 +126,8 @@ template <typename Derived> void AttackerBase<Derived>::hit(int damage)
    m_isHit = true;
 
    if (!isAlive())
-      Observed<Derived>::notify(derived(), AttackerDestroyedMsg,
-                                AttackerDestroyedMsgData{});
+      Observed<Derived>::notify(derived(), AttackerDestroyedEvent,
+                                AttackerDestroyedData{});
 }
 
 

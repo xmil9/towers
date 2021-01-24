@@ -10,7 +10,7 @@
 
 // Notifications sent to observers.
 
-constexpr char AttackerDestroyedMsg[] = "attacker_destroyed";
-struct AttackerDestroyedMsgData : public ObservedMsgData
+constexpr char AttackerDestroyedEvent[] = "attacker_destroyed";
+struct AttackerDestroyedData : public ObservedEventData
 {
 };
