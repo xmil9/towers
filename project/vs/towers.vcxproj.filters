@@ -336,9 +336,6 @@
     <ClInclude Include="..\..\field.h">
       <Filter>Game\Maps</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\attacker.h">
-      <Filter>Game\Attackers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\attacker_factory.h">
       <Filter>Game\Attackers</Filter>
     </ClInclude>
@@ -391,6 +388,21 @@
       <Filter>3D Sample</Filter>
     </ClInclude>
     <ClInclude Include="..\..\hp_renderer.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker_base.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\assault_tank.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\mobile_cannon.h">
+      <Filter>Game\Attackers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\attacker_events.h">
       <Filter>Game\Attackers</Filter>
     </ClInclude>
   </ItemGroup>

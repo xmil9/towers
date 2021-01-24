@@ -8,20 +8,27 @@
 #include <vector>
 
 
+///////////////////
+
+// Base class for event data.
+struct ObservedMsgData
+{
+ protected:
+   ~ObservedMsgData() = default;
+};
+
+
+///////////////////
+
 template <typename Source> class Observed
 {
  public:
-   // Base class for message data.
-   struct MsgData
-   {
-    protected:
-      ~MsgData() = default;
-   };
-   using Callback = std::function<void(Source&, std::string_view, const MsgData& data)>;
+   using Callback =
+      std::function<void(Source&, std::string_view, const ObservedMsgData& data)>;
 
    void addObserver(Callback cb);
    void removeObserver(Callback cb);
-   void notify(Source& src, std::string_view msg, const MsgData& data);
+   void notify(Source& src, std::string_view msg, const ObservedMsgData& data);
 
  private:
    std::vector<Callback> m_observers;
@@ -43,7 +50,8 @@ template <typename Source> void Observed<Source>::removeObserver(Callback cb)
 
 
 template <typename Source>
-void Observed<Source>::notify(Source& src, std::string_view msg, const MsgData& data)
+void Observed<Source>::notify(Source& src, std::string_view msg,
+                              const ObservedMsgData& data)
 {
    for (auto& cb : m_observers)
       cb(src, msg, data);

@@ -14,7 +14,7 @@ DefenderFactory::lookupModel(const std::string& modelName) const
    assert(pos != m_models.end());
    if (pos == m_models.end())
       throw std::runtime_error{
-         "Configuration failure. Laser turrent model not registered."};
+         "Configuration failure. Model not registered."};
    return pos->second;
 }
 

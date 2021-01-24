@@ -28,11 +28,10 @@ class Game3
    bool setupOutput();
 
    void onMainWindowChanged(MainWindow& src, std::string_view msg,
-                            const Observed<MainWindow>::MsgData& data);
+                            const ObservedMsgData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
-   void onInputChanged(Input& src, std::string_view msg,
-                       const Observed<Input>::MsgData& data);
+   void onInputChanged(Input& src, std::string_view msg, const ObservedMsgData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);

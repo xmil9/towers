@@ -115,10 +115,10 @@ bool Game2::setupUi()
 bool Game2::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-   m_mainWnd.addObserver([this](MainWindow& src, std::string_view msg,
-                                const Observed<MainWindow>::MsgData& data) {
-      onMainWindowChanged(src, msg, data);
-   });
+   m_mainWnd.addObserver(
+      [this](MainWindow& src, std::string_view msg, const ObservedMsgData& data) {
+         onMainWindowChanged(src, msg, data);
+      });
 
    if (m_mainWnd.create(WndWidth, WndHeight, "towers") != GLFW_NO_ERROR)
       return false;
@@ -132,7 +132,7 @@ bool Game2::setupMainWindow()
 bool Game2::setupInput()
 {
    m_input.addObserver(
-      [this](Input& /*src*/, std::string_view msg, const Observed<Input>::MsgData& data) {
+      [this](Input& /*src*/, std::string_view msg, const ObservedMsgData& data) {
          onInputChanged(m_input, msg, data);
       });
    return true;
@@ -256,27 +256,25 @@ bool Game2::setupAttackers()
                           SpriteForm{m_resources.getTextureSize(AatTexture)}},
                    Sprite{SpriteLook{AatHitTexture},
                           SpriteForm{m_resources.getTextureSize(AatHitTexture)}},
-                   m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()});
+                   m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
+      AssaultTank::defaultAttributes());
    m_attackFactory->registerModel(
       MhcModel,
       AttackerLook{Sprite{SpriteLook{MhcTexture},
                           SpriteForm{m_resources.getTextureSize(MhcTexture)}},
                    Sprite{SpriteLook{MhcHitTexture},
                           SpriteForm{m_resources.getTextureSize(MhcHitTexture)}},
-                   m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()});
+                   m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
+      MobileCannon::defaultAttributes());
 
-   addAttacker(
-      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 0, 50},
-                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
-   addAttacker(
-      m_attackFactory->makeAttacker(AatModel, .8f, Attacker::Attribs{2000, .03f, 100, 50},
-                                    OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
-   addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .5f, Attacker::Attribs{800, .05f, 0, 20},
-                                    OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}));
-   addAttacker(
-      m_attackFactory->makeAttacker(MhcModel, .5f, Attacker::Attribs{800, .05f, 10, 20},
-                                    OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}));
+   addAttacker(m_attackFactory->makeAttacker(
+      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
+   addAttacker(m_attackFactory->makeAttacker(
+      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
+   addAttacker(m_attackFactory->makeAttacker(
+      MhcModel, OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}));
+   addAttacker(m_attackFactory->makeAttacker(
+      MhcModel, OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}));
 
    return true;
 }
@@ -294,15 +292,14 @@ bool Game2::setupDefenders()
       DefenderLook{
          Sprite{SpriteLook{LtTexture}, SpriteForm{m_resources.getTextureSize(LtTexture)}},
          m_resources.getAnimation(LtFiringAnimation)},
-      LaserTurret::Attribs{LtRange, LtDamage, LtCost});
+      LaserTurret::defaultAttributes());
 
    m_defenseFactory->registerModel(
       SmModel,
       DefenderLook{
          Sprite{SpriteLook{SmTexture}, SpriteForm{m_resources.getTextureSize(SmTexture)}},
          m_resources.getAnimation(SmFiringAnimation)},
-      SonicMortar::Attribs{SmRange, SmDamage, SmCost, SmCollateralRange,
-                           SmCollateralDamage});
+      SonicMortar::defaultAttributes());
 
    resetDefenderPlacements();
    return true;
@@ -403,18 +400,19 @@ void Game2::addAttacker(std::optional<Attacker>&& attacker)
 {
    if (attacker)
    {
-      attacker->addObserver([this](Attacker& src, std::string_view msg,
-                                   const Observed<Attacker>::MsgData& data) {
-         onAttackerDestroyed(src, msg, data);
-      });
+      attacker->addObserver(
+         [this](auto& src, std::string_view msg, const ObservedMsgData& data) {
+            onAttackerDestroyed(src, msg, data);
+         });
 
       m_attackers.push_back(*attacker);
    }
 }
 
 
-void Game2::onAttackerDestroyed(Attacker& src, std::string_view /*msg*/,
-                                const Observed<Attacker>::MsgData& /*data*/)
+template <typename SpecificAttacker>
+void Game2::onAttackerDestroyed(SpecificAttacker& src, std::string_view /*msg*/,
+                                const ObservedMsgData& /*data*/)
 {
    m_credits += src.reward();
 }
@@ -478,7 +476,7 @@ void Game2::placeDefender(const PixPos& mousePos)
 
 
 void Game2::onMainWindowChanged(MainWindow& /*src*/, std::string_view msg,
-                                const Observed<MainWindow>::MsgData& data)
+                                const ObservedMsgData& data)
 {
    if (msg == WindowResizedMsg)
    {
@@ -496,7 +494,7 @@ void Game2::onMainWindowResize(const glm::ivec2& newSize)
 
 
 void Game2::onInputChanged(Input& /*src*/, std::string_view msg,
-                           const Observed<Input>::MsgData& data)
+                           const ObservedMsgData& data)
 {
    if (msg == MouseMovedMsg)
    {

@@ -33,7 +33,7 @@ class MainWindow : public gfl::Window, public Observed<MainWindow>
 // Notifications sent to observers.
 
 constexpr char WindowResizedMsg[] = "window_resized";
-struct WindowResizedMsgData : public Observed<MainWindow>::MsgData
+struct WindowResizedMsgData : public ObservedMsgData
 {
    glm::ivec2 newSize{0, 0};
    // Difference to previous size.

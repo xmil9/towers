@@ -201,7 +201,10 @@
     <ClInclude Include="..\..\animations.h" />
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />
+    <ClInclude Include="..\..\assault_tank.h" />
     <ClInclude Include="..\..\attacker.h" />
+    <ClInclude Include="..\..\attacker_base.h" />
+    <ClInclude Include="..\..\attacker_events.h" />
     <ClInclude Include="..\..\attacker_factory.h" />
     <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\attacker_models.h" />
@@ -248,6 +251,7 @@
     <ClInclude Include="..\..\gll_uniform.h" />
     <ClInclude Include="..\..\gll_vao.h" />
     <ClInclude Include="..\..\input.h" />
+    <ClInclude Include="..\..\mobile_cannon.h" />
     <ClInclude Include="..\..\norm_coords.h" />
     <ClInclude Include="..\..\path.h" />
     <ClInclude Include="..\..\pixel_coords.h" />

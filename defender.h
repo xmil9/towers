@@ -13,7 +13,7 @@
 ///////////////////
 
 // Wrapper around specific defender type.
-// Deals with dispatching calls to specific defender type.
+// Deals with dispatching calls to specific defender types.
 class Defender
 {
  public:
@@ -58,7 +58,7 @@ inline void Defender::update()
 ///////////////////
 
 // Wrapper around specific defender attributes type.
-// Deals with dispatching calls to specific attributes type.
+// Deals with dispatching calls to specific attributes types.
 class DefenderAttribs
 {
  public:

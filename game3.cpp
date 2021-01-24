@@ -79,10 +79,10 @@ bool Game3::setupUi()
 bool Game3::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-   m_mainWnd.addObserver([this](MainWindow& src, std::string_view msg,
-                                const Observed<MainWindow>::MsgData& data) {
-      onMainWindowChanged(src, msg, data);
-   });
+   m_mainWnd.addObserver(
+      [this](MainWindow& src, std::string_view msg, const ObservedMsgData& data) {
+         onMainWindowChanged(src, msg, data);
+      });
 
    if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
       return false;
@@ -95,7 +95,7 @@ bool Game3::setupMainWindow()
 bool Game3::setupInput()
 {
    m_input.addObserver(
-      [this](Input& /*src*/, std::string_view msg, const Observed<Input>::MsgData& data) {
+      [this](Input& /*src*/, std::string_view msg, const ObservedMsgData& data) {
          onInputChanged(m_input, msg, data);
       });
    return true;
@@ -111,7 +111,7 @@ bool Game3::setupOutput()
 
 
 void Game3::onMainWindowChanged(MainWindow& /*src*/, std::string_view msg,
-                                const Observed<MainWindow>::MsgData& data)
+                                const ObservedMsgData& data)
 {
    if (msg == WindowResizedMsg)
    {
@@ -130,7 +130,7 @@ void Game3::onMainWindowResize(const glm::ivec2& newSize)
 
 
 void Game3::onInputChanged(Input& /*src*/, std::string_view msg,
-                           const Observed<Input>::MsgData& data)
+                           const ObservedMsgData& data)
 {
    if (msg == MouseMovedMsg)
    {
