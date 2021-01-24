@@ -22,7 +22,8 @@ class AttackerFactory
    template <typename Attribs>
    void registerModel(const std::string& name, AttackerLook look, Attribs&& attribs);
 
-   Attacker makeAttacker(const std::string& model, const OffsetPath& path) const;
+   Attacker makeAttacker(const std::string& model, const OffsetPath& path,
+                         int launchDelay = 0) const;
    AttackerAttribs defaultAttributes(const std::string& model) const;
 
  private:

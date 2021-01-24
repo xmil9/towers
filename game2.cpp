@@ -270,7 +270,7 @@ bool Game2::setupAttackers()
    addAttacker(m_attackFactory->makeAttacker(
       AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
    addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
+      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}, 30));
    addAttacker(m_attackFactory->makeAttacker(
       MhcModel, OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}));
    addAttacker(m_attackFactory->makeAttacker(
@@ -480,8 +480,7 @@ void Game2::onMainWindowChanged(MainWindow& /*src*/, std::string_view event,
 {
    if (event == WindowResizedEvent)
    {
-      const WindowResizedData& resizeData =
-         static_cast<const WindowResizedData&>(data);
+      const WindowResizedData& resizeData = static_cast<const WindowResizedData&>(data);
       onMainWindowResize(resizeData.newSize);
    }
 }
