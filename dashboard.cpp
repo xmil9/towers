@@ -26,12 +26,14 @@ namespace
 constexpr NormDim CreditsPos{.075f, .025f};
 constexpr NormDim ButtonDim{.375f, .0625f};
 constexpr NormDim LabelValueGap{.03f, 0.f};
+constexpr NormCoord StatsVertGap = .014f;
 constexpr NormDim LaserTurretPos{.075f, .05f};
 constexpr NormDim SonarMortarPos{.535f, .05f};
 
 std::string CreditsText{"Credits:"};
 constexpr float TextScale = .8f * UiScale(1.f);
-constexpr float TextScaleSmall = .7f * UiScale(1.f);
+constexpr float TextScaleForCost = .7f * UiScale(1.f);
+constexpr float TextScaleForAllStats = .5f * UiScale(1.f);
 constexpr Color TextColor{.3f, .3f, .3f};
 
 
@@ -41,7 +43,7 @@ std::string FormatFloat(float f)
 {
    constexpr float precision = 100.f;
    const float rounded = static_cast<float>(static_cast<int>(precision * f)) / precision;
-   
+
    std::string s = sutil::trimRight(std::to_string(rounded), '0');
    if (sutil::endsWith(s, "."))
       s += "0";
@@ -85,7 +87,7 @@ Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands, Stat
 : m_dim{width, height}, m_commands{commands}, m_state{state},
   m_background{SpriteLook{DashboardTTag}, SpriteForm{m_dim}},
   m_creditsLabel{TextScale, TextColor}, m_creditsValue{TextScale, TextColor},
-  m_ltStats{TextScaleSmall, TextColor}, m_smStats{TextScaleSmall, TextColor}
+  m_ltStats{TextScaleForCost, TextColor}, m_smStats{TextScaleForCost, TextColor}
 {
    assert(m_commands);
    assert(m_state);
@@ -152,10 +154,10 @@ void Dashboard::setupCreditsElements(const Renderer2& renderer)
    const PixDim ceditsLabelDim = renderer.measureText(CreditsText, TextScale);
    m_creditsLabel.setup([]() { return CreditsText; }, CreditsPos * m_dim, ceditsLabelDim);
 
-   const PixDim gap = LabelValueGap * m_dim;
+   const PixDim gap = toPix(LabelValueGap);
    const PixDim creditsValPos =
       m_creditsLabel.position() + PixDim{ceditsLabelDim.x, 0.f} + gap;
-   const PixDim ceditsValDim{100.f, ceditsLabelDim.y};
+   const PixDim ceditsValDim{0.f, ceditsLabelDim.y};
    m_creditsValue.setup([this]() { return std::to_string(m_state->credits()); },
                         creditsValPos, ceditsValDim);
 }
@@ -163,26 +165,26 @@ void Dashboard::setupCreditsElements(const Renderer2& renderer)
 
 void Dashboard::setupDefenderElements()
 {
-   const PixDim buttonPixDim = ButtonDim * m_dim;
+   const PixDim buttonPixDim = toPix(ButtonDim);
    Sprite buttonBkg{SpriteLook{ButtonBackgroundTTag}, SpriteForm{buttonPixDim}};
    SpriteForm contentForm{buttonPixDim};
 
-   const PixPos ltPixPos = LaserTurretPos * m_dim;
+   const PixPos ltPixPos = toPix(LaserTurretPos);
    m_ltButton.setup(
       buttonBkg, Sprite{SpriteLook{LtTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(LtModel); }, ltPixPos, buttonPixDim);
 
-   const PixVec StatsOffset{0.f, buttonPixDim.y + 15.f};
-   const PixPos ltStatsPixPos = ltPixPos + StatsOffset;
+   const PixVec statsOffset{0.f, buttonPixDim.y + toVertPix(StatsVertGap)};
+   const PixPos ltStatsPixPos = ltPixPos + statsOffset;
    m_ltStats.setup([]() { return FormatDefenderStats(LaserTurret::defaultAttributes()); },
                    ltStatsPixPos, {});
 
-   const PixPos smPixPos = SonarMortarPos * m_dim;
+   const PixPos smPixPos = toPix(SonarMortarPos);
    m_smButton.setup(
       buttonBkg, Sprite{SpriteLook{SmTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(SmModel); }, smPixPos, buttonPixDim);
 
-   const PixPos smStatsPixPos = smPixPos + StatsOffset;
+   const PixPos smStatsPixPos = smPixPos + statsOffset;
    m_smStats.setup([]() { return FormatDefenderStats(SonicMortar::defaultAttributes()); },
                    smStatsPixPos, {});
 }

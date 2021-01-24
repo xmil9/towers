@@ -31,6 +31,10 @@ class Dashboard
    void setupCreditsElements(const Renderer2& renderer);
    void setupDefenderElements();
 
+   PixPos toPix(NormPos npos) const { return npos * m_dim; }
+   PixCoord toVertPix(NormCoord ny) const { return ny * m_dim.y; }
+   PixCoord toHorzPix(NormCoord nx) const { return nx * m_dim.x; }
+
  private:
    PixDim m_dim;
    Commands* m_commands = nullptr;
