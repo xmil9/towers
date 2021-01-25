@@ -175,8 +175,8 @@ bool Game2::setupTextures()
       {Explosion3TTag, scene, "explosion3.png"},
       {Explosion4TTag, scene, "explosion4.png"},
       {Map1TTag, scene, "map1.png"},
-      {ValidFieldTTag, ui, "valid_field.png"},
-      {InvalidFieldTTag, ui, "invalid_field.png"},
+      {InvalidFieldTTag, scene, "invalid_field.png"},
+      {RangeTTag, scene, "range.png"},
       {DashboardTTag, ui, "dashboard.png"},
       {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
       {HpStatusTTag, scene, "hp_status.png"},
@@ -311,8 +311,8 @@ bool Game2::setupBackground()
    m_background = Sprite{SpriteLook{Map1TTag}, SpriteForm{{MapWidth, MapHeight}}};
 
    const PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
-   m_validFieldOverlay = Sprite{SpriteLook{ValidFieldTTag}, SpriteForm{fieldPixDim}};
    m_invalidFieldOverlay = Sprite{SpriteLook{InvalidFieldTTag}, SpriteForm{fieldPixDim}};
+   m_rangeOverlay = Sprite{SpriteLook{RangeTTag}, SpriteForm{fieldPixDim}};
 
    return true;
 }
@@ -382,13 +382,21 @@ void Game2::renderPlaceSession()
       const bool isOnMap = m_map->isOnMap(fieldPos);
       if (isOnMap)
       {
-         const Sprite& overlay = canPlaceDefenderOnField(m_placeSess->model, fieldPos)
-                                    ? m_validFieldOverlay
-                                    : m_invalidFieldOverlay;
-         m_renderer.renderSprite(overlay, fieldPixPos);
+         if (canPlaceDefenderOnField(m_placeSess->model, fieldPos))
+         {
+            const PixDim rangeDim = m_coordSys->toRenderCoords(
+               2.0f * MapDim{m_placeSess->range, m_placeSess->range});
+            m_rangeOverlay.setSize(rangeDim);
+            const PixPos rangePixPos = fieldCenterPixPos - .5f * rangeDim;
+            m_renderer.renderSprite(m_rangeOverlay, rangePixPos);
+         }
+         else
+         {
+            m_renderer.renderSprite(m_invalidFieldOverlay, fieldPixPos);
+         }
       }
 
-      const PixDim halfIndicatorSize = m_placeSess->indicator.size() / 2.f;
+      const PixDim halfIndicatorSize = .5f * m_placeSess->indicator.size();
       const PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
       m_renderer.renderSprite(m_placeSess->indicator,
                               indicatorCenter - halfIndicatorSize);
@@ -648,6 +656,7 @@ void Game2::startPlaceSession(std::string_view model, std::string_view indicator
    PlaceSession sess;
    sess.model = model;
    sess.indicator = Sprite{SpriteLook{indicatorTex}, SpriteForm{indicatorDim}};
+   sess.range = m_defenseFactory->defaultAttributes(sess.model).range();
 
    m_placeSess = std::move(sess);
 }

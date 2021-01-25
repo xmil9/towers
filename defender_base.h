@@ -33,6 +33,8 @@ template <typename Derived> class DefenderBase
                 std::vector<Attacker>* attackers);
 
    int cost() const { return baseAttribs().cost; }
+   MapCoord range() const { return baseAttribs().range; }
+   MapPos center() const { return m_center; }
    void render(Renderer2& renderer);
    void update();
 

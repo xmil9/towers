@@ -121,8 +121,8 @@ class Game2 : private Commands, private State
    Sprite m_background;
    Dashboard m_dashboard;
    std::optional<PlaceSession> m_placeSess;
-   Sprite m_validFieldOverlay;
    Sprite m_invalidFieldOverlay;
+   Sprite m_rangeOverlay;
    std::vector<bool> m_defenderMatrix;
    int m_credits = 150;
 };

@@ -21,6 +21,8 @@ class Defender
    template <typename SpecificDefender> explicit Defender(SpecificDefender&& d);
 
    int cost() const;
+   MapCoord range() const;
+   MapPos center() const;
    void render(Renderer2& renderer);
    void update();
 
@@ -40,6 +42,22 @@ inline int Defender::cost() const
       return std::visit([](const auto& defender) { return defender.cost(); },
                         *m_defender);
    return 0;
+}
+
+inline MapCoord Defender::range() const
+{
+   if (m_defender)
+      return std::visit([](const auto& defender) { return defender.range(); },
+                        *m_defender);
+   return 0.f;
+}
+
+inline MapPos Defender::center() const
+{
+   if (m_defender)
+      return std::visit([](const auto& defender) { return defender.center(); },
+                        *m_defender);
+   return {0.f, 0.f};
 }
 
 inline void Defender::render(Renderer2& renderer)
