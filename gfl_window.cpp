@@ -101,6 +101,19 @@ void Window::setShouldClose(bool close)
 }
 
 
+std::optional<std::pair<double, double>> Window::cursorPosition() const
+{
+   if (m_wnd)
+   {
+      double x = 0.;
+      double y = 0.;
+      glfwGetCursorPos(m_wnd, &x, &y);
+      return std::pair(x, y);
+   }
+   return std::nullopt;
+}
+
+
 void Window::setCursorMode(int mode)
 {
    if (m_wnd)

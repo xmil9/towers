@@ -369,10 +369,7 @@ void Game2::renderPlaceSession()
 {
    if (m_placeSess)
    {
-      double x = 0.;
-      double y = 0.;
-      glfwGetCursorPos(m_mainWnd.handle(), &x, &y);
-      const PixPos mousePixPos(x, y);
+      const PixPos mousePixPos{m_mainWnd.mousePosition()};
 
       const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
       const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);

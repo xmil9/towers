@@ -6,6 +6,8 @@
 #include "glad/glad.h" // glad must be included before anything else opengl related.
 #include "gfl_types.h"
 #include "glfw/glfw3.h"
+#include <optional>
+#include <utility>
 
 
 namespace gfl
@@ -34,6 +36,8 @@ class Window
    bool shouldClose() const;
    void setShouldClose(bool close);
 
+   // Returns the mouse cursor position relative to this window.
+   std::optional<std::pair<double, double>> cursorPosition() const;
    // Sets the mouse cursor mode. Values:
    // GLFW_CURSOR_NORMAL, GLFW_CURSOR_HIDDEN, GLFW_CURSOR_DISABLED
    void setCursorMode(int mode);

@@ -3,6 +3,7 @@
 // MIT license
 //
 #pragma once
+#include "coords.h"
 #include "input_controller.h"
 #include "observed.h"
 #include "gfl_window.h"
@@ -13,6 +14,7 @@ class MainWindow : public gfl::Window, public Observed<MainWindow>
 {
  public:
    void setInputController(InputController* controller);
+   PixPos mousePosition() const;
 
  protected:
    void onWindowResized(int width, int height) override;

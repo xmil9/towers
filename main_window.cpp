@@ -4,12 +4,24 @@
 //
 #include "main_window.h"
 #include <cassert>
+#include <limits>
 
 
 void MainWindow::setInputController(InputController* controller)
 {
    assert(controller);
    m_inputController = controller;
+}
+
+
+PixPos MainWindow::mousePosition() const
+{
+   const auto mousePos = cursorPosition();
+   if (!mousePos)
+      return PixPos{-1.f, -1.f};
+
+   return {static_cast<PixCoord>(mousePos->first),
+           static_cast<PixCoord>(mousePos->second)};
 }
 
 
