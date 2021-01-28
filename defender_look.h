@@ -56,7 +56,7 @@ inline DefenderLook& DefenderLook::setRotation(Angle_t rot)
 
 inline void DefenderLook::render(Renderer2& renderer, PixPos atCenter)
 {
-   renderer.renderSprite(m_shape, atCenter - .5f * m_shape.size());
+   renderer.renderSpriteCentered(m_shape, atCenter);
 }
 
 inline void DefenderLook::renderFiring(Renderer2& renderer, PixPos atCenter)

@@ -66,11 +66,10 @@ inline AttackerLook& AttackerLook::setRotation(Angle_t rot)
 inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAlive,
                                  float hpRatio, bool isHit)
 {
-   const PixPos leftTop = atCenter - .5f * m_shape.size();
    if (isHit)
-      renderer.renderSprite(m_shapeHit, leftTop);
+      renderer.renderSpriteCentered(m_shapeHit, atCenter);
    else
-      renderer.renderSprite(m_shape, leftTop);
+      renderer.renderSpriteCentered(m_shape, atCenter);
 
    if (isAlive)
       m_hpRenderer->render(renderer, atCenter, hpRatio);

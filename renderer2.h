@@ -6,6 +6,7 @@
 #include "basic_types.h"
 #include "camera_2d.h"
 #include "frustum2.h"
+#include "sprite.h"
 #include "sprite_renderer.h"
 #include "text_renderer.h"
 #include "gll_program.h"
@@ -14,7 +15,6 @@
 
 class Animation;
 class Resources;
-class Sprite;
 
 
 ///////////////////
@@ -28,6 +28,8 @@ class Renderer2
    void clearScene() const;
    void beginRendering();
    void renderSprite(const Sprite& sprite, PixPos leftTop, const Color& tint = NoColor);
+   void renderSpriteCentered(const Sprite& sprite, PixPos center,
+                             const Color& tint = NoColor);
    void renderAnimation(Animation& anim, PixPos leftTop);
    void renderText(const std::string& text, PixPos pos, float scale, const Color& color);
    PixDim measureText(const std::string& text, float scale) const;
@@ -47,9 +49,16 @@ class Renderer2
 };
 
 
-inline void Renderer2::renderSprite(const Sprite& sprite, PixPos leftTop, const Color& tint)
+inline void Renderer2::renderSprite(const Sprite& sprite, PixPos leftTop,
+                                    const Color& tint)
 {
    m_spriteRenderer->render(m_shaders, sprite, leftTop, tint);
+}
+
+inline void Renderer2::renderSpriteCentered(const Sprite& sprite, PixPos center,
+                                            const Color& tint)
+{
+   renderSprite(sprite, center - .5f * sprite.size(), tint);
 }
 
 inline void Renderer2::renderText(const std::string& text, PixPos pos, float scale,

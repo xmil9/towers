@@ -384,8 +384,7 @@ void Game2::renderDefenderInfo()
       const MapPos at = touchedDefender->center();
       const PixPos atPix = m_coordSys->toRenderCoords(at);
       m_rangeOverlay.setSize(rangeDim);
-      const PixPos rangePixPos = atPix - .5f * rangeDim;
-      m_renderer.renderSprite(m_rangeOverlay, rangePixPos);
+      m_renderer.renderSpriteCentered(m_rangeOverlay, atPix);
    }
 }
 
@@ -409,8 +408,7 @@ void Game2::renderPlaceSession()
             const PixDim rangeDim = m_coordSys->toRenderCoords(
                2.0f * MapDim{m_placeSess->range, m_placeSess->range});
             m_rangeOverlay.setSize(rangeDim);
-            const PixPos rangePixPos = fieldCenterPixPos - .5f * rangeDim;
-            m_renderer.renderSprite(m_rangeOverlay, rangePixPos);
+            m_renderer.renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
          }
          else
          {
@@ -418,10 +416,8 @@ void Game2::renderPlaceSession()
          }
       }
 
-      const PixDim halfIndicatorSize = .5f * m_placeSess->indicator.size();
       const PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
-      m_renderer.renderSprite(m_placeSess->indicator,
-                              indicatorCenter - halfIndicatorSize);
+      m_renderer.renderSpriteCentered(m_placeSess->indicator, indicatorCenter);
    }
 }
 
