@@ -53,6 +53,7 @@ class Game2 : private Commands, private State
    void updateState();
    void render();
    void renderMap();
+   void renderDefenderInfo();
    void renderPlaceSession();
 
    void addAttacker(std::optional<Attacker>&& attacker);
@@ -62,6 +63,7 @@ class Game2 : private Commands, private State
 
    void resetDefenderPlacements();
    bool hasDefenderOnField(MapPos field) const;
+   const Defender* defenderOnField(MapPos field) const;
    void setDefenderOnField(MapPos field, bool hasDefender);
    bool canPlaceDefenderOnField(const std::string& defenderModel, MapPos field) const;
    void addDefender(std::optional<Defender>&& defender, const PixPos& pos);

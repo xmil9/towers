@@ -352,6 +352,7 @@ void Game2::render()
    for (auto& defender : m_defenders)
       defender.render(m_renderer);
 
+   renderDefenderInfo();
    // Draw placed content on top of everything else.
    renderPlaceSession();
 
@@ -362,6 +363,30 @@ void Game2::render()
 void Game2::renderMap()
 {
    m_renderer.renderSprite(m_background, {0.f, 0.f});
+}
+
+
+void Game2::renderDefenderInfo()
+{
+   if (m_placeSess)
+      return;
+
+   const PixPos mousePixPos{m_mainWnd.mousePosition()};
+   const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
+   if (!m_map->isOnMap(fieldPos))
+      return;
+
+   const Defender* touchedDefender = defenderOnField(fieldPos);
+   if (touchedDefender)
+   {
+      const MapCoord range = touchedDefender->range();
+      const PixDim rangeDim = m_coordSys->toRenderCoords(2.0f * MapDim{range, range});
+      const MapPos at = touchedDefender->center();
+      const PixPos atPix = m_coordSys->toRenderCoords(at);
+      m_rangeOverlay.setSize(rangeDim);
+      const PixPos rangePixPos = atPix - .5f * rangeDim;
+      m_renderer.renderSprite(m_rangeOverlay, rangePixPos);
+   }
 }
 
 
@@ -438,6 +463,16 @@ bool Game2::hasDefenderOnField(MapPos field) const
       static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
    assert(idx >= 0 && idx < m_defenderMatrix.size());
    return m_defenderMatrix[idx];
+}
+
+
+const Defender* Game2::defenderOnField(MapPos field) const
+{
+   if (hasDefenderOnField(field))
+      for (const auto& defender : m_defenders)
+         if (m_map->isOnSameField(defender.center(), field))
+            return &defender;
+   return nullptr;
 }
 
 

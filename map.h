@@ -19,6 +19,10 @@ class Map
    const Path& path() const { return m_rep.paths[0]; }
    bool isOnMap(MapPos pos) const;
    bool canBuildOnField(MapPos pos) const;
+   bool isOnSameField(MapPos a, MapPos b) const;
+
+ private:
+   int fieldIndex(MapPos pos) const;
 
  private:
    MapData m_rep;
@@ -37,9 +41,19 @@ inline bool Map::isOnMap(MapPos pos) const
 
 inline bool Map::canBuildOnField(MapPos pos) const
 {
-   const int col = static_cast<int>(pos.x);
-   const int row = static_cast<int>(pos.y);
-   const int fieldIdx = row * sizeInFields().x + col;
+   const int fieldIdx = fieldIndex(pos);
    assert(fieldIdx >= 0 && fieldIdx < m_rep.terrain.size());
    return m_rep.terrain[fieldIdx].canBuildOn();
+}
+
+inline bool Map::isOnSameField(MapPos a, MapPos b) const
+{
+   return fieldIndex(a) == fieldIndex(b);
+}
+
+inline int Map::fieldIndex(MapPos pos) const
+{
+   const int col = static_cast<int>(pos.x);
+   const int row = static_cast<int>(pos.y);
+   return row * sizeInFields().x + col;
 }
