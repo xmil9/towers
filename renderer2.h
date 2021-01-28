@@ -31,6 +31,7 @@ class Renderer2
    void renderSpriteCentered(const Sprite& sprite, PixPos center,
                              const Color& tint = NoColor);
    void renderAnimation(Animation& anim, PixPos leftTop);
+   void renderAnimationCentered(Animation& anim, PixPos center);
    void renderText(const std::string& text, PixPos pos, float scale, const Color& color);
    PixDim measureText(const std::string& text, float scale) const;
 

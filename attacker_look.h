@@ -79,5 +79,5 @@ inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter)
 {
    // Also draw the attacker so that the explosion appears on top of it.
    render(renderer, atCenter, false, 0.f, true);
-   renderer.renderAnimation(m_explosion, atCenter - .5f * m_explosion.size());
+   renderer.renderAnimationCentered(m_explosion, atCenter);
 }

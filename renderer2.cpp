@@ -47,6 +47,17 @@ void Renderer2::renderAnimation(Animation& anim, PixPos leftTop)
 }
 
 
+void Renderer2::renderAnimationCentered(Animation& anim, PixPos center)
+{
+   const auto sprite = anim.nextFrame();
+   if (sprite)
+   {
+      const PixPos leftTop = center - .5f * (*sprite)->size();
+      m_spriteRenderer->render(m_shaders, **sprite, leftTop);
+   }
+}
+
+
 bool Renderer2::setupShaders(const std::filesystem::path& shaderPath)
 {
    gll::Shader vs{gll::makeVertexShader(shaderPath / "sprite_shader.vs")};

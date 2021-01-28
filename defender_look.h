@@ -61,5 +61,5 @@ inline void DefenderLook::render(Renderer2& renderer, PixPos atCenter)
 
 inline void DefenderLook::renderFiring(Renderer2& renderer, PixPos atCenter)
 {
-   renderer.renderAnimation(m_firing, atCenter - .5f * m_firing.size());
+   renderer.renderAnimationCentered(m_firing, atCenter);
 }
