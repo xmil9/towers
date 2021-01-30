@@ -27,7 +27,7 @@ constexpr Color TextColor{.3f, .3f, .3f};
 
 constexpr NormDim CreditsPos{.075f, .025f};
 constexpr NormDim CreditsValueGap{.03f, 0.f};
-std::string CreditsText{"Credits:"};
+const std::string CreditsText{"Credits:"};
 constexpr float CreditsTextScale = .8f * UiScale(1.f);
 constexpr Color CreditsTextColor = TextColor;
 
