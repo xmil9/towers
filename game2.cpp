@@ -268,14 +268,17 @@ bool Game2::setupAttackers()
                    m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
       MobileCannon::defaultAttributes());
 
+   // Small initial delay to keep attackers from rendering before the attack has started.
+   constexpr int DefaultDelay = 1;
+
    addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}));
+      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}, DefaultDelay));
    addAttacker(m_attackFactory->makeAttacker(
       AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}, 30));
    addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}));
+      MhcModel, OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}, DefaultDelay));
    addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}));
+      MhcModel, OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}, DefaultDelay));
 
    return true;
 }
