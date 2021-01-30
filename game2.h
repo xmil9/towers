@@ -92,12 +92,14 @@ class Game2 : private Commands, private State
 
    // State overrides.
    int credits() const override { return m_credits; }
-   bool canAffordDefender(const std::string& model) const;
+   bool canAffordDefender(const std::string& model) const override;
+   bool canStartAttack() const override;
 
    // Commands overrides.
    void startPlaceSession(std::string_view model, std::string_view indicatorTex,
                           PixDim indicatorDim) override;
    void endPlaceSession() override;
+   void startAttack() override;
 
  private:
    static constexpr PixCoordi MapWidth = UiScale(1800);
@@ -127,4 +129,5 @@ class Game2 : private Commands, private State
    Sprite m_rangeOverlay;
    std::vector<bool> m_defenderMatrix;
    int m_credits = 150;
+   bool m_hasAttackStarted = false;
 };

@@ -177,9 +177,10 @@ bool Game2::setupTextures()
       {Map1TTag, scene, "map1.png"},
       {InvalidFieldTTag, scene, "invalid_field.png"},
       {RangeTTag, scene, "range.png"},
+      {HpStatusTTag, scene, "hp_status.png"},
       {DashboardTTag, ui, "dashboard.png"},
       {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
-      {HpStatusTTag, scene, "hp_status.png"},
+      {StartTTag, ui, "start.png"},
    };
 
    for (const auto& spec : textures)
@@ -326,6 +327,9 @@ void Game2::processInput()
 
 void Game2::updateState()
 {
+   if (!m_hasAttackStarted)
+      return;
+
    for (auto& attacker : m_attackers)
       attacker.update();
    for (auto& defender : m_defenders)
@@ -678,6 +682,12 @@ bool Game2::canAffordDefender(const std::string& model) const
 }
 
 
+bool Game2::canStartAttack() const
+{
+   return !m_hasAttackStarted;
+}
+
+
 void Game2::startPlaceSession(std::string_view model, std::string_view indicatorTex,
                               PixDim indicatorDim)
 {
@@ -693,4 +703,10 @@ void Game2::startPlaceSession(std::string_view model, std::string_view indicator
 void Game2::endPlaceSession()
 {
    m_placeSess = std::nullopt;
+}
+
+
+void Game2::startAttack()
+{
+   m_hasAttackStarted = true;
 }

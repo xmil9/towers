@@ -23,18 +23,24 @@ namespace
 
 ///////////////////
 
+constexpr Color TextColor{.3f, .3f, .3f};
+
 constexpr NormDim CreditsPos{.075f, .025f};
-constexpr NormDim ButtonDim{.375f, .0625f};
-constexpr NormDim LabelValueGap{.03f, 0.f};
-constexpr NormCoord StatsVertGap = .014f;
+constexpr NormDim CreditsValueGap{.03f, 0.f};
+std::string CreditsText{"Credits:"};
+constexpr float CreditsTextScale = .8f * UiScale(1.f);
+constexpr Color CreditsTextColor = TextColor;
+
 constexpr NormDim LaserTurretPos{.075f, .05f};
 constexpr NormDim SonarMortarPos{.535f, .05f};
-
-std::string CreditsText{"Credits:"};
-constexpr float TextScale = .8f * UiScale(1.f);
+constexpr NormDim DefenderButtonDim{.375f, .0625f};
+constexpr NormCoord StatsVertGap = .014f;
 constexpr float TextScaleForCost = .7f * UiScale(1.f);
 constexpr float TextScaleForAllStats = .5f * UiScale(1.f);
-constexpr Color TextColor{.3f, .3f, .3f};
+constexpr Color StatsTextColor = TextColor;
+
+constexpr NormDim StartPos{.075f, .145f};
+constexpr NormDim StartButtonDim = .5f * DefenderButtonDim;
 
 
 ///////////////////
@@ -86,8 +92,9 @@ template <typename Attribs> std::string FormatDefenderStats(const Attribs& attri
 Dashboard::Dashboard(PixCoordi width, PixCoordi height, Commands* commands, State* state)
 : m_dim{width, height}, m_commands{commands}, m_state{state},
   m_background{SpriteLook{DashboardTTag}, SpriteForm{m_dim}},
-  m_creditsLabel{TextScale, TextColor}, m_creditsValue{TextScale, TextColor},
-  m_ltStats{TextScaleForCost, TextColor}, m_smStats{TextScaleForCost, TextColor}
+  m_creditsLabel{CreditsTextScale, CreditsTextColor}, m_creditsValue{CreditsTextScale,
+                                                                     CreditsTextColor},
+  m_ltStats{TextScaleForCost, StatsTextColor}, m_smStats{TextScaleForCost, StatsTextColor}
 {
    assert(m_commands);
    assert(m_state);
@@ -101,6 +108,7 @@ bool Dashboard::setup(const Renderer2& renderer, const MapCoordSys* cs)
 
    setupCreditsElements(renderer);
    setupDefenderElements();
+   setupGameflowElements();
 
    return true;
 }
@@ -115,6 +123,7 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
    m_ltStats.render(renderer, at);
    m_smButton.render(renderer, at);
    m_smStats.render(renderer, at);
+   m_startButton.render(renderer, at);
 }
 
 
@@ -139,6 +148,12 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
       return true;
    }
 
+   if (m_startButton.isHit(mousePosInDash) && m_startButton.isEnabled())
+   {
+      m_commands->startAttack();
+      return true;
+   }
+
    return false;
 }
 
@@ -151,10 +166,10 @@ bool Dashboard::onLeftButtonReleased(const glm::vec2& /*mousePosInDash*/)
 
 void Dashboard::setupCreditsElements(const Renderer2& renderer)
 {
-   const PixDim ceditsLabelDim = renderer.measureText(CreditsText, TextScale);
+   const PixDim ceditsLabelDim = renderer.measureText(CreditsText, CreditsTextScale);
    m_creditsLabel.setup([]() { return CreditsText; }, CreditsPos * m_dim, ceditsLabelDim);
 
-   const PixDim gap = toPix(LabelValueGap);
+   const PixDim gap = toPix(CreditsValueGap);
    const PixDim creditsValPos =
       m_creditsLabel.position() + PixDim{ceditsLabelDim.x, 0.f} + gap;
    const PixDim ceditsValDim{0.f, ceditsLabelDim.y};
@@ -165,7 +180,7 @@ void Dashboard::setupCreditsElements(const Renderer2& renderer)
 
 void Dashboard::setupDefenderElements()
 {
-   const PixDim buttonPixDim = toPix(ButtonDim);
+   const PixDim buttonPixDim = toPix(DefenderButtonDim);
    Sprite buttonBkg{SpriteLook{ButtonBackgroundTTag}, SpriteForm{buttonPixDim}};
    SpriteForm contentForm{buttonPixDim};
 
@@ -187,4 +202,17 @@ void Dashboard::setupDefenderElements()
    const PixPos smStatsPixPos = smPixPos + statsOffset;
    m_smStats.setup([]() { return FormatDefenderStats(SonicMortar::defaultAttributes()); },
                    smStatsPixPos, {});
+}
+
+
+void Dashboard::setupGameflowElements()
+{
+   const PixDim buttonPixDim = toPix(StartButtonDim);
+   Sprite buttonBkg{SpriteLook{ButtonBackgroundTTag}, SpriteForm{buttonPixDim}};
+   SpriteForm contentForm{buttonPixDim};
+
+   const PixPos startPixPos = toPix(StartPos);
+   m_startButton.setup(
+      buttonBkg, Sprite{SpriteLook{StartTTag}, contentForm},
+      [this]() { return m_state->canStartAttack(); }, startPixPos, buttonPixDim);
 }

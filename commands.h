@@ -14,6 +14,7 @@ struct Commands
    virtual void startPlaceSession(std::string_view model, std::string_view indicatorTex,
                                   PixDim indicatorDim) = 0;
    virtual void endPlaceSession() = 0;
+   virtual void startAttack() = 0;
 
  protected:
    // No destruction through this interface.

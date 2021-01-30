@@ -30,6 +30,7 @@ class Dashboard
  private:
    void setupCreditsElements(const Renderer2& renderer);
    void setupDefenderElements();
+   void setupGameflowElements();
 
    PixPos toPix(NormPos npos) const { return npos * m_dim; }
    PixCoord toVertPix(NormCoord ny) const { return ny * m_dim.y; }
@@ -47,4 +48,5 @@ class Dashboard
    Label m_ltStats;
    Button m_smButton;
    Label m_smStats;
+   Button m_startButton;
 };
