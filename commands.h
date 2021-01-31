@@ -15,6 +15,7 @@ struct Commands
                                   PixDim indicatorDim) = 0;
    virtual void endPlaceSession() = 0;
    virtual void startAttack() = 0;
+   virtual void pauseAttack() = 0;
 
  protected:
    // No destruction through this interface.

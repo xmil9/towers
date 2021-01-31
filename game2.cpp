@@ -76,18 +76,22 @@ void Game2::run()
    while (!m_mainWnd.shouldClose())
    {
       m_frameClock.nextLap();
-      processLag += m_frameClock.lapLength();
+      if (!m_isPaused)
+         processLag += m_frameClock.lapLength();
 
       processInput();
 
-      // Catch up with the game state for the time that was used for rendering and
-      // processing input. This standardizes the game speed across machines with
-      // various processing speeds.
-      constexpr float UpdateGranularityMs = 25.f;
-      while (processLag >= UpdateGranularityMs)
+      if (!m_isPaused)
       {
-         updateState();
-         processLag -= UpdateGranularityMs;
+         // Catch up with the game state for the time that was used for rendering and
+         // processing input. This standardizes the game speed across machines with
+         // various processing speeds.
+         constexpr float UpdateGranularityMs = 25.f;
+         while (processLag >= UpdateGranularityMs)
+         {
+            updateState();
+            processLag -= UpdateGranularityMs;
+         }
       }
 
       render();
@@ -181,6 +185,7 @@ bool Game2::setupTextures()
       {DashboardTTag, ui, "dashboard.png"},
       {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
       {StartTTag, ui, "start.png"},
+      {PauseTTag, ui, "pause.png"},
    };
 
    for (const auto& spec : textures)
@@ -330,7 +335,7 @@ void Game2::processInput()
 
 void Game2::updateState()
 {
-   if (!m_hasAttackStarted)
+   if (m_isPaused)
       return;
 
    for (auto& entry : m_attackers)
@@ -704,7 +709,13 @@ bool Game2::canAffordDefender(const std::string& model) const
 
 bool Game2::canStartAttack() const
 {
-   return !m_hasAttackStarted;
+   return m_isPaused;
+}
+
+
+bool Game2::canPauseAttack() const
+{
+   return !m_isPaused;
 }
 
 
@@ -728,5 +739,11 @@ void Game2::endPlaceSession()
 
 void Game2::startAttack()
 {
-   m_hasAttackStarted = true;
+   m_isPaused = false;
+}
+
+
+void Game2::pauseAttack()
+{
+   m_isPaused = true;
 }

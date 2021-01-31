@@ -16,3 +16,4 @@ constexpr char HpStatusTTag[] = "hp_status";
 constexpr char DashboardTTag[] = "dashboard";
 constexpr char ButtonBackgroundTTag[] = "button_bgrd";
 constexpr char StartTTag[] = "start";
+constexpr char PauseTTag[] = "pause";

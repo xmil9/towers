@@ -49,4 +49,5 @@ class Dashboard
    Button m_smButton;
    Label m_smStats;
    Button m_startButton;
+   Button m_pauseButton;
 };
