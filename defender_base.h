@@ -42,6 +42,7 @@ template <typename Derived> class DefenderBase
    void update();
    void removeAsTarget(EntityId attackerId);
    bool isInRange(const Attacker& attacker) const;
+   bool isInRange(MapCoord dist) const;
 
  protected:
    Attacker& target();
@@ -51,9 +52,7 @@ template <typename Derived> class DefenderBase
    void setPosition(MapPos center);
    void setSize(MapVec size);
    bool findTarget();
-   std::optional<MapCoord> distTo(const Attacker& attacker) const;
    bool canHit(const Attacker& attacker) const;
-   bool isInRange(MapCoord dist) const;
    void calcRotation();
    std::optional<MapVec> targetDirection() const;
 
@@ -67,7 +66,7 @@ template <typename Derived> class DefenderBase
    MapPos m_center;
    const MapCoordSys* m_coordSys;
    AttackerMap* m_attackers = nullptr;
-   FirstMatchTargetScan<Derived> m_targetScan;
+   ClosestTargetScan<Derived> m_targetScan;
    std::optional<EntityId> m_target;
 };
 
@@ -151,36 +150,8 @@ template <typename Derived> bool DefenderBase<Derived>::findTarget()
       return true;
 
    // Find new target.
-   m_target = m_targetScan.scan(m_center, baseAttribs().range);
+   m_target = m_targetScan.scan(derived());
    return m_target.has_value();
-
-   // m_target = std::nullopt;
-   // MapCoord minDist = std::numeric_limits<MapCoord>::max();
-
-   // for (auto& attacker : *m_attackers)
-   //{
-   //   if (attacker.isAlive())
-   //   {
-   //      if (const auto dist = distTo(attacker);
-   //          dist && isInRange(*dist) && sutil::lessEqual(*dist, minDist))
-   //      {
-   //         m_target = &attacker;
-   //         minDist = *dist;
-   //      }
-   //   }
-   //}
-
-   // return m_target.has_value();
-}
-
-
-template <typename Derived>
-std::optional<MapCoord> DefenderBase<Derived>::distTo(const Attacker& attacker) const
-{
-   const auto pos = attacker.position();
-   if (pos)
-      return glm::length(m_center - *pos);
-   return std::nullopt;
 }
 
 
