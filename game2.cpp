@@ -356,9 +356,9 @@ void Game2::render()
    m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
 
    for (auto& entry : m_attackers)
-      entry.second.render(m_renderer);
+      entry.second.render(m_renderer, m_isPaused);
    for (auto& defender : m_defenders)
-      defender.render(m_renderer);
+      defender.render(m_renderer, m_isPaused);
 
    renderDefenderInfo();
    // Draw placed content on top of everything else.

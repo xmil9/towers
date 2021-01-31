@@ -38,7 +38,7 @@ template <typename Derived> class DefenderBase
    int cost() const { return baseAttribs().cost; }
    MapCoord range() const { return baseAttribs().range; }
    MapPos center() const { return m_center; }
-   void render(Renderer2& renderer);
+   void render(Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
    bool isInRange(const Attacker& attacker) const;
@@ -86,11 +86,12 @@ DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, MapCoord siz
 }
 
 
-template <typename Derived> void DefenderBase<Derived>::render(Renderer2& renderer)
+template <typename Derived>
+void DefenderBase<Derived>::render(Renderer2& renderer, bool isPaused)
 {
    const PixPos center = m_coordSys->toRenderCoords(m_center);
 
-   if (m_target && target().isAlive())
+   if (m_target && target().isAlive() && !isPaused)
    {
       calcRotation();
       m_look.renderFiring(renderer, center);

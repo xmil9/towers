@@ -33,7 +33,7 @@ template <typename Derived> class AttackerBase : public Observed<Derived>
                 const OffsetPath& path, const MapCoordSys* cs);
 
    EntityId id() const { return m_id; }
-   void render(Renderer2& renderer);
+   void render(Renderer2& renderer, bool isPaused);
    void update();
    std::optional<MapPos> position() const { return m_center; }
    void hit(int damage);
@@ -87,7 +87,8 @@ AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, MapCoord siz
 }
 
 
-template <typename Derived> void AttackerBase<Derived>::render(Renderer2& renderer)
+template <typename Derived>
+void AttackerBase<Derived>::render(Renderer2& renderer, bool /*isPaused*/)
 {
    if (!hasStarted())
       return;

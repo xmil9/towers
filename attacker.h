@@ -22,7 +22,7 @@ class Attacker
    template <typename SpecificAttacker> explicit Attacker(SpecificAttacker&& a);
 
    EntityId id() const;
-   void render(Renderer2& renderer);
+   void render(Renderer2& renderer, bool isPaused);
    void update();
    std::optional<MapPos> position() const;
    void hit(int damage);
@@ -49,10 +49,11 @@ inline EntityId Attacker::id() const
    return {};
 }
 
-inline void Attacker::render(Renderer2& renderer)
+inline void Attacker::render(Renderer2& renderer, bool isPaused)
 {
    if (m_attacker)
-      std::visit([&](auto& attacker) { attacker.render(renderer); }, *m_attacker);
+      std::visit([&](auto& attacker) { attacker.render(renderer, isPaused); },
+                 *m_attacker);
 }
 
 inline void Attacker::update()

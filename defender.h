@@ -24,7 +24,7 @@ class Defender
    int cost() const;
    MapCoord range() const;
    MapPos center() const;
-   void render(Renderer2& renderer);
+   void render(Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
 
@@ -69,10 +69,11 @@ inline MapPos Defender::center() const
    return {0.f, 0.f};
 }
 
-inline void Defender::render(Renderer2& renderer)
+inline void Defender::render(Renderer2& renderer, bool isPaused)
 {
    if (m_defender)
-      std::visit([&renderer](auto& defender) { defender.render(renderer); }, *m_defender);
+      std::visit([&](auto& defender) { defender.render(renderer, isPaused); },
+                 *m_defender);
 }
 
 inline void Defender::update()
