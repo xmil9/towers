@@ -8,6 +8,7 @@
 #include "map_coord_sys.h"
 #include "path.h"
 #include "renderer2.h"
+#include "target_scan.h"
 #include "essentutils/fputil.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
@@ -40,6 +41,7 @@ template <typename Derived> class DefenderBase
    void render(Renderer2& renderer);
    void update();
    void removeAsTarget(EntityId attackerId);
+   bool isInRange(const Attacker& attacker) const;
 
  protected:
    Attacker& target();
@@ -51,7 +53,6 @@ template <typename Derived> class DefenderBase
    bool findTarget();
    std::optional<MapCoord> distTo(const Attacker& attacker) const;
    bool canHit(const Attacker& attacker) const;
-   bool isInRange(const Attacker& attacker) const;
    bool isInRange(MapCoord dist) const;
    void calcRotation();
    std::optional<MapVec> targetDirection() const;
@@ -66,6 +67,7 @@ template <typename Derived> class DefenderBase
    MapPos m_center;
    const MapCoordSys* m_coordSys;
    AttackerMap* m_attackers = nullptr;
+   FirstMatchTargetScan<Derived> m_targetScan;
    std::optional<EntityId> m_target;
 };
 
@@ -74,8 +76,8 @@ template <typename Derived>
 DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, MapCoord size,
                                     MapPos center, const MapCoordSys* cs,
                                     AttackerMap* attackers)
-: m_id{id}, m_look{std::move(look)}, m_center{center}, m_coordSys{cs}, m_attackers{
-                                                                          attackers}
+: m_id{id}, m_look{std::move(look)}, m_center{center}, m_coordSys{cs},
+  m_attackers{attackers}, m_targetScan{attackers}
 {
    assert(m_coordSys);
    assert(m_attackers);
@@ -149,14 +151,9 @@ template <typename Derived> bool DefenderBase<Derived>::findTarget()
       return true;
 
    // Find new target.
-   const auto iter =
-      std::find_if(m_attackers->begin(), m_attackers->end(), [this](const auto& entry) {
-         return entry.second.isAlive() && canHit(entry.second);
-      });
-   m_target =
-      iter != m_attackers->end() ? std::make_optional(iter->second.id()) : std::nullopt;
-
+   m_target = m_targetScan.scan(m_center, baseAttribs().range);
    return m_target.has_value();
+
    // m_target = std::nullopt;
    // MapCoord minDist = std::numeric_limits<MapCoord>::max();
 

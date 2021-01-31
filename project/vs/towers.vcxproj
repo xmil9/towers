@@ -271,6 +271,7 @@
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
     <ClInclude Include="..\..\state.h" />
+    <ClInclude Include="..\..\target_scan.h" />
     <ClInclude Include="..\..\textures.h" />
     <ClInclude Include="..\..\texture_tags.h" />
     <ClInclude Include="..\..\text_renderer.h" />

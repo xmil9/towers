@@ -402,6 +402,9 @@
     <ClInclude Include="..\..\attacker_events.h">
       <Filter>Game\Attackers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\target_scan.h">
+      <Filter>Game\Defenders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
