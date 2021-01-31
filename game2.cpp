@@ -707,15 +707,9 @@ bool Game2::canAffordDefender(const std::string& model) const
 }
 
 
-bool Game2::canStartAttack() const
+bool Game2::isPaused() const
 {
    return m_isPaused;
-}
-
-
-bool Game2::canPauseAttack() const
-{
-   return !m_isPaused;
 }
 
 

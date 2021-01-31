@@ -12,8 +12,7 @@ struct State
 {
    virtual int credits() const = 0;
    virtual bool canAffordDefender(const std::string& model) const = 0;
-   virtual bool canStartAttack() const = 0;
-   virtual bool canPauseAttack() const = 0;
+   virtual bool isPaused() const = 0;
 
  protected:
    // No destruction through this interface.

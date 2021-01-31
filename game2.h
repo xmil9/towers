@@ -96,8 +96,7 @@ class Game2 : private Commands, private State
    // State overrides.
    int credits() const override { return m_credits; }
    bool canAffordDefender(const std::string& model) const override;
-   bool canStartAttack() const override;
-   bool canPauseAttack() const override;
+   bool isPaused() const override;
 
    // Commands overrides.
    void startPlaceSession(std::string_view model, std::string_view indicatorTex,

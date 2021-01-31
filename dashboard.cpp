@@ -40,7 +40,6 @@ constexpr float TextScaleForAllStats = .5f * UiScale(1.f);
 constexpr Color StatsTextColor = TextColor;
 
 constexpr NormDim StartPos{.075f, .145f};
-constexpr NormDim PausePos{.3f, .145f};
 constexpr NormDim FlowButtonDim = .5f * DefenderButtonDim;
 
 
@@ -125,7 +124,6 @@ void Dashboard::render(Renderer2& renderer, const PixPos& at)
    m_smButton.render(renderer, at);
    m_smStats.render(renderer, at);
    m_startButton.render(renderer, at);
-   m_pauseButton.render(renderer, at);
 }
 
 
@@ -152,13 +150,19 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
 
    if (m_startButton.isHit(mousePosInDash) && m_startButton.isEnabled())
    {
-      m_commands->startAttack();
-      return true;
-   }
+      const PixDim buttonPixDim = toPix(FlowButtonDim);
+      SpriteForm contentForm{buttonPixDim};
 
-   if (m_pauseButton.isHit(mousePosInDash) && m_pauseButton.isEnabled())
-   {
-      m_commands->pauseAttack();
+      if (m_state->isPaused())
+      {
+         m_commands->startAttack();
+         m_startButton.setContent(Sprite{SpriteLook{PauseTTag}, contentForm});
+      }
+      else
+      {
+         m_commands->pauseAttack();
+         m_startButton.setContent(Sprite{SpriteLook{StartTTag}, contentForm});
+      }
       return true;
    }
 
@@ -222,10 +226,5 @@ void Dashboard::setupGameflowElements()
    const PixPos startPixPos = toPix(StartPos);
    m_startButton.setup(
       buttonBkg, Sprite{SpriteLook{StartTTag}, contentForm},
-      [this]() { return m_state->canStartAttack(); }, startPixPos, buttonPixDim);
-
-   const PixPos pausePixPos = toPix(PausePos);
-   m_pauseButton.setup(
-      buttonBkg, Sprite{SpriteLook{PauseTTag}, contentForm},
-      [this]() { return m_state->canPauseAttack(); }, pausePixPos, buttonPixDim);
+      [this]() { return true; }, startPixPos, buttonPixDim);
 }
