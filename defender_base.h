@@ -31,7 +31,7 @@ template <typename Derived> class DefenderBase
 
  public:
    DefenderBase(EntityId id, DefenderLook look, MapCoord size, MapPos center,
-                const MapCoordSys* cs, std::unordered_map<EntityId, Attacker>* attackers);
+                const MapCoordSys* cs, AttackerMap* attackers);
 
    EntityId id() const { return m_id; }
    int cost() const { return baseAttribs().cost; }
@@ -65,7 +65,7 @@ template <typename Derived> class DefenderBase
    DefenderLook m_look;
    MapPos m_center;
    const MapCoordSys* m_coordSys;
-   std::unordered_map<EntityId, Attacker>* m_attackers = nullptr;
+   AttackerMap* m_attackers = nullptr;
    std::optional<EntityId> m_target;
 };
 
@@ -73,7 +73,7 @@ template <typename Derived> class DefenderBase
 template <typename Derived>
 DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, MapCoord size,
                                     MapPos center, const MapCoordSys* cs,
-                                    std::unordered_map<EntityId, Attacker>* attackers)
+                                    AttackerMap* attackers)
 : m_id{id}, m_look{std::move(look)}, m_center{center}, m_coordSys{cs}, m_attackers{
                                                                           attackers}
 {

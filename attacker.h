@@ -7,6 +7,7 @@
 #include "coords.h"
 #include "mobile_cannon.h"
 #include <optional>
+#include <unordered_map>
 #include <variant>
 
 
@@ -175,3 +176,8 @@ template <typename Attribs> Attribs AttackerAttribs::get() const
       return std::get<Attribs>(*m_attribs);
    return {};
 }
+
+
+///////////////////
+
+using AttackerMap = std::unordered_map<EntityId, Attacker>;

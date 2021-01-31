@@ -18,8 +18,7 @@ class LaserTurret : public DefenderBase<LaserTurret>
 
  public:
    LaserTurret(EntityId id, DefenderLook look, MapCoord size, MapPos center,
-               const Attribs& attribs, const MapCoordSys* cs,
-               std::unordered_map<EntityId, Attacker>* attackers);
+               const Attribs& attribs, const MapCoordSys* cs, AttackerMap* attackers);
 
    static Attribs defaultAttributes();
 
@@ -33,8 +32,7 @@ class LaserTurret : public DefenderBase<LaserTurret>
 
 inline LaserTurret::LaserTurret(EntityId id, DefenderLook look, MapCoord size,
                                 MapPos center, const Attribs& attribs,
-                                const MapCoordSys* cs,
-                                std::unordered_map<EntityId, Attacker>* attackers)
+                                const MapCoordSys* cs, AttackerMap* attackers)
 : DefenderBase<LaserTurret>{id, look, size, center, cs, attackers}, m_attribs{attribs}
 
 {

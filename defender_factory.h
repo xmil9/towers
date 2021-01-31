@@ -23,8 +23,7 @@ class MapCoordSys;
 class DefenderFactory
 {
  public:
-   explicit DefenderFactory(const MapCoordSys* cs,
-                            std::unordered_map<EntityId, Attacker>* attackers);
+   explicit DefenderFactory(const MapCoordSys* cs, AttackerMap* attackers);
 
    template <typename Attribs>
    void registerModel(const std::string& name, DefenderLook look, Attribs&& attribs);
@@ -46,13 +45,12 @@ class DefenderFactory
    EntityId m_nextId = 1;
    const MapCoordSys* m_coordSys = nullptr;
    // Collection of active attackers.
-   std::unordered_map<EntityId, Attacker>* m_attackers = nullptr;
+   AttackerMap* m_attackers = nullptr;
    std::unordered_map<std::string, Model> m_models;
 };
 
 
-inline DefenderFactory::DefenderFactory(const MapCoordSys* cs,
-                                        std::unordered_map<EntityId, Attacker>* attackers)
+inline DefenderFactory::DefenderFactory(const MapCoordSys* cs, AttackerMap* attackers)
 : m_coordSys{cs}, m_attackers{attackers}
 {
    assert(m_coordSys);

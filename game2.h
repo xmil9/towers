@@ -121,7 +121,7 @@ class Game2 : private Commands, private State
    Renderer2 m_renderer;
    std::unique_ptr<HpRenderer> m_hpRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
-   std::unordered_map<EntityId, Attacker> m_attackers;
+   AttackerMap m_attackers;
    std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
