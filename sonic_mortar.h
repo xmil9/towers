@@ -55,13 +55,16 @@ inline void SonicMortar::shoot()
       return;
 
    // Hit the target with the primary damage.
+   const auto targetId = target().id();
    target().hit(m_attribs.damage);
+   // Caution - After hitting the target it might be destroyed, so accessing it in the
+   //           rest of the function has to be protected again with another check!
 
    // Hit other attackers in collateral range with the collateral damage.
    for (auto& entry : *m_attackers)
    {
       Attacker& attacker = entry.second;
-      const bool isPrimaryTarget = attacker.id() == target().id();
+      const bool isPrimaryTarget = attacker.id() == targetId;
       if (!isPrimaryTarget && attacker.isAlive() && isInCollateralRange(attacker))
          attacker.hit(m_attribs.collateralDamage);
    }
