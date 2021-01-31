@@ -162,7 +162,6 @@
     <ClCompile Include="..\..\animation.cpp" />
     <ClCompile Include="..\..\animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
-    <ClCompile Include="..\..\attacker.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
     <ClCompile Include="..\..\button.cpp" />
     <ClCompile Include="..\..\dashboard.cpp" />

@@ -92,9 +92,6 @@
     <ClCompile Include="..\..\map_data.cpp">
       <Filter>Game\Maps</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\attacker.cpp">
-      <Filter>Game\Attackers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\attacker_factory.cpp">
       <Filter>Game\Attackers</Filter>
     </ClCompile>
