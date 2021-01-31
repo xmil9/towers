@@ -29,6 +29,7 @@ class Animation
    Animation& rotate(Angle_t rot);
 
    bool hasFinished() const { return m_currFrame >= m_totalFrames; }
+   std::optional<const Sprite*> currentFrame();
    std::optional<const Sprite*> nextFrame();
 
  private:

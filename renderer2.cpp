@@ -39,17 +39,17 @@ void Renderer2::beginRendering()
 }
 
 
-void Renderer2::renderAnimation(Animation& anim, PixPos leftTop)
+void Renderer2::renderAnimation(Animation& anim, PixPos leftTop, bool advanceFrame)
 {
-   const auto sprite = anim.nextFrame();
+   const auto sprite = advanceFrame ? anim.nextFrame() : anim.currentFrame();
    if (sprite)
       m_spriteRenderer->render(m_shaders, **sprite, leftTop);
 }
 
 
-void Renderer2::renderAnimationCentered(Animation& anim, PixPos center)
+void Renderer2::renderAnimationCentered(Animation& anim, PixPos center, bool advanceFrame)
 {
-   const auto sprite = anim.nextFrame();
+   const auto sprite = advanceFrame ? anim.nextFrame() : anim.currentFrame();
    if (sprite)
    {
       const PixPos leftTop = center - .5f * (*sprite)->size();

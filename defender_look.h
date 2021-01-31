@@ -22,7 +22,7 @@ class DefenderLook
    DefenderLook& setRotation(Angle_t rot);
 
    void render(Renderer2& renderer, PixPos atCenter);
-   void renderFiring(Renderer2& renderer, PixPos atCenter);
+   void renderFiring(Renderer2& renderer, PixPos atCenter, bool isPaused);
 
  private:
    Sprite m_shape;
@@ -59,7 +59,8 @@ inline void DefenderLook::render(Renderer2& renderer, PixPos atCenter)
    renderer.renderSpriteCentered(m_shape, atCenter);
 }
 
-inline void DefenderLook::renderFiring(Renderer2& renderer, PixPos atCenter)
+inline void DefenderLook::renderFiring(Renderer2& renderer, PixPos atCenter,
+                                       bool isPaused)
 {
-   renderer.renderAnimationCentered(m_firing, atCenter);
+   renderer.renderAnimationCentered(m_firing, atCenter, !isPaused);
 }

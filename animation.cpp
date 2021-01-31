@@ -51,6 +51,16 @@ Animation& Animation::rotate(Angle_t rot)
 }
 
 
+std::optional<const Sprite*> Animation::currentFrame()
+{
+   if (m_totalFrames == 0 || hasFinished())
+      return std::nullopt;
+
+   const auto idx = calcSpriteIndex(m_currFrame);
+   return idx ? std::make_optional(&m_sprites[*idx]) : std::nullopt;
+}
+
+
 std::optional<const Sprite*> Animation::nextFrame()
 {
    if (m_totalFrames == 0 || (hasFinished() && !m_repeat))

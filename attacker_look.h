@@ -25,7 +25,7 @@ class AttackerLook
 
    void render(Renderer2& renderer, PixPos atCenter, bool isAlive, float hpRatio,
                bool isHit);
-   void renderExploded(Renderer2& renderer, PixPos atCenter);
+   void renderExploded(Renderer2& renderer, PixPos atCenter, bool isPaused);
 
    bool hasExplosionFinished() const { return m_explosion.hasFinished(); }
 
@@ -75,9 +75,10 @@ inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAl
       m_hpRenderer->render(renderer, atCenter, hpRatio);
 }
 
-inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter)
+inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter,
+                                         bool isPaused)
 {
    // Also draw the attacker so that the explosion appears on top of it.
    render(renderer, atCenter, false, 0.f, true);
-   renderer.renderAnimationCentered(m_explosion, atCenter);
+   renderer.renderAnimationCentered(m_explosion, atCenter, !isPaused);
 }

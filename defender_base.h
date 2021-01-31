@@ -91,10 +91,10 @@ void DefenderBase<Derived>::render(Renderer2& renderer, bool isPaused)
 {
    const PixPos center = m_coordSys->toRenderCoords(m_center);
 
-   if (m_target && target().isAlive() && !isPaused)
+   if (m_target && target().isAlive())
    {
       calcRotation();
-      m_look.renderFiring(renderer, center);
+      m_look.renderFiring(renderer, center, isPaused);
    }
    else
    {

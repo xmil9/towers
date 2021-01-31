@@ -88,7 +88,7 @@ AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, MapCoord siz
 
 
 template <typename Derived>
-void AttackerBase<Derived>::render(Renderer2& renderer, bool /*isPaused*/)
+void AttackerBase<Derived>::render(Renderer2& renderer, bool isPaused)
 {
    if (!hasStarted())
       return;
@@ -105,7 +105,7 @@ void AttackerBase<Derived>::render(Renderer2& renderer, bool /*isPaused*/)
    }
    else
    {
-      m_look.renderExploded(renderer, center);
+      m_look.renderExploded(renderer, center, isPaused);
    }
 }
 
