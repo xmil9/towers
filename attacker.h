@@ -20,6 +20,7 @@ class Attacker
    Attacker() = default;
    template <typename SpecificAttacker> explicit Attacker(SpecificAttacker&& a);
 
+   EntityId id() const;
    void render(Renderer2& renderer);
    void update();
    std::optional<MapPos> position() const;
@@ -38,6 +39,13 @@ class Attacker
 template <typename SpecificAttacker>
 Attacker::Attacker(SpecificAttacker&& a) : m_attacker{std::move(a)}
 {
+}
+
+inline EntityId Attacker::id() const
+{
+   if (m_attacker)
+      return std::visit([&](const auto& attacker) { return attacker.id(); }, *m_attacker);
+   return {};
 }
 
 inline void Attacker::render(Renderer2& renderer)

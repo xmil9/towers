@@ -19,8 +19,9 @@ AttackerFactory::lookupModel(const std::string& modelName) const
 
 
 Attacker AttackerFactory::makeAttacker(const std::string& model, const OffsetPath& path,
-                                       int launchDelay) const
+                                       int launchDelay)
 {
+   EntityId id = m_nextId++;
    const Model& data = lookupModel(model);
 
    if (model == AatModel)
@@ -28,14 +29,14 @@ Attacker AttackerFactory::makeAttacker(const std::string& model, const OffsetPat
       AssaultTank::Attribs attribs = data.attribs.get<AssaultTank::Attribs>();
       attribs.launchDelay = launchDelay;
 
-      return Attacker{AssaultTank{data.look, AatSize, attribs, path, m_coordSys}};
+      return Attacker{AssaultTank{id, data.look, AatSize, attribs, path, m_coordSys}};
    }
    else if (model == MhcModel)
    {
       MobileCannon::Attribs attribs = data.attribs.get<MobileCannon::Attribs>();
       attribs.launchDelay = launchDelay;
 
-      return Attacker{MobileCannon{data.look, MhcSize, attribs, path, m_coordSys}};
+      return Attacker{MobileCannon{id, data.look, MhcSize, attribs, path, m_coordSys}};
    }
 
    assert(false && "Unknown defender model.");

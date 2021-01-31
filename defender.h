@@ -20,11 +20,13 @@ class Defender
    Defender() = default;
    template <typename SpecificDefender> explicit Defender(SpecificDefender&& d);
 
+   EntityId id() const;
    int cost() const;
    MapCoord range() const;
    MapPos center() const;
    void render(Renderer2& renderer);
    void update();
+   void removeAsTarget(EntityId attackerId);
 
  private:
    std::optional<std::variant<LaserTurret, SonicMortar>> m_defender;
@@ -34,6 +36,13 @@ class Defender
 template <typename SpecificDefender>
 Defender::Defender(SpecificDefender&& d) : m_defender{std::move(d)}
 {
+}
+
+inline EntityId Defender::id() const
+{
+   if (m_defender)
+      return std::visit([](const auto& defender) { return defender.id(); }, *m_defender);
+   return {};
 }
 
 inline int Defender::cost() const
@@ -70,6 +79,13 @@ inline void Defender::update()
 {
    if (m_defender)
       std::visit([](auto& defender) { defender.update(); }, *m_defender);
+}
+
+inline void Defender::removeAsTarget(EntityId attackerId)
+{
+   if (m_defender)
+      std::visit([&attackerId](auto& defender) { defender.removeAsTarget(attackerId); },
+                 *m_defender);
 }
 
 

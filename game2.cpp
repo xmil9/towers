@@ -333,16 +333,12 @@ void Game2::updateState()
    if (!m_hasAttackStarted)
       return;
 
-   for (auto& attacker : m_attackers)
-      attacker.update();
+   for (auto& entry : m_attackers)
+      entry.second.update();
    for (auto& defender : m_defenders)
       defender.update();
 
-   // Remove destroyed attackers.
-   m_attackers.erase(
-      std::remove_if(m_attackers.begin(), m_attackers.end(),
-                     [](const auto& attacker) { return attacker.canBeRemoved(); }),
-      m_attackers.end());
+   removeDestroyedAttackers();
 }
 
 
@@ -354,8 +350,8 @@ void Game2::render()
    renderMap();
    m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
 
-   for (auto& attacker : m_attackers)
-      attacker.render(m_renderer);
+   for (auto& entry : m_attackers)
+      entry.second.render(m_renderer);
    for (auto& defender : m_defenders)
       defender.render(m_renderer);
 
@@ -438,7 +434,8 @@ void Game2::addAttacker(std::optional<Attacker>&& attacker)
             onAttackerDestroyed(src, event, data);
          });
 
-      m_attackers.push_back(*attacker);
+      const EntityId id = attacker->id();
+      m_attackers[id] = std::move(*attacker);
    }
 }
 
@@ -448,6 +445,26 @@ void Game2::onAttackerDestroyed(SpecificAttacker& src, std::string_view /*event*
                                 const ObservedEventData& /*data*/)
 {
    m_credits += src.reward();
+   removeAsTarget(src.id());
+}
+
+
+void Game2::removeDestroyedAttackers()
+{
+   for (auto it = m_attackers.begin(); it != m_attackers.end();)
+   {
+      if (it->second.canBeRemoved())
+         it = m_attackers.erase(it);
+      else
+         ++it;
+   }
+}
+
+
+void Game2::removeAsTarget(EntityId attackerId)
+{
+   for (auto& defender : m_defenders)
+      defender.removeAsTarget(attackerId);
 }
 
 

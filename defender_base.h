@@ -12,8 +12,9 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
 #include <cstddef>
+#include <limits>
 #include <optional>
-#include <vector>
+#include <unordered_map>
 
 
 ///////////////////
@@ -29,20 +30,29 @@ template <typename Derived> class DefenderBase
    };
 
  public:
-   DefenderBase(DefenderLook look, MapCoord size, MapPos center, const MapCoordSys* cs,
-                std::vector<Attacker>* attackers);
+   DefenderBase(EntityId id, DefenderLook look, MapCoord size, MapPos center,
+                const MapCoordSys* cs, std::unordered_map<EntityId, Attacker>* attackers);
 
+   EntityId id() const { return m_id; }
    int cost() const { return baseAttribs().cost; }
    MapCoord range() const { return baseAttribs().range; }
    MapPos center() const { return m_center; }
    void render(Renderer2& renderer);
    void update();
+   void removeAsTarget(EntityId attackerId);
+
+ protected:
+   Attacker& target();
+   const Attacker& target() const;
 
  private:
    void setPosition(MapPos center);
    void setSize(MapVec size);
    bool findTarget();
+   std::optional<MapCoord> distTo(const Attacker& attacker) const;
+   bool canHit(const Attacker& attacker) const;
    bool isInRange(const Attacker& attacker) const;
+   bool isInRange(MapCoord dist) const;
    void calcRotation();
    std::optional<MapVec> targetDirection() const;
 
@@ -51,19 +61,21 @@ template <typename Derived> class DefenderBase
    const Attribs& baseAttribs() const { return derived().m_attribs; }
 
  protected:
+   EntityId m_id = 0;
    DefenderLook m_look;
    MapPos m_center;
    const MapCoordSys* m_coordSys;
-   std::vector<Attacker>* m_attackers = nullptr;
-   std::optional<Attacker*> m_target;
+   std::unordered_map<EntityId, Attacker>* m_attackers = nullptr;
+   std::optional<EntityId> m_target;
 };
 
 
 template <typename Derived>
-DefenderBase<Derived>::DefenderBase(DefenderLook look, MapCoord size, MapPos center,
-                                    const MapCoordSys* cs,
-                                    std::vector<Attacker>* attackers)
-: m_look{std::move(look)}, m_center{center}, m_coordSys{cs}, m_attackers{attackers}
+DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, MapCoord size,
+                                    MapPos center, const MapCoordSys* cs,
+                                    std::unordered_map<EntityId, Attacker>* attackers)
+: m_id{id}, m_look{std::move(look)}, m_center{center}, m_coordSys{cs}, m_attackers{
+                                                                          attackers}
 {
    assert(m_coordSys);
    assert(m_attackers);
@@ -73,12 +85,11 @@ DefenderBase<Derived>::DefenderBase(DefenderLook look, MapCoord size, MapPos cen
 }
 
 
-template <typename Derived>
-void DefenderBase<Derived>::render(Renderer2& renderer)
+template <typename Derived> void DefenderBase<Derived>::render(Renderer2& renderer)
 {
    const PixPos center = m_coordSys->toRenderCoords(m_center);
 
-   if (m_target)
+   if (m_target && target().isAlive())
    {
       calcRotation();
       m_look.renderFiring(renderer, center);
@@ -90,10 +101,32 @@ void DefenderBase<Derived>::render(Renderer2& renderer)
 }
 
 
+template <typename Derived> Attacker& DefenderBase<Derived>::target()
+{
+   assert(m_target.has_value());
+   return (*m_attackers)[*m_target];
+}
+
+
+template <typename Derived> const Attacker& DefenderBase<Derived>::target() const
+{
+   assert(m_target.has_value());
+   return (*m_attackers)[*m_target];
+}
+
+
 template <typename Derived> void DefenderBase<Derived>::update()
 {
    if (findTarget())
       derived().shoot();
+}
+
+
+template <typename Derived>
+void DefenderBase<Derived>::removeAsTarget(EntityId attackerId)
+{
+   if (m_target && target().id() == attackerId)
+      m_target = std::nullopt;
 }
 
 
@@ -111,18 +144,53 @@ template <typename Derived> void DefenderBase<Derived>::setSize(MapVec size)
 
 template <typename Derived> bool DefenderBase<Derived>::findTarget()
 {
-   m_target.reset();
+   // Try to keep existing target.
+   if (m_target && canHit(target()))
+      return true;
 
-   for (auto& attacker : *m_attackers)
-   {
-      if (attacker.isAlive() && isInRange(attacker))
-      {
-         m_target = &attacker;
-         break;
-      }
-   }
+   // Find new target.
+   const auto iter =
+      std::find_if(m_attackers->begin(), m_attackers->end(), [this](const auto& entry) {
+         return entry.second.isAlive() && canHit(entry.second);
+      });
+   m_target =
+      iter != m_attackers->end() ? std::make_optional(iter->second.id()) : std::nullopt;
 
-   return !!m_target;
+   return m_target.has_value();
+   // m_target = std::nullopt;
+   // MapCoord minDist = std::numeric_limits<MapCoord>::max();
+
+   // for (auto& attacker : *m_attackers)
+   //{
+   //   if (attacker.isAlive())
+   //   {
+   //      if (const auto dist = distTo(attacker);
+   //          dist && isInRange(*dist) && sutil::lessEqual(*dist, minDist))
+   //      {
+   //         m_target = &attacker;
+   //         minDist = *dist;
+   //      }
+   //   }
+   //}
+
+   // return m_target.has_value();
+}
+
+
+template <typename Derived>
+std::optional<MapCoord> DefenderBase<Derived>::distTo(const Attacker& attacker) const
+{
+   const auto pos = attacker.position();
+   if (pos)
+      return glm::length(m_center - *pos);
+   return std::nullopt;
+}
+
+
+template <typename Derived>
+bool DefenderBase<Derived>::canHit(const Attacker& attacker) const
+{
+   return attacker.isAlive() && isInRange(attacker);
 }
 
 
@@ -130,10 +198,14 @@ template <typename Derived>
 bool DefenderBase<Derived>::isInRange(const Attacker& attacker) const
 {
    const auto pos = attacker.position();
-   if (!pos)
-      return false;
+   if (pos)
+      return isInRange(glm::length(m_center - *pos));
+   return false;
+}
 
-   const MapCoord dist = glm::length(m_center - *pos);
+
+template <typename Derived> bool DefenderBase<Derived>::isInRange(MapCoord dist) const
+{
    return sutil::lessEqual(dist, baseAttribs().range);
 }
 
@@ -155,7 +227,7 @@ std::optional<MapVec> DefenderBase<Derived>::targetDirection() const
    if (!m_target)
       return std::nullopt;
 
-   const auto targetPos = (*m_target)->position();
+   const auto targetPos = target().position();
    if (!targetPos)
       return std::nullopt;
 

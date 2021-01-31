@@ -11,7 +11,6 @@
 #include <string>
 #include <unordered_map>
 #include <variant>
-#include <vector>
 
 class MapCoordSys;
 
@@ -24,12 +23,13 @@ class MapCoordSys;
 class DefenderFactory
 {
  public:
-   explicit DefenderFactory(const MapCoordSys* cs, std::vector<Attacker>* attackers);
+   explicit DefenderFactory(const MapCoordSys* cs,
+                            std::unordered_map<EntityId, Attacker>* attackers);
 
    template <typename Attribs>
    void registerModel(const std::string& name, DefenderLook look, Attribs&& attribs);
 
-   Defender makeDefender(const std::string& model, MapPos center) const;
+   Defender makeDefender(const std::string& model, MapPos center);
    DefenderAttribs defaultAttributes(const std::string& model) const;
 
  private:
@@ -43,15 +43,16 @@ class DefenderFactory
    const Model& lookupModel(const std::string& modelName) const;
 
  private:
+   EntityId m_nextId = 1;
    const MapCoordSys* m_coordSys = nullptr;
    // Collection of active attackers.
-   std::vector<Attacker>* m_attackers = nullptr;
+   std::unordered_map<EntityId, Attacker>* m_attackers = nullptr;
    std::unordered_map<std::string, Model> m_models;
 };
 
 
 inline DefenderFactory::DefenderFactory(const MapCoordSys* cs,
-                                        std::vector<Attacker>* attackers)
+                                        std::unordered_map<EntityId, Attacker>* attackers)
 : m_coordSys{cs}, m_attackers{attackers}
 {
    assert(m_coordSys);

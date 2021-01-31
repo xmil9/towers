@@ -24,6 +24,7 @@
 #include "state.h"
 #include <memory>
 #include <optional>
+#include <unordered_map>
 #include <vector>
 
 
@@ -60,6 +61,8 @@ class Game2 : private Commands, private State
    template<typename SpecificAttacker>
    void onAttackerDestroyed(SpecificAttacker& src, std::string_view event,
                             const ObservedEventData& data);
+   void removeDestroyedAttackers();
+   void removeAsTarget(EntityId attackerId);
 
    void resetDefenderPlacements();
    bool hasDefenderOnField(MapPos field) const;
@@ -118,7 +121,7 @@ class Game2 : private Commands, private State
    Renderer2 m_renderer;
    std::unique_ptr<HpRenderer> m_hpRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
-   std::vector<Attacker> m_attackers;
+   std::unordered_map<EntityId, Attacker> m_attackers;
    std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;

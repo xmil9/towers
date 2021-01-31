@@ -17,8 +17,9 @@ class LaserTurret : public DefenderBase<LaserTurret>
    using Attribs = DefenderBase<LaserTurret>::Attribs;
 
  public:
-   LaserTurret(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
-               const MapCoordSys* cs, std::vector<Attacker>* attackers);
+   LaserTurret(EntityId id, DefenderLook look, MapCoord size, MapPos center,
+               const Attribs& attribs, const MapCoordSys* cs,
+               std::unordered_map<EntityId, Attacker>* attackers);
 
    static Attribs defaultAttributes();
 
@@ -30,18 +31,19 @@ class LaserTurret : public DefenderBase<LaserTurret>
 };
 
 
-inline LaserTurret::LaserTurret(DefenderLook look, MapCoord size, MapPos center,
-                                const Attribs& attribs, const MapCoordSys* cs,
-                                std::vector<Attacker>* attackers)
-: DefenderBase<LaserTurret>{look, size, center, cs, attackers}, m_attribs{attribs}
+inline LaserTurret::LaserTurret(EntityId id, DefenderLook look, MapCoord size,
+                                MapPos center, const Attribs& attribs,
+                                const MapCoordSys* cs,
+                                std::unordered_map<EntityId, Attacker>* attackers)
+: DefenderBase<LaserTurret>{id, look, size, center, cs, attackers}, m_attribs{attribs}
 
 {
 }
 
 inline void LaserTurret::shoot()
 {
-   if (m_target || !(*m_target)->isAlive())
-      (*m_target)->hit(m_attribs.damage);
+   if (m_target || !target().isAlive())
+      target().hit(m_attribs.damage);
 }
 
 inline LaserTurret::Attribs LaserTurret::defaultAttributes()

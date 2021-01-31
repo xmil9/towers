@@ -21,8 +21,9 @@ class SonicMortar : public DefenderBase<SonicMortar>
    };
 
  public:
-   SonicMortar(DefenderLook look, MapCoord size, MapPos center, const Attribs& attribs,
-               const MapCoordSys* cs, std::vector<Attacker>* attackers);
+   SonicMortar(EntityId id, DefenderLook look, MapCoord size, MapPos center,
+               const Attribs& attribs, const MapCoordSys* cs,
+               std::unordered_map<EntityId, Attacker>* attackers);
 
    static Attribs defaultAttributes();
 
@@ -36,10 +37,11 @@ class SonicMortar : public DefenderBase<SonicMortar>
 };
 
 
-inline SonicMortar::SonicMortar(DefenderLook look, MapCoord size, MapPos center,
-                                const Attribs& attribs, const MapCoordSys* cs,
-                                std::vector<Attacker>* attackers)
-: DefenderBase<SonicMortar>{look, size, center, cs, attackers}, m_attribs{attribs}
+inline SonicMortar::SonicMortar(EntityId id, DefenderLook look, MapCoord size,
+                                MapPos center, const Attribs& attribs,
+                                const MapCoordSys* cs,
+                                std::unordered_map<EntityId, Attacker>* attackers)
+: DefenderBase<SonicMortar>{id, look, size, center, cs, attackers}, m_attribs{attribs}
 
 {
 }
@@ -51,16 +53,17 @@ inline SonicMortar::Attribs SonicMortar::defaultAttributes()
 
 inline void SonicMortar::shoot()
 {
-   if (!m_target || !(*m_target)->isAlive())
+   if (!m_target || !target().isAlive())
       return;
 
    // Hit the target with the primary damage.
-   (*m_target)->hit(m_attribs.damage);
+   target().hit(m_attribs.damage);
 
    // Hit other attackers in collateral range with the collateral damage.
-   for (auto& attacker : *m_attackers)
+   for (auto& entry : *m_attackers)
    {
-      const bool isPrimaryTarget = &attacker == *m_target;
+      Attacker& attacker = entry.second;
+      const bool isPrimaryTarget = attacker.id() == target().id();
       if (!isPrimaryTarget && attacker.isAlive() && isInCollateralRange(attacker))
          attacker.hit(m_attribs.collateralDamage);
    }
@@ -72,7 +75,7 @@ inline bool SonicMortar::isInCollateralRange(const Attacker& attacker) const
    if (!m_target)
       return false;
 
-   const auto targetPos = (*m_target)->position();
+   const auto targetPos = target().position();
    if (!targetPos)
       return false;
 

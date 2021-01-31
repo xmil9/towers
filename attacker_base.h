@@ -29,9 +29,10 @@ template <typename Derived> class AttackerBase : public Observed<Derived>
    };
 
  public:
-   AttackerBase(AttackerLook look, MapCoord size, const Attribs& attribs,
+   AttackerBase(EntityId id, AttackerLook look, MapCoord size, const Attribs& attribs,
                 const OffsetPath& path, const MapCoordSys* cs);
 
+   EntityId id() const { return m_id; }
    void render(Renderer2& renderer);
    void update();
    std::optional<MapPos> position() const { return m_center; }
@@ -56,6 +57,7 @@ template <typename Derived> class AttackerBase : public Observed<Derived>
    const Attribs& derivedAttribs() const { return derived().m_attribs; }
 
  protected:
+   EntityId m_id = 0;
    AttackerLook m_look;
    Attribs m_initialAttribs;
    Attribs m_currAttribs;
@@ -72,10 +74,10 @@ template <typename Derived> class AttackerBase : public Observed<Derived>
 // AttackerBase implementation.
 
 template <typename Derived>
-AttackerBase<Derived>::AttackerBase(AttackerLook look, MapCoord size,
+AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, MapCoord size,
                                     const Attribs& attribs, const OffsetPath& path,
                                     const MapCoordSys* cs)
-: m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},
+: m_id{id}, m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},
   m_center{path.start()}, m_currTurn{0}, m_path{path}, m_coordSys{cs}
 {
    assert(m_coordSys);

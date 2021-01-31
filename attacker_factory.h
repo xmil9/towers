@@ -23,7 +23,7 @@ class AttackerFactory
    void registerModel(const std::string& name, AttackerLook look, Attribs&& attribs);
 
    Attacker makeAttacker(const std::string& model, const OffsetPath& path,
-                         int launchDelay = 0) const;
+                         int launchDelay = 0);
    AttackerAttribs defaultAttributes(const std::string& model) const;
 
  private:
@@ -37,6 +37,7 @@ class AttackerFactory
    const Model& lookupModel(const std::string& modelName) const;
 
  private:
+   EntityId m_nextId = 1;
    const MapCoordSys* m_coordSys = nullptr;
    std::unordered_map<std::string, Model> m_models;
 };
