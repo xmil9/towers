@@ -11,7 +11,7 @@
 #include "glm/vec3.hpp"
 #include <cassert>
 #include <filesystem>
-#include <map>
+#include <unordered_map>
 
 namespace gll
 {
@@ -58,7 +58,7 @@ class TextRenderer
 
  private:
    Resources* m_resources = nullptr;
-   std::map<GLchar, Char> m_chars;
+   std::unordered_map<GLchar, Char> m_chars;
    gll::Vao m_vao;
    gll::Vbo m_posVbo;
    gll::Vbo m_texCoordVbo;
