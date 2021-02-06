@@ -51,7 +51,7 @@ void Game3::run()
    while (!m_mainWnd.shouldClose())
    {
       m_frameClock.nextLap();
-      m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
+      m_input.process(m_mainWnd, m_frameClock.lapLength(sge::MsToSecs));
       // advanceState();
       m_renderer.renderFrame();
       m_mainWnd.swapBuffers();

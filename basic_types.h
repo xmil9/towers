@@ -3,12 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "lap_clock.h"
 #include "glm/vec3.hpp"
 
-
-using FrameClock = LapClock<float, std::chrono::milliseconds>;
-constexpr float MsToSecs = 0.001f;
 
 enum class DirectionXZ
 {

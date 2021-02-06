@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "rect.h"
+#include "sge_rect.h"
 #include "glm/vec2.hpp"
 
 
@@ -16,4 +16,4 @@ using IntCoord = int;
 using IntPos = glm::ivec2;
 using IntVec = glm::ivec2;
 using IntDim = glm::ivec2;
-using IntRect = Rect<IntPos>;
+using IntRect = sge::Rect<IntPos>;

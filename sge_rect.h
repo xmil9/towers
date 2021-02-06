@@ -5,6 +5,8 @@
 #pragma once
 
 
+namespace sge
+{
 ///////////////////
 
 template<typename Pos>
@@ -74,3 +76,5 @@ Rect<Pos> operator+(const Rect<Pos>& r, Vec offset)
    Rect<Pos> res{r};
    return res += offset;
 }
+
+} // namespace sge

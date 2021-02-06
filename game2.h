@@ -19,6 +19,7 @@
 #include "place_session.h"
 #include "renderer2.h"
 #include "resources.h"
+#include "sge_types.h"
 #include "sprite.h"
 #include "state.h"
 #include "opengl_util/gfl_lib.h"
@@ -115,7 +116,7 @@ class Game2 : private Commands, private State
    static constexpr PixCoordi WndHeight = MapHeight;
 
    Resources m_resources;
-   FrameClock m_frameClock;
+   sge::FrameClock m_frameClock;
    gfl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;

@@ -2,9 +2,13 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "png_texture.h"
+#include "sge_png_texture.h"
 #include "stb/stb_image.h"
 
+
+namespace sge
+{
+///////////////////
 
 PngTexture::PngTexture(const std::filesystem::path& texFile, bool flipVert)
 {
@@ -61,3 +65,5 @@ void PngTexture::clear()
    m_height = 0;
    m_data = nullptr;
 }
+
+} // namespace sge

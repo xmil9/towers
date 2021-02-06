@@ -7,6 +7,7 @@
 #include "input.h"
 #include "main_window.h"
 #include "renderer3.h"
+#include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gfl_lib.h"
 #include <optional>
@@ -40,7 +41,7 @@ class Game3
    void updateCameraPosition(gfl::Key key, float frameLengthSecs);
 
  private:
-   FrameClock m_frameClock;
+   sge::FrameClock m_frameClock;
    gfl::Lib m_glfw;
    MainWindow m_mainWnd;
    Input m_input;

@@ -8,6 +8,10 @@
 #include <utility>
 
 
+namespace sge
+{
+///////////////////
+
 class PngTexture
 {
  public:
@@ -46,3 +50,5 @@ class PngTexture
    int m_height = 0;
    unsigned char* m_data = nullptr;
 };
+
+} // namespace sge

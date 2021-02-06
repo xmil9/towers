@@ -6,6 +6,8 @@
 #include <chrono>
 
 
+namespace sge
+{
 ///////////////////
 
 // Clock to measure repeated events.
@@ -54,3 +56,5 @@ T LapClock<T, Duration>::elapsedInLap(float factor) const
    const auto elapsed = std::chrono::duration_cast<Duration>(m_clock.now() - m_lastLap);
    return static_cast<T>(elapsed.count() * factor);
 }
+
+} // namespace gge

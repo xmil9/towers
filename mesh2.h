@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "coords.h"
-#include "point2.h"
+#include "sge_point2.h"
 #include "opengl_util/gll_data_format.h"
 #include <algorithm>
 #include <cstddef>
@@ -16,7 +16,7 @@
 class Mesh2
 {
  public:
-   using Point = Point2<NormCoord>;
+   using Point = sge::Point2<NormCoord>;
    using VertexIdx = unsigned int;
 
  public:

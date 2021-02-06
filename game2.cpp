@@ -329,7 +329,7 @@ bool Game2::setupBackground()
 
 void Game2::processInput()
 {
-   m_input.process(m_mainWnd, m_frameClock.lapLength(MsToSecs));
+   m_input.process(m_mainWnd, m_frameClock.lapLength(sge::MsToSecs));
 }
 
 

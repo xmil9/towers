@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "rect.h"
+#include "sge_rect.h"
 #include "glm/vec2.hpp"
 
 
@@ -15,4 +15,4 @@ using NormCoord = float;
 using NormPos = glm::vec2;
 using NormVec = glm::vec2;
 using NormDim = glm::vec2;
-using NormRect = Rect<NormPos>;
+using NormRect = sge::Rect<NormPos>;

@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "textures.h"
-#include "png_texture.h"
+#include "sge_png_texture.h"
 
 
 static gll::Texture2D NullTexture;
@@ -12,7 +12,7 @@ static gll::Texture2D NullTexture;
 bool Textures::load(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert)
 {
-   PngTexture tex{texFile, flipVert};
+   sge::PngTexture tex{texFile, flipVert};
    if (!tex)
       return false;
 

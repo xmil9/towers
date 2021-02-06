@@ -5,6 +5,9 @@
 #pragma once
 
 
+namespace sge
+{
+
 // POD data structure for a point.
 // This will be used for arrays of elements of type T, so the memory layout
 // must not contain anything else but Ts.
@@ -17,3 +20,5 @@ struct Point2
    Coord x;
    Coord y;
 };
+
+} // namespace sge
