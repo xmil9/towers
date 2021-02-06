@@ -11,6 +11,7 @@
     <ClInclude Include="..\..\type_traits_util.h" />
     <ClInclude Include="..\..\rand_util.h" />
     <ClInclude Include="..\..\angle.h" />
+    <ClInclude Include="..\..\observed.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\string_util.cpp" />

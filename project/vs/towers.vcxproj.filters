@@ -147,9 +147,6 @@
     <ClInclude Include="..\..\lap_clock.h">
       <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\observed.h">
-      <Filter>Infrastructure\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\input.h">
       <Filter>Infrastructure\Ui</Filter>
     </ClInclude>

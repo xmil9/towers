@@ -41,6 +41,7 @@
     <ClInclude Include="..\..\fputil.h" />
     <ClInclude Include="..\..\generic_string_util.h" />
     <ClInclude Include="..\..\math_util.h" />
+    <ClInclude Include="..\..\observed.h" />
     <ClInclude Include="..\..\rand_util.h" />
     <ClInclude Include="..\..\string_util.h" />
     <ClInclude Include="..\..\sutils_api.h" />

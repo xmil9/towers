@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "observed.h"
+#include "essentutils/observed.h"
 
 
 ///////////////////
@@ -11,6 +11,6 @@
 // Notifications sent to observers.
 
 constexpr char AttackerDestroyedEvent[] = "attacker_destroyed";
-struct AttackerDestroyedData : public ObservedEventData
+struct AttackerDestroyedData : public sutil::ObservedEventData
 {
 };

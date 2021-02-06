@@ -1,4 +1,7 @@
 //
+// essentutils
+// Lightweight observable class.
+//
 // Oct-2020, Michael Lindner
 // MIT license
 //
@@ -8,6 +11,8 @@
 #include <vector>
 
 
+namespace sutil
+{
 ///////////////////
 
 // Base class for event data.
@@ -24,10 +29,9 @@ template <typename Source> class Observed
 {
  public:
    using Callback =
-      std::function<void(Source&, std::string_view, const ObservedEventData& data)>;
+      std::function<void(Source&, std::string_view, const ObservedEventData&)>;
 
    void addObserver(Callback cb);
-   void removeObserver(Callback cb);
    void notify(Source& src, std::string_view event, const ObservedEventData& data);
 
  private:
@@ -41,14 +45,6 @@ template <typename Source> void Observed<Source>::addObserver(Callback cb)
 }
 
 
-template <typename Source> void Observed<Source>::removeObserver(Callback cb)
-{
-   const auto pos = std::find(std::begin(m_observers), std::end(m_observers), cb);
-   if (pos != m_observers.end())
-      m_observers.erase(pos);
-}
-
-
 template <typename Source>
 void Observed<Source>::notify(Source& src, std::string_view event,
                               const ObservedEventData& data)
@@ -56,3 +52,5 @@ void Observed<Source>::notify(Source& src, std::string_view event,
    for (auto& cb : m_observers)
       cb(src, event, data);
 }
+
+} // namespace sutil

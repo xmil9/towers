@@ -5,12 +5,12 @@
 #pragma once
 #include "coords.h"
 #include "input_controller.h"
-#include "observed.h"
+#include "essentutils/observed.h"
 #include "glm/vec2.hpp"
 #include "opengl_util/gfl_window.h"
 
 
-class MainWindow : public gfl::Window, public Observed<MainWindow>
+class MainWindow : public gfl::Window, public sutil::Observed<MainWindow>
 {
  public:
    void setInputController(InputController* controller);
@@ -35,7 +35,7 @@ class MainWindow : public gfl::Window, public Observed<MainWindow>
 // Notifications sent to observers.
 
 constexpr char WindowResizedEvent[] = "window_resized";
-struct WindowResizedData : public ObservedEventData
+struct WindowResizedData : public sutil::ObservedEventData
 {
    glm::ivec2 newSize{0, 0};
    // Difference to previous size.

@@ -6,8 +6,8 @@
 #include "attacker_events.h"
 #include "attacker_look.h"
 #include "map_coord_sys.h"
-#include "observed.h"
 #include "path.h"
+#include "essentutils/observed.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
 #include <optional>
@@ -17,7 +17,7 @@ class Renderer2;
 
 ///////////////////
 
-template <typename Derived> class AttackerBase : public Observed<Derived>
+template <typename Derived> class AttackerBase : public sutil::Observed<Derived>
 {
  public:
    struct Attribs
@@ -129,8 +129,8 @@ template <typename Derived> void AttackerBase<Derived>::hit(int damage)
    m_isHit = true;
 
    if (!isAlive())
-      Observed<Derived>::notify(derived(), AttackerDestroyedEvent,
-                                AttackerDestroyedData{});
+      sutil::Observed<Derived>::notify(derived(), AttackerDestroyedEvent,
+                                       AttackerDestroyedData{});
 }
 
 

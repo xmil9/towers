@@ -239,7 +239,6 @@
     <ClInclude Include="..\..\sprite_form.h" />
     <ClInclude Include="..\..\sprite_look.h" />
     <ClInclude Include="..\..\mesh2.h" />
-    <ClInclude Include="..\..\observed.h" />
     <ClInclude Include="..\..\png_texture.h" />
     <ClInclude Include="..\..\point2.h" />
     <ClInclude Include="..\..\renderer3.h" />

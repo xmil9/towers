@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "input_controller.h"
-#include "observed.h"
+#include "essentutils/observed.h"
 #include "glm/vec2.hpp"
 
 namespace gfl
@@ -15,7 +15,7 @@ class Window;
 
 ///////////////////
 
-class Input : public InputController, public Observed<Input>
+class Input : public InputController, public sutil::Observed<Input>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
@@ -43,20 +43,20 @@ class Input : public InputController, public Observed<Input>
 // Notifications sent to input state observers.
 
 constexpr char MouseMovedEvent[] = "mouse-moved";
-struct MouseMovedData : public ObservedEventData
+struct MouseMovedData : public sutil::ObservedEventData
 {
    glm::vec2 pos{0.f, 0.f};
    glm::vec2 delta{0.f, 0.f};
 };
 
 constexpr char MouseScrolledEvent[] = "mouse-scrolled";
-struct MouseScrolledData : public ObservedEventData
+struct MouseScrolledData : public sutil::ObservedEventData
 {
    glm::vec2 delta{0.f, 0.f};
 };
 
 constexpr char MouseButtonChangedEvent[] = "mouse-button-changed";
-struct MouseButtonChangedData : public ObservedEventData
+struct MouseButtonChangedData : public sutil::ObservedEventData
 {
    // Button id: GLFW_MOUSE_BUTTON_1, GLFW_MOUSE_BUTTON_2, etc
    gfl::MouseButton button = 0;
@@ -69,7 +69,7 @@ struct MouseButtonChangedData : public ObservedEventData
 };
 
 constexpr char KeyChangedEvent[] = "key-changed";
-struct KeyChangedData : public ObservedEventData
+struct KeyChangedData : public sutil::ObservedEventData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;
@@ -82,7 +82,7 @@ struct KeyChangedData : public ObservedEventData
 };
 
 constexpr char KeyPolledEvent[] = "key-polled";
-struct KeyPolledData : public ObservedEventData
+struct KeyPolledData : public sutil::ObservedEventData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;
