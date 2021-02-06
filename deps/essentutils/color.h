@@ -11,7 +11,7 @@
 #include <utility>
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -56,4 +56,4 @@ inline bool operator!=(const Rgb& a, const Rgb& b)
    return !(a == b);
 }
 
-} // namespace sutil
+} // namespace esl

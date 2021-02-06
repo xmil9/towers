@@ -13,7 +13,7 @@
 #include <type_traits>
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -35,7 +35,7 @@ template <typename Fp> class Angle
 
    constexpr operator Fp() const { return radians(); }
    constexpr Fp radians() const { return m_rad; }
-   constexpr Fp degrees() const { return sutil::degrees(m_rad); }
+   constexpr Fp degrees() const { return esl::degrees(m_rad); }
 
    constexpr Angle& operator+=(Angle a);
    constexpr Angle& operator+=(Fp rad);
@@ -73,7 +73,7 @@ template <typename Fp>
 template <typename T>
 constexpr Angle<Fp> Angle<Fp>::fromDegrees(T deg)
 {
-   return Angle<Fp>{sutil::radians(deg)};
+   return Angle<Fp>{esl::radians(deg)};
 }
 
 template <typename Fp> constexpr Angle<Fp>& Angle<Fp>::operator=(Fp rad)
@@ -142,21 +142,21 @@ template <typename T, typename U>
 constexpr bool operator==(const Angle<T>& a, const Angle<U>& b)
 {
    using Common = std::common_type_t<T, U>;
-   return sutil::equal<Common>(a, b);
+   return esl::equal<Common>(a, b);
 }
 
 template <typename T, typename Scalar>
 constexpr bool operator==(const Angle<T>& a, Scalar b)
 {
    using Common = std::common_type_t<T, Scalar>;
-   return sutil::equal<Common>(a, b);
+   return esl::equal<Common>(a, b);
 }
 
 template <typename Scalar, typename T>
 constexpr bool operator==(Scalar a, const Angle<T>& b)
 {
    using Common = std::common_type_t<Scalar, T>;
-   return sutil::equal<Common>(a, b);
+   return esl::equal<Common>(a, b);
 }
 
 // Inquality.
@@ -183,21 +183,21 @@ template <typename T, typename U>
 constexpr bool operator<(const Angle<T>& a, const Angle<U>& b)
 {
    using Common = std::common_type_t<T, U>;
-   return sutil::less<Common>(a, b);
+   return esl::less<Common>(a, b);
 }
 
 template <typename T, typename Scalar>
 constexpr bool operator<(const Angle<T>& a, Scalar b)
 {
    using Common = std::common_type_t<T, Scalar>;
-   return sutil::less<Common>(a, b);
+   return esl::less<Common>(a, b);
 }
 
 template <typename Scalar, typename T>
 constexpr bool operator<(Scalar a, const Angle<T>& b)
 {
    using Common = std::common_type_t<Scalar, T>;
-   return sutil::less<Common>(a, b);
+   return esl::less<Common>(a, b);
 }
 
 // Less-or-equal-than.
@@ -205,21 +205,21 @@ template <typename T, typename U>
 constexpr bool operator<=(const Angle<T>& a, const Angle<U>& b)
 {
    using Common = std::common_type_t<T, U>;
-   return sutil::lessEqual<Common>(a, b);
+   return esl::lessEqual<Common>(a, b);
 }
 
 template <typename T, typename Scalar>
 constexpr bool operator<=(const Angle<T>& a, Scalar b)
 {
    using Common = std::common_type_t<T, Scalar>;
-   return sutil::lessEqual<Common>(a, b);
+   return esl::lessEqual<Common>(a, b);
 }
 
 template <typename Scalar, typename T>
 constexpr bool operator<=(Scalar a, const Angle<T>& b)
 {
    using Common = std::common_type_t<Scalar, T>;
-   return sutil::lessEqual<Common>(a, b);
+   return esl::lessEqual<Common>(a, b);
 }
 
 // Greater-than.
@@ -321,7 +321,7 @@ constexpr Angle<std::common_type_t<T, Scalar>> operator/(Angle<T> a, Scalar b)
    return a /= static_cast<Common>(b);
 }
 
-} // namespace sutil
+} // namespace esl
 
 
 ///////////////////
@@ -329,9 +329,9 @@ constexpr Angle<std::common_type_t<T, Scalar>> operator/(Angle<T> a, Scalar b)
 
 namespace std
 {
-template <typename Fp> struct hash<sutil::Angle<Fp>>
+template <typename Fp> struct hash<esl::Angle<Fp>>
 {
-   std::size_t operator()(const sutil::Angle<Fp>& a) const noexcept
+   std::size_t operator()(const esl::Angle<Fp>& a) const noexcept
    {
       return std::hash<Fp>{}(a.operator Fp());
    }

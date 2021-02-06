@@ -175,7 +175,7 @@ bool DefenderBase<Derived>::isInRange(const Attacker& attacker) const
 
 template <typename Derived> bool DefenderBase<Derived>::isInRange(MapCoord dist) const
 {
-   return sutil::lessEqual(dist, baseAttribs().range);
+   return esl::lessEqual(dist, baseAttribs().range);
 }
 
 

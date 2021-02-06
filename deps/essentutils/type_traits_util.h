@@ -10,7 +10,7 @@
 #include <type_traits>
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -46,4 +46,4 @@ struct IsOneOf<T, U, Rest...>
 template <typename T, typename... Types>
 inline constexpr bool isOneOf_v = IsOneOf<T, Types...>::value;
 
-} // namespace sutil
+} // namespace esl

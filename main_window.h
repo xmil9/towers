@@ -10,7 +10,7 @@
 #include "opengl_util/gfl_window.h"
 
 
-class MainWindow : public gfl::Window, public sutil::Observed<MainWindow>
+class MainWindow : public gfl::Window, public esl::Observed<MainWindow>
 {
  public:
    void setInputController(InputController* controller);
@@ -35,7 +35,7 @@ class MainWindow : public gfl::Window, public sutil::Observed<MainWindow>
 // Notifications sent to observers.
 
 constexpr char WindowResizedEvent[] = "window_resized";
-struct WindowResizedData : public sutil::ObservedEventData
+struct WindowResizedData : public esl::ObservedEventData
 {
    glm::ivec2 newSize{0, 0};
    // Difference to previous size.

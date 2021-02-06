@@ -13,13 +13,13 @@
 
 ///////////////////
 
-using Angle_t = sutil::Angle<float>;
+using Angle_t = esl::Angle<float>;
 
 
 // Equality for any values represented by GLM floating point vectors.
 inline bool isEqual(glm::vec2 a, glm::vec2 b)
 {
-   return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
+   return esl::equal(a.x, b.x) && esl::equal(a.y, b.y);
 }
 
 // Equality for any values represented by GLM integer vectors.
@@ -27,5 +27,5 @@ inline bool isEqual(glm::vec2 a, glm::vec2 b)
 // for generic code.
 inline bool isEqual(glm::ivec2 a, glm::ivec2 b)
 {
-   return sutil::equal(a.x, b.x) && sutil::equal(a.y, b.y);
+   return esl::equal(a.x, b.x) && esl::equal(a.y, b.y);
 }

@@ -80,7 +80,7 @@ void Renderer3::renderFrame()
 
 bool Renderer3::setupShaders()
 {
-   const std::filesystem::path appPath = sutil::appDirectory();
+   const std::filesystem::path appPath = esl::appDirectory();
    bool ok = !appPath.empty();
 
    gll::Shader vs{gll::makeVertexShader(appPath / "shaders" / "cube3_shader.vs")};
@@ -109,7 +109,7 @@ bool Renderer3::setupShaders()
 
 bool Renderer3::setupTextures()
 {
-   const std::filesystem::path appPath = sutil::appDirectory();
+   const std::filesystem::path appPath = esl::appDirectory();
    if (appPath.empty())
       return false;
 

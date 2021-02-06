@@ -4,7 +4,6 @@
     <ClInclude Include="..\..\color.h" />
     <ClInclude Include="..\..\generic_string_util.h" />
     <ClInclude Include="..\..\string_util.h" />
-    <ClInclude Include="..\..\sutils_api.h" />
     <ClInclude Include="..\..\filesys.h" />
     <ClInclude Include="..\..\fputil.h" />
     <ClInclude Include="..\..\math_util.h" />
@@ -12,6 +11,7 @@
     <ClInclude Include="..\..\rand_util.h" />
     <ClInclude Include="..\..\angle.h" />
     <ClInclude Include="..\..\observed.h" />
+    <ClInclude Include="..\..\esl_api.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\string_util.cpp" />

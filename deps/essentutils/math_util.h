@@ -12,7 +12,7 @@
 #include "fputil.h"
 
 
-namespace sutil
+namespace esl
 {
 
 ////////////////////
@@ -143,4 +143,4 @@ inline Sign sign(long double val)
    return Sign::None;
 }
 
-} // namespace sutil
+} // namespace esl

@@ -76,7 +76,7 @@ ClosestTargetScan<SpecificDefender>::scan(SpecificDefender& defender)
       if (attacker.isAlive() && attacker.position())
       {
          const MapCoord dist = glm::length(defender.center() - *attacker.position());
-         if (defender.isInRange(dist) && sutil::lessEqual(dist, minDist))
+         if (defender.isInRange(dist) && esl::lessEqual(dist, minDist))
          {
             targetId = attacker.id();
             minDist = dist;

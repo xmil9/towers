@@ -80,7 +80,7 @@ bool Game3::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
    m_mainWnd.addObserver(
-      [this](MainWindow& src, std::string_view event, const sutil::ObservedEventData& data) {
+      [this](MainWindow& src, std::string_view event, const esl::ObservedEventData& data) {
          onMainWindowChanged(src, event, data);
       });
 
@@ -95,7 +95,7 @@ bool Game3::setupMainWindow()
 bool Game3::setupInput()
 {
    m_input.addObserver(
-      [this](Input& /*src*/, std::string_view event, const sutil::ObservedEventData& data) {
+      [this](Input& /*src*/, std::string_view event, const esl::ObservedEventData& data) {
          onInputChanged(m_input, event, data);
       });
    return true;
@@ -111,7 +111,7 @@ bool Game3::setupOutput()
 
 
 void Game3::onMainWindowChanged(MainWindow& /*src*/, std::string_view event,
-                                const sutil::ObservedEventData& data)
+                                const esl::ObservedEventData& data)
 {
    if (event == WindowResizedEvent)
    {
@@ -130,7 +130,7 @@ void Game3::onMainWindowResize(const glm::ivec2& newSize)
 
 
 void Game3::onInputChanged(Input& /*src*/, std::string_view event,
-                           const sutil::ObservedEventData& data)
+                           const esl::ObservedEventData& data)
 {
    if (event == MouseMovedEvent)
    {

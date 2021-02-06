@@ -120,7 +120,7 @@ bool Game2::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
    m_mainWnd.addObserver([this](MainWindow& src, std::string_view event,
-                                const sutil::ObservedEventData& data) {
+                                const esl::ObservedEventData& data) {
       onMainWindowChanged(src, event, data);
    });
 
@@ -136,7 +136,7 @@ bool Game2::setupMainWindow()
 bool Game2::setupInput()
 {
    m_input.addObserver([this](Input& /*src*/, std::string_view event,
-                              const sutil::ObservedEventData& data) {
+                              const esl::ObservedEventData& data) {
       onInputChanged(m_input, event, data);
    });
    return true;
@@ -435,7 +435,7 @@ void Game2::addAttacker(std::optional<Attacker>&& attacker)
    if (attacker)
    {
       attacker->addObserver(
-         [this](auto& src, std::string_view event, const sutil::ObservedEventData& data) {
+         [this](auto& src, std::string_view event, const esl::ObservedEventData& data) {
             onAttackerDestroyed(src, event, data);
          });
 
@@ -447,7 +447,7 @@ void Game2::addAttacker(std::optional<Attacker>&& attacker)
 
 template <typename SpecificAttacker>
 void Game2::onAttackerDestroyed(SpecificAttacker& src, std::string_view /*event*/,
-                                const sutil::ObservedEventData& /*data*/)
+                                const esl::ObservedEventData& /*data*/)
 {
    m_credits += src.reward();
    removeAsTarget(src.id());
@@ -541,7 +541,7 @@ void Game2::placeDefender(const PixPos& mousePos)
 
 
 void Game2::onMainWindowChanged(MainWindow& /*src*/, std::string_view event,
-                                const sutil::ObservedEventData& data)
+                                const esl::ObservedEventData& data)
 {
    if (event == WindowResizedEvent)
    {
@@ -558,7 +558,7 @@ void Game2::onMainWindowResize(const glm::ivec2& newSize)
 
 
 void Game2::onInputChanged(Input& /*src*/, std::string_view event,
-                           const sutil::ObservedEventData& data)
+                           const esl::ObservedEventData& data)
 {
    if (event == MouseMovedEvent)
    {

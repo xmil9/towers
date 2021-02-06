@@ -19,7 +19,7 @@
 #include <vector>
 
 
-namespace sutil
+namespace esl
 {
 namespace genstr
 {
@@ -227,4 +227,4 @@ template <typename FP, typename Str> std::optional<FP> fpFromStr(const Str& s) n
 }
 
 } // namespace genstr
-} // namespace sutil
+} // namespace esl

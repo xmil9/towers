@@ -17,7 +17,7 @@ class Renderer2;
 
 ///////////////////
 
-template <typename Derived> class AttackerBase : public sutil::Observed<Derived>
+template <typename Derived> class AttackerBase : public esl::Observed<Derived>
 {
  public:
    struct Attribs
@@ -129,7 +129,7 @@ template <typename Derived> void AttackerBase<Derived>::hit(int damage)
    m_isHit = true;
 
    if (!isAlive())
-      sutil::Observed<Derived>::notify(derived(), AttackerDestroyedEvent,
+      esl::Observed<Derived>::notify(derived(), AttackerDestroyedEvent,
                                        AttackerDestroyedData{});
 }
 
@@ -160,7 +160,7 @@ template <typename Derived> void AttackerBase<Derived>::move()
    const MapVec dir = direction();
    MapVec offset = m_currAttribs.speed * glm::normalize(dir);
    // Limit movement to next turn.
-   if (sutil::greaterEqual(glm::length(offset), glm::length(dir)))
+   if (esl::greaterEqual(glm::length(offset), glm::length(dir)))
    {
       offset = dir;
       ++*m_currTurn;

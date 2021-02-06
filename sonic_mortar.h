@@ -85,5 +85,5 @@ inline bool SonicMortar::isInCollateralRange(const Attacker& attacker) const
       return false;
 
    const MapCoord dist = glm::length(*targetPos - *pos);
-   return sutil::lessEqual(dist, m_attribs.collateralDamageRange);
+   return esl::lessEqual(dist, m_attribs.collateralDamageRange);
 }

@@ -50,8 +50,8 @@ std::string FormatFloat(float f)
    constexpr float precision = 100.f;
    const float rounded = static_cast<float>(static_cast<int>(precision * f)) / precision;
 
-   std::string s = sutil::trimRight(std::to_string(rounded), '0');
-   if (sutil::endsWith(s, "."))
+   std::string s = esl::trimRight(std::to_string(rounded), '0');
+   if (esl::endsWith(s, "."))
       s += "0";
    return s;
 }

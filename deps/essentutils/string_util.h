@@ -7,7 +7,7 @@
 //
 #pragma once
 #include "generic_string_util.h"
-#include "sutils_api.h"
+#include "esl_api.h"
 #include <algorithm>
 #include <iterator>
 #include <locale>
@@ -16,7 +16,7 @@
 #include <vector>
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -57,18 +57,18 @@ template <typename FP> std::optional<FP> fpFromStr(const std::string& s) noexcep
 template <typename FP> std::optional<FP> fpFromStr(const std::wstring& s) noexcept;
 
 // UTF-8/UTF-16 string conversions.
-SUTILS_API std::string utf8(const std::string& s);
-SUTILS_API std::string utf8(const std::wstring& s);
-SUTILS_API std::wstring utf16(const std::string& s);
-SUTILS_API std::wstring utf16(const std::wstring& s);
-template<typename Str> Str convertTo(const std::string& s);
-template<typename Str> Str convertTo(const std::wstring& s);
+ESL_API std::string utf8(const std::string& s);
+ESL_API std::string utf8(const std::wstring& s);
+ESL_API std::wstring utf16(const std::string& s);
+ESL_API std::wstring utf16(const std::wstring& s);
+template <typename Str> Str convertTo(const std::string& s);
+template <typename Str> Str convertTo(const std::wstring& s);
 // UTF-8/UTF-16 character conversions. Note that the UTF-8 representation of one UTF-16
 // character can be multiple characters long.
-SUTILS_API std::string utf8(char ch);
-SUTILS_API std::string utf8(wchar_t ch);
-SUTILS_API wchar_t utf16(const char* ch, std::size_t len);
-SUTILS_API wchar_t utf16(const wchar_t* ch, std::size_t len);
+ESL_API std::string utf8(char ch);
+ESL_API std::string utf8(wchar_t ch);
+ESL_API wchar_t utf16(const char* ch, std::size_t len);
+ESL_API wchar_t utf16(const wchar_t* ch, std::size_t len);
 
 
 ///////////////////
@@ -188,8 +188,7 @@ inline std::vector<std::wstring> split(const std::wstring& s,
 }
 
 
-template <typename Iter>
-std::string join(Iter it, Iter end, const std::string& separator)
+template <typename Iter> std::string join(Iter it, Iter end, const std::string& separator)
 {
    return genstr::join(it, end, separator);
 }
@@ -274,10 +273,12 @@ template <typename FP> std::optional<FP> fpFromStr(const std::wstring& s) noexce
 }
 
 
-template<typename SrcStr, typename DstStr> DstStr convertString(const SrcStr& s)
+template <typename SrcStr, typename DstStr> DstStr convertString(const SrcStr& s)
 {
-   static_assert(std::is_same_v<SrcStr, std::string> || std::is_same_v<SrcStr, std::wstring>);
-   static_assert(std::is_same_v<DstStr, std::string> || std::is_same_v<DstStr, std::wstring>);
+   static_assert(std::is_same_v<SrcStr, std::string> ||
+                 std::is_same_v<SrcStr, std::wstring>);
+   static_assert(std::is_same_v<DstStr, std::string> ||
+                 std::is_same_v<DstStr, std::wstring>);
 
    if constexpr (std::is_same_v<DstStr, std::string>)
       return utf8(s);
@@ -286,15 +287,15 @@ template<typename SrcStr, typename DstStr> DstStr convertString(const SrcStr& s)
 }
 
 
-template<typename Str> Str convertTo(const std::string& s)
+template <typename Str> Str convertTo(const std::string& s)
 {
    return convertString<std::string, Str>(s);
 }
 
 
-template<typename Str> Str convertTo(const std::wstring& s)
+template <typename Str> Str convertTo(const std::wstring& s)
 {
    return convertString<std::wstring, Str>(s);
 }
 
-} // namespace sutil
+} // namespace esl

@@ -11,7 +11,7 @@
 #include <vector>
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -53,4 +53,4 @@ void Observed<Source>::notify(Source& src, std::string_view event,
       cb(src, event, data);
 }
 
-} // namespace sutil
+} // namespace esl

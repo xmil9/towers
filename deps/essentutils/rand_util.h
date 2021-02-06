@@ -8,7 +8,7 @@
 #include <random>
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -67,4 +67,4 @@ template <typename Fp> Fp Random<Fp>::next()
    return m_dist(m_gen);
 }
 
-} // namespace sutil
+} // namespace esl

@@ -158,7 +158,7 @@ template <typename T> T Uniform::value() const
 
 #pragma warning(disable : 4201)
 
-   if constexpr (sutil::isOneOf_v<T, GLfloat, GLint, GLuint, GLdouble, bool>)
+   if constexpr (esl::isOneOf_v<T, GLfloat, GLint, GLuint, GLdouble, bool>)
    {
       using GlValue = typename std::conditional<std::is_same_v<T, bool>, GLint, T>::type;
 
@@ -167,7 +167,7 @@ template <typename T> T Uniform::value() const
       return val;
    }
 #ifdef HAVE_GLM
-   else if constexpr (sutil::isOneOf_v<T, glm::vec2, glm::ivec2, glm::uvec2, glm::dvec2,
+   else if constexpr (esl::isOneOf_v<T, glm::vec2, glm::ivec2, glm::uvec2, glm::dvec2,
                                        glm::bvec2>)
    {
       using Value = typename T::value_type;
@@ -178,7 +178,7 @@ template <typename T> T Uniform::value() const
       getUniformValues(m_program, m_location, 2, vals.data());
       return T(vals[0], vals[1]);
    }
-   else if constexpr (sutil::isOneOf_v<T, glm::vec3, glm::ivec3, glm::uvec3, glm::dvec3,
+   else if constexpr (esl::isOneOf_v<T, glm::vec3, glm::ivec3, glm::uvec3, glm::dvec3,
                                        glm::bvec3>)
    {
       using Value = typename T::value_type;
@@ -189,7 +189,7 @@ template <typename T> T Uniform::value() const
       getUniformValues(m_program, m_location, 3, vals.data());
       return T(vals[0], vals[1], vals[2]);
    }
-   else if constexpr (sutil::isOneOf_v<T, glm::vec4, glm::ivec4, glm::uvec4, glm::dvec4,
+   else if constexpr (esl::isOneOf_v<T, glm::vec4, glm::ivec4, glm::uvec4, glm::dvec4,
                                        glm::bvec4>)
    {
       using Value = typename T::value_type;

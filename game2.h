@@ -60,7 +60,7 @@ class Game2 : private Commands, private State
    void addAttacker(std::optional<Attacker>&& attacker);
    template <typename SpecificAttacker>
    void onAttackerDestroyed(SpecificAttacker& src, std::string_view event,
-                            const sutil::ObservedEventData& data);
+                            const esl::ObservedEventData& data);
    void removeDestroyedAttackers();
    void removeAsTarget(EntityId attackerId);
 
@@ -73,11 +73,11 @@ class Game2 : private Commands, private State
    void placeDefender(const PixPos& mousePos);
 
    void onMainWindowChanged(MainWindow& src, std::string_view event,
-                            const sutil::ObservedEventData& data);
+                            const esl::ObservedEventData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
    void onInputChanged(Input& src, std::string_view event,
-                       const sutil::ObservedEventData& data);
+                       const esl::ObservedEventData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
    void onMouseButtonChanged(gfl::MouseButton button, int action, const glm::vec2& pos);

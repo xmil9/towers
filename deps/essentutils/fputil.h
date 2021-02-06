@@ -11,7 +11,7 @@
 #include <type_traits>
 
 
-namespace sutil
+namespace esl
 {
 
 ////////////////////
@@ -200,4 +200,4 @@ T sqrt(T val)
    return FpTraits<T>::sqrt(val);
 }
 
-} // namespace sutil
+} // namespace esl

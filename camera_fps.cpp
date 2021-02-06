@@ -22,8 +22,8 @@ constexpr Angle_t MinPitch{Angle_t::fromDegrees(-89.0f)};
 
 void CameraFps::updateDirection(const glm::vec2& offset)
 {
-   m_yaw += sutil::radians(offset.x);
-   m_pitch += sutil::radians(offset.y);
+   m_yaw += esl::radians(offset.x);
+   m_pitch += esl::radians(offset.y);
 
    if (m_pitch > MaxPitch)
       m_pitch = MaxPitch;

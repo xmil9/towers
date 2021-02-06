@@ -50,7 +50,7 @@ Utf8Locale::~Utf8Locale()
 } // namespace
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -147,4 +147,4 @@ wchar_t utf16(const wchar_t* ch, std::size_t len)
    return L'\0';
 }
 
-} // namespace sutil
+} // namespace esl

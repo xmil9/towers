@@ -19,7 +19,7 @@ constexpr Angle_t MinFov{Angle_t::fromDegrees(20.0f)};
 
 void Frustum3::updateFov(float offset)
 {
-   m_horzFov -= sutil::radians(offset);
+   m_horzFov -= esl::radians(offset);
 
    if (m_horzFov > MaxFov)
       m_horzFov = MaxFov;

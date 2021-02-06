@@ -7,7 +7,7 @@
 
 
 Resources::Resources()
-   : m_mainPath{sutil::appDirectory()}
+   : m_mainPath{esl::appDirectory()}
 {
 }
 

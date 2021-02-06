@@ -11,6 +11,6 @@
 // Notifications sent to observers.
 
 constexpr char AttackerDestroyedEvent[] = "attacker_destroyed";
-struct AttackerDestroyedData : public sutil::ObservedEventData
+struct AttackerDestroyedData : public esl::ObservedEventData
 {
 };

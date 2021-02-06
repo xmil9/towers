@@ -15,7 +15,7 @@ class Window;
 
 ///////////////////
 
-class Input : public InputController, public sutil::Observed<Input>
+class Input : public InputController, public esl::Observed<Input>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
@@ -43,20 +43,20 @@ class Input : public InputController, public sutil::Observed<Input>
 // Notifications sent to input state observers.
 
 constexpr char MouseMovedEvent[] = "mouse-moved";
-struct MouseMovedData : public sutil::ObservedEventData
+struct MouseMovedData : public esl::ObservedEventData
 {
    glm::vec2 pos{0.f, 0.f};
    glm::vec2 delta{0.f, 0.f};
 };
 
 constexpr char MouseScrolledEvent[] = "mouse-scrolled";
-struct MouseScrolledData : public sutil::ObservedEventData
+struct MouseScrolledData : public esl::ObservedEventData
 {
    glm::vec2 delta{0.f, 0.f};
 };
 
 constexpr char MouseButtonChangedEvent[] = "mouse-button-changed";
-struct MouseButtonChangedData : public sutil::ObservedEventData
+struct MouseButtonChangedData : public esl::ObservedEventData
 {
    // Button id: GLFW_MOUSE_BUTTON_1, GLFW_MOUSE_BUTTON_2, etc
    gfl::MouseButton button = 0;
@@ -69,7 +69,7 @@ struct MouseButtonChangedData : public sutil::ObservedEventData
 };
 
 constexpr char KeyChangedEvent[] = "key-changed";
-struct KeyChangedData : public sutil::ObservedEventData
+struct KeyChangedData : public esl::ObservedEventData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;
@@ -82,7 +82,7 @@ struct KeyChangedData : public sutil::ObservedEventData
 };
 
 constexpr char KeyPolledEvent[] = "key-polled";
-struct KeyPolledData : public sutil::ObservedEventData
+struct KeyPolledData : public esl::ObservedEventData
 {
    // Glfw key code: GLFW_KEY_SPACE, GLFW_KEY_A, ...
    gfl::Key key = 0;

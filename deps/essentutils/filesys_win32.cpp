@@ -40,7 +40,7 @@ struct CoTaskMem
 } // namespace
 
 
-namespace sutil
+namespace esl
 {
 ///////////////////
 
@@ -71,6 +71,6 @@ std::filesystem::path userDirectory()
 
 }
 
-} // namespace sutil
+} // namespace esl
 
 #endif // _WIN32
