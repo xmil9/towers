@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "input.h"
-#include "gfl_window.h"
+#include "opengl_util/gfl_window.h"
 #include <array>
 
 

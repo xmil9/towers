@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "coords.h"
-#include "gll_texture.h"
+#include "opengl_util/gll_texture.h"
 #include <filesystem>
 #include <string>
 #include <unordered_map>

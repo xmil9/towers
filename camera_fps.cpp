@@ -4,7 +4,6 @@
 //
 #include "camera_fps.h"
 #include "essentutils/math_util.h"
-#include "glfw/glfw3.h"
 #include <cassert>
 #include <cmath>
 

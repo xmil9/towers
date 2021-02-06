@@ -6,8 +6,8 @@
 #include "coords.h"
 #include "input_controller.h"
 #include "observed.h"
-#include "gfl_window.h"
 #include "glm/vec2.hpp"
+#include "opengl_util/gfl_window.h"
 
 
 class MainWindow : public gfl::Window, public Observed<MainWindow>

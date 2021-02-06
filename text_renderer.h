@@ -5,10 +5,10 @@
 #pragma once
 #include "basic_types.h"
 #include "coords.h"
-#include "gll_texture.h"
-#include "gll_vao.h"
-#include "gll_vbo.h"
 #include "glm/vec3.hpp"
+#include "opengl_util/gll_texture.h"
+#include "opengl_util/gll_vao.h"
+#include "opengl_util/gll_vbo.h"
 #include <cassert>
 #include <filesystem>
 #include <unordered_map>

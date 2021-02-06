@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "game3.h"
-#include "gll_debug.h"
+#include "opengl_util/gll_debug.h"
 
 
 namespace

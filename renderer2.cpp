@@ -4,8 +4,8 @@
 //
 #include "renderer2.h"
 #include "resources.h"
-#include "gll_shader.h"
 #include "glm/gtc/matrix_transform.hpp"
+#include "opengl_util/gll_shader.h"
 
 
 bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)

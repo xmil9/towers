@@ -4,11 +4,11 @@
 //
 #pragma once
 #include "basic_types.h"
-#include "gfl_lib.h"
 #include "input.h"
 #include "main_window.h"
 #include "renderer3.h"
 #include "glm/vec3.hpp"
+#include "opengl_util/gfl_lib.h"
 #include <optional>
 
 

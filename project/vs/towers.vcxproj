@@ -125,7 +125,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\deps;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freetype\2.10.4\release static\win64\freetype.lib;glfw\lib\Debug\glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype\2.10.4\release static\win64\freetype.lib;glfw\lib\Debug\glfw3.lib;opengl_util\bin\x64\dbg_lib\opengl_util.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>call "$(ProjectDir)deploy.bat" "$(OutDir)"
@@ -151,7 +151,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\deps;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freetype\2.10.4\release static\win64\freetype.lib;glfw\lib\Release\glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype\2.10.4\release static\win64\freetype.lib;glfw\lib\Release\glfw3.lib;opengl_util\bin\x64\rel_lib\opengl_util.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>call "$(ProjectDir)deploy.bat" "$(OutDir)"
@@ -175,13 +175,6 @@
     <ClCompile Include="..\..\frustum3.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\game3.cpp" />
-    <ClCompile Include="..\..\gfl_lib.cpp" />
-    <ClCompile Include="..\..\gfl_window.cpp" />
-    <ClCompile Include="..\..\gll_debug.cpp" />
-    <ClCompile Include="..\..\gll_program.cpp" />
-    <ClCompile Include="..\..\gll_shader.cpp" />
-    <ClCompile Include="..\..\gll_texture.cpp" />
-    <ClCompile Include="..\..\gll_binding.cpp" />
     <ClCompile Include="..\..\input.cpp" />
     <ClCompile Include="..\..\path.cpp" />
     <ClCompile Include="..\..\png_texture.cpp" />
@@ -231,24 +224,10 @@
     <ClInclude Include="..\..\frustum2.h" />
     <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\game3.h" />
-    <ClInclude Include="..\..\gll_binding.h" />
-    <ClInclude Include="..\..\gll_debug.h" />
     <ClInclude Include="..\..\input_controller.h" />
     <ClInclude Include="..\..\lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\frustum3.h" />
-    <ClInclude Include="..\..\gfl_types.h" />
-    <ClInclude Include="..\..\gfl_lib.h" />
-    <ClInclude Include="..\..\gfl_window.h" />
-    <ClInclude Include="..\..\gll_vbo.h" />
-    <ClInclude Include="..\..\gll_data_format.h" />
-    <ClInclude Include="..\..\gll_object.h" />
-    <ClInclude Include="..\..\gll_program.h" />
-    <ClInclude Include="..\..\gll_shader.h" />
-    <ClInclude Include="..\..\gll_texture.h" />
-    <ClInclude Include="..\..\gll_types.h" />
-    <ClInclude Include="..\..\gll_uniform.h" />
-    <ClInclude Include="..\..\gll_vao.h" />
     <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\mobile_cannon.h" />
     <ClInclude Include="..\..\norm_coords.h" />

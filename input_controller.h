@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "gfl_types.h"
+#include "opengl_util/gfl_types.h"
 
 
 struct InputController

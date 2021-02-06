@@ -6,14 +6,14 @@
 #include "basic_types.h"
 #include "camera_fps.h"
 #include "frustum3.h"
-#include "gll_data_format.h"
-#include "gll_program.h"
-#include "gll_shader.h"
-#include "gll_texture.h"
-#include "gll_uniform.h"
-#include "gll_vao.h"
-#include "gll_vbo.h"
 #include "glm/matrix.hpp"
+#include "opengl_util/gll_data_format.h"
+#include "opengl_util/gll_program.h"
+#include "opengl_util/gll_shader.h"
+#include "opengl_util/gll_texture.h"
+#include "opengl_util/gll_uniform.h"
+#include "opengl_util/gll_vao.h"
+#include "opengl_util/gll_vbo.h"
 
 
 class Renderer3

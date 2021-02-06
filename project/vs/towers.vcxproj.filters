@@ -8,26 +8,11 @@
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Infrastructure\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gll_shader.cpp">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gll_program.cpp">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gll_texture.cpp">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\input.cpp">
       <Filter>Infrastructure\Ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\png_texture.cpp">
       <Filter>Infrastructure\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gll_debug.cpp">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gll_binding.cpp">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\camera_fps.cpp">
       <Filter>Infrastructure\Rendering\3d</Filter>
@@ -49,12 +34,6 @@
     </ClCompile>
     <ClCompile Include="..\..\sprite_form.cpp">
       <Filter>Infrastructure\Rendering\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gfl_lib.cpp">
-      <Filter>Infrastructure\Glfw Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gfl_window.cpp">
-      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\animation.cpp">
       <Filter>Infrastructure\Rendering\2d</Filter>
@@ -112,12 +91,6 @@
     <Filter Include="Infrastructure\Glad">
       <UniqueIdentifier>{e3626774-826b-4350-8f5e-5eb4e04c0390}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Infrastructure\Glfw Utilities">
-      <UniqueIdentifier>{afc1cc97-7a35-4d4b-8969-73c54d9bdb8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Infrastructure\OpenGL Utilities">
-      <UniqueIdentifier>{83b7ab7a-7ef2-4e24-bee1-513529922f10}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Infrastructure\Rendering">
       <UniqueIdentifier>{4589b49b-6d2f-4cf1-bb21-0224ce69757b}</UniqueIdentifier>
     </Filter>
@@ -171,27 +144,6 @@
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Infrastructure\Stb</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gll_types.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_object.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_data_format.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_shader.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_program.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_uniform.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_texture.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\lap_clock.h">
       <Filter>Infrastructure\Utilities</Filter>
     </ClInclude>
@@ -206,18 +158,6 @@
     </ClInclude>
     <ClInclude Include="..\..\png_texture.h">
       <Filter>Infrastructure\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_debug.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_binding.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_vbo.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gll_vao.h">
-      <Filter>Infrastructure\OpenGL Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\camera_2d.h">
       <Filter>Infrastructure\Rendering\2d</Filter>
@@ -263,15 +203,6 @@
     </ClInclude>
     <ClInclude Include="..\..\point2.h">
       <Filter>Infrastructure\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gfl_types.h">
-      <Filter>Infrastructure\Glfw Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gfl_lib.h">
-      <Filter>Infrastructure\Glfw Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gfl_window.h">
-      <Filter>Infrastructure\Glfw Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\animation.h">
       <Filter>Infrastructure\Rendering\2d</Filter>

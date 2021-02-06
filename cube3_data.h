@@ -2,7 +2,7 @@
 // MIT license
 //
 #pragma once
-#include "gll_data_format.h"
+#include "opengl_util/gll_data_format.h"
 
 
 static float positions[] = {

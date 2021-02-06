@@ -11,7 +11,7 @@
 #include "mesh2.h"
 #include "texture_tags.h"
 // External
-#include "gll_debug.h"
+#include "opengl_util/gll_debug.h"
 // Runtime
 #include <iostream>
 #include <thread>

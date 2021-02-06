@@ -11,7 +11,6 @@
 #include "dashboard.h"
 #include "defender.h"
 #include "defender_factory.h"
-#include "gfl_lib.h"
 #include "hp_renderer.h"
 #include "input.h"
 #include "main_window.h"
@@ -22,6 +21,7 @@
 #include "resources.h"
 #include "sprite.h"
 #include "state.h"
+#include "opengl_util/gfl_lib.h"
 #include <memory>
 #include <optional>
 #include <unordered_map>

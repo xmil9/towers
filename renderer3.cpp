@@ -5,9 +5,9 @@
 #include "renderer3.h"
 #include "cube3_data.h"
 #include "essentutils/filesys.h"
-#include "gll_binding.h"
 #include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"
+#include "opengl_util/gll_binding.h"
 
 
 bool Renderer3::setup()

@@ -5,11 +5,11 @@
 #include "text_renderer.h"
 #include "mesh2.h"
 #include "resources.h"
-#include "gll_binding.h"
-#include "gll_program.h"
-#include "gll_shader.h"
 #include "ft2build.h"
 #include "freetype/freetype.h"
+#include "opengl_util/gll_binding.h"
+#include "opengl_util/gll_program.h"
+#include "opengl_util/gll_shader.h"
 #include <array>
 
 

@@ -9,9 +9,9 @@
 #include "sprite.h"
 #include "sprite_renderer.h"
 #include "text_renderer.h"
-#include "gll_program.h"
-#include "gll_uniform.h"
 #include "glm/vec3.hpp"
+#include "opengl_util/gll_program.h"
+#include "opengl_util/gll_uniform.h"
 
 class Animation;
 class Resources;

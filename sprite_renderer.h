@@ -5,8 +5,8 @@
 #pragma once
 #include "basic_types.h"
 #include "mesh2.h"
-#include "gll_vao.h"
 #include "glm/vec2.hpp"
+#include "opengl_util/gll_vao.h"
 #include <filesystem>
 #include <cstddef>
 

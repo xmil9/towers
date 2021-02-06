@@ -5,7 +5,7 @@
 #pragma once
 #include "coords.h"
 #include "point2.h"
-#include "gll_data_format.h"
+#include "opengl_util/gll_data_format.h"
 #include <algorithm>
 #include <cstddef>
 #include <vector>
