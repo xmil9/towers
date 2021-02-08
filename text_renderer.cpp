@@ -99,7 +99,7 @@ const FT_GlyphSlot Face::glyph() const
 ///////////////////
 
 void TextRenderer::render(gll::Program& shaders, const std::string& text,
-                          sge::PixPos baseline, float scale, const Color& color)
+                          sge::PixPos baseline, float scale, const sge::Color& color)
 {
    glActiveTexture(GL_TEXTURE0);
    m_vao.bind();

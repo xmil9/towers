@@ -21,7 +21,7 @@ class Sprite
    sge::PixPos rotationCenter() const { return m_form.rotationCenter(); }
    bool hasTexture() const { return m_look.hasTexture(); }
    std::string texture() const { return m_look.texture(); }
-   Color color() const { return m_look.color(); }
+   sge::Color color() const { return m_look.color(); }
 
    Sprite& setSize(sge::PixDim size);
    Sprite& setRotation(Angle_t rot);

@@ -56,7 +56,7 @@ bool SpriteRenderer::setup()
 
 
 void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite,
-                            sge::PixPos leftTop, const Color& tint) const
+                            sge::PixPos leftTop, const sge::Color& tint) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (sprite.hasTexture())

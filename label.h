@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "coords.h"
+#include "sge_types.h"
 #include <functional>
 #include <string>
 
@@ -19,7 +19,7 @@ class Label
    using GetTextFn = std::function<std::string()>;
 
  public:
-   Label(float textScale, const Color& textColor);
+   Label(float textScale, const sge::Color& textColor);
 
    void setup(GetTextFn getTextFn, const sge::PixPos& leftTop, const sge::PixDim& dim);
    sge::PixPos position() const { return m_leftTop; }
@@ -30,14 +30,14 @@ class Label
 
  private:
    float m_textScale = 1.f;
-   Color m_textColor{Black};
+   sge::Color m_textColor{sge::Black};
    GetTextFn m_getTextFn;
    sge::PixPos m_leftTop{0.f, 0.f};
    sge::PixDim m_dim{0.f, 0.f};
 };
 
 
-inline Label::Label(float textScale, const Color& textColor)
+inline Label::Label(float textScale, const sge::Color& textColor)
 : m_textScale{textScale}, m_textColor{textColor}
 {
 }

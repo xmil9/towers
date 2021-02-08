@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "coords.h"
+#include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_texture.h"
 #include "opengl_util/gll_vao.h"
@@ -35,7 +35,7 @@ class TextRenderer
 
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
    void render(gll::Program& shaders, const std::string& text, sge::PixPos baseline,
-               float scale, const Color& color);
+               float scale, const sge::Color& color);
    sge::PixDim measure(const std::string& text, float scale) const;
 
  private:

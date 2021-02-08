@@ -3,12 +3,12 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "sprite.h"
 #include "sprite_renderer.h"
 #include "text_renderer.h"
 #include "sge_camera_2d.h"
 #include "sge_frustum2.h"
+#include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_program.h"
 #include "opengl_util/gll_uniform.h"
@@ -28,14 +28,14 @@ class Renderer2
    void clearScene() const;
    void beginRendering();
    void renderSprite(const Sprite& sprite, sge::PixPos leftTop,
-                     const Color& tint = NoColor);
+                     const sge::Color& tint = sge::NoColor);
    void renderSpriteCentered(const Sprite& sprite, sge::PixPos center,
-                             const Color& tint = NoColor);
+                             const sge::Color& tint = sge::NoColor);
    void renderAnimation(Animation& anim, sge::PixPos leftTop, bool advanceFrame = true);
    void renderAnimationCentered(Animation& anim, sge::PixPos center,
                                 bool advanceFrame = true);
    void renderText(const std::string& text, sge::PixPos pos, float scale,
-                   const Color& color);
+                   const sge::Color& color);
    sge::PixDim measureText(const std::string& text, float scale) const;
 
 
@@ -54,19 +54,19 @@ class Renderer2
 
 
 inline void Renderer2::renderSprite(const Sprite& sprite, sge::PixPos leftTop,
-                                    const Color& tint)
+                                    const sge::Color& tint)
 {
    m_spriteRenderer->render(m_shaders, sprite, leftTop, tint);
 }
 
 inline void Renderer2::renderSpriteCentered(const Sprite& sprite, sge::PixPos center,
-                                            const Color& tint)
+                                            const sge::Color& tint)
 {
    renderSprite(sprite, center - .5f * sprite.size(), tint);
 }
 
 inline void Renderer2::renderText(const std::string& text, sge::PixPos pos, float scale,
-                                  const Color& color)
+                                  const sge::Color& color)
 {
    m_textRenderer->render(m_shaders, text, pos, scale, color);
 }

@@ -23,13 +23,13 @@ namespace
 
 ///////////////////
 
-constexpr Color TextColor{.3f, .3f, .3f};
+constexpr sge::Color TextColor{.3f, .3f, .3f};
 
 constexpr sge::NormDim CreditsPos{.075f, .025f};
 constexpr sge::NormDim CreditsValueGap{.03f, 0.f};
 const std::string CreditsText{"Credits:"};
 constexpr float CreditsTextScale = .8f * UiScale(1.f);
-constexpr Color CreditsTextColor = TextColor;
+constexpr sge::Color CreditsTextColor = TextColor;
 
 constexpr sge::NormDim LaserTurretPos{.075f, .05f};
 constexpr sge::NormDim SonarMortarPos{.535f, .05f};
@@ -37,7 +37,7 @@ constexpr sge::NormDim DefenderButtonDim{.375f, .0625f};
 constexpr sge::NormCoord StatsVertGap = .014f;
 constexpr float TextScaleForCost = .7f * UiScale(1.f);
 constexpr float TextScaleForAllStats = .5f * UiScale(1.f);
-constexpr Color StatsTextColor = TextColor;
+constexpr sge::Color StatsTextColor = TextColor;
 
 constexpr sge::NormDim StartPos{.075f, .145f};
 constexpr sge::NormDim FlowButtonDim = .5f * DefenderButtonDim;

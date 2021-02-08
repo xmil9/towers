@@ -8,7 +8,7 @@
 
 ///////////////////
 
-static constexpr Color DisabledTint{.8f, .8f, .8f};
+static constexpr sge::Color DisabledTint{.8f, .8f, .8f};
 
 
 ///////////////////
@@ -28,7 +28,7 @@ void Button::setup(const Sprite& background, Sprite&& content, IsEnabledFn isEna
 
 void Button::render(Renderer2& renderer, const sge::PixPos& offset)
 {
-   Color tint = m_isEnabledFn() ? NoColor : DisabledTint;
+   sge::Color tint = m_isEnabledFn() ? sge::NoColor : DisabledTint;
 
    renderer.renderSprite(m_background, offset + m_leftTop);
    renderer.renderSprite(m_content, offset + m_leftTop, tint);

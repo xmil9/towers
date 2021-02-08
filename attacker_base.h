@@ -5,6 +5,7 @@
 #pragma once
 #include "attacker_events.h"
 #include "attacker_look.h"
+#include "basic_types.h"
 #include "map_coord_sys.h"
 #include "path.h"
 #include "essentutils/observed.h"

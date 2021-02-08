@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "sge_mesh2.h"
+#include "sge_types.h"
 #include "glm/vec2.hpp"
 #include "opengl_util/gll_vao.h"
 #include <filesystem>
@@ -33,7 +33,7 @@ class SpriteRenderer
 
    bool setup();
    void render(gll::Program& shaders, const Sprite& sprite, sge::PixPos leftTop,
-               const Color& tint = NoColor) const;
+               const sge::Color& tint = sge::NoColor) const;
 
  private:
    bool setupData();

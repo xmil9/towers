@@ -4,6 +4,7 @@
 //
 #include "renderer3.h"
 #include "cube3_data.h"
+#include "sge_types.h"
 #include "essentutils/filesys.h"
 #include "glfw/glfw3.h"
 #include "glm/gtx/rotate_vector.hpp"
@@ -204,9 +205,9 @@ bool Renderer3::setupRendering()
 
 bool Renderer3::setupLighting()
 {
-   const Color lightColor{1.0f, 1.0f, 1.0f};
+   const sge::Color lightColor{1.0f, 1.0f, 1.0f};
    constexpr float ambientIntensity = 0.1f;
-   const Color ambient = lightColor * ambientIntensity;
+   const sge::Color ambient = lightColor * ambientIntensity;
 
    m_prog.use();
    gll::Uniform lightColorUf = m_prog.uniform("lightColor");
