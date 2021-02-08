@@ -3,11 +3,11 @@
 // MIT license
 //
 #pragma once
-#include "sprite.h"
 #include "sprite_renderer.h"
 #include "text_renderer.h"
 #include "sge_camera_2d.h"
 #include "sge_frustum2.h"
+#include "sge_sprite.h"
 #include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_program.h"
@@ -27,9 +27,9 @@ class Renderer2
 
    void clearScene() const;
    void beginRendering();
-   void renderSprite(const Sprite& sprite, sge::PixPos leftTop,
+   void renderSprite(const sge::Sprite& sprite, sge::PixPos leftTop,
                      const sge::Color& tint = sge::NoColor);
-   void renderSpriteCentered(const Sprite& sprite, sge::PixPos center,
+   void renderSpriteCentered(const sge::Sprite& sprite, sge::PixPos center,
                              const sge::Color& tint = sge::NoColor);
    void renderAnimation(Animation& anim, sge::PixPos leftTop, bool advanceFrame = true);
    void renderAnimationCentered(Animation& anim, sge::PixPos center,
@@ -53,13 +53,13 @@ class Renderer2
 };
 
 
-inline void Renderer2::renderSprite(const Sprite& sprite, sge::PixPos leftTop,
+inline void Renderer2::renderSprite(const sge::Sprite& sprite, sge::PixPos leftTop,
                                     const sge::Color& tint)
 {
    m_spriteRenderer->render(m_shaders, sprite, leftTop, tint);
 }
 
-inline void Renderer2::renderSpriteCentered(const Sprite& sprite, sge::PixPos center,
+inline void Renderer2::renderSpriteCentered(const sge::Sprite& sprite, sge::PixPos center,
                                             const sge::Color& tint)
 {
    renderSprite(sprite, center - .5f * sprite.size(), tint);

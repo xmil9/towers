@@ -18,11 +18,11 @@ static Animation NullAnimation;
 static Animation makeExplosion(sge::PixDim size)
 {
    const sge::SpriteForm form{size, sge::Angle_t{0.f}};
-   std::vector<Sprite> sprites{
-      Sprite{sge::SpriteLook{Explosion1TTag}, form},
-      Sprite{sge::SpriteLook{Explosion2TTag}, form},
-      Sprite{sge::SpriteLook{Explosion3TTag}, form},
-      Sprite{sge::SpriteLook{Explosion4TTag}, form},
+   std::vector<sge::Sprite> sprites{
+      sge::Sprite{sge::SpriteLook{Explosion1TTag}, form},
+      sge::Sprite{sge::SpriteLook{Explosion2TTag}, form},
+      sge::Sprite{sge::SpriteLook{Explosion3TTag}, form},
+      sge::Sprite{sge::SpriteLook{Explosion4TTag}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
 
@@ -33,9 +33,9 @@ static Animation makeExplosion(sge::PixDim size)
 static Animation makeFiringLaserTurret(sge::PixDim size)
 {
    const sge::SpriteForm form{size, sge::Angle_t{0.f}};
-   std::vector<Sprite> sprites{
-      Sprite{sge::SpriteLook{LtFiring1Texture}, form},
-      Sprite{sge::SpriteLook{LtFiring2Texture}, form},
+   std::vector<sge::Sprite> sprites{
+      sge::Sprite{sge::SpriteLook{LtFiring1Texture}, form},
+      sge::Sprite{sge::SpriteLook{LtFiring2Texture}, form},
    };
    std::vector<int> frames{10, 10};
 
@@ -46,9 +46,9 @@ static Animation makeFiringLaserTurret(sge::PixDim size)
 static Animation makeFiringSonicMortar(sge::PixDim size)
 {
    const sge::SpriteForm form{size, sge::Angle_t{0.f}};
-   std::vector<Sprite> sprites{
-      Sprite{sge::SpriteLook{SmFiring1Texture}, form},
-      Sprite{sge::SpriteLook{SmFiring2Texture}, form},
+   std::vector<sge::Sprite> sprites{
+      sge::Sprite{sge::SpriteLook{SmFiring1Texture}, form},
+      sge::Sprite{sge::SpriteLook{SmFiring2Texture}, form},
    };
    std::vector<int> frames{10, 10};
 

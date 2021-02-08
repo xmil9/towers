@@ -6,7 +6,7 @@
 #include "button.h"
 #include "coords.h"
 #include "label.h"
-#include "sprite.h"
+#include "sge_sprite.h"
 
 struct Commands;
 class MapCoordSys;
@@ -41,7 +41,7 @@ class Dashboard
    Commands* m_commands = nullptr;
    State* m_state = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;
-   Sprite m_background;
+   sge::Sprite m_background;
    Label m_creditsLabel;
    Label m_creditsValue;
    Button m_ltButton;

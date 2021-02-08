@@ -10,7 +10,8 @@
 
 ///////////////////
 
-Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat)
+Animation::Animation(std::vector<sge::Sprite> sprites, std::vector<int> frames,
+                     bool repeat)
 : m_sprites{std::move(sprites)}, m_frames{std::move(frames)}, m_repeat{repeat},
   m_totalFrames{std::accumulate(m_frames.begin(), m_frames.end(), 0)}
 {
@@ -51,7 +52,7 @@ Animation& Animation::rotate(sge::Angle_t rot)
 }
 
 
-std::optional<const Sprite*> Animation::currentFrame()
+std::optional<const sge::Sprite*> Animation::currentFrame()
 {
    if (m_totalFrames == 0 || hasFinished())
       return std::nullopt;
@@ -61,7 +62,7 @@ std::optional<const Sprite*> Animation::currentFrame()
 }
 
 
-std::optional<const Sprite*> Animation::nextFrame()
+std::optional<const sge::Sprite*> Animation::nextFrame()
 {
    if (m_totalFrames == 0 || (hasFinished() && !m_repeat))
       return std::nullopt;

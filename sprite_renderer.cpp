@@ -4,7 +4,7 @@
 //
 #include "sprite_renderer.h"
 #include "resources.h"
-#include "sprite.h"
+#include "sge_sprite.h"
 #include "opengl_util/gll_binding.h"
 #include "opengl_util/gll_data_format.h"
 #include "opengl_util/gll_program.h"
@@ -56,7 +56,7 @@ bool SpriteRenderer::setup()
 }
 
 
-void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite,
+void SpriteRenderer::render(gll::Program& shaders, const sge::Sprite& sprite,
                             sge::PixPos leftTop, const sge::Color& tint) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;

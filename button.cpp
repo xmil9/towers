@@ -13,8 +13,9 @@ static constexpr sge::Color DisabledTint{.8f, .8f, .8f};
 
 ///////////////////
 
-void Button::setup(const Sprite& background, Sprite&& content, IsEnabledFn isEnabledFn,
-                   const sge::PixPos& leftTop, const sge::PixDim& dim)
+void Button::setup(const sge::Sprite& background, sge::Sprite&& content,
+                   IsEnabledFn isEnabledFn, const sge::PixPos& leftTop,
+                   const sge::PixDim& dim)
 {
    assert(isEnabledFn);
 

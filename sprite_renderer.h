@@ -15,8 +15,10 @@ namespace gll
 class Program;
 }
 class Resources;
+namespace sge
+{
 class Sprite;
-
+}
 
 ///////////////////
 
@@ -32,7 +34,7 @@ class SpriteRenderer
    SpriteRenderer& operator=(SpriteRenderer&&) = default;
 
    bool setup();
-   void render(gll::Program& shaders, const Sprite& sprite, sge::PixPos leftTop,
+   void render(gll::Program& shaders, const sge::Sprite& sprite, sge::PixPos leftTop,
                const sge::Color& tint = sge::NoColor) const;
 
  private:

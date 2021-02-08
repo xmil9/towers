@@ -17,11 +17,11 @@
 #include "place_session.h"
 #include "renderer2.h"
 #include "resources.h"
+#include "state.h"
 #include "sge_input.h"
 #include "sge_main_window.h"
+#include "sge_sprite.h"
 #include "sge_types.h"
-#include "sprite.h"
-#include "state.h"
 #include "opengl_util/gfl_lib.h"
 #include <memory>
 #include <optional>
@@ -128,11 +128,11 @@ class Game2 : private Commands, private State
    std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
-   Sprite m_background;
+   sge::Sprite m_background;
    Dashboard m_dashboard;
    std::optional<PlaceSession> m_placeSess;
-   Sprite m_invalidFieldOverlay;
-   Sprite m_rangeOverlay;
+   sge::Sprite m_invalidFieldOverlay;
+   sge::Sprite m_rangeOverlay;
    std::vector<bool> m_defenderMatrix;
    int m_credits = 150;
    bool m_isPaused = true;

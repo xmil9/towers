@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "coords.h"
-#include "sprite.h"
+#include "sge_sprite.h"
 #include <optional>
 #include <vector>
 
@@ -17,7 +17,7 @@ class Animation
 {
  public:
    Animation() = default;
-   Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat);
+   Animation(std::vector<sge::Sprite> sprites, std::vector<int> frames, bool repeat);
 
    // Returns the size of the current frame's sprite.
    sge::PixDim size() const { return size(m_currFrame); }
@@ -29,8 +29,8 @@ class Animation
    Animation& rotate(sge::Angle_t rot);
 
    bool hasFinished() const { return m_currFrame >= m_totalFrames; }
-   std::optional<const Sprite*> currentFrame();
-   std::optional<const Sprite*> nextFrame();
+   std::optional<const sge::Sprite*> currentFrame();
+   std::optional<const sge::Sprite*> nextFrame();
 
  private:
    void populateMaxFrameIndices();
@@ -40,7 +40,7 @@ class Animation
    void reset();
 
  private:
-   std::vector<Sprite> m_sprites;
+   std::vector<sge::Sprite> m_sprites;
    // Number of frames for how long each sprite is displayed.
    std::vector<int> m_frames;
    // Repeat the animation after it finishes.

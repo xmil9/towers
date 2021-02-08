@@ -11,9 +11,9 @@
 #include "place_session.h"
 #include "renderer2.h"
 #include "sonic_mortar.h"
-#include "sprite.h"
 #include "state.h"
 #include "texture_tags.h"
+#include "sge_sprite.h"
 #include "essentutils/string_util.h"
 #include <memory>
 
@@ -157,12 +157,12 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
       if (m_state->isPaused())
       {
          m_commands->startAttack();
-         m_startButton.setContent(Sprite{sge::SpriteLook{PauseTTag}, contentForm});
+         m_startButton.setContent(sge::Sprite{sge::SpriteLook{PauseTTag}, contentForm});
       }
       else
       {
          m_commands->pauseAttack();
-         m_startButton.setContent(Sprite{sge::SpriteLook{StartTTag}, contentForm});
+         m_startButton.setContent(sge::Sprite{sge::SpriteLook{StartTTag}, contentForm});
       }
       return true;
    }
@@ -194,12 +194,12 @@ void Dashboard::setupCreditsElements(const Renderer2& renderer)
 void Dashboard::setupDefenderElements()
 {
    const sge::PixDim buttonPixDim = toPix(DefenderButtonDim);
-   Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag}, sge::SpriteForm{buttonPixDim}};
+   sge::Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag}, sge::SpriteForm{buttonPixDim}};
    sge::SpriteForm contentForm{buttonPixDim};
 
    const sge::PixPos ltPixPos = toPix(LaserTurretPos);
    m_ltButton.setup(
-      buttonBkg, Sprite{sge::SpriteLook{LtTexture}, contentForm},
+      buttonBkg, sge::Sprite{sge::SpriteLook{LtTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(LtModel); }, ltPixPos, buttonPixDim);
 
    const sge::PixVec statsOffset{0.f, buttonPixDim.y + toVertPix(StatsVertGap)};
@@ -209,7 +209,7 @@ void Dashboard::setupDefenderElements()
 
    const sge::PixPos smPixPos = toPix(SonarMortarPos);
    m_smButton.setup(
-      buttonBkg, Sprite{sge::SpriteLook{SmTexture}, contentForm},
+      buttonBkg, sge::Sprite{sge::SpriteLook{SmTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(SmModel); }, smPixPos, buttonPixDim);
 
    const sge::PixPos smStatsPixPos = smPixPos + statsOffset;
@@ -221,11 +221,12 @@ void Dashboard::setupDefenderElements()
 void Dashboard::setupGameflowElements()
 {
    const sge::PixDim buttonPixDim = toPix(FlowButtonDim);
-   Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag}, sge::SpriteForm{buttonPixDim}};
+   sge::Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag},
+                         sge::SpriteForm{buttonPixDim}};
    sge::SpriteForm contentForm{buttonPixDim};
 
    const sge::PixPos startPixPos = toPix(StartPos);
    m_startButton.setup(
-      buttonBkg, Sprite{sge::SpriteLook{StartTTag}, contentForm},
+      buttonBkg, sge::Sprite{sge::SpriteLook{StartTTag}, contentForm},
       [this]() { return true; }, startPixPos, buttonPixDim);
 }

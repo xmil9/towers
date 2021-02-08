@@ -246,7 +246,7 @@
     <ClInclude Include="..\..\renderer3.h" />
     <ClInclude Include="..\..\resources.h" />
     <ClInclude Include="..\..\renderer2.h" />
-    <ClInclude Include="..\..\sprite.h" />
+    <ClInclude Include="..\..\sge_sprite.h" />
     <ClInclude Include="..\..\sprite_renderer.h" />
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />

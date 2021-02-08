@@ -165,9 +165,6 @@
     <ClInclude Include="..\..\renderer2.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sprite.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\animation.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
@@ -340,6 +337,9 @@
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sge_sprite_form.h">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_sprite.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
   </ItemGroup>
