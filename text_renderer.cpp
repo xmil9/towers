@@ -3,8 +3,8 @@
 // MIT license
 //
 #include "text_renderer.h"
-#include "mesh2.h"
 #include "resources.h"
+#include "sge_mesh2.h"
 #include "ft2build.h"
 #include "freetype/freetype.h"
 #include "opengl_util/gll_binding.h"
@@ -122,16 +122,16 @@ void TextRenderer::render(gll::Program& shaders, const std::string& text,
       const float w = ch.size.x * scale;
       const float h = ch.size.y * scale;
 
-      const std::array<Mesh2::Point, NumCharVertices> positions{
-         Mesh2::Point{xpos, ypos - h}, Mesh2::Point{xpos, ypos},
-         Mesh2::Point{xpos + w, ypos}, Mesh2::Point{xpos, ypos - h},
-         Mesh2::Point{xpos + w, ypos}, Mesh2::Point{xpos + w, ypos - h}};
+      const std::array<sge::Mesh2::Point, NumCharVertices> positions{
+         sge::Mesh2::Point{xpos, ypos - h}, sge::Mesh2::Point{xpos, ypos},
+         sge::Mesh2::Point{xpos + w, ypos}, sge::Mesh2::Point{xpos, ypos - h},
+         sge::Mesh2::Point{xpos + w, ypos}, sge::Mesh2::Point{xpos + w, ypos - h}};
 
       ch.tex.bind();
 
       m_posVbo.bind(GL_ARRAY_BUFFER);
-      m_posVbo.setSubData(GL_ARRAY_BUFFER, 0, sizeof(Mesh2::Point) * positions.size(),
-                          positions.data());
+      m_posVbo.setSubData(GL_ARRAY_BUFFER, 0,
+                          sizeof(sge::Mesh2::Point) * positions.size(), positions.data());
       m_posVbo.unbind(GL_ARRAY_BUFFER);
 
       glDrawArrays(GL_TRIANGLES, 0, NumCharVertices);
@@ -215,21 +215,23 @@ bool TextRenderer::setupBuffers()
    constexpr GLuint TexCoordsAttribIdx = 1;
 
    // Same data format for position and texture coordinates.
-   const gll::DataFormat VertexFormat{2, GL_FLOAT, GL_FALSE, sizeof(Mesh2::Point),
+   const gll::DataFormat VertexFormat{2, GL_FLOAT, GL_FALSE, sizeof(sge::Mesh2::Point),
                                       nullptr};
 
    m_posVbo.create();
-   bindArrayVbo(m_posVbo, PosAttribIdx, nullptr, NumCharVertices * sizeof(Mesh2::Point),
-                VertexFormat, GL_DYNAMIC_DRAW, gll::Unbind::Immediately);
+   bindArrayVbo(m_posVbo, PosAttribIdx, nullptr,
+                NumCharVertices * sizeof(sge::Mesh2::Point), VertexFormat,
+                GL_DYNAMIC_DRAW, gll::Unbind::Immediately);
 
    // Texture coordinates are the same for all chars and never change.
-   static const std::array<Mesh2::Point, NumCharVertices> CharTextureCoords{
-      Mesh2::Point{0.f, 0.f}, Mesh2::Point{0.f, 1.f}, Mesh2::Point{1.f, 1.f},
-      Mesh2::Point{0.f, 0.f}, Mesh2::Point{1.f, 1.f}, Mesh2::Point{1.f, 0.f}};
+   static const std::array<sge::Mesh2::Point, NumCharVertices> CharTextureCoords{
+      sge::Mesh2::Point{0.f, 0.f}, sge::Mesh2::Point{0.f, 1.f},
+      sge::Mesh2::Point{1.f, 1.f}, sge::Mesh2::Point{0.f, 0.f},
+      sge::Mesh2::Point{1.f, 1.f}, sge::Mesh2::Point{1.f, 0.f}};
    m_texCoordVbo.create();
    bindArrayVbo(m_texCoordVbo, TexCoordsAttribIdx, CharTextureCoords.data(),
-                NumCharVertices * sizeof(Mesh2::Point), VertexFormat, GL_DYNAMIC_DRAW,
-                gll::Unbind::Immediately);
+                NumCharVertices * sizeof(sge::Mesh2::Point), VertexFormat,
+                GL_DYNAMIC_DRAW, gll::Unbind::Immediately);
 
    return true;
 }

@@ -219,10 +219,10 @@
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\sge_main_window.h" />
-    <ClInclude Include="..\..\camera_2d.h" />
+    <ClInclude Include="..\..\sge_camera_2d.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />
-    <ClInclude Include="..\..\frustum2.h" />
+    <ClInclude Include="..\..\sge_frustum2.h" />
     <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\game3.h" />
     <ClInclude Include="..\..\sge_input_controller.h" />
@@ -240,7 +240,7 @@
     <ClInclude Include="..\..\sonic_mortar.h" />
     <ClInclude Include="..\..\sprite_form.h" />
     <ClInclude Include="..\..\sprite_look.h" />
-    <ClInclude Include="..\..\mesh2.h" />
+    <ClInclude Include="..\..\sge_mesh2.h" />
     <ClInclude Include="..\..\sge_png_texture.h" />
     <ClInclude Include="..\..\sge_point2.h" />
     <ClInclude Include="..\..\renderer3.h" />

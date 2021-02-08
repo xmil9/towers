@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "basic_types.h"
-#include "mesh2.h"
+#include "sge_mesh2.h"
 #include "glm/vec2.hpp"
 #include "opengl_util/gll_vao.h"
 #include <filesystem>
@@ -37,7 +37,7 @@ class SpriteRenderer
 
  private:
    bool setupData();
-   void makeVao(const Mesh2& mesh);
+   void makeVao(const sge::Mesh2& mesh);
 
  private:
    Resources* m_resources = nullptr;

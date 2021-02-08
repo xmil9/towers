@@ -9,6 +9,10 @@
 #include <string>
 
 
+namespace sge
+{
+///////////////////
+
 // Represents the section of view/camera space that is visible.
 // For a 2D frustum this is an orthographic (no perspective) view.
 class Frustum2
@@ -36,3 +40,5 @@ inline void Frustum2::setSize(int width, int height)
    m_width = static_cast<float>(width);
    m_height = static_cast<float>(height);
 }
+
+} // namespace sge

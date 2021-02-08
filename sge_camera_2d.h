@@ -9,6 +9,10 @@
 #include "glm/vec3.hpp"
 
 
+namespace sge
+{
+///////////////////
+
 class Camera2d
 {
  public:
@@ -37,3 +41,5 @@ inline void Camera2d::updatePosition(const glm::vec3& offset)
 {
    m_eye += offset;
 }
+
+} // namespace sge

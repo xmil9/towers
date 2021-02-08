@@ -4,11 +4,11 @@
 //
 #pragma once
 #include "basic_types.h"
-#include "camera_2d.h"
-#include "frustum2.h"
 #include "sprite.h"
 #include "sprite_renderer.h"
 #include "text_renderer.h"
+#include "sge_camera_2d.h"
+#include "sge_frustum2.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_program.h"
 #include "opengl_util/gll_uniform.h"
@@ -45,8 +45,8 @@ class Renderer2
 
  private:
    Resources* m_resources = nullptr;
-   Camera2d m_cam;
-   Frustum2 m_frustum;
+   sge::Camera2d m_cam;
+   sge::Frustum2 m_frustum;
    gll::Program m_shaders;
    std::unique_ptr<SpriteRenderer> m_spriteRenderer;
    std::unique_ptr<TextRenderer> m_textRenderer;

@@ -85,15 +85,15 @@ bool SpriteRenderer::setupData()
 {
    // Coord system for vertex coordinates is:
    // (0, 0) - left-top, (1, 1) - right-bottom
-   const std::vector<Mesh2::Point> positions = {
+   const std::vector<sge::Mesh2::Point> positions = {
       {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
    // Triangle vertices are ordered ccw.
-   const std::vector<Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
+   const std::vector<sge::Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
    // Coord system for texture coordinates is:
    // (0, 0) - left-bottom, (1, 1) - right-top
-   const std::vector<Mesh2::Point> texCoords = positions;
+   const std::vector<sge::Mesh2::Point> texCoords = positions;
 
-   Mesh2 mesh;
+   sge::Mesh2 mesh;
    mesh.setPositions(positions);
    mesh.setIndices(indices);
    mesh.setTextureCoords(texCoords);
@@ -105,7 +105,7 @@ bool SpriteRenderer::setupData()
 }
 
 
-void SpriteRenderer::makeVao(const Mesh2& mesh)
+void SpriteRenderer::makeVao(const sge::Mesh2& mesh)
 {
    m_vao.create();
    m_vao.bind();

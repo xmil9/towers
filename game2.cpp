@@ -8,7 +8,6 @@
 #include "attacker_models.h"
 #include "defender_models.h"
 #include "map_data.h"
-#include "mesh2.h"
 #include "texture_tags.h"
 // External
 #include "opengl_util/gll_debug.h"

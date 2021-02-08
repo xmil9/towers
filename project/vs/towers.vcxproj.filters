@@ -147,14 +147,8 @@
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Engine\Stb</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\camera_2d.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\camera_fps.h">
       <Filter>Engine\Rendering\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\frustum2.h">
-      <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\frustum3.h">
       <Filter>Engine\Rendering\3d</Filter>
@@ -178,9 +172,6 @@
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sprite_form.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\mesh2.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\animation.h">
@@ -341,6 +332,15 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_main_window.h">
       <Filter>Engine\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_mesh2.h">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_frustum2.h">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_camera_2d.h">
+      <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
