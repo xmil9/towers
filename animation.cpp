@@ -19,7 +19,7 @@ Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool 
 }
 
 
-Animation& Animation::setRotation(Angle_t rot)
+Animation& Animation::setRotation(sge::Angle_t rot)
 {
    for (auto& sp : m_sprites)
       sp.setRotation(rot);
@@ -43,7 +43,7 @@ Animation& Animation::scale(float factor)
 }
 
 
-Animation& Animation::rotate(Angle_t rot)
+Animation& Animation::rotate(sge::Angle_t rot)
 {
    for (auto& sp : m_sprites)
       sp.rotate(rot);

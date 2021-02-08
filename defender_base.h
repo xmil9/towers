@@ -185,7 +185,7 @@ template <typename Derived> void DefenderBase<Derived>::calcRotation()
    if (!targetDir)
       return;
 
-   const Angle_t rot{-glm::orientedAngle(glm::normalize(*targetDir), Up)};
+   const sge::Angle_t rot{-glm::orientedAngle(glm::normalize(*targetDir), Up)};
    m_look.setRotation(rot);
 }
 

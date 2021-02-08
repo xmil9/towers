@@ -22,11 +22,11 @@ class Animation
    // Returns the size of the current frame's sprite.
    sge::PixDim size() const { return size(m_currFrame); }
 
-   Animation& setRotation(Angle_t rot);
+   Animation& setRotation(sge::Angle_t rot);
    // Sets size of all sprites in the animation.
    Animation& setSize(sge::PixDim size);
    Animation& scale(float factor);
-   Animation& rotate(Angle_t rot);
+   Animation& rotate(sge::Angle_t rot);
 
    bool hasFinished() const { return m_currFrame >= m_totalFrames; }
    std::optional<const Sprite*> currentFrame();

@@ -218,7 +218,8 @@ bool Game2::setupRenderer()
    constexpr sge::NormVec hpOffset{-.25f, -.4f};
    const sge::PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
    m_hpRenderer = std::make_unique<HpRenderer>(
-      Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpStatusPixDim}}, hpPixOffset);
+      Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
+      hpPixOffset);
 
    return m_renderer.setup(&m_resources, WndWidth, WndHeight);
 }
@@ -257,18 +258,18 @@ bool Game2::setupAttackers()
 
    m_attackFactory->registerModel(
       AatModel,
-      AttackerLook{Sprite{SpriteLook{AatTexture},
-                          SpriteForm{m_resources.getTextureSize(AatTexture)}},
-                   Sprite{SpriteLook{AatHitTexture},
-                          SpriteForm{m_resources.getTextureSize(AatHitTexture)}},
+      AttackerLook{Sprite{sge::SpriteLook{AatTexture},
+                          sge::SpriteForm{m_resources.getTextureSize(AatTexture)}},
+                   Sprite{sge::SpriteLook{AatHitTexture},
+                          sge::SpriteForm{m_resources.getTextureSize(AatHitTexture)}},
                    m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
       AssaultTank::defaultAttributes());
    m_attackFactory->registerModel(
       MhcModel,
-      AttackerLook{Sprite{SpriteLook{MhcTexture},
-                          SpriteForm{m_resources.getTextureSize(MhcTexture)}},
-                   Sprite{SpriteLook{MhcHitTexture},
-                          SpriteForm{m_resources.getTextureSize(MhcHitTexture)}},
+      AttackerLook{Sprite{sge::SpriteLook{MhcTexture},
+                          sge::SpriteForm{m_resources.getTextureSize(MhcTexture)}},
+                   Sprite{sge::SpriteLook{MhcHitTexture},
+                          sge::SpriteForm{m_resources.getTextureSize(MhcHitTexture)}},
                    m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
       MobileCannon::defaultAttributes());
 
@@ -297,16 +298,16 @@ bool Game2::setupDefenders()
 
    m_defenseFactory->registerModel(
       LtModel,
-      DefenderLook{
-         Sprite{SpriteLook{LtTexture}, SpriteForm{m_resources.getTextureSize(LtTexture)}},
-         m_resources.getAnimation(LtFiringAnimation)},
+      DefenderLook{Sprite{sge::SpriteLook{LtTexture},
+                          sge::SpriteForm{m_resources.getTextureSize(LtTexture)}},
+                   m_resources.getAnimation(LtFiringAnimation)},
       LaserTurret::defaultAttributes());
 
    m_defenseFactory->registerModel(
       SmModel,
-      DefenderLook{
-         Sprite{SpriteLook{SmTexture}, SpriteForm{m_resources.getTextureSize(SmTexture)}},
-         m_resources.getAnimation(SmFiringAnimation)},
+      DefenderLook{Sprite{sge::SpriteLook{SmTexture},
+                          sge::SpriteForm{m_resources.getTextureSize(SmTexture)}},
+                   m_resources.getAnimation(SmFiringAnimation)},
       SonicMortar::defaultAttributes());
 
    resetDefenderPlacements();
@@ -316,11 +317,13 @@ bool Game2::setupDefenders()
 
 bool Game2::setupBackground()
 {
-   m_background = Sprite{SpriteLook{Map1TTag}, SpriteForm{{MapWidth, MapHeight}}};
+   m_background =
+      Sprite{sge::SpriteLook{Map1TTag}, sge::SpriteForm{{MapWidth, MapHeight}}};
 
    const sge::PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
-   m_invalidFieldOverlay = Sprite{SpriteLook{InvalidFieldTTag}, SpriteForm{fieldPixDim}};
-   m_rangeOverlay = Sprite{SpriteLook{RangeTTag}, SpriteForm{fieldPixDim}};
+   m_invalidFieldOverlay =
+      Sprite{sge::SpriteLook{InvalidFieldTTag}, sge::SpriteForm{fieldPixDim}};
+   m_rangeOverlay = Sprite{sge::SpriteLook{RangeTTag}, sge::SpriteForm{fieldPixDim}};
 
    return true;
 }
@@ -719,7 +722,7 @@ void Game2::startPlaceSession(std::string_view model, std::string_view indicator
 {
    PlaceSession sess;
    sess.model = model;
-   sess.indicator = Sprite{SpriteLook{indicatorTex}, SpriteForm{indicatorDim}};
+   sess.indicator = Sprite{sge::SpriteLook{indicatorTex}, sge::SpriteForm{indicatorDim}};
    sess.range = m_defenseFactory->defaultAttributes(sess.model).range();
 
    m_placeSess = std::move(sess);

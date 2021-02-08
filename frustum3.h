@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/mat4x4.hpp"
 #include <string>
@@ -25,7 +25,7 @@ class Frustum3
 
  private:
    // The horizontal field-of-view angle. Defines how wide the frustum is.
-   Angle_t m_horzFov = Angle_t::fromDegrees(45.0f);
+   sge::Angle_t m_horzFov = sge::Angle_t::fromDegrees(45.0f);
    // Aspect ratio of horizontal to vertical size of the frustum.
    float m_aspect = 1.0f;
    // Coordinates (along the central axis) of the near and far planes that cut off the

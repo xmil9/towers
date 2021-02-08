@@ -5,14 +5,10 @@
 #pragma once
 #include "map_coords.h"
 #include "sge_coords.h"
-#include "essentutils/angle.h"
 #include "essentutils/fputil.h"
 
 
 ///////////////////
-
-using Angle_t = esl::Angle<float>;
-
 
 // Equality for any values represented by GLM floating point vectors.
 inline bool isEqual(glm::vec2 a, glm::vec2 b)

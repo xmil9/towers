@@ -181,7 +181,7 @@
     <ClCompile Include="..\..\renderer2.cpp" />
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
-    <ClCompile Include="..\..\sprite_form.cpp" />
+    <ClCompile Include="..\..\sge_sprite_form.cpp" />
     <ClCompile Include="..\..\sprite_renderer.cpp" />
     <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
@@ -238,8 +238,8 @@
     <ClInclude Include="..\..\sge_rect.h" />
     <ClInclude Include="..\..\sge_types.h" />
     <ClInclude Include="..\..\sonic_mortar.h" />
-    <ClInclude Include="..\..\sprite_form.h" />
-    <ClInclude Include="..\..\sprite_look.h" />
+    <ClInclude Include="..\..\sge_sprite_form.h" />
+    <ClInclude Include="..\..\sge_sprite_look.h" />
     <ClInclude Include="..\..\sge_mesh2.h" />
     <ClInclude Include="..\..\sge_png_texture.h" />
     <ClInclude Include="..\..\sge_point2.h" />

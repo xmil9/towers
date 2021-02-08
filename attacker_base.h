@@ -194,7 +194,7 @@ template <typename Derived> void AttackerBase<Derived>::setSize(MapVec size)
 
 template <typename Derived> void AttackerBase<Derived>::calcRotation()
 {
-   const Angle_t rot{glm::angle(normedDirection(), Up)};
+   const sge::Angle_t rot{glm::angle(normedDirection(), Up)};
    m_look.setRotation(rot);
 }
 

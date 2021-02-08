@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "sprite_form.h"
-#include "sprite_look.h"
+#include "sge_sprite_form.h"
+#include "sge_sprite_look.h"
 
 
 ///////////////////
@@ -13,33 +13,33 @@ class Sprite
 {
  public:
    Sprite() = default;
-   explicit Sprite(SpriteLook look);
-   Sprite(SpriteLook look, const SpriteForm& form);
+   explicit Sprite(sge::SpriteLook look);
+   Sprite(sge::SpriteLook look, const sge::SpriteForm& form);
 
    sge::PixDim size() const { return m_form.size(); }
-   Angle_t rotation() const { return m_form.rotation(); }
+   sge::Angle_t rotation() const { return m_form.rotation(); }
    sge::PixPos rotationCenter() const { return m_form.rotationCenter(); }
    bool hasTexture() const { return m_look.hasTexture(); }
    std::string texture() const { return m_look.texture(); }
    sge::Color color() const { return m_look.color(); }
 
    Sprite& setSize(sge::PixDim size);
-   Sprite& setRotation(Angle_t rot);
-   Sprite& setForm(const SpriteForm& form);
+   Sprite& setRotation(sge::Angle_t rot);
+   Sprite& setForm(const sge::SpriteForm& form);
    Sprite& scale(float factor);
-   Sprite& rotate(Angle_t rot);
+   Sprite& rotate(sge::Angle_t rot);
 
  private:
-   SpriteLook m_look;
-   SpriteForm m_form;
+   sge::SpriteLook m_look;
+   sge::SpriteForm m_form;
 };
 
 
-inline Sprite::Sprite(SpriteLook look) : Sprite{look, SpriteForm{}}
+inline Sprite::Sprite(sge::SpriteLook look) : Sprite{look, sge::SpriteForm{}}
 {
 }
 
-inline Sprite::Sprite(SpriteLook look, const SpriteForm& form)
+inline Sprite::Sprite(sge::SpriteLook look, const sge::SpriteForm& form)
 : m_look{std::move(look)}, m_form{form}
 {
 }
@@ -50,13 +50,13 @@ inline Sprite& Sprite::setSize(sge::PixDim size)
    return *this;
 }
 
-inline Sprite& Sprite::setRotation(Angle_t rot)
+inline Sprite& Sprite::setRotation(sge::Angle_t rot)
 {
    m_form.setRotation(rot);
    return *this;
 }
 
-inline Sprite& Sprite::setForm(const SpriteForm& form)
+inline Sprite& Sprite::setForm(const sge::SpriteForm& form)
 {
    m_form = form;
    return *this;
@@ -68,7 +68,7 @@ inline Sprite& Sprite::scale(float factor)
    return *this;
 }
 
-inline Sprite& Sprite::rotate(Angle_t rot)
+inline Sprite& Sprite::rotate(sge::Angle_t rot)
 {
    m_form.rotate(rot);
    return *this;

@@ -2,10 +2,14 @@
 // Dec-2020, Michael Lindner
 // MIT license
 //
-#include "sprite_form.h"
+#include "sge_sprite_form.h"
 
 
-void SpriteForm::setSize(sge::PixDim size)
+namespace sge
+{
+///////////////////
+
+void SpriteForm::setSize(PixDim size)
 {
    const bool isDegenerate = m_size.x == 0.f || m_size.y == 0.f;
    const glm::vec2 rotCenterRatio =
@@ -13,3 +17,5 @@ void SpriteForm::setSize(sge::PixDim size)
    m_size = size;
    m_rotCenter = m_size * rotCenterRatio;
 }
+
+} // namespace sge

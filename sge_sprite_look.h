@@ -9,13 +9,17 @@
 #include <string>
 
 
+namespace sge
+{
+///////////////////
+
 class SpriteLook
 {
  public:
    SpriteLook() = default;
    explicit SpriteLook(std::string_view texTag);
-   explicit SpriteLook(const sge::Color& color);
-   SpriteLook(std::string_view texTag, const sge::Color& color);
+   explicit SpriteLook(const Color& color);
+   SpriteLook(std::string_view texTag, const Color& color);
    ~SpriteLook() = default;
    SpriteLook(const SpriteLook&) = default;
    SpriteLook(SpriteLook&&) = default;
@@ -25,24 +29,24 @@ class SpriteLook
 
    bool hasTexture() const { return m_textureTag.has_value(); }
    std::string texture() const;
-   bool hasColor() const { return m_color != sge::White; }
-   sge::Color color() const { return m_color; }
+   bool hasColor() const { return m_color != White; }
+   Color color() const { return m_color; }
 
  private:
    std::optional<std::string> m_textureTag;
-   sge::Color m_color;
+   Color m_color;
 };
 
 
-inline SpriteLook::SpriteLook(std::string_view texTag) : SpriteLook{texTag, sge::White}
+inline SpriteLook::SpriteLook(std::string_view texTag) : SpriteLook{texTag, White}
 {
 }
 
-inline SpriteLook::SpriteLook(const sge::Color& color) : m_color{color}
+inline SpriteLook::SpriteLook(const Color& color) : m_color{color}
 {
 }
 
-inline SpriteLook::SpriteLook(std::string_view texTag, const sge::Color& color)
+inline SpriteLook::SpriteLook(std::string_view texTag, const Color& color)
 : m_textureTag{texTag}, m_color{color}
 {
 }
@@ -53,3 +57,5 @@ inline std::string SpriteLook::texture() const
       return *m_textureTag;
    return "";
 }
+
+} // namespace sge

@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "basic_types.h"
-#include "coords.h"
+#include "sge_coords.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/matrix.hpp"
 #include "glm/vec2.hpp"
@@ -31,8 +31,8 @@ class CameraFps
  private:
    // Current yaw and pitch values of camera. The camera's direction is calculated from
    // the yaw and pitch values.
-   Angle_t m_yaw = Angle_t::fromDegrees(-90.0f);
-   Angle_t m_pitch = Angle_t::fromDegrees(0.0f);
+   sge::Angle_t m_yaw = sge::Angle_t::fromDegrees(-90.0f);
+   sge::Angle_t m_pitch = sge::Angle_t::fromDegrees(0.0f);
    // Location of camera in world space.
    glm::vec3 m_eye = glm::vec3(0.0f, 0.0f, 3.0f);
    // Normalized direction that camera is looking at.
