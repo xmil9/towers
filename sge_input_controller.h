@@ -6,6 +6,9 @@
 #include "opengl_util/gfl_types.h"
 
 
+namespace sge
+{
+
 struct InputController
 {
    virtual void onMouseMoved(double xpos, double ypos) = 0;
@@ -14,3 +17,5 @@ struct InputController
                                      double xpos, double ypos) = 0;
    virtual void onKeyChanged(gfl::Key key, int scancode, int action, int mods) = 0;
 };
+
+} // namespace sge

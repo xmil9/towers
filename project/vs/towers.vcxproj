@@ -175,7 +175,7 @@
     <ClCompile Include="..\..\frustum3.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\game3.cpp" />
-    <ClCompile Include="..\..\input.cpp" />
+    <ClCompile Include="..\..\sge_input.cpp" />
     <ClCompile Include="..\..\path.cpp" />
     <ClCompile Include="..\..\sge_png_texture.cpp" />
     <ClCompile Include="..\..\renderer2.cpp" />
@@ -225,11 +225,11 @@
     <ClInclude Include="..\..\frustum2.h" />
     <ClInclude Include="..\..\game2.h" />
     <ClInclude Include="..\..\game3.h" />
-    <ClInclude Include="..\..\input_controller.h" />
+    <ClInclude Include="..\..\sge_input_controller.h" />
     <ClInclude Include="..\..\sge_lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
     <ClInclude Include="..\..\frustum3.h" />
-    <ClInclude Include="..\..\input.h" />
+    <ClInclude Include="..\..\sge_input.h" />
     <ClInclude Include="..\..\mobile_cannon.h" />
     <ClInclude Include="..\..\sge_norm_coords.h" />
     <ClInclude Include="..\..\path.h" />

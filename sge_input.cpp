@@ -2,10 +2,13 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "input.h"
+#include "sge_input.h"
 #include "opengl_util/gfl_window.h"
 #include <array>
 
+
+namespace sge
+{
 
 void Input::process(gfl::Window& wnd, float frameLengthSecs)
 {
@@ -89,3 +92,5 @@ void Input::notifyKeyPolled(gfl::Key key, float frameLengthSecs)
    data.frameLengthSecs = frameLengthSecs;
    notify(*this, KeyPolledEvent, data);
 }
+
+} // namespace sge

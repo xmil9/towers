@@ -79,10 +79,10 @@ bool Game3::setupUi()
 bool Game3::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-   m_mainWnd.addObserver(
-      [this](MainWindow& src, std::string_view event, const esl::ObservedEventData& data) {
-         onMainWindowChanged(src, event, data);
-      });
+   m_mainWnd.addObserver([this](MainWindow& src, std::string_view event,
+                                const esl::ObservedEventData& data) {
+      onMainWindowChanged(src, event, data);
+   });
 
    if (m_mainWnd.create(800, 800, "towers") != GLFW_NO_ERROR)
       return false;
@@ -94,10 +94,10 @@ bool Game3::setupMainWindow()
 
 bool Game3::setupInput()
 {
-   m_input.addObserver(
-      [this](Input& /*src*/, std::string_view event, const esl::ObservedEventData& data) {
-         onInputChanged(m_input, event, data);
-      });
+   m_input.addObserver([this](sge::Input& /*src*/, std::string_view event,
+                              const esl::ObservedEventData& data) {
+      onInputChanged(m_input, event, data);
+   });
    return true;
 }
 
@@ -115,8 +115,7 @@ void Game3::onMainWindowChanged(MainWindow& /*src*/, std::string_view event,
 {
    if (event == WindowResizedEvent)
    {
-      const WindowResizedData& resizeData =
-         static_cast<const WindowResizedData&>(data);
+      const WindowResizedData& resizeData = static_cast<const WindowResizedData&>(data);
       onMainWindowResize(resizeData.newSize);
    }
 }
@@ -129,22 +128,22 @@ void Game3::onMainWindowResize(const glm::ivec2& newSize)
 }
 
 
-void Game3::onInputChanged(Input& /*src*/, std::string_view event,
+void Game3::onInputChanged(sge::Input& /*src*/, std::string_view event,
                            const esl::ObservedEventData& data)
 {
-   if (event == MouseMovedEvent)
+   if (event == sge::MouseMovedEvent)
    {
-      const auto movedData = static_cast<const MouseMovedData&>(data);
+      const auto movedData = static_cast<const sge::MouseMovedData&>(data);
       onMouseMoved(movedData.delta);
    }
-   else if (event == MouseScrolledEvent)
+   else if (event == sge::MouseScrolledEvent)
    {
-      const auto scrolledData = static_cast<const MouseScrolledData&>(data);
+      const auto scrolledData = static_cast<const sge::MouseScrolledData&>(data);
       onMouseScrolled(scrolledData.delta);
    }
-   else if (event == KeyPolledEvent)
+   else if (event == sge::KeyPolledEvent)
    {
-      const auto polledData = static_cast<const KeyPolledData&>(data);
+      const auto polledData = static_cast<const sge::KeyPolledData&>(data);
       onKeyPolled(polledData.key, polledData.frameLengthSecs);
    }
 }

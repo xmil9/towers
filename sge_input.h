@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "input_controller.h"
+#include "sge_input_controller.h"
 #include "essentutils/observed.h"
 #include "glm/vec2.hpp"
 
@@ -13,6 +13,8 @@ class Window;
 }
 
 
+namespace sge
+{
 ///////////////////
 
 class Input : public InputController, public esl::Observed<Input>
@@ -89,3 +91,5 @@ struct KeyPolledData : public esl::ObservedEventData
    // Frame length in seconds.
    float frameLengthSecs = 0.f;
 };
+
+} // namespace sge

@@ -135,10 +135,10 @@ bool Game2::setupMainWindow()
 
 bool Game2::setupInput()
 {
-   m_input.addObserver(
-      [this](Input& /*src*/, std::string_view event, const esl::ObservedEventData& data) {
-         onInputChanged(m_input, event, data);
-      });
+   m_input.addObserver([this](sge::Input& /*src*/, std::string_view event,
+                              const esl::ObservedEventData& data) {
+      onInputChanged(m_input, event, data);
+   });
    return true;
 }
 
@@ -558,27 +558,27 @@ void Game2::onMainWindowResize(const glm::ivec2& newSize)
 }
 
 
-void Game2::onInputChanged(Input& /*src*/, std::string_view event,
+void Game2::onInputChanged(sge::Input& /*src*/, std::string_view event,
                            const esl::ObservedEventData& data)
 {
-   if (event == MouseMovedEvent)
+   if (event == sge::MouseMovedEvent)
    {
-      const auto& movedData = static_cast<const MouseMovedData&>(data);
+      const auto& movedData = static_cast<const sge::MouseMovedData&>(data);
       onMouseMoved(movedData.delta);
    }
-   else if (event == MouseScrolledEvent)
+   else if (event == sge::MouseScrolledEvent)
    {
-      const auto& scrolledData = static_cast<const MouseScrolledData&>(data);
+      const auto& scrolledData = static_cast<const sge::MouseScrolledData&>(data);
       onMouseScrolled(scrolledData.delta);
    }
-   else if (event == MouseButtonChangedEvent)
+   else if (event == sge::MouseButtonChangedEvent)
    {
-      const auto& buttonData = static_cast<const MouseButtonChangedData&>(data);
+      const auto& buttonData = static_cast<const sge::MouseButtonChangedData&>(data);
       onMouseButtonChanged(buttonData.button, buttonData.action, buttonData.pos);
    }
-   else if (event == KeyPolledEvent)
+   else if (event == sge::KeyPolledEvent)
    {
-      const auto& polledData = static_cast<const KeyPolledData&>(data);
+      const auto& polledData = static_cast<const sge::KeyPolledData&>(data);
       onKeyPolled(polledData.key, polledData.frameLengthSecs);
    }
 }

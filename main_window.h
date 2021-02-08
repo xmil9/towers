@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "coords.h"
-#include "input_controller.h"
+#include "sge_input_controller.h"
 #include "essentutils/observed.h"
 #include "glm/vec2.hpp"
 #include "opengl_util/gfl_window.h"
@@ -13,7 +13,7 @@
 class MainWindow : public gfl::Window, public esl::Observed<MainWindow>
 {
  public:
-   void setInputController(InputController* controller);
+   void setInputController(sge::InputController* controller);
    sge::PixPos mousePosition() const;
 
  protected:
@@ -25,7 +25,7 @@ class MainWindow : public gfl::Window, public esl::Observed<MainWindow>
                                    double xpos, double ypos) override;
 
  private:
-   InputController* m_inputController = nullptr;
+   sge::InputController* m_inputController = nullptr;
    glm::ivec2 m_wndSize{0, 0};
 };
 

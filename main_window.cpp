@@ -7,7 +7,7 @@
 #include <limits>
 
 
-void MainWindow::setInputController(InputController* controller)
+void MainWindow::setInputController(sge::InputController* controller)
 {
    assert(controller);
    m_inputController = controller;

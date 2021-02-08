@@ -8,9 +8,6 @@
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Engine\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\input.cpp">
-      <Filter>Engine\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\camera_fps.cpp">
       <Filter>Engine\Rendering\3d</Filter>
     </ClCompile>
@@ -83,6 +80,9 @@
     <ClCompile Include="..\..\sge_png_texture.cpp">
       <Filter>Engine\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sge_input.cpp">
+      <Filter>Engine\Ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">
@@ -146,12 +146,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Engine\Stb</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\input.h">
-      <Filter>Engine\Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\input_controller.h">
-      <Filter>Engine\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\camera_2d.h">
       <Filter>Engine\Rendering\2d</Filter>
@@ -341,6 +335,12 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_coords.h">
       <Filter>Engine\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_input.h">
+      <Filter>Engine\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_input_controller.h">
+      <Filter>Engine\Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
