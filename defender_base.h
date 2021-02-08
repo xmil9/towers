@@ -89,7 +89,7 @@ DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, MapCoord siz
 template <typename Derived>
 void DefenderBase<Derived>::render(Renderer2& renderer, bool isPaused)
 {
-   const PixPos center = m_coordSys->toRenderCoords(m_center);
+   const sge::PixPos center = m_coordSys->toRenderCoords(m_center);
 
    if (m_target && target().isAlive())
    {

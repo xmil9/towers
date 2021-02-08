@@ -16,14 +16,14 @@ class Textures
    bool load(const std::string& tag, const std::filesystem::path& texFile,
              bool flipVert = false);
    const gll::Texture2D& operator[](const std::string& tag) const;
-   PixDim size(const std::string& tag) const;
+   sge::PixDim size(const std::string& tag) const;
    void clear() { m_texs.clear(); }
 
  private:
     struct Entry
     {
        gll::Texture2D texture;
-       PixDim size;
+       sge::PixDim size;
     };
 
  private:

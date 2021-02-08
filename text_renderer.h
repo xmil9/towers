@@ -34,9 +34,9 @@ class TextRenderer
    TextRenderer& operator=(TextRenderer&&) noexcept = default;
 
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
-   void render(gll::Program& shaders, const std::string& text, PixPos baseline,
+   void render(gll::Program& shaders, const std::string& text, sge::PixPos baseline,
                float scale, const Color& color);
-   PixDim measure(const std::string& text, float scale) const;
+   sge::PixDim measure(const std::string& text, float scale) const;
 
  private:
    // Information about how to draw each character.

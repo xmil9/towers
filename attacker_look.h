@@ -18,14 +18,14 @@ class AttackerLook
    AttackerLook(Sprite&& shape, Sprite&& shapeHit, Animation explosion,
                 HpRenderer* hpRenderer);
 
-   PixDim size() const { return m_shape.size(); }
+   sge::PixDim size() const { return m_shape.size(); }
 
-   AttackerLook& setSize(PixDim size);
+   AttackerLook& setSize(sge::PixDim size);
    AttackerLook& setRotation(Angle_t rot);
 
-   void render(Renderer2& renderer, PixPos atCenter, bool isAlive, float hpRatio,
+   void render(Renderer2& renderer, sge::PixPos atCenter, bool isAlive, float hpRatio,
                bool isHit);
-   void renderExploded(Renderer2& renderer, PixPos atCenter, bool isPaused);
+   void renderExploded(Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
 
    bool hasExplosionFinished() const { return m_explosion.hasFinished(); }
 
@@ -45,7 +45,7 @@ inline AttackerLook::AttackerLook(Sprite&& shape, Sprite&& shapeHit, Animation e
    assert(m_hpRenderer);
 }
 
-inline AttackerLook& AttackerLook::setSize(PixDim size)
+inline AttackerLook& AttackerLook::setSize(sge::PixDim size)
 {
    m_shape.setSize(size);
    m_shapeHit.setSize(size);
@@ -63,7 +63,7 @@ inline AttackerLook& AttackerLook::setRotation(Angle_t rot)
    return *this;
 }
 
-inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAlive,
+inline void AttackerLook::render(Renderer2& renderer, sge::PixPos atCenter, bool isAlive,
                                  float hpRatio, bool isHit)
 {
    if (isHit)
@@ -75,7 +75,7 @@ inline void AttackerLook::render(Renderer2& renderer, PixPos atCenter, bool isAl
       m_hpRenderer->render(renderer, atCenter, hpRatio);
 }
 
-inline void AttackerLook::renderExploded(Renderer2& renderer, PixPos atCenter,
+inline void AttackerLook::renderExploded(Renderer2& renderer, sge::PixPos atCenter,
                                          bool isPaused)
 {
    // Also draw the attacker so that the explosion appears on top of it.

@@ -14,7 +14,7 @@ class MainWindow : public gfl::Window, public esl::Observed<MainWindow>
 {
  public:
    void setInputController(InputController* controller);
-   PixPos mousePosition() const;
+   sge::PixPos mousePosition() const;
 
  protected:
    void onWindowResized(int width, int height) override;

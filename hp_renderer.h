@@ -14,17 +14,17 @@ class Renderer2;
 class HpRenderer
 {
 public:
-   HpRenderer(Sprite&& status, PixVec offset);
+   HpRenderer(Sprite&& status, sge::PixVec offset);
 
-   void render(Renderer2& renderer, PixPos atSpriteCenter, float ratio);
+   void render(Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio);
 
 private:
    Sprite m_status;
-   PixVec m_offset{0.f, 0.f};
+   sge::PixVec m_offset{0.f, 0.f};
 };
 
 
-inline HpRenderer::HpRenderer(Sprite&& status, PixVec offset)
+inline HpRenderer::HpRenderer(Sprite&& status, sge::PixVec offset)
    : m_status{std::move(status)}, m_offset{offset}
 {
 }

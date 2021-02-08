@@ -7,6 +7,8 @@
 #include "glm/vec2.hpp"
 
 
+namespace sge
+{
 ///////////////////
 
 // Integer coordinate.
@@ -17,3 +19,5 @@ using IntPos = glm::ivec2;
 using IntVec = glm::ivec2;
 using IntDim = glm::ivec2;
 using IntRect = sge::Rect<IntPos>;
+
+} // namespace sge

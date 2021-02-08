@@ -27,7 +27,7 @@ Animation& Animation::setRotation(Angle_t rot)
 }
 
 
-Animation& Animation::setSize(PixDim size)
+Animation& Animation::setSize(sge::PixDim size)
 {
    for (auto& sp : m_sprites)
       sp.setSize(size);
@@ -85,10 +85,10 @@ void Animation::populateMaxFrameIndices()
 }
 
 
-PixDim Animation::size(int frame) const
+sge::PixDim Animation::size(int frame) const
 {
    const auto idx = calcSpriteIndex(frame);
-   return idx ? m_sprites[*idx].size() : PixDim();
+   return idx ? m_sprites[*idx].size() : sge::PixDim();
 }
 
 

@@ -10,14 +10,14 @@
 
 ///////////////////
 
-Path::Path(const std::vector<IntPos>& turns)
+Path::Path(const std::vector<sge::IntPos>& turns)
 {
    if (turns.empty())
       throw std::runtime_error("An empty path is illegal.");
 
    m_turns.reserve(turns.size());
    std::transform(turns.begin(), turns.end(), std::back_inserter(m_turns),
-                  [](IntPos pos) {
+                  [](sge::IntPos pos) {
                      constexpr MapPos fieldCenter{.5f, .5f};
                      return MapPos(pos) + fieldCenter;
                   });

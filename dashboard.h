@@ -20,24 +20,24 @@ struct State;
 class Dashboard
 {
  public:
-   Dashboard(PixCoordi width, PixCoordi height, Commands* commands, State* state);
+   Dashboard(sge::PixCoordi width, sge::PixCoordi height, Commands* commands, State* state);
 
    bool setup(const Renderer2& renderer, const MapCoordSys* cs);
-   void render(Renderer2& renderer, const PixPos& at);
-   bool onLeftButtonPressed(const PixPos& mousePosInDash);
-   bool onLeftButtonReleased(const PixPos& mousePosInDash);
+   void render(Renderer2& renderer, const sge::PixPos& at);
+   bool onLeftButtonPressed(const sge::PixPos& mousePosInDash);
+   bool onLeftButtonReleased(const sge::PixPos& mousePosInDash);
 
  private:
    void setupCreditsElements(const Renderer2& renderer);
    void setupDefenderElements();
    void setupGameflowElements();
 
-   PixPos toPix(NormPos npos) const { return npos * m_dim; }
-   PixCoord toVertPix(NormCoord ny) const { return ny * m_dim.y; }
-   PixCoord toHorzPix(NormCoord nx) const { return nx * m_dim.x; }
+   sge::PixPos toPix(sge::NormPos npos) const { return npos * m_dim; }
+   sge::PixCoord toVertPix(sge::NormCoord ny) const { return ny * m_dim.y; }
+   sge::PixCoord toHorzPix(sge::NormCoord nx) const { return nx * m_dim.x; }
 
  private:
-   PixDim m_dim;
+   sge::PixDim m_dim;
    Commands* m_commands = nullptr;
    State* m_state = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;

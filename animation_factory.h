@@ -16,10 +16,10 @@ class AnimationFactory
  public:
    AnimationFactory();
 
-   Animation make(const std::string& tag, PixDim size);
+   Animation make(const std::string& tag, sge::PixDim size);
 
  private:
-   using FactoryFunc = std::function<Animation(PixDim)>;
+   using FactoryFunc = std::function<Animation(sge::PixDim)>;
 
  private:
    std::unordered_map<std::string, FactoryFunc> m_factories;

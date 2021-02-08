@@ -14,14 +14,14 @@ void MainWindow::setInputController(InputController* controller)
 }
 
 
-PixPos MainWindow::mousePosition() const
+sge::PixPos MainWindow::mousePosition() const
 {
    const auto mousePos = cursorPosition();
    if (!mousePos)
-      return PixPos{-1.f, -1.f};
+      return sge::PixPos{-1.f, -1.f};
 
-   return {static_cast<PixCoord>(mousePos->first),
-           static_cast<PixCoord>(mousePos->second)};
+   return {static_cast<sge::PixCoord>(mousePos->first),
+           static_cast<sge::PixCoord>(mousePos->second)};
 }
 
 

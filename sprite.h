@@ -16,14 +16,14 @@ class Sprite
    explicit Sprite(SpriteLook look);
    Sprite(SpriteLook look, const SpriteForm& form);
 
-   PixDim size() const { return m_form.size(); }
+   sge::PixDim size() const { return m_form.size(); }
    Angle_t rotation() const { return m_form.rotation(); }
-   PixPos rotationCenter() const { return m_form.rotationCenter(); }
+   sge::PixPos rotationCenter() const { return m_form.rotationCenter(); }
    bool hasTexture() const { return m_look.hasTexture(); }
    std::string texture() const { return m_look.texture(); }
    Color color() const { return m_look.color(); }
 
-   Sprite& setSize(PixDim size);
+   Sprite& setSize(sge::PixDim size);
    Sprite& setRotation(Angle_t rot);
    Sprite& setForm(const SpriteForm& form);
    Sprite& scale(float factor);
@@ -44,7 +44,7 @@ inline Sprite::Sprite(SpriteLook look, const SpriteForm& form)
 {
 }
 
-inline Sprite& Sprite::setSize(PixDim size)
+inline Sprite& Sprite::setSize(sge::PixDim size)
 {
    m_form.setSize(size);
    return *this;

@@ -16,7 +16,7 @@ namespace
 {
 ///////////////////
 
-glm::mat4x4 rotateAround(const glm::mat4x4& m, Angle_t rot, const PixPos& rotCenter)
+glm::mat4x4 rotateAround(const glm::mat4x4& m, Angle_t rot, const sge::PixPos& rotCenter)
 {
    constexpr glm::vec3 rotNormal{0.f, 0.f, 1.f};
    return
@@ -31,8 +31,8 @@ glm::mat4x4 rotateAround(const glm::mat4x4& m, Angle_t rot, const PixPos& rotCen
 }
 
 
-glm::mat4x4 calcModelMatrix(const PixPos& pos, const PixDim& size, Angle_t rot,
-                            const PixPos& rotCenter)
+glm::mat4x4 calcModelMatrix(const sge::PixPos& pos, const sge::PixDim& size, Angle_t rot,
+                            const sge::PixPos& rotCenter)
 {
    return
       // Finally scale.
@@ -55,8 +55,8 @@ bool SpriteRenderer::setup()
 }
 
 
-void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop,
-                            const Color& tint) const
+void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite,
+                            sge::PixPos leftTop, const Color& tint) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (sprite.hasTexture())

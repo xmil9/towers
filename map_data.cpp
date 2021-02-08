@@ -26,11 +26,11 @@ json readFile(const std::filesystem::path& path)
 
 struct ParsedMapData
 {
-   IntDim mapSize{0, 0};
+   sge::IntDim mapSize{0, 0};
    std::string terrain;
-   std::vector<IntPos> starts;
-   IntPos finish{0, 0};
-   std::vector<std::vector<IntPos>> paths;
+   std::vector<sge::IntPos> starts;
+   sge::IntPos finish{0, 0};
+   std::vector<std::vector<sge::IntPos>> paths;
 
    bool isValid() const;
 };
@@ -51,9 +51,9 @@ glm::ivec2 parsePosition(const json& jList)
 }
 
 
-std::vector<IntPos> parseJsonPath(const json& jPath)
+std::vector<sge::IntPos> parseJsonPath(const json& jPath)
 {
-   std::vector<IntPos> parsedPath;
+   std::vector<sge::IntPos> parsedPath;
    parsedPath.reserve(jPath.size());
    std::transform(jPath.begin(), jPath.end(), std::back_inserter(parsedPath),
                   [](const json& jList) { return parsePosition(jList); });
@@ -133,7 +133,7 @@ MapData populateData(const ParsedMapData& parsed)
    map.paths.reserve(parsed.paths.size());
    std::transform(parsed.paths.cbegin(), parsed.paths.cend(),
                   std::back_inserter(map.paths),
-                  [](const std::vector<IntPos>& turns) { return Path{turns}; });
+                  [](const std::vector<sge::IntPos>& turns) { return Path{turns}; });
 
    return map;
 }

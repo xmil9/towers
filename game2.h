@@ -70,8 +70,8 @@ class Game2 : private Commands, private State
    const Defender* defenderOnField(MapPos field) const;
    void setDefenderOnField(MapPos field, bool hasDefender);
    bool canPlaceDefenderOnField(const std::string& defenderModel, MapPos field) const;
-   void addDefender(std::optional<Defender>&& defender, const PixPos& pos);
-   void placeDefender(const PixPos& mousePos);
+   void addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos);
+   void placeDefender(const sge::PixPos& mousePos);
 
    void onMainWindowChanged(MainWindow& src, std::string_view event,
                             const esl::ObservedEventData& data);
@@ -88,12 +88,12 @@ class Game2 : private Commands, private State
    void onRightButtonReleased(const glm::vec2& pos);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
-   bool isInMap(const PixPos& pos) const;
-   bool isInDashboard(const PixPos& pos) const;
-   bool mapOnLeftButtonPressed(const PixPos& pos);
-   bool mapOnLeftButtonReleased(const PixPos& pos);
-   bool dashboardOnLeftButtonPressed(const PixPos& pos);
-   bool dashboardOnLeftButtonReleased(const PixPos& pos);
+   bool isInMap(const sge::PixPos& pos) const;
+   bool isInDashboard(const sge::PixPos& pos) const;
+   bool mapOnLeftButtonPressed(const sge::PixPos& pos);
+   bool mapOnLeftButtonReleased(const sge::PixPos& pos);
+   bool dashboardOnLeftButtonPressed(const sge::PixPos& pos);
+   bool dashboardOnLeftButtonReleased(const sge::PixPos& pos);
 
    // State overrides.
    int credits() const override { return m_credits; }
@@ -102,18 +102,18 @@ class Game2 : private Commands, private State
 
    // Commands overrides.
    void startPlaceSession(std::string_view model, std::string_view indicatorTex,
-                          PixDim indicatorDim) override;
+                          sge::PixDim indicatorDim) override;
    void endPlaceSession() override;
    void startAttack() override;
    void pauseAttack() override;
 
  private:
-   static constexpr PixCoordi MapWidth = UiScale(1800);
-   static constexpr PixCoordi MapHeight = UiScale(1200);
-   static constexpr PixCoordi DashboardWidth = UiScale(200);
-   static constexpr PixCoordi DashboardHeight = MapHeight;
-   static constexpr PixCoordi WndWidth = MapWidth + DashboardWidth;
-   static constexpr PixCoordi WndHeight = MapHeight;
+   static constexpr sge::PixCoordi MapWidth = UiScale(1800);
+   static constexpr sge::PixCoordi MapHeight = UiScale(1200);
+   static constexpr sge::PixCoordi DashboardWidth = UiScale(200);
+   static constexpr sge::PixCoordi DashboardHeight = MapHeight;
+   static constexpr sge::PixCoordi WndWidth = MapWidth + DashboardWidth;
+   static constexpr sge::PixCoordi WndHeight = MapHeight;
 
    Resources m_resources;
    sge::FrameClock m_frameClock;

@@ -14,7 +14,7 @@ static constexpr Color DisabledTint{.8f, .8f, .8f};
 ///////////////////
 
 void Button::setup(const Sprite& background, Sprite&& content, IsEnabledFn isEnabledFn,
-                   const PixPos& leftTop, const PixDim& dim)
+                   const sge::PixPos& leftTop, const sge::PixDim& dim)
 {
    assert(isEnabledFn);
 
@@ -26,7 +26,7 @@ void Button::setup(const Sprite& background, Sprite&& content, IsEnabledFn isEna
 }
 
 
-void Button::render(Renderer2& renderer, const PixPos& offset)
+void Button::render(Renderer2& renderer, const sge::PixPos& offset)
 {
    Color tint = m_isEnabledFn() ? NoColor : DisabledTint;
 

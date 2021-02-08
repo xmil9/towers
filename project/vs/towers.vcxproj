@@ -211,7 +211,8 @@
     <ClInclude Include="..\..\defender_look.h" />
     <ClInclude Include="..\..\defender_models.h" />
     <ClInclude Include="..\..\hp_renderer.h" />
-    <ClInclude Include="..\..\int_coords.h" />
+    <ClInclude Include="..\..\sge_coords.h" />
+    <ClInclude Include="..\..\sge_int_coords.h" />
     <ClInclude Include="..\..\label.h" />
     <ClInclude Include="..\..\laser_turret.h" />
     <ClInclude Include="..\..\map_coords.h" />
@@ -230,9 +231,9 @@
     <ClInclude Include="..\..\frustum3.h" />
     <ClInclude Include="..\..\input.h" />
     <ClInclude Include="..\..\mobile_cannon.h" />
-    <ClInclude Include="..\..\norm_coords.h" />
+    <ClInclude Include="..\..\sge_norm_coords.h" />
     <ClInclude Include="..\..\path.h" />
-    <ClInclude Include="..\..\pixel_coords.h" />
+    <ClInclude Include="..\..\sge_pixel_coords.h" />
     <ClInclude Include="..\..\place_session.h" />
     <ClInclude Include="..\..\sge_rect.h" />
     <ClInclude Include="..\..\sge_types.h" />

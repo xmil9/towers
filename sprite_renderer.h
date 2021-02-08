@@ -32,7 +32,7 @@ class SpriteRenderer
    SpriteRenderer& operator=(SpriteRenderer&&) = default;
 
    bool setup();
-   void render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop,
+   void render(gll::Program& shaders, const Sprite& sprite, sge::PixPos leftTop,
                const Color& tint = NoColor) const;
 
  private:

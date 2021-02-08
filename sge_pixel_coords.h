@@ -7,6 +7,8 @@
 #include "glm/vec2.hpp"
 
 
+namespace sge
+{
 ///////////////////
 
 // Pixel coordinates represented by floating point values.
@@ -22,3 +24,5 @@ using PixPosi = glm::ivec2;
 using PixVeci = glm::ivec2;
 using PixDimi = glm::ivec2;
 using PixRecti = sge::Rect<PixPosi>;
+
+} // namespace sge

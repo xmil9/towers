@@ -27,13 +27,16 @@ class Renderer2
 
    void clearScene() const;
    void beginRendering();
-   void renderSprite(const Sprite& sprite, PixPos leftTop, const Color& tint = NoColor);
-   void renderSpriteCentered(const Sprite& sprite, PixPos center,
+   void renderSprite(const Sprite& sprite, sge::PixPos leftTop,
+                     const Color& tint = NoColor);
+   void renderSpriteCentered(const Sprite& sprite, sge::PixPos center,
                              const Color& tint = NoColor);
-   void renderAnimation(Animation& anim, PixPos leftTop, bool advanceFrame = true);
-   void renderAnimationCentered(Animation& anim, PixPos center, bool advanceFrame = true);
-   void renderText(const std::string& text, PixPos pos, float scale, const Color& color);
-   PixDim measureText(const std::string& text, float scale) const;
+   void renderAnimation(Animation& anim, sge::PixPos leftTop, bool advanceFrame = true);
+   void renderAnimationCentered(Animation& anim, sge::PixPos center,
+                                bool advanceFrame = true);
+   void renderText(const std::string& text, sge::PixPos pos, float scale,
+                   const Color& color);
+   sge::PixDim measureText(const std::string& text, float scale) const;
 
 
  private:
@@ -50,25 +53,25 @@ class Renderer2
 };
 
 
-inline void Renderer2::renderSprite(const Sprite& sprite, PixPos leftTop,
+inline void Renderer2::renderSprite(const Sprite& sprite, sge::PixPos leftTop,
                                     const Color& tint)
 {
    m_spriteRenderer->render(m_shaders, sprite, leftTop, tint);
 }
 
-inline void Renderer2::renderSpriteCentered(const Sprite& sprite, PixPos center,
+inline void Renderer2::renderSpriteCentered(const Sprite& sprite, sge::PixPos center,
                                             const Color& tint)
 {
    renderSprite(sprite, center - .5f * sprite.size(), tint);
 }
 
-inline void Renderer2::renderText(const std::string& text, PixPos pos, float scale,
+inline void Renderer2::renderText(const std::string& text, sge::PixPos pos, float scale,
                                   const Color& color)
 {
    m_textRenderer->render(m_shaders, text, pos, scale, color);
 }
 
-inline PixDim Renderer2::measureText(const std::string& text, float scale) const
+inline sge::PixDim Renderer2::measureText(const std::string& text, float scale) const
 {
    return m_textRenderer->measure(text, scale);
 }

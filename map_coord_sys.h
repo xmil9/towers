@@ -14,39 +14,39 @@
 class MapCoordSys
 {
  public:
-   explicit MapCoordSys(PixDim fieldSize);
+   explicit MapCoordSys(sge::PixDim fieldSize);
 
-   PixPos toRenderCoords(MapPos mpos) const;
-   MapPos toMapCoords(PixPos ppos) const;
+   sge::PixPos toRenderCoords(MapPos mpos) const;
+   MapPos toMapCoords(sge::PixPos ppos) const;
 
    // Returns the map size whose larger side is set to a given value and whose smaller
    // side is calculated to be at the same aspect ratio as a given source size.
-   MapDim scaleToSize(MapCoord largerSide, PixDim source) const;
+   MapDim scaleToSize(MapCoord largerSide, sge::PixDim source) const;
 
  private:
    // Size of each field in pixel coordinates.
-   PixDim m_fieldSize{0.f, 0.f};
+   sge::PixDim m_fieldSize{0.f, 0.f};
 };
 
 
-inline MapCoordSys::MapCoordSys(PixDim fieldSize) : m_fieldSize{fieldSize}
+inline MapCoordSys::MapCoordSys(sge::PixDim fieldSize) : m_fieldSize{fieldSize}
 {
    if (m_fieldSize.x == 0.f || m_fieldSize.y == 0.f)
       throw std::runtime_error("Fields of zero size are illegal.");
 }
 
-inline PixPos MapCoordSys::toRenderCoords(MapPos mpos) const
+inline sge::PixPos MapCoordSys::toRenderCoords(MapPos mpos) const
 {
    return mpos * m_fieldSize;
 }
 
-inline MapPos MapCoordSys::toMapCoords(PixPos ppos) const
+inline MapPos MapCoordSys::toMapCoords(sge::PixPos ppos) const
 {
    assert(m_fieldSize.x != 0.f && m_fieldSize.y != 0.f);
    return ppos / m_fieldSize;
 }
 
-inline MapDim MapCoordSys::scaleToSize(MapCoord largerSide, PixDim source) const
+inline MapDim MapCoordSys::scaleToSize(MapCoord largerSide, sge::PixDim source) const
 {
    const auto aspects = source.x >= source.y
                            ? std::make_pair<float, float>(1.f, source.y / source.x)

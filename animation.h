@@ -20,11 +20,11 @@ class Animation
    Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat);
 
    // Returns the size of the current frame's sprite.
-   PixDim size() const { return size(m_currFrame); }
+   sge::PixDim size() const { return size(m_currFrame); }
 
    Animation& setRotation(Angle_t rot);
    // Sets size of all sprites in the animation.
-   Animation& setSize(PixDim size);
+   Animation& setSize(sge::PixDim size);
    Animation& scale(float factor);
    Animation& rotate(Angle_t rot);
 
@@ -35,7 +35,7 @@ class Animation
  private:
    void populateMaxFrameIndices();
    // Returns the size of the sprite rendered for the given frame.
-   PixDim size(int frame) const;
+   sge::PixDim size(int frame) const;
    std::optional<std::size_t> calcSpriteIndex(int frame) const;
    void reset();
 

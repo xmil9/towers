@@ -93,7 +93,7 @@ void AttackerBase<Derived>::render(Renderer2& renderer, bool isPaused)
    if (!hasStarted())
       return;
 
-   const PixPos center = m_coordSys->toRenderCoords(*m_center);
+   const sge::PixPos center = m_coordSys->toRenderCoords(*m_center);
 
    if (isAlive())
    {

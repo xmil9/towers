@@ -5,7 +5,7 @@
 #include "sprite_form.h"
 
 
-void SpriteForm::setSize(PixDim size)
+void SpriteForm::setSize(sge::PixDim size)
 {
    const bool isDegenerate = m_size.x == 0.f || m_size.y == 0.f;
    const glm::vec2 rotCenterRatio =

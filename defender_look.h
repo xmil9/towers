@@ -16,13 +16,13 @@ class DefenderLook
    DefenderLook(const Sprite& shape, Animation firing);
    DefenderLook(Sprite&& shape, Animation firing);
 
-   PixDim size() const { return m_shape.size(); }
+   sge::PixDim size() const { return m_shape.size(); }
 
-   DefenderLook& setSize(PixDim size);
+   DefenderLook& setSize(sge::PixDim size);
    DefenderLook& setRotation(Angle_t rot);
 
-   void render(Renderer2& renderer, PixPos atCenter);
-   void renderFiring(Renderer2& renderer, PixPos atCenter, bool isPaused);
+   void render(Renderer2& renderer, sge::PixPos atCenter);
+   void renderFiring(Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
 
  private:
    Sprite m_shape;
@@ -40,7 +40,7 @@ inline DefenderLook::DefenderLook(Sprite&& shape, Animation firing)
 {
 }
 
-inline DefenderLook& DefenderLook::setSize(PixDim size)
+inline DefenderLook& DefenderLook::setSize(sge::PixDim size)
 {
    m_shape.setSize(size);
    m_firing.setSize(size);
@@ -54,12 +54,12 @@ inline DefenderLook& DefenderLook::setRotation(Angle_t rot)
    return *this;
 }
 
-inline void DefenderLook::render(Renderer2& renderer, PixPos atCenter)
+inline void DefenderLook::render(Renderer2& renderer, sge::PixPos atCenter)
 {
    renderer.renderSpriteCentered(m_shape, atCenter);
 }
 
-inline void DefenderLook::renderFiring(Renderer2& renderer, PixPos atCenter,
+inline void DefenderLook::renderFiring(Renderer2& renderer, sge::PixPos atCenter,
                                        bool isPaused)
 {
    renderer.renderAnimationCentered(m_firing, atCenter, !isPaused);

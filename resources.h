@@ -23,7 +23,7 @@ class Resources
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);
    const gll::Texture2D& getTexture(const std::string& tag) const;
-   PixDim getTextureSize(const std::string& tag) const;
+   sge::PixDim getTextureSize(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
    void addAnimation(const std::string& tag, Animation&& a);
@@ -48,7 +48,7 @@ inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
    return m_texRepos[tag];
 }
 
-inline PixDim Resources::getTextureSize(const std::string& tag) const
+inline sge::PixDim Resources::getTextureSize(const std::string& tag) const
 {
    return m_texRepos.size(tag);
 }

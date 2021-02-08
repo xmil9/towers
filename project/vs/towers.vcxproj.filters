@@ -139,6 +139,9 @@
     <Filter Include="Engine\Utilities">
       <UniqueIdentifier>{6be38c80-5e3f-4c4b-98b5-bef3f5c98975}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Coordinates">
+      <UniqueIdentifier>{878b9ca0-f65f-45a3-9010-ee32851974bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
@@ -279,15 +282,6 @@
     <ClInclude Include="..\..\laser_turret.h">
       <Filter>Game\Defenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\int_coords.h">
-      <Filter>Game\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\norm_coords.h">
-      <Filter>Game\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pixel_coords.h">
-      <Filter>Game\Coordinates</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\coords.h">
       <Filter>Game\Coordinates</Filter>
     </ClInclude>
@@ -335,6 +329,18 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_lap_clock.h">
       <Filter>Engine\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_int_coords.h">
+      <Filter>Engine\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_norm_coords.h">
+      <Filter>Engine\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_pixel_coords.h">
+      <Filter>Engine\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_coords.h">
+      <Filter>Engine\Coordinates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

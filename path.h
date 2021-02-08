@@ -17,7 +17,7 @@ class Path
 
  public:
    Path() = default;
-   explicit Path(const std::vector<IntPos>& turns);
+   explicit Path(const std::vector<sge::IntPos>& turns);
 
    std::size_t size() const { return m_turns.size(); }
    MapPos operator[](Index idx) const;

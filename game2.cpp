@@ -135,10 +135,10 @@ bool Game2::setupMainWindow()
 
 bool Game2::setupInput()
 {
-   m_input.addObserver([this](Input& /*src*/, std::string_view event,
-                              const esl::ObservedEventData& data) {
-      onInputChanged(m_input, event, data);
-   });
+   m_input.addObserver(
+      [this](Input& /*src*/, std::string_view event, const esl::ObservedEventData& data) {
+         onInputChanged(m_input, event, data);
+      });
    return true;
 }
 
@@ -202,10 +202,10 @@ bool Game2::setupTerrain()
       return false;
    m_map = std::make_unique<Map>(std::move(*mapData));
 
-   const PixDim mapPixDim{MapWidth, MapHeight};
-   const IntDim mapSizeInFields = m_map->sizeInFields();
-   const PixDim fieldPixDim{mapPixDim.x / mapSizeInFields.x,
-                            mapPixDim.y / mapSizeInFields.y};
+   const sge::PixDim mapPixDim{MapWidth, MapHeight};
+   const sge::IntDim mapSizeInFields = m_map->sizeInFields();
+   const sge::PixDim fieldPixDim{mapPixDim.x / mapSizeInFields.x,
+                                 mapPixDim.y / mapSizeInFields.y};
    m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
 
    return true;
@@ -214,10 +214,10 @@ bool Game2::setupTerrain()
 
 bool Game2::setupRenderer()
 {
-   constexpr NormDim hpStatusDim{.5f, .05f};
-   const PixDim hpStatusPixDim = m_coordSys->toRenderCoords(hpStatusDim);
-   constexpr NormVec hpOffset{-.25f, -.4f};
-   const PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
+   constexpr sge::NormDim hpStatusDim{.5f, .05f};
+   const sge::PixDim hpStatusPixDim = m_coordSys->toRenderCoords(hpStatusDim);
+   constexpr sge::NormVec hpOffset{-.25f, -.4f};
+   const sge::PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
    m_hpRenderer = std::make_unique<HpRenderer>(
       Sprite{SpriteLook{HpStatusTTag}, SpriteForm{hpStatusPixDim}}, hpPixOffset);
 
@@ -235,7 +235,7 @@ bool Game2::setupAnimations()
       ExplosionATag,
       factory.make(ExplosionATag, m_coordSys->toRenderCoords(MapDim{1.f, 1.f})));
 
-   PixDim firingSize = m_coordSys->toRenderCoords(
+   sge::PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->scaleToSize(LtSize, m_resources.getTextureSize(LtTexture)));
    m_resources.addAnimation(LtFiringAnimation,
                             factory.make(LtFiringAnimation, firingSize));
@@ -319,7 +319,7 @@ bool Game2::setupBackground()
 {
    m_background = Sprite{SpriteLook{Map1TTag}, SpriteForm{{MapWidth, MapHeight}}};
 
-   const PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
+   const sge::PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
    m_invalidFieldOverlay = Sprite{SpriteLook{InvalidFieldTTag}, SpriteForm{fieldPixDim}};
    m_rangeOverlay = Sprite{SpriteLook{RangeTTag}, SpriteForm{fieldPixDim}};
 
@@ -353,7 +353,7 @@ void Game2::render()
 
    m_renderer.beginRendering();
    renderMap();
-   m_dashboard.render(m_renderer, PixPos{MapWidth - 1, 0.f});
+   m_dashboard.render(m_renderer, sge::PixPos{MapWidth - 1, 0.f});
 
    for (auto& entry : m_attackers)
       entry.second.render(m_renderer, m_isPaused);
@@ -379,7 +379,7 @@ void Game2::renderDefenderInfo()
    if (m_placeSess)
       return;
 
-   const PixPos mousePixPos{m_mainWnd.mousePosition()};
+   const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
    const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
    if (!m_map->isOnMap(fieldPos))
       return;
@@ -388,9 +388,10 @@ void Game2::renderDefenderInfo()
    if (touchedDefender)
    {
       const MapCoord range = touchedDefender->range();
-      const PixDim rangeDim = m_coordSys->toRenderCoords(2.0f * MapDim{range, range});
+      const sge::PixDim rangeDim =
+         m_coordSys->toRenderCoords(2.0f * MapDim{range, range});
       const MapPos at = touchedDefender->center();
-      const PixPos atPix = m_coordSys->toRenderCoords(at);
+      const sge::PixPos atPix = m_coordSys->toRenderCoords(at);
       m_rangeOverlay.setSize(rangeDim);
       m_renderer.renderSpriteCentered(m_rangeOverlay, atPix);
    }
@@ -401,11 +402,11 @@ void Game2::renderPlaceSession()
 {
    if (m_placeSess)
    {
-      const PixPos mousePixPos{m_mainWnd.mousePosition()};
+      const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
 
       const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
-      const PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
-      const PixPos fieldCenterPixPos =
+      const sge::PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
+      const sge::PixPos fieldCenterPixPos =
          fieldPixPos + m_coordSys->toRenderCoords(MapPos{.5f, .5f});
 
       const bool isOnMap = m_map->isOnMap(fieldPos);
@@ -413,7 +414,7 @@ void Game2::renderPlaceSession()
       {
          if (canPlaceDefenderOnField(m_placeSess->model, fieldPos))
          {
-            const PixDim rangeDim = m_coordSys->toRenderCoords(
+            const sge::PixDim rangeDim = m_coordSys->toRenderCoords(
                2.0f * MapDim{m_placeSess->range, m_placeSess->range});
             m_rangeOverlay.setSize(rangeDim);
             m_renderer.renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
@@ -424,7 +425,7 @@ void Game2::renderPlaceSession()
          }
       }
 
-      const PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
+      const sge::PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
       m_renderer.renderSpriteCentered(m_placeSess->indicator, indicatorCenter);
    }
 }
@@ -476,7 +477,7 @@ void Game2::removeAsTarget(EntityId attackerId)
 void Game2::resetDefenderPlacements()
 {
    assert(m_map);
-   const IntDim mapDim = m_map->sizeInFields();
+   const sge::IntDim mapDim = m_map->sizeInFields();
    m_defenderMatrix.resize(mapDim.x * mapDim.y);
    std::fill(m_defenderMatrix.begin(), m_defenderMatrix.end(), false);
 }
@@ -517,7 +518,7 @@ bool Game2::canPlaceDefenderOnField(const std::string& /*defenderModel*/,
 }
 
 
-void Game2::addDefender(std::optional<Defender>&& defender, const PixPos& pos)
+void Game2::addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos)
 {
    if (defender)
    {
@@ -528,7 +529,7 @@ void Game2::addDefender(std::optional<Defender>&& defender, const PixPos& pos)
 }
 
 
-void Game2::placeDefender(const PixPos& mousePos)
+void Game2::placeDefender(const sge::PixPos& mousePos)
 {
    const MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
    if (!m_map->isOnMap(pos) || !canPlaceDefenderOnField(m_placeSess->model, pos))
@@ -644,20 +645,20 @@ void Game2::onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/)
 }
 
 
-bool Game2::isInMap(const PixPos& pos) const
+bool Game2::isInMap(const sge::PixPos& pos) const
 {
    return pos.x > 0 && pos.x <= MapWidth && pos.y > 0 && pos.y <= MapHeight;
 }
 
 
-bool Game2::isInDashboard(const PixPos& pos) const
+bool Game2::isInDashboard(const sge::PixPos& pos) const
 {
    return pos.x > MapWidth && pos.x <= MapWidth + DashboardWidth && pos.y > 0 &&
           pos.y <= DashboardHeight;
 }
 
 
-bool Game2::mapOnLeftButtonPressed(const PixPos& pos)
+bool Game2::mapOnLeftButtonPressed(const sge::PixPos& pos)
 {
    if (!isInMap(pos))
       return false;
@@ -672,7 +673,7 @@ bool Game2::mapOnLeftButtonPressed(const PixPos& pos)
 }
 
 
-bool Game2::mapOnLeftButtonReleased(const PixPos& pos)
+bool Game2::mapOnLeftButtonReleased(const sge::PixPos& pos)
 {
    if (!isInMap(pos))
       return false;
@@ -680,22 +681,22 @@ bool Game2::mapOnLeftButtonReleased(const PixPos& pos)
 }
 
 
-bool Game2::dashboardOnLeftButtonPressed(const PixPos& pos)
+bool Game2::dashboardOnLeftButtonPressed(const sge::PixPos& pos)
 {
    if (!isInDashboard(pos))
       return false;
 
-   const PixPos posInDashboard = pos - PixPos{MapWidth, 0.f};
+   const sge::PixPos posInDashboard = pos - sge::PixPos{MapWidth, 0.f};
    return m_dashboard.onLeftButtonPressed(posInDashboard);
 }
 
 
-bool Game2::dashboardOnLeftButtonReleased(const PixPos& pos)
+bool Game2::dashboardOnLeftButtonReleased(const sge::PixPos& pos)
 {
    if (!isInDashboard(pos))
       return false;
 
-   const PixPos posInDashboard = pos - PixPos{MapWidth, 0.f};
+   const sge::PixPos posInDashboard = pos - sge::PixPos{MapWidth, 0.f};
    return m_dashboard.onLeftButtonReleased(posInDashboard);
 }
 
@@ -714,7 +715,7 @@ bool Game2::isPaused() const
 
 
 void Game2::startPlaceSession(std::string_view model, std::string_view indicatorTex,
-                              PixDim indicatorDim)
+                              sge::PixDim indicatorDim)
 {
    PlaceSession sess;
    sess.model = model;

@@ -16,7 +16,7 @@
 class Mesh2
 {
  public:
-   using Point = sge::Point2<NormCoord>;
+   using Point = sge::Point2<sge::NormCoord>;
    using VertexIdx = unsigned int;
 
  public:
@@ -24,7 +24,7 @@ class Mesh2
 
    std::size_t numPositions() const { return m_positions.size(); }
    std::size_t numPositionBytes() const { return m_positions.size() * sizeof(Point); }
-   const NormCoord* positions() const;
+   const sge::NormCoord* positions() const;
    constexpr gll::DataFormat positionsFormat() const;
    void setPositions(const std::vector<Point>& positions);
    void setPositions(std::vector<Point>&& positions);
@@ -37,7 +37,7 @@ class Mesh2
 
    std::size_t numTextureCoords() const { return m_texCoords.size(); }
    std::size_t numTextureCoordBytes() const;
-   const NormCoord* textureCoords() const;
+   const sge::NormCoord* textureCoords() const;
    constexpr gll::DataFormat textureCoordsFormat() const;
    void setTextureCoords(const std::vector<Point>& texCoords);
    void setTextureCoords(std::vector<Point>&& texCoords);
@@ -49,9 +49,9 @@ class Mesh2
 };
 
 
-inline const NormCoord* Mesh2::positions() const
+inline const sge::NormCoord* Mesh2::positions() const
 {
-   return reinterpret_cast<const NormCoord*>(m_positions.data());
+   return reinterpret_cast<const sge::NormCoord*>(m_positions.data());
 }
 
 inline constexpr gll::DataFormat Mesh2::positionsFormat() const
@@ -86,9 +86,9 @@ inline std::size_t Mesh2::numTextureCoordBytes() const
    return m_texCoords.size() * sizeof(Point);
 }
 
-inline const NormCoord* Mesh2::textureCoords() const
+inline const sge::NormCoord* Mesh2::textureCoords() const
 {
-   return reinterpret_cast<const NormCoord*>(m_texCoords.data());
+   return reinterpret_cast<const sge::NormCoord*>(m_texCoords.data());
 }
 
 inline constexpr gll::DataFormat Mesh2::textureCoordsFormat() const

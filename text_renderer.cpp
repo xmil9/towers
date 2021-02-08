@@ -98,8 +98,8 @@ const FT_GlyphSlot Face::glyph() const
 
 ///////////////////
 
-void TextRenderer::render(gll::Program& shaders, const std::string& text, PixPos baseline,
-                          float scale, const Color& color)
+void TextRenderer::render(gll::Program& shaders, const std::string& text,
+                          sge::PixPos baseline, float scale, const Color& color)
 {
    glActiveTexture(GL_TEXTURE0);
    m_vao.bind();
@@ -144,14 +144,14 @@ void TextRenderer::render(gll::Program& shaders, const std::string& text, PixPos
 }
 
 
-PixDim TextRenderer::measure(const std::string& text, float scale) const
+sge::PixDim TextRenderer::measure(const std::string& text, float scale) const
 {
-   PixDim dim{0.f, 0.f};
+   sge::PixDim dim{0.f, 0.f};
    for (char c : text)
    {
       const auto pos = m_chars.find(c);
       if (pos != m_chars.end())
-         dim += PixDim{pos->second.size + pos->second.bearing};
+         dim += sge::PixDim{pos->second.size + pos->second.bearing};
    }
    return dim * scale;
 }

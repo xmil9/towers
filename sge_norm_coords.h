@@ -7,6 +7,8 @@
 #include "glm/vec2.hpp"
 
 
+namespace sge
+{
 ///////////////////
 
 // Normalized coordinates are in range [0.0, 1.0].
@@ -16,3 +18,5 @@ using NormPos = glm::vec2;
 using NormVec = glm::vec2;
 using NormDim = glm::vec2;
 using NormRect = sge::Rect<NormPos>;
+
+} // namespace sge

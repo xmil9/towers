@@ -15,7 +15,7 @@
 static Animation NullAnimation;
 
 
-static Animation makeExplosion(PixDim size)
+static Animation makeExplosion(sge::PixDim size)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
@@ -30,7 +30,7 @@ static Animation makeExplosion(PixDim size)
 }
 
 
-static Animation makeFiringLaserTurret(PixDim size)
+static Animation makeFiringLaserTurret(sge::PixDim size)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
@@ -43,7 +43,7 @@ static Animation makeFiringLaserTurret(PixDim size)
 }
 
 
-static Animation makeFiringSonicMortar(PixDim size)
+static Animation makeFiringSonicMortar(sge::PixDim size)
 {
    const SpriteForm form{size, Angle_t{0.f}};
    std::vector<Sprite> sprites{
@@ -68,7 +68,7 @@ AnimationFactory::AnimationFactory()
 }
 
 
-Animation AnimationFactory::make(const std::string& tag, PixDim size)
+Animation AnimationFactory::make(const std::string& tag, sge::PixDim size)
 {
    const auto pos = m_factories.find(tag);
    if (pos == m_factories.end())
