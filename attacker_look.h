@@ -3,10 +3,10 @@
 // MIT license
 //
 #pragma once
-#include "animation.h"
 #include "hp_renderer.h"
 #include "renderer2.h"
 #include "texture_tags.h"
+#include "sge_animation.h"
 #include "sge_sprite.h"
 
 
@@ -15,7 +15,7 @@
 class AttackerLook
 {
  public:
-   AttackerLook(sge::Sprite&& shape, sge::Sprite&& shapeHit, Animation explosion,
+   AttackerLook(sge::Sprite&& shape, sge::Sprite&& shapeHit, sge::Animation explosion,
                 HpRenderer* hpRenderer);
 
    sge::PixDim size() const { return m_shape.size(); }
@@ -32,13 +32,13 @@ class AttackerLook
  private:
    sge::Sprite m_shape;
    sge::Sprite m_shapeHit;
-   Animation m_explosion;
+   sge::Animation m_explosion;
    HpRenderer* m_hpRenderer = nullptr;
 };
 
 
 inline AttackerLook::AttackerLook(sge::Sprite&& shape, sge::Sprite&& shapeHit,
-                                  Animation explosion, HpRenderer* hpRenderer)
+                                  sge::Animation explosion, HpRenderer* hpRenderer)
 : m_shape{std::move(shape)}, m_shapeHit{std::move(shapeHit)},
   m_explosion{std::move(explosion)}, m_hpRenderer{hpRenderer}
 {

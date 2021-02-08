@@ -5,10 +5,10 @@
 #include "animations.h"
 
 
-static Animation NullAnimation;
+static sge::Animation NullAnimation;
 
 
-const Animation& Animations::operator[](const std::string& tag) const
+const sge::Animation& Animations::operator[](const std::string& tag) const
 {
    const auto pos = m_repos.find(tag);
    return (pos != m_repos.end()) ? pos->second : NullAnimation;

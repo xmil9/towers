@@ -39,7 +39,8 @@ void Renderer2::beginRendering()
 }
 
 
-void Renderer2::renderAnimation(Animation& anim, sge::PixPos leftTop, bool advanceFrame)
+void Renderer2::renderAnimation(sge::Animation& anim, sge::PixPos leftTop,
+                                bool advanceFrame)
 {
    const auto sprite = advanceFrame ? anim.nextFrame() : anim.currentFrame();
    if (sprite)
@@ -47,7 +48,8 @@ void Renderer2::renderAnimation(Animation& anim, sge::PixPos leftTop, bool advan
 }
 
 
-void Renderer2::renderAnimationCentered(Animation& anim, sge::PixPos center, bool advanceFrame)
+void Renderer2::renderAnimationCentered(sge::Animation& anim, sge::PixPos center,
+                                        bool advanceFrame)
 {
    const auto sprite = advanceFrame ? anim.nextFrame() : anim.currentFrame();
    if (sprite)

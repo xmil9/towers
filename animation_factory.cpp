@@ -3,19 +3,19 @@
 // MIT license
 //
 #include "animation_factory.h"
-#include "animation.h"
 #include "animation_tags.h"
 #include "defender_models.h"
 #include "map_coord_sys.h"
 #include "texture_tags.h"
+#include "sge_animation.h"
 
 
 ///////////////////
 
-static Animation NullAnimation;
+static sge::Animation NullAnimation;
 
 
-static Animation makeExplosion(sge::PixDim size)
+static sge::Animation makeExplosion(sge::PixDim size)
 {
    const sge::SpriteForm form{size, sge::Angle_t{0.f}};
    std::vector<sge::Sprite> sprites{
@@ -26,11 +26,11 @@ static Animation makeExplosion(sge::PixDim size)
    };
    std::vector<int> frames{15, 15, 15, 15};
 
-   return Animation(sprites, frames, false);
+   return sge::Animation(sprites, frames, false);
 }
 
 
-static Animation makeFiringLaserTurret(sge::PixDim size)
+static sge::Animation makeFiringLaserTurret(sge::PixDim size)
 {
    const sge::SpriteForm form{size, sge::Angle_t{0.f}};
    std::vector<sge::Sprite> sprites{
@@ -39,11 +39,11 @@ static Animation makeFiringLaserTurret(sge::PixDim size)
    };
    std::vector<int> frames{10, 10};
 
-   return Animation(sprites, frames, true);
+   return sge::Animation(sprites, frames, true);
 }
 
 
-static Animation makeFiringSonicMortar(sge::PixDim size)
+static sge::Animation makeFiringSonicMortar(sge::PixDim size)
 {
    const sge::SpriteForm form{size, sge::Angle_t{0.f}};
    std::vector<sge::Sprite> sprites{
@@ -52,7 +52,7 @@ static Animation makeFiringSonicMortar(sge::PixDim size)
    };
    std::vector<int> frames{10, 10};
 
-   return Animation(sprites, frames, true);
+   return sge::Animation(sprites, frames, true);
 }
 
 
@@ -68,7 +68,7 @@ AnimationFactory::AnimationFactory()
 }
 
 
-Animation AnimationFactory::make(const std::string& tag, sge::PixDim size)
+sge::Animation AnimationFactory::make(const std::string& tag, sge::PixDim size)
 {
    const auto pos = m_factories.find(tag);
    if (pos == m_factories.end())

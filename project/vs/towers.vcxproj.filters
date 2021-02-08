@@ -23,9 +23,6 @@
     <ClCompile Include="..\..\renderer2.cpp">
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\animation.cpp">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\text_renderer.cpp">
       <Filter>Engine\Rendering\Text</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>Engine\Ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sge_sprite_form.cpp">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sge_animation.cpp">
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
   </ItemGroup>
@@ -163,9 +163,6 @@
       <Filter>Engine\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer2.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\animation.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\text_renderer.h">
@@ -340,6 +337,9 @@
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sge_sprite.h">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_animation.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
   </ItemGroup>

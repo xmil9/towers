@@ -2,16 +2,17 @@
 // Dec-2020, Michael Lindner
 // MIT license
 //
-#include "animation.h"
+#include "sge_animation.h"
 #include <algorithm>
 #include <iterator>
 #include <numeric>
 
 
+namespace sge
+{
 ///////////////////
 
-Animation::Animation(std::vector<sge::Sprite> sprites, std::vector<int> frames,
-                     bool repeat)
+Animation::Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat)
 : m_sprites{std::move(sprites)}, m_frames{std::move(frames)}, m_repeat{repeat},
   m_totalFrames{std::accumulate(m_frames.begin(), m_frames.end(), 0)}
 {
@@ -20,7 +21,7 @@ Animation::Animation(std::vector<sge::Sprite> sprites, std::vector<int> frames,
 }
 
 
-Animation& Animation::setRotation(sge::Angle_t rot)
+Animation& Animation::setRotation(Angle_t rot)
 {
    for (auto& sp : m_sprites)
       sp.setRotation(rot);
@@ -28,7 +29,7 @@ Animation& Animation::setRotation(sge::Angle_t rot)
 }
 
 
-Animation& Animation::setSize(sge::PixDim size)
+Animation& Animation::setSize(PixDim size)
 {
    for (auto& sp : m_sprites)
       sp.setSize(size);
@@ -44,7 +45,7 @@ Animation& Animation::scale(float factor)
 }
 
 
-Animation& Animation::rotate(sge::Angle_t rot)
+Animation& Animation::rotate(Angle_t rot)
 {
    for (auto& sp : m_sprites)
       sp.rotate(rot);
@@ -52,7 +53,7 @@ Animation& Animation::rotate(sge::Angle_t rot)
 }
 
 
-std::optional<const sge::Sprite*> Animation::currentFrame()
+std::optional<const Sprite*> Animation::currentFrame()
 {
    if (m_totalFrames == 0 || hasFinished())
       return std::nullopt;
@@ -62,7 +63,7 @@ std::optional<const sge::Sprite*> Animation::currentFrame()
 }
 
 
-std::optional<const sge::Sprite*> Animation::nextFrame()
+std::optional<const Sprite*> Animation::nextFrame()
 {
    if (m_totalFrames == 0 || (hasFinished() && !m_repeat))
       return std::nullopt;
@@ -86,10 +87,10 @@ void Animation::populateMaxFrameIndices()
 }
 
 
-sge::PixDim Animation::size(int frame) const
+PixDim Animation::size(int frame) const
 {
    const auto idx = calcSpriteIndex(frame);
-   return idx ? m_sprites[*idx].size() : sge::PixDim();
+   return idx ? m_sprites[*idx].size() : PixDim();
 }
 
 
@@ -106,3 +107,5 @@ void Animation::reset()
 {
    m_currFrame = 0;
 }
+
+} // namespace sge

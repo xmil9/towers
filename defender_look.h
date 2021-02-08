@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "animation.h"
 #include "renderer2.h"
+#include "sge_animation.h"
 #include "sge_sprite.h"
 
 
@@ -13,8 +13,8 @@
 class DefenderLook
 {
  public:
-   DefenderLook(const sge::Sprite& shape, Animation firing);
-   DefenderLook(sge::Sprite&& shape, Animation firing);
+   DefenderLook(const sge::Sprite& shape, sge::Animation firing);
+   DefenderLook(sge::Sprite&& shape, sge::Animation firing);
 
    sge::PixDim size() const { return m_shape.size(); }
 
@@ -26,16 +26,16 @@ class DefenderLook
 
  private:
    sge::Sprite m_shape;
-   Animation m_firing;
+   sge::Animation m_firing;
 };
 
 
-inline DefenderLook::DefenderLook(const sge::Sprite& shape, Animation firing)
+inline DefenderLook::DefenderLook(const sge::Sprite& shape, sge::Animation firing)
 : m_shape{shape}, m_firing{std::move(firing)}
 {
 }
 
-inline DefenderLook::DefenderLook(sge::Sprite&& shape, Animation firing)
+inline DefenderLook::DefenderLook(sge::Sprite&& shape, sge::Animation firing)
 : m_shape{std::move(shape)}, m_firing{std::move(firing)}
 {
 }

@@ -13,7 +13,10 @@
 #include "opengl_util/gll_program.h"
 #include "opengl_util/gll_uniform.h"
 
+namespace sge
+{
 class Animation;
+}
 class Resources;
 
 
@@ -31,8 +34,8 @@ class Renderer2
                      const sge::Color& tint = sge::NoColor);
    void renderSpriteCentered(const sge::Sprite& sprite, sge::PixPos center,
                              const sge::Color& tint = sge::NoColor);
-   void renderAnimation(Animation& anim, sge::PixPos leftTop, bool advanceFrame = true);
-   void renderAnimationCentered(Animation& anim, sge::PixPos center,
+   void renderAnimation(sge::Animation& anim, sge::PixPos leftTop, bool advanceFrame = true);
+   void renderAnimationCentered(sge::Animation& anim, sge::PixPos center,
                                 bool advanceFrame = true);
    void renderText(const std::string& text, sge::PixPos pos, float scale,
                    const sge::Color& color);

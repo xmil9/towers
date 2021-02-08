@@ -26,8 +26,8 @@ class Resources
    sge::PixDim getTextureSize(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
-   void addAnimation(const std::string& tag, Animation&& a);
-   const Animation& getAnimation(const std::string& tag) const;
+   void addAnimation(const std::string& tag, sge::Animation&& a);
+   const sge::Animation& getAnimation(const std::string& tag) const;
    void clearAnimations() { m_animationRepos.clear(); }
 
  private:
@@ -53,12 +53,12 @@ inline sge::PixDim Resources::getTextureSize(const std::string& tag) const
    return m_texRepos.size(tag);
 }
 
-inline void Resources::addAnimation(const std::string& tag, Animation&& a)
+inline void Resources::addAnimation(const std::string& tag, sge::Animation&& a)
 {
    m_animationRepos.add(tag, std::move(a));
 }
 
-inline const Animation& Resources::getAnimation(const std::string& tag) const
+inline const sge::Animation& Resources::getAnimation(const std::string& tag) const
 {
    return m_animationRepos[tag];
 }

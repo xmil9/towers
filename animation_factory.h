@@ -8,7 +8,10 @@
 #include <string>
 #include <unordered_map>
 
+namespace sge
+{
 class Animation;
+}
 
 
 class AnimationFactory
@@ -16,10 +19,10 @@ class AnimationFactory
  public:
    AnimationFactory();
 
-   Animation make(const std::string& tag, sge::PixDim size);
+   sge::Animation make(const std::string& tag, sge::PixDim size);
 
  private:
-   using FactoryFunc = std::function<Animation(sge::PixDim)>;
+   using FactoryFunc = std::function<sge::Animation(sge::PixDim)>;
 
  private:
    std::unordered_map<std::string, FactoryFunc> m_factories;

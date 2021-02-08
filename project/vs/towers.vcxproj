@@ -159,7 +159,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\animation.cpp" />
+    <ClCompile Include="..\..\sge_animation.cpp" />
     <ClCompile Include="..\..\animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
@@ -189,7 +189,7 @@
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\animation.h" />
+    <ClInclude Include="..\..\sge_animation.h" />
     <ClInclude Include="..\..\animations.h" />
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />

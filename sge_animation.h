@@ -3,12 +3,14 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include "sge_sprite.h"
 #include <optional>
 #include <vector>
 
 
+namespace sge
+{
 ///////////////////
 
 // Animates of a sequence of sprites.
@@ -17,30 +19,30 @@ class Animation
 {
  public:
    Animation() = default;
-   Animation(std::vector<sge::Sprite> sprites, std::vector<int> frames, bool repeat);
+   Animation(std::vector<Sprite> sprites, std::vector<int> frames, bool repeat);
 
    // Returns the size of the current frame's sprite.
-   sge::PixDim size() const { return size(m_currFrame); }
+   PixDim size() const { return size(m_currFrame); }
 
-   Animation& setRotation(sge::Angle_t rot);
+   Animation& setRotation(Angle_t rot);
    // Sets size of all sprites in the animation.
-   Animation& setSize(sge::PixDim size);
+   Animation& setSize(PixDim size);
    Animation& scale(float factor);
-   Animation& rotate(sge::Angle_t rot);
+   Animation& rotate(Angle_t rot);
 
    bool hasFinished() const { return m_currFrame >= m_totalFrames; }
-   std::optional<const sge::Sprite*> currentFrame();
-   std::optional<const sge::Sprite*> nextFrame();
+   std::optional<const Sprite*> currentFrame();
+   std::optional<const Sprite*> nextFrame();
 
  private:
    void populateMaxFrameIndices();
    // Returns the size of the sprite rendered for the given frame.
-   sge::PixDim size(int frame) const;
+   PixDim size(int frame) const;
    std::optional<std::size_t> calcSpriteIndex(int frame) const;
    void reset();
 
  private:
-   std::vector<sge::Sprite> m_sprites;
+   std::vector<Sprite> m_sprites;
    // Number of frames for how long each sprite is displayed.
    std::vector<int> m_frames;
    // Repeat the animation after it finishes.
@@ -51,3 +53,5 @@ class Animation
    std::vector<int> m_maxFrameIdx;
    int m_currFrame = 0;
 };
+
+} // namespace sge
