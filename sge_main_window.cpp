@@ -2,26 +2,30 @@
 // Oct-2020, Michael Lindner
 // MIT license
 //
-#include "main_window.h"
+#include "sge_main_window.h"
 #include <cassert>
 #include <limits>
 
 
-void MainWindow::setInputController(sge::InputController* controller)
+namespace sge
+{
+///////////////////
+
+void MainWindow::setInputController(InputController* controller)
 {
    assert(controller);
    m_inputController = controller;
 }
 
 
-sge::PixPos MainWindow::mousePosition() const
+PixPos MainWindow::mousePosition() const
 {
    const auto mousePos = cursorPosition();
    if (!mousePos)
-      return sge::PixPos{-1.f, -1.f};
+      return PixPos{-1.f, -1.f};
 
-   return {static_cast<sge::PixCoord>(mousePos->first),
-           static_cast<sge::PixCoord>(mousePos->second)};
+   return {static_cast<PixCoord>(mousePos->first),
+           static_cast<PixCoord>(mousePos->second)};
 }
 
 
@@ -77,3 +81,5 @@ void MainWindow::onWindowMouseButtonChanged(gfl::MouseButton button, int action,
    if (m_inputController)
       m_inputController->onMouseButtonChanged(button, action, mods, xpos, ypos);
 }
+
+} // namespace sge

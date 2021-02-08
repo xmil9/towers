@@ -168,7 +168,7 @@
     <ClCompile Include="..\..\defender_factory.cpp" />
     <ClCompile Include="..\..\hp_renderer.cpp" />
     <ClCompile Include="..\..\label.cpp" />
-    <ClCompile Include="..\..\main_window.cpp" />
+    <ClCompile Include="..\..\sge_main_window.cpp" />
     <ClCompile Include="..\..\camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
@@ -218,7 +218,7 @@
     <ClInclude Include="..\..\map_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
-    <ClInclude Include="..\..\main_window.h" />
+    <ClInclude Include="..\..\sge_main_window.h" />
     <ClInclude Include="..\..\camera_2d.h" />
     <ClInclude Include="..\..\camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />

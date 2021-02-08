@@ -23,9 +23,6 @@
     <ClCompile Include="..\..\renderer2.cpp">
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\main_window.cpp">
-      <Filter>Engine\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\sprite_form.cpp">
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>Engine\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sge_input.cpp">
+      <Filter>Engine\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sge_main_window.cpp">
       <Filter>Engine\Ui</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,9 +182,6 @@
     </ClInclude>
     <ClInclude Include="..\..\mesh2.h">
       <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\main_window.h">
-      <Filter>Engine\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\animation.h">
       <Filter>Engine\Rendering\2d</Filter>
@@ -340,6 +337,9 @@
       <Filter>Engine\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sge_input_controller.h">
+      <Filter>Engine\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_main_window.h">
       <Filter>Engine\Ui</Filter>
     </ClInclude>
   </ItemGroup>

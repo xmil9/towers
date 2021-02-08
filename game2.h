@@ -12,13 +12,13 @@
 #include "defender.h"
 #include "defender_factory.h"
 #include "hp_renderer.h"
-#include "main_window.h"
 #include "map.h"
 #include "map_coord_sys.h"
 #include "place_session.h"
 #include "renderer2.h"
 #include "resources.h"
 #include "sge_input.h"
+#include "sge_main_window.h"
 #include "sge_types.h"
 #include "sprite.h"
 #include "state.h"
@@ -73,7 +73,7 @@ class Game2 : private Commands, private State
    void addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos);
    void placeDefender(const sge::PixPos& mousePos);
 
-   void onMainWindowChanged(MainWindow& src, std::string_view event,
+   void onMainWindowChanged(sge::MainWindow& src, std::string_view event,
                             const esl::ObservedEventData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
@@ -118,7 +118,7 @@ class Game2 : private Commands, private State
    Resources m_resources;
    sge::FrameClock m_frameClock;
    gfl::Lib m_glfw;
-   MainWindow m_mainWnd;
+   sge::MainWindow m_mainWnd;
    sge::Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;
    Renderer2 m_renderer;

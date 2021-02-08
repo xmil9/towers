@@ -119,7 +119,7 @@ bool Game2::setupUi()
 bool Game2::setupMainWindow()
 {
    m_mainWnd.setInputController(&m_input);
-   m_mainWnd.addObserver([this](MainWindow& src, std::string_view event,
+   m_mainWnd.addObserver([this](sge::MainWindow& src, std::string_view event,
                                 const esl::ObservedEventData& data) {
       onMainWindowChanged(src, event, data);
    });
@@ -541,12 +541,13 @@ void Game2::placeDefender(const sge::PixPos& mousePos)
 }
 
 
-void Game2::onMainWindowChanged(MainWindow& /*src*/, std::string_view event,
+void Game2::onMainWindowChanged(sge::MainWindow& /*src*/, std::string_view event,
                                 const esl::ObservedEventData& data)
 {
-   if (event == WindowResizedEvent)
+   if (event == sge::WindowResizedEvent)
    {
-      const WindowResizedData& resizeData = static_cast<const WindowResizedData&>(data);
+      const sge::WindowResizedData& resizeData =
+         static_cast<const sge::WindowResizedData&>(data);
       onMainWindowResize(resizeData.newSize);
    }
 }

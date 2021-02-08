@@ -3,18 +3,22 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include "sge_input_controller.h"
 #include "essentutils/observed.h"
 #include "glm/vec2.hpp"
 #include "opengl_util/gfl_window.h"
 
 
+namespace sge
+{
+///////////////////
+
 class MainWindow : public gfl::Window, public esl::Observed<MainWindow>
 {
  public:
-   void setInputController(sge::InputController* controller);
-   sge::PixPos mousePosition() const;
+   void setInputController(InputController* controller);
+   PixPos mousePosition() const;
 
  protected:
    void onWindowResized(int width, int height) override;
@@ -25,7 +29,7 @@ class MainWindow : public gfl::Window, public esl::Observed<MainWindow>
                                    double xpos, double ypos) override;
 
  private:
-   sge::InputController* m_inputController = nullptr;
+   InputController* m_inputController = nullptr;
    glm::ivec2 m_wndSize{0, 0};
 };
 
@@ -41,3 +45,5 @@ struct WindowResizedData : public esl::ObservedEventData
    // Difference to previous size.
    glm::ivec2 diff{0, 0};
 };
+
+} // namespace sge

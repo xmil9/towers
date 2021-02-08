@@ -4,9 +4,9 @@
 //
 #pragma once
 #include "basic_types.h"
-#include "main_window.h"
 #include "renderer3.h"
 #include "sge_input.h"
+#include "sge_main_window.h"
 #include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gfl_lib.h"
@@ -28,7 +28,7 @@ class Game3
    bool setupInput();
    bool setupOutput();
 
-   void onMainWindowChanged(MainWindow& src, std::string_view event,
+   void onMainWindowChanged(sge::MainWindow& src, std::string_view event,
                             const esl::ObservedEventData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
@@ -44,7 +44,7 @@ class Game3
  private:
    sge::FrameClock m_frameClock;
    gfl::Lib m_glfw;
-   MainWindow m_mainWnd;
+   sge::MainWindow m_mainWnd;
    sge::Input m_input;
    Renderer3 m_renderer;
 };
