@@ -62,8 +62,8 @@ void Renderer2::renderAnimationCentered(sge::Animation& anim, sge::PixPos center
 
 bool Renderer2::setupShaders(const std::filesystem::path& shaderPath)
 {
-   gll::Shader vs{gll::makeVertexShader(shaderPath / "sprite_shader.vs")};
-   gll::Shader fs{gll::makeFragmentShader(shaderPath / "sprite_shader.fs")};
+   gll::Shader vs{gll::makeVertexShader(shaderPath / "sge_sprite_shader.vs")};
+   gll::Shader fs{gll::makeFragmentShader(shaderPath / "sge_sprite_shader.fs")};
    if (!vs || !fs)
       return false;
 

@@ -353,10 +353,10 @@
     <None Include="..\..\shaders\cube3_shader.vs">
       <Filter>Engine\Rendering\3d</Filter>
     </None>
-    <None Include="..\..\shaders\sprite_shader.fs">
+    <None Include="..\..\shaders\sge_sprite_shader.vs">
       <Filter>Engine\Rendering\2d</Filter>
     </None>
-    <None Include="..\..\shaders\sprite_shader.vs">
+    <None Include="..\..\shaders\sge_sprite_shader.fs">
       <Filter>Engine\Rendering\2d</Filter>
     </None>
   </ItemGroup>
