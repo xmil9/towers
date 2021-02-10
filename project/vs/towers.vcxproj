@@ -182,7 +182,7 @@
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\sge_sprite_form.cpp" />
-    <ClCompile Include="..\..\sprite_renderer.cpp" />
+    <ClCompile Include="..\..\sge_sprite_renderer.cpp" />
     <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
     <ClCompile Include="..\..\text_renderer.cpp" />
@@ -247,7 +247,7 @@
     <ClInclude Include="..\..\resources.h" />
     <ClInclude Include="..\..\renderer2.h" />
     <ClInclude Include="..\..\sge_sprite.h" />
-    <ClInclude Include="..\..\sprite_renderer.h" />
+    <ClInclude Include="..\..\sge_sprite_renderer.h" />
     <ClInclude Include="..\..\map.h" />
     <ClInclude Include="..\..\map_data.h" />
     <ClInclude Include="..\..\state.h" />

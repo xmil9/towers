@@ -3,11 +3,11 @@
 // MIT license
 //
 #pragma once
-#include "sprite_renderer.h"
 #include "text_renderer.h"
 #include "sge_camera_2d.h"
 #include "sge_frustum2.h"
 #include "sge_sprite.h"
+#include "sge_sprite_renderer.h"
 #include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_program.h"
@@ -51,7 +51,7 @@ class Renderer2
    sge::Camera2d m_cam;
    sge::Frustum2 m_frustum;
    gll::Program m_shaders;
-   std::unique_ptr<SpriteRenderer> m_spriteRenderer;
+   std::unique_ptr<sge::SpriteRenderer> m_spriteRenderer;
    std::unique_ptr<TextRenderer> m_textRenderer;
 };
 

@@ -20,6 +20,9 @@ namespace sge
 class Sprite;
 }
 
+
+namespace sge
+{
 ///////////////////
 
 class SpriteRenderer
@@ -34,12 +37,12 @@ class SpriteRenderer
    SpriteRenderer& operator=(SpriteRenderer&&) = default;
 
    bool setup();
-   void render(gll::Program& shaders, const sge::Sprite& sprite, sge::PixPos leftTop,
-               const sge::Color& tint = sge::NoColor) const;
+   void render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop,
+               const Color& tint = NoColor) const;
 
  private:
    bool setupData();
-   void makeVao(const sge::Mesh2& mesh);
+   void makeVao(const Mesh2& mesh);
 
  private:
    Resources* m_resources = nullptr;
@@ -51,3 +54,5 @@ class SpriteRenderer
 inline SpriteRenderer::SpriteRenderer(Resources* resources) : m_resources{resources}
 {
 }
+
+} // namespace sge

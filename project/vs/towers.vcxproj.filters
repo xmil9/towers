@@ -17,9 +17,6 @@
     <ClCompile Include="..\..\renderer3.cpp">
       <Filter>Engine\Rendering\3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sprite_renderer.cpp">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\renderer2.cpp">
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sge_animation.cpp">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sge_sprite_renderer.cpp">
       <Filter>Engine\Rendering\2d</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="..\..\renderer3.h">
       <Filter>Engine\Rendering\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sprite_renderer.h">
-      <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cube3_data.h">
       <Filter>Engine\Rendering\3d</Filter>
@@ -340,6 +337,9 @@
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sge_animation.h">
+      <Filter>Engine\Rendering\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_sprite_renderer.h">
       <Filter>Engine\Rendering\2d</Filter>
     </ClInclude>
   </ItemGroup>

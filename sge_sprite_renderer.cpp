@@ -2,7 +2,7 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "sprite_renderer.h"
+#include "sge_sprite_renderer.h"
 #include "resources.h"
 #include "sge_sprite.h"
 #include "opengl_util/gll_binding.h"
@@ -48,6 +48,8 @@ glm::mat4x4 calcModelMatrix(const sge::PixPos& pos, const sge::PixDim& size,
 } // namespace
 
 
+namespace sge
+{
 ///////////////////
 
 bool SpriteRenderer::setup()
@@ -56,8 +58,8 @@ bool SpriteRenderer::setup()
 }
 
 
-void SpriteRenderer::render(gll::Program& shaders, const sge::Sprite& sprite,
-                            sge::PixPos leftTop, const sge::Color& tint) const
+void SpriteRenderer::render(gll::Program& shaders, const Sprite& sprite, PixPos leftTop,
+                            const Color& tint) const
 {
    gll::BindingScope<gll::Texture2D> texBinding;
    if (sprite.hasTexture())
@@ -86,15 +88,15 @@ bool SpriteRenderer::setupData()
 {
    // Coord system for vertex coordinates is:
    // (0, 0) - left-top, (1, 1) - right-bottom
-   const std::vector<sge::Mesh2::Point> positions = {
+   const std::vector<Mesh2::Point> positions = {
       {0.f, 1.f}, {1.f, 1.f}, {1.f, 0.f}, {0.f, 0.f}};
    // Triangle vertices are ordered ccw.
-   const std::vector<sge::Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
+   const std::vector<Mesh2::VertexIdx> indices = {0, 1, 2, 2, 3, 0};
    // Coord system for texture coordinates is:
    // (0, 0) - left-bottom, (1, 1) - right-top
-   const std::vector<sge::Mesh2::Point> texCoords = positions;
+   const std::vector<Mesh2::Point> texCoords = positions;
 
-   sge::Mesh2 mesh;
+   Mesh2 mesh;
    mesh.setPositions(positions);
    mesh.setIndices(indices);
    mesh.setTextureCoords(texCoords);
@@ -106,7 +108,7 @@ bool SpriteRenderer::setupData()
 }
 
 
-void SpriteRenderer::makeVao(const sge::Mesh2& mesh)
+void SpriteRenderer::makeVao(const Mesh2& mesh)
 {
    m_vao.create();
    m_vao.bind();
@@ -138,3 +140,5 @@ void SpriteRenderer::makeVao(const sge::Mesh2& mesh)
    texCoordVbo.unbind(GL_ARRAY_BUFFER);
    elemVbo.unbind(GL_ELEMENT_ARRAY_BUFFER);
 }
+
+} // namespace sge

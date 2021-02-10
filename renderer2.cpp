@@ -13,7 +13,7 @@ bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
    assert(resources);
 
    m_resources = resources;
-   m_spriteRenderer = std::make_unique<SpriteRenderer>(resources);
+   m_spriteRenderer = std::make_unique<sge::SpriteRenderer>(resources);
    m_textRenderer = std::make_unique<TextRenderer>(resources);
 
    const std::filesystem::path fontPath = m_resources->fontPath() / "arial.ttf";
