@@ -15,11 +15,11 @@
 #include "map.h"
 #include "map_coord_sys.h"
 #include "place_session.h"
-#include "renderer2.h"
 #include "resources.h"
 #include "state.h"
 #include "sge_input.h"
 #include "sge_main_window.h"
+#include "sge_renderer2.h"
 #include "sge_sprite.h"
 #include "sge_types.h"
 #include "opengl_util/gfl_lib.h"
@@ -121,7 +121,7 @@ class Game2 : private Commands, private State
    sge::MainWindow m_mainWnd;
    sge::Input m_input;
    std::unique_ptr<MapCoordSys> m_coordSys;
-   Renderer2 m_renderer;
+   sge::Renderer2 m_renderer;
    std::unique_ptr<HpRenderer> m_hpRenderer;
    std::unique_ptr<AttackerFactory> m_attackFactory;
    AttackerMap m_attackers;

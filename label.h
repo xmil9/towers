@@ -8,7 +8,10 @@
 #include <functional>
 #include <string>
 
+namespace sge
+{
 class Renderer2;
+}
 
 
 ///////////////////
@@ -26,7 +29,7 @@ class Label
    void setPosition(const sge::PixPos& leftTop) { m_leftTop = leftTop; }
    sge::PixDim dim() const { return m_dim; }
    void setDim(const sge::PixDim& dim) { m_dim = dim; }
-   void render(Renderer2& renderer, const sge::PixPos& offset);
+   void render(sge::Renderer2& renderer, const sge::PixPos& offset);
 
  private:
    float m_textScale = 1.f;

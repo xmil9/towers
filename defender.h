@@ -4,8 +4,8 @@
 //
 #pragma once
 #include "laser_turret.h"
-#include "renderer2.h"
 #include "sonic_mortar.h"
+#include "sge_renderer2.h"
 #include <optional>
 #include <variant>
 
@@ -24,7 +24,7 @@ class Defender
    int cost() const;
    MapCoord range() const;
    MapPos center() const;
-   void render(Renderer2& renderer, bool isPaused);
+   void render(sge::Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
 
@@ -69,7 +69,7 @@ inline MapPos Defender::center() const
    return {0.f, 0.f};
 }
 
-inline void Defender::render(Renderer2& renderer, bool isPaused)
+inline void Defender::render(sge::Renderer2& renderer, bool isPaused)
 {
    if (m_defender)
       std::visit([&](auto& defender) { defender.render(renderer, isPaused); },

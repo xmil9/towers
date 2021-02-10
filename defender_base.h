@@ -7,8 +7,8 @@
 #include "defender_look.h"
 #include "map_coord_sys.h"
 #include "path.h"
-#include "renderer2.h"
 #include "target_scan.h"
+#include "sge_renderer2.h"
 #include "essentutils/fputil.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
@@ -38,7 +38,7 @@ template <typename Derived> class DefenderBase
    int cost() const { return baseAttribs().cost; }
    MapCoord range() const { return baseAttribs().range; }
    MapPos center() const { return m_center; }
-   void render(Renderer2& renderer, bool isPaused);
+   void render(sge::Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
    bool isInRange(const Attacker& attacker) const;
@@ -87,7 +87,7 @@ DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, MapCoord siz
 
 
 template <typename Derived>
-void DefenderBase<Derived>::render(Renderer2& renderer, bool isPaused)
+void DefenderBase<Derived>::render(sge::Renderer2& renderer, bool isPaused)
 {
    const sge::PixPos center = m_coordSys->toRenderCoords(m_center);
 

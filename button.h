@@ -8,7 +8,10 @@
 #include <functional>
 #include <utility>
 
+namespace sge
+{
 class Renderer2;
+}
 
 
 ///////////////////
@@ -23,7 +26,7 @@ class Button
               IsEnabledFn isEnabledFn, const sge::PixPos& leftTop,
               const sge::PixDim& dim);
    void setContent(sge::Sprite&& content);
-   void render(Renderer2& renderer, const sge::PixPos& offset);
+   void render(sge::Renderer2& renderer, const sge::PixPos& offset);
    bool isHit(const sge::PixPos& pos) const;
    bool isEnabled() const { return m_isEnabledFn(); }
 

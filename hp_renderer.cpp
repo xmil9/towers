@@ -3,11 +3,10 @@
 // MIT license
 //
 #include "hp_renderer.h"
-#include "renderer2.h"
+#include "sge_renderer2.h"
 
 
-
-void HpRenderer::render(Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio)
+void HpRenderer::render(sge::Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio)
 {
    // Adjust hp size to given ratio.
    const sge::PixDim fullDim = m_status.size();

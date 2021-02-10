@@ -9,10 +9,10 @@
 #include "laser_turret.h"
 #include "map_coord_sys.h"
 #include "place_session.h"
-#include "renderer2.h"
 #include "sonic_mortar.h"
 #include "state.h"
 #include "texture_tags.h"
+#include "sge_renderer2.h"
 #include "sge_sprite.h"
 #include "essentutils/string_util.h"
 #include <memory>
@@ -102,7 +102,7 @@ Dashboard::Dashboard(sge::PixCoordi width, sge::PixCoordi height, Commands* comm
 }
 
 
-bool Dashboard::setup(const Renderer2& renderer, const MapCoordSys* cs)
+bool Dashboard::setup(const sge::Renderer2& renderer, const MapCoordSys* cs)
 {
    assert(cs);
    m_mapCoordSys = cs;
@@ -115,7 +115,7 @@ bool Dashboard::setup(const Renderer2& renderer, const MapCoordSys* cs)
 }
 
 
-void Dashboard::render(Renderer2& renderer, const sge::PixPos& at)
+void Dashboard::render(sge::Renderer2& renderer, const sge::PixPos& at)
 {
    renderer.renderSprite(m_background, at);
    m_creditsLabel.render(renderer, at);
@@ -177,7 +177,7 @@ bool Dashboard::onLeftButtonReleased(const glm::vec2& /*mousePosInDash*/)
 }
 
 
-void Dashboard::setupCreditsElements(const Renderer2& renderer)
+void Dashboard::setupCreditsElements(const sge::Renderer2& renderer)
 {
    const sge::PixDim ceditsLabelDim = renderer.measureText(CreditsText, CreditsTextScale);
    m_creditsLabel.setup([]() { return CreditsText; }, CreditsPos * m_dim, ceditsLabelDim);

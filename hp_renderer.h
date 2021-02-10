@@ -6,25 +6,28 @@
 #include "coords.h"
 #include "sge_sprite.h"
 
+namespace sge
+{
 class Renderer2;
+}
 
 
 ///////////////////
 
 class HpRenderer
 {
-public:
+ public:
    HpRenderer(sge::Sprite&& status, sge::PixVec offset);
 
-   void render(Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio);
+   void render(sge::Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio);
 
-private:
+ private:
    sge::Sprite m_status;
    sge::PixVec m_offset{0.f, 0.f};
 };
 
 
 inline HpRenderer::HpRenderer(sge::Sprite&& status, sge::PixVec offset)
-   : m_status{std::move(status)}, m_offset{offset}
+: m_status{std::move(status)}, m_offset{offset}
 {
 }

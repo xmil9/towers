@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "button.h"
-#include "renderer2.h"
+#include "sge_renderer2.h"
 
 
 ///////////////////
@@ -27,7 +27,7 @@ void Button::setup(const sge::Sprite& background, sge::Sprite&& content,
 }
 
 
-void Button::render(Renderer2& renderer, const sge::PixPos& offset)
+void Button::render(sge::Renderer2& renderer, const sge::PixPos& offset)
 {
    sge::Color tint = m_isEnabledFn() ? sge::NoColor : DisabledTint;
 

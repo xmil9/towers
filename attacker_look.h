@@ -4,9 +4,9 @@
 //
 #pragma once
 #include "hp_renderer.h"
-#include "renderer2.h"
 #include "texture_tags.h"
 #include "sge_animation.h"
+#include "sge_renderer2.h"
 #include "sge_sprite.h"
 
 
@@ -23,9 +23,9 @@ class AttackerLook
    AttackerLook& setSize(sge::PixDim size);
    AttackerLook& setRotation(sge::Angle_t rot);
 
-   void render(Renderer2& renderer, sge::PixPos atCenter, bool isAlive, float hpRatio,
-               bool isHit);
-   void renderExploded(Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
+   void render(sge::Renderer2& renderer, sge::PixPos atCenter, bool isAlive,
+               float hpRatio, bool isHit);
+   void renderExploded(sge::Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
 
    bool hasExplosionFinished() const { return m_explosion.hasFinished(); }
 
@@ -63,8 +63,8 @@ inline AttackerLook& AttackerLook::setRotation(sge::Angle_t rot)
    return *this;
 }
 
-inline void AttackerLook::render(Renderer2& renderer, sge::PixPos atCenter, bool isAlive,
-                                 float hpRatio, bool isHit)
+inline void AttackerLook::render(sge::Renderer2& renderer, sge::PixPos atCenter,
+                                 bool isAlive, float hpRatio, bool isHit)
 {
    if (isHit)
       renderer.renderSpriteCentered(m_shapeHit, atCenter);
@@ -75,7 +75,7 @@ inline void AttackerLook::render(Renderer2& renderer, sge::PixPos atCenter, bool
       m_hpRenderer->render(renderer, atCenter, hpRatio);
 }
 
-inline void AttackerLook::renderExploded(Renderer2& renderer, sge::PixPos atCenter,
+inline void AttackerLook::renderExploded(sge::Renderer2& renderer, sge::PixPos atCenter,
                                          bool isPaused)
 {
    // Also draw the attacker so that the explosion appears on top of it.

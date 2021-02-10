@@ -2,18 +2,22 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "renderer2.h"
 #include "resources.h"
+#include "sge_renderer2.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "opengl_util/gll_shader.h"
 
+
+namespace sge
+{
+///////////////////
 
 bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
 {
    assert(resources);
 
    m_resources = resources;
-   m_spriteRenderer = std::make_unique<sge::SpriteRenderer>(resources);
+   m_spriteRenderer = std::make_unique<SpriteRenderer>(resources);
    m_textRenderer = std::make_unique<TextRenderer>(resources);
 
    const std::filesystem::path fontPath = m_resources->fontPath() / "arial.ttf";
@@ -39,8 +43,7 @@ void Renderer2::beginRendering()
 }
 
 
-void Renderer2::renderAnimation(sge::Animation& anim, sge::PixPos leftTop,
-                                bool advanceFrame)
+void Renderer2::renderAnimation(Animation& anim, PixPos leftTop, bool advanceFrame)
 {
    const auto sprite = advanceFrame ? anim.nextFrame() : anim.currentFrame();
    if (sprite)
@@ -48,13 +51,12 @@ void Renderer2::renderAnimation(sge::Animation& anim, sge::PixPos leftTop,
 }
 
 
-void Renderer2::renderAnimationCentered(sge::Animation& anim, sge::PixPos center,
-                                        bool advanceFrame)
+void Renderer2::renderAnimationCentered(Animation& anim, PixPos center, bool advanceFrame)
 {
    const auto sprite = advanceFrame ? anim.nextFrame() : anim.currentFrame();
    if (sprite)
    {
-      const sge::PixPos leftTop = center - .5f * (*sprite)->size();
+      const PixPos leftTop = center - .5f * (*sprite)->size();
       m_spriteRenderer->render(m_shaders, **sprite, leftTop);
    }
 }
@@ -98,3 +100,5 @@ bool Renderer2::setupSettings(int viewWidth, int viewHeight)
 
    return true;
 }
+
+} // namespace sge

@@ -11,8 +11,11 @@
 struct Commands;
 class MapCoordSys;
 struct PlaceSession;
-class Renderer2;
 struct State;
+namespace sge
+{
+class Renderer2;
+}
 
 
 ///////////////////
@@ -22,13 +25,13 @@ class Dashboard
  public:
    Dashboard(sge::PixCoordi width, sge::PixCoordi height, Commands* commands, State* state);
 
-   bool setup(const Renderer2& renderer, const MapCoordSys* cs);
-   void render(Renderer2& renderer, const sge::PixPos& at);
+   bool setup(const sge::Renderer2& renderer, const MapCoordSys* cs);
+   void render(sge::Renderer2& renderer, const sge::PixPos& at);
    bool onLeftButtonPressed(const sge::PixPos& mousePosInDash);
    bool onLeftButtonReleased(const sge::PixPos& mousePosInDash);
 
  private:
-   void setupCreditsElements(const Renderer2& renderer);
+   void setupCreditsElements(const sge::Renderer2& renderer);
    void setupDefenderElements();
    void setupGameflowElements();
 

@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "label.h"
-#include "renderer2.h"
+#include "sge_renderer2.h"
 
 
 ///////////////////
@@ -18,7 +18,7 @@ void Label::setup(GetTextFn getTextFn, const sge::PixPos& leftTop, const sge::Pi
 }
 
 
-void Label::render(Renderer2& renderer, const sge::PixPos& offset)
+void Label::render(sge::Renderer2& renderer, const sge::PixPos& offset)
 {
    renderer.renderText(m_getTextFn(), offset + m_leftTop, m_textScale, m_textColor);
 }

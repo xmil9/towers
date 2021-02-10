@@ -178,7 +178,7 @@
     <ClCompile Include="..\..\sge_input.cpp" />
     <ClCompile Include="..\..\path.cpp" />
     <ClCompile Include="..\..\sge_png_texture.cpp" />
-    <ClCompile Include="..\..\renderer2.cpp" />
+    <ClCompile Include="..\..\sge_renderer2.cpp" />
     <ClCompile Include="..\..\renderer3.cpp" />
     <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\sge_sprite_form.cpp" />
@@ -245,7 +245,7 @@
     <ClInclude Include="..\..\sge_point2.h" />
     <ClInclude Include="..\..\renderer3.h" />
     <ClInclude Include="..\..\resources.h" />
-    <ClInclude Include="..\..\renderer2.h" />
+    <ClInclude Include="..\..\sge_renderer2.h" />
     <ClInclude Include="..\..\sge_sprite.h" />
     <ClInclude Include="..\..\sge_sprite_renderer.h" />
     <ClInclude Include="..\..\map.h" />

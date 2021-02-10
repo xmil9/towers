@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "renderer2.h"
 #include "sge_animation.h"
+#include "sge_renderer2.h"
 #include "sge_sprite.h"
 
 
@@ -21,8 +21,8 @@ class DefenderLook
    DefenderLook& setSize(sge::PixDim size);
    DefenderLook& setRotation(sge::Angle_t rot);
 
-   void render(Renderer2& renderer, sge::PixPos atCenter);
-   void renderFiring(Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
+   void render(sge::Renderer2& renderer, sge::PixPos atCenter);
+   void renderFiring(sge::Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
 
  private:
    sge::Sprite m_shape;
@@ -54,12 +54,12 @@ inline DefenderLook& DefenderLook::setRotation(sge::Angle_t rot)
    return *this;
 }
 
-inline void DefenderLook::render(Renderer2& renderer, sge::PixPos atCenter)
+inline void DefenderLook::render(sge::Renderer2& renderer, sge::PixPos atCenter)
 {
    renderer.renderSpriteCentered(m_shape, atCenter);
 }
 
-inline void DefenderLook::renderFiring(Renderer2& renderer, sge::PixPos atCenter,
+inline void DefenderLook::renderFiring(sge::Renderer2& renderer, sge::PixPos atCenter,
                                        bool isPaused)
 {
    renderer.renderAnimationCentered(m_firing, atCenter, !isPaused);
