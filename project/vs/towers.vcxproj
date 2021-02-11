@@ -172,7 +172,7 @@
     <ClCompile Include="..\..\sge_camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
-    <ClCompile Include="..\..\frustum3.cpp" />
+    <ClCompile Include="..\..\sge_frustum3.cpp" />
     <ClCompile Include="..\..\game2.cpp" />
     <ClCompile Include="..\..\game3.cpp" />
     <ClCompile Include="..\..\sge_input.cpp" />
@@ -229,7 +229,7 @@
     <ClInclude Include="..\..\sge_input_controller.h" />
     <ClInclude Include="..\..\sge_lap_clock.h" />
     <ClInclude Include="..\..\deps\stb\stb_image.h" />
-    <ClInclude Include="..\..\frustum3.h" />
+    <ClInclude Include="..\..\sge_frustum3.h" />
     <ClInclude Include="..\..\sge_input.h" />
     <ClInclude Include="..\..\mobile_cannon.h" />
     <ClInclude Include="..\..\sge_norm_coords.h" />

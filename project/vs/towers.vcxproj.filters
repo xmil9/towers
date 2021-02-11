@@ -8,9 +8,6 @@
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Engine\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\frustum3.cpp">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\renderer3.cpp">
       <Filter>Engine\Rendering\3d</Filter>
     </ClCompile>
@@ -83,6 +80,9 @@
     <ClCompile Include="..\..\sge_camera_fps.cpp">
       <Filter>Engine\Rendering\3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sge_frustum3.cpp">
+      <Filter>Engine\Rendering\3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">
@@ -146,9 +146,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Engine\Stb</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\frustum3.h">
-      <Filter>Engine\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer3.h">
       <Filter>Engine\Rendering\3d</Filter>
@@ -344,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_direction.h">
       <Filter>Engine\Coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_frustum3.h">
+      <Filter>Engine\Rendering\3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

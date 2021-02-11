@@ -9,6 +9,10 @@
 #include <string>
 
 
+namespace sge
+{
+///////////////////
+
 // Represents the section of view space that is visible.
 // Content within this space will be rendered. Content outside will be clipped off.
 // Defines the clip space of the coordinate transformation sequence:
@@ -25,7 +29,7 @@ class Frustum3
 
  private:
    // The horizontal field-of-view angle. Defines how wide the frustum is.
-   sge::Angle_t m_horzFov = sge::Angle_t::fromDegrees(45.0f);
+   Angle_t m_horzFov = Angle_t::fromDegrees(45.0f);
    // Aspect ratio of horizontal to vertical size of the frustum.
    float m_aspect = 1.0f;
    // Coordinates (along the central axis) of the near and far planes that cut off the
@@ -39,3 +43,5 @@ inline glm::mat4x4 Frustum3::projectionMatrix() const
 {
    return glm::perspective(m_horzFov.radians(), m_aspect, m_nearPlane, m_farPlane);
 }
+
+} // namespace sge

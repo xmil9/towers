@@ -3,9 +3,9 @@
 // MIT license
 //
 #pragma once
-#include "frustum3.h"
 #include "sge_camera_fps.h"
 #include "sge_direction.h"
+#include "sge_frustum3.h"
 #include "glm/matrix.hpp"
 #include "opengl_util/gll_data_format.h"
 #include "opengl_util/gll_program.h"
@@ -37,7 +37,7 @@ class Renderer3
 
  private:
    sge::CameraFps m_cam;
-   Frustum3 m_frustum;
+   sge::Frustum3 m_frustum;
 
    // Matrix to transform object coords to world coords.
    glm::mat4 m_modelMat{0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f, 0.f,
