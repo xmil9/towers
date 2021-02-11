@@ -2,7 +2,7 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "camera_fps.h"
+#include "sge_camera_fps.h"
 #include "essentutils/math_util.h"
 #include <cassert>
 #include <cmath>
@@ -18,6 +18,8 @@ constexpr sge::Angle_t MinPitch{sge::Angle_t::fromDegrees(-89.0f)};
 } // namespace
 
 
+namespace sge
+{
 ///////////////////
 
 void CameraFps::updateDirection(const glm::vec2& offset)
@@ -55,3 +57,5 @@ glm::vec3 CameraFps::directionVector(DirectionXZ dir) const
    assert(false && "Unexpected direction.");
    return {};
 }
+
+} // namespace sge

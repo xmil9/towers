@@ -169,7 +169,7 @@
     <ClCompile Include="..\..\hp_renderer.cpp" />
     <ClCompile Include="..\..\label.cpp" />
     <ClCompile Include="..\..\sge_main_window.cpp" />
-    <ClCompile Include="..\..\camera_fps.cpp" />
+    <ClCompile Include="..\..\sge_camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\frustum3.cpp" />
@@ -212,6 +212,7 @@
     <ClInclude Include="..\..\defender_models.h" />
     <ClInclude Include="..\..\hp_renderer.h" />
     <ClInclude Include="..\..\sge_coords.h" />
+    <ClInclude Include="..\..\sge_direction.h" />
     <ClInclude Include="..\..\sge_int_coords.h" />
     <ClInclude Include="..\..\label.h" />
     <ClInclude Include="..\..\laser_turret.h" />
@@ -220,7 +221,7 @@
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\sge_main_window.h" />
     <ClInclude Include="..\..\sge_camera_2d.h" />
-    <ClInclude Include="..\..\camera_fps.h" />
+    <ClInclude Include="..\..\sge_camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />
     <ClInclude Include="..\..\sge_frustum2.h" />
     <ClInclude Include="..\..\game2.h" />

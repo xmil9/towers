@@ -168,18 +168,18 @@ void Game3::onKeyPolled(gfl::Key key, float frameLengthSecs)
 }
 
 
-std::optional<DirectionXZ> Game3::getCameraDirection(gfl::Key key) const
+std::optional<sge::DirectionXZ> Game3::getCameraDirection(gfl::Key key) const
 {
    switch (key)
    {
    case GLFW_KEY_W:
-      return DirectionXZ::Forward;
+      return sge::DirectionXZ::Forward;
    case GLFW_KEY_S:
-      return DirectionXZ::Backward;
+      return sge::DirectionXZ::Backward;
    case GLFW_KEY_A:
-      return DirectionXZ::Left;
+      return sge::DirectionXZ::Left;
    case GLFW_KEY_D:
-      return DirectionXZ::Right;
+      return sge::DirectionXZ::Right;
    default:
       return std::nullopt;
    }

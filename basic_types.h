@@ -6,14 +6,6 @@
 #include <cstdint>
 
 
-enum class DirectionXZ
-{
-   Left,
-   Right,
-   Forward,
-   Backward
-};
-
 template<typename T>
 constexpr T UiScale(T val)
 {

@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
 #include "renderer3.h"
+#include "sge_direction.h"
 #include "sge_input.h"
 #include "sge_main_window.h"
 #include "sge_types.h"
@@ -38,7 +38,7 @@ class Game3
    void onMouseScrolled(const glm::vec2& delta);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
-   std::optional<DirectionXZ> getCameraDirection(gfl::Key key) const;
+   std::optional<sge::DirectionXZ> getCameraDirection(gfl::Key key) const;
    void updateCameraPosition(gfl::Key key, float frameLengthSecs);
 
  private:

@@ -3,9 +3,9 @@
 // MIT license
 //
 #pragma once
-#include "basic_types.h"
-#include "camera_fps.h"
 #include "frustum3.h"
+#include "sge_camera_fps.h"
+#include "sge_direction.h"
 #include "glm/matrix.hpp"
 #include "opengl_util/gll_data_format.h"
 #include "opengl_util/gll_program.h"
@@ -26,7 +26,7 @@ class Renderer3
    void setFrustumAspect(float aspect) { m_frustum.setAspect(aspect); }
    void updateFrustumFov(float offset) { m_frustum.updateFov(offset); }
    void updateCameraDirection(const glm::vec2& offset) { m_cam.updateDirection(offset); }
-   void updateCameraPosition(DirectionXZ dir, float dist);
+   void updateCameraPosition(sge::DirectionXZ dir, float dist);
 
  private:
    bool setupShaders();
@@ -36,7 +36,7 @@ class Renderer3
    bool setupLighting();
 
  private:
-   CameraFps m_cam;
+   sge::CameraFps m_cam;
    Frustum3 m_frustum;
 
    // Matrix to transform object coords to world coords.
@@ -58,7 +58,7 @@ class Renderer3
 };
 
 
-inline void Renderer3::updateCameraPosition(DirectionXZ dir, float dist)
+inline void Renderer3::updateCameraPosition(sge::DirectionXZ dir, float dist)
 {
    m_cam.updatePosition(dir, dist);
 }
