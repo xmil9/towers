@@ -3,11 +3,11 @@
 // MIT license
 //
 #pragma once
-#include "text_renderer.h"
 #include "sge_camera_2d.h"
 #include "sge_frustum2.h"
 #include "sge_sprite.h"
 #include "sge_sprite_renderer.h"
+#include "sge_text_renderer.h"
 #include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_program.h"

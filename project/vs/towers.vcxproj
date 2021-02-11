@@ -185,7 +185,7 @@
     <ClCompile Include="..\..\sge_sprite_renderer.cpp" />
     <ClCompile Include="..\..\map_data.cpp" />
     <ClCompile Include="..\..\textures.cpp" />
-    <ClCompile Include="..\..\text_renderer.cpp" />
+    <ClCompile Include="..\..\sge_text_renderer.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -255,7 +255,7 @@
     <ClInclude Include="..\..\target_scan.h" />
     <ClInclude Include="..\..\textures.h" />
     <ClInclude Include="..\..\texture_tags.h" />
-    <ClInclude Include="..\..\text_renderer.h" />
+    <ClInclude Include="..\..\sge_text_renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json" />

@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include "sge_types.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_texture.h"
@@ -20,6 +20,8 @@ class Program;
 class Resources;
 
 
+namespace sge
+{
 ///////////////////
 
 class TextRenderer
@@ -34,9 +36,9 @@ class TextRenderer
    TextRenderer& operator=(TextRenderer&&) noexcept = default;
 
    bool setup(const std::filesystem::path& font, unsigned int fontSize);
-   void render(gll::Program& shaders, const std::string& text, sge::PixPos baseline,
-               float scale, const sge::Color& color);
-   sge::PixDim measure(const std::string& text, float scale) const;
+   void render(gll::Program& shaders, const std::string& text, PixPos baseline,
+               float scale, const Color& color);
+   PixDim measure(const std::string& text, float scale) const;
 
  private:
    // Information about how to draw each character.
@@ -74,3 +76,5 @@ inline bool TextRenderer::setup(const std::filesystem::path& font, unsigned int 
 {
    return setupCharTextures(font, fontSize) && setupBuffers();
 }
+
+} // namespace sge
