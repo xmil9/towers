@@ -150,9 +150,6 @@
     <ClInclude Include="..\..\renderer3.h">
       <Filter>Engine\Rendering\3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cube3_data.h">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\text_renderer.h">
       <Filter>Engine\Rendering\Text</Filter>
     </ClInclude>
@@ -344,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_frustum3.h">
       <Filter>Engine\Rendering\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cube3_data.h">
+      <Filter>3D Sample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
