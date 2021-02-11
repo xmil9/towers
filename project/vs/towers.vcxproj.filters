@@ -8,9 +8,6 @@
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Engine\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\renderer3.cpp">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\text_renderer.cpp">
       <Filter>Engine\Rendering\Text</Filter>
     </ClCompile>
@@ -83,6 +80,9 @@
     <ClCompile Include="..\..\sge_frustum3.cpp">
       <Filter>Engine\Rendering\3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\renderer3.cpp">
+      <Filter>3D Sample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">
@@ -146,9 +146,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Engine\Stb</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\renderer3.h">
-      <Filter>Engine\Rendering\3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\text_renderer.h">
       <Filter>Engine\Rendering\Text</Filter>
@@ -345,22 +342,25 @@
     <ClInclude Include="..\..\cube3_data.h">
       <Filter>3D Sample</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\renderer3.h">
+      <Filter>3D Sample</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">
       <Filter>Resources</Filter>
-    </None>
-    <None Include="..\..\shaders\cube3_shader.fs">
-      <Filter>Engine\Rendering\3d</Filter>
-    </None>
-    <None Include="..\..\shaders\cube3_shader.vs">
-      <Filter>Engine\Rendering\3d</Filter>
     </None>
     <None Include="..\..\shaders\sge_sprite_shader.vs">
       <Filter>Engine\Rendering\2d</Filter>
     </None>
     <None Include="..\..\shaders\sge_sprite_shader.fs">
       <Filter>Engine\Rendering\2d</Filter>
+    </None>
+    <None Include="..\..\shaders\cube3_shader.vs">
+      <Filter>3D Sample</Filter>
+    </None>
+    <None Include="..\..\shaders\cube3_shader.fs">
+      <Filter>3D Sample</Filter>
     </None>
   </ItemGroup>
 </Project>
