@@ -7,6 +7,8 @@
 #include "glm/vec2.hpp"
 
 
+namespace sge
+{
 ///////////////////
 
 // Map coordinates expressed in floating point field indices.
@@ -18,10 +20,11 @@ using MapCoord = float;
 using MapPos = glm::vec2;
 using MapVec = glm::vec2;
 using MapDim = glm::vec2;
-using MapRect = sge::Rect<MapPos>;
+using MapRect = Rect<MapPos>;
 
 constexpr MapVec Up{0.f, -1.f};
 constexpr MapVec Down{0.f, 1.f};
 constexpr MapVec Left{-1.f, 0.f};
 constexpr MapVec Right{1.f, 0.f};
 
+} // namespace sge

@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include <functional>
 #include <string>
 #include <unordered_map>

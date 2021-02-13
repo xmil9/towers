@@ -4,8 +4,8 @@
 //
 #pragma once
 #include "button.h"
-#include "coords.h"
 #include "label.h"
+#include "sge_coords.h"
 #include "sge_sprite.h"
 
 struct Commands;

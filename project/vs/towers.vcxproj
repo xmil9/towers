@@ -204,7 +204,6 @@
     <ClInclude Include="..\..\basic_types.h" />
     <ClInclude Include="..\..\button.h" />
     <ClInclude Include="..\..\commands.h" />
-    <ClInclude Include="..\..\coords.h" />
     <ClInclude Include="..\..\dashboard.h" />
     <ClInclude Include="..\..\defender.h" />
     <ClInclude Include="..\..\defender_base.h" />
@@ -217,7 +216,7 @@
     <ClInclude Include="..\..\sge_int_coords.h" />
     <ClInclude Include="..\..\label.h" />
     <ClInclude Include="..\..\laser_turret.h" />
-    <ClInclude Include="..\..\map_coords.h" />
+    <ClInclude Include="..\..\sge_map_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
     <ClInclude Include="..\..\field.h" />
     <ClInclude Include="..\..\sge_main_window.h" />

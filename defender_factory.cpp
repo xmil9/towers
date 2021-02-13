@@ -18,7 +18,7 @@ DefenderFactory::lookupModel(const std::string& modelName) const
 }
 
 
-Defender DefenderFactory::makeDefender(const std::string& model, MapPos center)
+Defender DefenderFactory::makeDefender(const std::string& model, sge::MapPos center)
 {
    EntityId id = m_nextId++;
    const Model& data = lookupModel(model);

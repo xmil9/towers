@@ -225,12 +225,6 @@
     <ClInclude Include="..\..\laser_turret.h">
       <Filter>Game\Defenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\coords.h">
-      <Filter>Game\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\map_coords.h">
-      <Filter>Game\Coordinates</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\map_coord_sys.h">
       <Filter>Game\Coordinates</Filter>
     </ClInclude>
@@ -350,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="..\..\paths.h">
       <Filter>Game\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_map_coords.h">
+      <Filter>Engine\Coordinates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

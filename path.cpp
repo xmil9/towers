@@ -18,7 +18,7 @@ Path::Path(const std::vector<sge::IntPos>& turns)
    m_turns.reserve(turns.size());
    std::transform(turns.begin(), turns.end(), std::back_inserter(m_turns),
                   [](sge::IntPos pos) {
-                     constexpr MapPos fieldCenter{.5f, .5f};
-                     return MapPos(pos) + fieldCenter;
+                     constexpr sge::MapPos fieldCenter{.5f, .5f};
+                     return sge::MapPos(pos) + fieldCenter;
                   });
 }

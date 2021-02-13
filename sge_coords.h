@@ -4,9 +4,11 @@
 //
 #pragma once
 #include "sge_int_coords.h"
+#include "sge_map_coords.h"
 #include "sge_norm_coords.h"
 #include "sge_pixel_coords.h"
 #include "essentutils/angle.h"
+#include "essentutils/fputil.h"
 
 
 namespace sge

@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include "sge_point2.h"
 #include "opengl_util/gll_data_format.h"
 #include <algorithm>

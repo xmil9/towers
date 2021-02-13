@@ -20,8 +20,8 @@ class MobileCannon : public AttackerBase<MobileCannon>
    using Attribs = AttackerBase<MobileCannon>::Attribs;
 
  public:
-   MobileCannon(EntityId id, AttackerLook look, MapCoord size, const Attribs& attribs,
-                const OffsetPath& path, const MapCoordSys* cs);
+   MobileCannon(EntityId id, AttackerLook look, sge::MapCoord size,
+                const Attribs& attribs, const OffsetPath& path, const MapCoordSys* cs);
 
    static Attribs defaultAttributes();
 
@@ -30,7 +30,7 @@ class MobileCannon : public AttackerBase<MobileCannon>
 };
 
 
-inline MobileCannon::MobileCannon(EntityId id, AttackerLook look, MapCoord size,
+inline MobileCannon::MobileCannon(EntityId id, AttackerLook look, sge::MapCoord size,
                                   const Attribs& attribs, const OffsetPath& path,
                                   const MapCoordSys* cs)
 : AttackerBase<MobileCannon>{id, look, size, attribs, path, cs}, m_attribs{attribs}

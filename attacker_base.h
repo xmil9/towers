@@ -30,13 +30,13 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
    };
 
  public:
-   AttackerBase(EntityId id, AttackerLook look, MapCoord size, const Attribs& attribs,
-                const OffsetPath& path, const MapCoordSys* cs);
+   AttackerBase(EntityId id, AttackerLook look, sge::MapCoord size,
+                const Attribs& attribs, const OffsetPath& path, const MapCoordSys* cs);
 
    EntityId id() const { return m_id; }
    void render(sge::Renderer2& renderer, bool isPaused);
    void update();
-   std::optional<MapPos> position() const { return m_center; }
+   std::optional<sge::MapPos> position() const { return m_center; }
    void hit(int damage);
    bool isAlive() const { return m_currAttribs.hp > 0; }
    bool hasStarted() const { return m_currAttribs.launchDelay == 0; }
@@ -46,12 +46,12 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
  private:
    void move();
    bool isAtLastPosition() const;
-   void setPosition(std::optional<MapPos> center);
-   void setSize(MapVec size);
+   void setPosition(std::optional<sge::MapPos> center);
+   void setSize(sge::MapVec size);
    void calcRotation();
    // Returns direction of movement.
-   MapVec direction() const;
-   MapVec normedDirection() const { return glm::normalize(direction()); }
+   sge::MapVec direction() const;
+   sge::MapVec normedDirection() const { return glm::normalize(direction()); }
 
    Derived& derived() { return static_cast<Derived&>(*this); }
    const Derived& derived() const { return static_cast<const Derived&>(*this); }
@@ -62,7 +62,7 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
    AttackerLook m_look;
    Attribs m_initialAttribs;
    Attribs m_currAttribs;
-   std::optional<MapPos> m_center;
+   std::optional<sge::MapPos> m_center;
    std::optional<Path::Index> m_currTurn;
    OffsetPath m_path;
    const MapCoordSys* m_coordSys = nullptr;
@@ -75,7 +75,7 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
 // AttackerBase implementation.
 
 template <typename Derived>
-AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, MapCoord size,
+AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, sge::MapCoord size,
                                     const Attribs& attribs, const OffsetPath& path,
                                     const MapCoordSys* cs)
 : m_id{id}, m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},
@@ -158,8 +158,8 @@ template <typename Derived> void AttackerBase<Derived>::move()
 
    assert(m_center && m_currTurn);
 
-   const MapVec dir = direction();
-   MapVec offset = m_currAttribs.speed * glm::normalize(dir);
+   const sge::MapVec dir = direction();
+   sge::MapVec offset = m_currAttribs.speed * glm::normalize(dir);
    // Limit movement to next turn.
    if (esl::greaterEqual(glm::length(offset), glm::length(dir)))
    {
@@ -180,13 +180,13 @@ template <typename Derived> bool AttackerBase<Derived>::isAtLastPosition() const
 
 
 template <typename Derived>
-void AttackerBase<Derived>::setPosition(std::optional<MapPos> center)
+void AttackerBase<Derived>::setPosition(std::optional<sge::MapPos> center)
 {
    m_center = center;
 }
 
 
-template <typename Derived> void AttackerBase<Derived>::setSize(MapVec size)
+template <typename Derived> void AttackerBase<Derived>::setSize(sge::MapVec size)
 {
    m_look.setSize(m_coordSys->toRenderCoords(size));
 }
@@ -194,18 +194,18 @@ template <typename Derived> void AttackerBase<Derived>::setSize(MapVec size)
 
 template <typename Derived> void AttackerBase<Derived>::calcRotation()
 {
-   const sge::Angle rot{glm::angle(normedDirection(), Up)};
+   const sge::Angle rot{glm::angle(normedDirection(), sge::Up)};
    m_look.setRotation(rot);
 }
 
 
-template <typename Derived> MapVec AttackerBase<Derived>::direction() const
+template <typename Derived> sge::MapVec AttackerBase<Derived>::direction() const
 {
    if (!m_center || !m_currTurn)
-      return Up;
+      return sge::Up;
 
-   MapPos pos = *m_center;
-   MapPos nextPos = pos;
+   sge::MapPos pos = *m_center;
+   sge::MapPos nextPos = pos;
    if (*m_currTurn < m_path.size() - 1)
    {
       nextPos = m_path[*m_currTurn + 1];

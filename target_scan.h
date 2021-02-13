@@ -68,14 +68,14 @@ std::optional<EntityId>
 ClosestTargetScan<SpecificDefender>::scan(SpecificDefender& defender)
 {
    std::optional<EntityId> targetId;
-   MapCoord minDist = std::numeric_limits<MapCoord>::max();
+   sge::MapCoord minDist = std::numeric_limits<sge::MapCoord>::max();
 
    for (const auto& entry : *m_attackers)
    {
       const Attacker& attacker = entry.second;
       if (attacker.isAlive() && attacker.position())
       {
-         const MapCoord dist = glm::length(defender.center() - *attacker.position());
+         const sge::MapCoord dist = glm::length(defender.center() - *attacker.position());
          if (defender.isInRange(dist) && esl::lessEqual(dist, minDist))
          {
             targetId = attacker.id();

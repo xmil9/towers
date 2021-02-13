@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
+#include "sge_coords.h"
 #include "sge_sprite.h"
 #include <memory>
 #include <string>
@@ -15,5 +15,5 @@ struct PlaceSession
 {
    std::string model;
    sge::Sprite indicator;
-   MapCoord range = 1.f;
+   sge::MapCoord range = 1.f;
 };

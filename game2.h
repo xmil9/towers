@@ -7,7 +7,6 @@
 #include "attacker_factory.h"
 #include "basic_types.h"
 #include "commands.h"
-#include "coords.h"
 #include "dashboard.h"
 #include "defender.h"
 #include "defender_factory.h"
@@ -17,6 +16,7 @@
 #include "paths.h"
 #include "place_session.h"
 #include "state.h"
+#include "sge_coords.h"
 #include "sge_input.h"
 #include "sge_main_window.h"
 #include "sge_renderer2.h"
@@ -67,10 +67,10 @@ class Game2 : private Commands, private State
    void removeAsTarget(EntityId attackerId);
 
    void resetDefenderPlacements();
-   bool hasDefenderOnField(MapPos field) const;
-   const Defender* defenderOnField(MapPos field) const;
-   void setDefenderOnField(MapPos field, bool hasDefender);
-   bool canPlaceDefenderOnField(const std::string& defenderModel, MapPos field) const;
+   bool hasDefenderOnField(sge::MapPos field) const;
+   const Defender* defenderOnField(sge::MapPos field) const;
+   void setDefenderOnField(sge::MapPos field, bool hasDefender);
+   bool canPlaceDefenderOnField(const std::string& defenderModel, sge::MapPos field) const;
    void addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos);
    void placeDefender(const sge::PixPos& mousePos);
 

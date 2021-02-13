@@ -3,9 +3,9 @@
 // MIT license
 //
 #pragma once
-#include "coords.h"
 #include "field.h"
 #include "path.h"
+#include "sge_coords.h"
 #include <cstddef>
 #include <filesystem>
 #include <optional>

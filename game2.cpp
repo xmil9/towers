@@ -29,15 +29,15 @@ constexpr float MovementSpeed = 2.5f;
 
 ///////////////////
 
-static MapPos truncate(MapPos pos)
+static sge::MapPos truncate(sge::MapPos pos)
 {
-   return MapPos(static_cast<int>(pos.x), static_cast<int>(pos.y));
+   return sge::MapPos(static_cast<int>(pos.x), static_cast<int>(pos.y));
 }
 
 
-static MapPos centerInField(MapPos pos)
+static sge::MapPos centerInField(sge::MapPos pos)
 {
-   return truncate(pos) + MapVec{.5f, .5f};
+   return truncate(pos) + sge::MapVec{.5f, .5f};
 }
 
 } // namespace
@@ -234,7 +234,7 @@ bool Game2::setupAnimations()
 
    m_resources.addAnimation(
       ExplosionATag,
-      factory.make(ExplosionATag, m_coordSys->toRenderCoords(MapDim{1.f, 1.f})));
+      factory.make(ExplosionATag, m_coordSys->toRenderCoords(sge::MapDim{1.f, 1.f})));
 
    sge::PixDim firingSize = m_coordSys->toRenderCoords(
       m_coordSys->scaleToSize(LtSize, m_resources.getTextureSize(LtTexture)));
@@ -280,13 +280,13 @@ bool Game2::setupAttackers()
    constexpr int DefaultDelay = 1;
 
    addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}, DefaultDelay));
+      AatModel, OffsetPath{&m_map->path(), sge::MapVec{0.f, 0.f}}, DefaultDelay));
    addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), MapVec{0.f, 0.f}}, 30));
+      AatModel, OffsetPath{&m_map->path(), sge::MapVec{0.f, 0.f}}, 30));
    addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), MapVec{-.08f, .05f}}, DefaultDelay));
+      MhcModel, OffsetPath{&m_map->path(), sge::MapVec{-.08f, .05f}}, DefaultDelay));
    addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), MapVec{0.f, -0.05}}, DefaultDelay));
+      MhcModel, OffsetPath{&m_map->path(), sge::MapVec{0.f, -0.05}}, DefaultDelay));
 
    return true;
 }
@@ -323,7 +323,7 @@ bool Game2::setupBackground()
    m_background =
       sge::Sprite{sge::SpriteLook{Map1TTag}, sge::SpriteForm{{MapWidth, MapHeight}}};
 
-   const sge::PixDim fieldPixDim = m_coordSys->toRenderCoords(MapDim{1.f, 1.f});
+   const sge::PixDim fieldPixDim = m_coordSys->toRenderCoords(sge::MapDim{1.f, 1.f});
    m_invalidFieldOverlay =
       sge::Sprite{sge::SpriteLook{InvalidFieldTTag}, sge::SpriteForm{fieldPixDim}};
    m_rangeOverlay = sge::Sprite{sge::SpriteLook{RangeTTag}, sge::SpriteForm{fieldPixDim}};
@@ -385,17 +385,17 @@ void Game2::renderDefenderInfo()
       return;
 
    const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
-   const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
+   const sge::MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
    if (!m_map->isOnMap(fieldPos))
       return;
 
    const Defender* touchedDefender = defenderOnField(fieldPos);
    if (touchedDefender)
    {
-      const MapCoord range = touchedDefender->range();
+      const sge::MapCoord range = touchedDefender->range();
       const sge::PixDim rangeDim =
-         m_coordSys->toRenderCoords(2.0f * MapDim{range, range});
-      const MapPos at = touchedDefender->center();
+         m_coordSys->toRenderCoords(2.0f * sge::MapDim{range, range});
+      const sge::MapPos at = touchedDefender->center();
       const sge::PixPos atPix = m_coordSys->toRenderCoords(at);
       m_rangeOverlay.setSize(rangeDim);
       m_renderer.renderSpriteCentered(m_rangeOverlay, atPix);
@@ -409,10 +409,10 @@ void Game2::renderPlaceSession()
    {
       const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
 
-      const MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
+      const sge::MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
       const sge::PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
       const sge::PixPos fieldCenterPixPos =
-         fieldPixPos + m_coordSys->toRenderCoords(MapPos{.5f, .5f});
+         fieldPixPos + m_coordSys->toRenderCoords(sge::MapPos{.5f, .5f});
 
       const bool isOnMap = m_map->isOnMap(fieldPos);
       if (isOnMap)
@@ -420,7 +420,7 @@ void Game2::renderPlaceSession()
          if (canPlaceDefenderOnField(m_placeSess->model, fieldPos))
          {
             const sge::PixDim rangeDim = m_coordSys->toRenderCoords(
-               2.0f * MapDim{m_placeSess->range, m_placeSess->range});
+               2.0f * sge::MapDim{m_placeSess->range, m_placeSess->range});
             m_rangeOverlay.setSize(rangeDim);
             m_renderer.renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
          }
@@ -488,7 +488,7 @@ void Game2::resetDefenderPlacements()
 }
 
 
-bool Game2::hasDefenderOnField(MapPos field) const
+bool Game2::hasDefenderOnField(sge::MapPos field) const
 {
    const int idx =
       static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
@@ -497,7 +497,7 @@ bool Game2::hasDefenderOnField(MapPos field) const
 }
 
 
-const Defender* Game2::defenderOnField(MapPos field) const
+const Defender* Game2::defenderOnField(sge::MapPos field) const
 {
    if (hasDefenderOnField(field))
       for (const auto& defender : m_defenders)
@@ -507,7 +507,7 @@ const Defender* Game2::defenderOnField(MapPos field) const
 }
 
 
-void Game2::setDefenderOnField(MapPos field, bool hasDefender)
+void Game2::setDefenderOnField(sge::MapPos field, bool hasDefender)
 {
    const int idx =
       static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
@@ -517,7 +517,7 @@ void Game2::setDefenderOnField(MapPos field, bool hasDefender)
 
 
 bool Game2::canPlaceDefenderOnField(const std::string& /*defenderModel*/,
-                                    MapPos field) const
+                                    sge::MapPos field) const
 {
    return m_map->canBuildOnField(field) && !hasDefenderOnField(field);
 }
@@ -536,7 +536,7 @@ void Game2::addDefender(std::optional<Defender>&& defender, const sge::PixPos& p
 
 void Game2::placeDefender(const sge::PixPos& mousePos)
 {
-   const MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
+   const sge::MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
    if (!m_map->isOnMap(pos) || !canPlaceDefenderOnField(m_placeSess->model, pos))
    {
       return;

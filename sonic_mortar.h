@@ -16,12 +16,12 @@ class SonicMortar : public DefenderBase<SonicMortar>
  public:
    struct Attribs : public DefenderBase<SonicMortar>::Attribs
    {
-      MapCoord collateralDamageRange = 0.f;
+      sge::MapCoord collateralDamageRange = 0.f;
       int collateralDamage = 0;
    };
 
  public:
-   SonicMortar(EntityId id, DefenderLook look, MapCoord size, MapPos center,
+   SonicMortar(EntityId id, DefenderLook look, sge::MapCoord size, sge::MapPos center,
                const Attribs& attribs, const MapCoordSys* cs, AttackerMap* attackers);
 
    static Attribs defaultAttributes();
@@ -36,8 +36,8 @@ class SonicMortar : public DefenderBase<SonicMortar>
 };
 
 
-inline SonicMortar::SonicMortar(EntityId id, DefenderLook look, MapCoord size,
-                                MapPos center, const Attribs& attribs,
+inline SonicMortar::SonicMortar(EntityId id, DefenderLook look, sge::MapCoord size,
+                                sge::MapPos center, const Attribs& attribs,
                                 const MapCoordSys* cs, AttackerMap* attackers)
 : DefenderBase<SonicMortar>{id, look, size, center, cs, attackers}, m_attribs{attribs}
 
@@ -84,6 +84,6 @@ inline bool SonicMortar::isInCollateralRange(const Attacker& attacker) const
    if (!pos)
       return false;
 
-   const MapCoord dist = glm::length(*targetPos - *pos);
+   const sge::MapCoord dist = glm::length(*targetPos - *pos);
    return esl::lessEqual(dist, m_attribs.collateralDamageRange);
 }

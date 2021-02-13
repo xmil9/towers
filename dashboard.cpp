@@ -134,7 +134,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    m_commands->endPlaceSession();
 
    // Set size of indicator to size of one field on map.
-   constexpr MapDim indicatorDim{1.f, 1.f};
+   constexpr sge::MapDim indicatorDim{1.f, 1.f};
    const sge::PixDim indicatorsPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);
 
    if (m_ltButton.isHit(mousePosInDash) && m_ltButton.isEnabled())
@@ -194,7 +194,8 @@ void Dashboard::setupCreditsElements(const sge::Renderer2& renderer)
 void Dashboard::setupDefenderElements()
 {
    const sge::PixDim buttonPixDim = toPix(DefenderButtonDim);
-   sge::Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag}, sge::SpriteForm{buttonPixDim}};
+   sge::Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag},
+                         sge::SpriteForm{buttonPixDim}};
    sge::SpriteForm contentForm{buttonPixDim};
 
    const sge::PixPos ltPixPos = toPix(LaserTurretPos);

@@ -22,8 +22,8 @@ class Defender
 
    EntityId id() const;
    int cost() const;
-   MapCoord range() const;
-   MapPos center() const;
+   sge::MapCoord range() const;
+   sge::MapPos center() const;
    void render(sge::Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
@@ -53,7 +53,7 @@ inline int Defender::cost() const
    return 0;
 }
 
-inline MapCoord Defender::range() const
+inline sge::MapCoord Defender::range() const
 {
    if (m_defender)
       return std::visit([](const auto& defender) { return defender.range(); },
@@ -61,7 +61,7 @@ inline MapCoord Defender::range() const
    return 0.f;
 }
 
-inline MapPos Defender::center() const
+inline sge::MapPos Defender::center() const
 {
    if (m_defender)
       return std::visit([](const auto& defender) { return defender.center(); },
@@ -101,7 +101,7 @@ class DefenderAttribs
    template <typename SpecificAttribs> explicit DefenderAttribs(SpecificAttribs&& a);
 
    // Common attributes.
-   MapCoord range() const;
+   sge::MapCoord range() const;
    int damage() const;
    int cost() const;
 
@@ -118,7 +118,7 @@ DefenderAttribs::DefenderAttribs(SpecificAttribs&& a) : m_attribs{std::move(a)}
 {
 }
 
-inline MapCoord DefenderAttribs::range() const
+inline sge::MapCoord DefenderAttribs::range() const
 {
    if (m_attribs)
       return std::visit([](const auto& attribs) { return attribs.range; }, *m_attribs);
