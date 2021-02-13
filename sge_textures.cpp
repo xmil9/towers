@@ -2,17 +2,23 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "textures.h"
+#include "sge_textures.h"
 #include "sge_png_texture.h"
 
+
+///////////////////
 
 static gll::Texture2D NullTexture;
 
 
+namespace sge
+{
+///////////////////
+
 bool Textures::load(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert)
 {
-   sge::PngTexture tex{texFile, flipVert};
+   PngTexture tex{texFile, flipVert};
    if (!tex)
       return false;
 
@@ -28,7 +34,7 @@ bool Textures::load(const std::string& tag, const std::filesystem::path& texFile
    glTex.generateMipmap();
 
    const auto [pos, ok] = m_texs.insert_or_assign(
-      tag, Entry{std::move(glTex), sge::PixDim(tex.width(), tex.height())});
+      tag, Entry{std::move(glTex), PixDim(tex.width(), tex.height())});
    return ok;
 }
 
@@ -40,8 +46,10 @@ const gll::Texture2D& Textures::operator[](const std::string& tag) const
 }
 
 
-sge::PixDim Textures::size(const std::string& tag) const
+PixDim Textures::size(const std::string& tag) const
 {
    const auto pos = m_texs.find(tag);
-   return (pos != m_texs.end()) ? pos->second.size : sge::PixDim{};
+   return (pos != m_texs.end()) ? pos->second.size : PixDim{};
 }
+
+} // namespace sge

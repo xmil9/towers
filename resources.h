@@ -4,7 +4,7 @@
 //
 #pragma once
 #include "animations.h"
-#include "textures.h"
+#include "sge_textures.h"
 #include <string>
 
 
@@ -31,7 +31,7 @@ class Resources
    void clearAnimations() { m_animationRepos.clear(); }
 
  private:
-   Textures m_texRepos;
+   sge::Textures m_texRepos;
    Animations m_animationRepos;
    std::filesystem::path m_mainPath;
 };

@@ -29,9 +29,6 @@
     <ClCompile Include="..\..\resources.cpp">
       <Filter>Game\Resource Management</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\textures.cpp">
-      <Filter>Game\Resource Management</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\path.cpp">
       <Filter>Game\Maps</Filter>
     </ClCompile>
@@ -82,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="..\..\sge_text_renderer.cpp">
       <Filter>Engine\Rendering\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sge_textures.cpp">
+      <Filter>Engine\Resource Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +142,9 @@
     <Filter Include="Engine\Coordinates">
       <UniqueIdentifier>{878b9ca0-f65f-45a3-9010-ee32851974bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Resource Management">
+      <UniqueIdentifier>{6a94fc27-0135-48c4-9783-159d73e31840}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\stb\stb_image.h">
@@ -184,9 +187,6 @@
       <Filter>Game\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="..\..\texture_tags.h">
-      <Filter>Game\Resource Management</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\textures.h">
       <Filter>Game\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="..\..\path.h">
@@ -344,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_text_renderer.h">
       <Filter>Engine\Rendering\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_textures.h">
+      <Filter>Engine\Resource Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
