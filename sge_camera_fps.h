@@ -35,8 +35,8 @@ class CameraFps
  private:
    // Current yaw and pitch values of camera. The camera's direction is calculated from
    // the yaw and pitch values.
-   Angle_t m_yaw = Angle_t::fromDegrees(-90.0f);
-   Angle_t m_pitch = Angle_t::fromDegrees(0.0f);
+   Angle m_yaw = Angle::fromDegrees(-90.0f);
+   Angle m_pitch = Angle::fromDegrees(0.0f);
    // Location of camera in world space.
    glm::vec3 m_eye = glm::vec3(0.0f, 0.0f, 3.0f);
    // Normalized direction that camera is looking at.

@@ -16,7 +16,7 @@ namespace
 {
 ///////////////////
 
-glm::mat4x4 rotateAround(const glm::mat4x4& m, sge::Angle_t rot,
+glm::mat4x4 rotateAround(const glm::mat4x4& m, sge::Angle rot,
                          const sge::PixPos& rotCenter)
 {
    constexpr glm::vec3 rotNormal{0.f, 0.f, 1.f};
@@ -33,7 +33,7 @@ glm::mat4x4 rotateAround(const glm::mat4x4& m, sge::Angle_t rot,
 
 
 glm::mat4x4 calcModelMatrix(const sge::PixPos& pos, const sge::PixDim& size,
-                            sge::Angle_t rot, const sge::PixPos& rotCenter)
+                            sge::Angle rot, const sge::PixPos& rotCenter)
 {
    return
       // Finally scale.

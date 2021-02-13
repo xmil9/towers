@@ -9,8 +9,8 @@ namespace
 {
 ///////////////////
 
-constexpr sge::Angle_t MaxFov{sge::Angle_t::fromDegrees(60.0f)};
-constexpr sge::Angle_t MinFov{sge::Angle_t::fromDegrees(20.0f)};
+constexpr sge::Angle MaxFov{sge::Angle::fromDegrees(60.0f)};
+constexpr sge::Angle MinFov{sge::Angle::fromDegrees(20.0f)};
 
 } // namespace
 

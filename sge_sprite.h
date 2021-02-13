@@ -19,17 +19,17 @@ class Sprite
    Sprite(SpriteLook look, const SpriteForm& form);
 
    PixDim size() const { return m_form.size(); }
-   Angle_t rotation() const { return m_form.rotation(); }
+   Angle rotation() const { return m_form.rotation(); }
    PixPos rotationCenter() const { return m_form.rotationCenter(); }
    bool hasTexture() const { return m_look.hasTexture(); }
    std::string texture() const { return m_look.texture(); }
    Color color() const { return m_look.color(); }
 
    Sprite& setSize(PixDim size);
-   Sprite& setRotation(Angle_t rot);
+   Sprite& setRotation(Angle rot);
    Sprite& setForm(const SpriteForm& form);
    Sprite& scale(float factor);
-   Sprite& rotate(Angle_t rot);
+   Sprite& rotate(Angle rot);
 
  private:
    SpriteLook m_look;
@@ -52,7 +52,7 @@ inline Sprite& Sprite::setSize(PixDim size)
    return *this;
 }
 
-inline Sprite& Sprite::setRotation(Angle_t rot)
+inline Sprite& Sprite::setRotation(Angle rot)
 {
    m_form.setRotation(rot);
    return *this;
@@ -70,7 +70,7 @@ inline Sprite& Sprite::scale(float factor)
    return *this;
 }
 
-inline Sprite& Sprite::rotate(Angle_t rot)
+inline Sprite& Sprite::rotate(Angle rot)
 {
    m_form.rotate(rot);
    return *this;

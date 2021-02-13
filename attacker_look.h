@@ -21,7 +21,7 @@ class AttackerLook
    sge::PixDim size() const { return m_shape.size(); }
 
    AttackerLook& setSize(sge::PixDim size);
-   AttackerLook& setRotation(sge::Angle_t rot);
+   AttackerLook& setRotation(sge::Angle rot);
 
    void render(sge::Renderer2& renderer, sge::PixPos atCenter, bool isAlive,
                float hpRatio, bool isHit);
@@ -54,7 +54,7 @@ inline AttackerLook& AttackerLook::setSize(sge::PixDim size)
    return *this;
 }
 
-inline AttackerLook& AttackerLook::setRotation(sge::Angle_t rot)
+inline AttackerLook& AttackerLook::setRotation(sge::Angle rot)
 {
    m_shape.setRotation(rot);
    m_shapeHit.setRotation(rot);

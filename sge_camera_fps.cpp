@@ -12,8 +12,8 @@ namespace
 {
 ///////////////////
 
-constexpr sge::Angle_t MaxPitch{sge::Angle_t::fromDegrees(89.0f)};
-constexpr sge::Angle_t MinPitch{sge::Angle_t::fromDegrees(-89.0f)};
+constexpr sge::Angle MaxPitch{sge::Angle::fromDegrees(89.0f)};
+constexpr sge::Angle MinPitch{sge::Angle::fromDegrees(-89.0f)};
 
 } // namespace
 

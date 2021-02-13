@@ -13,7 +13,7 @@ namespace sge
 {
 ///////////////////
 
-using Angle_t = esl::Angle<float>;
+using Angle = esl::Angle<float>;
 
 
 ///////////////////
