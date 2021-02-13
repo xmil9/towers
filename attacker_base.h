@@ -175,7 +175,7 @@ template <typename Derived> bool AttackerBase<Derived>::isAtLastPosition() const
 {
    if (!m_center)
       return true;
-   return isEqual(*m_center, m_path.finish());
+   return sge::isEqual(*m_center, m_path.finish());
 }
 
 
