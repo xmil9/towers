@@ -160,7 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\sge_animation.cpp" />
-    <ClCompile Include="..\..\animations.cpp" />
+    <ClCompile Include="..\..\sge_animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
     <ClCompile Include="..\..\attacker_factory.cpp" />
     <ClCompile Include="..\..\button.cpp" />
@@ -190,7 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\sge_animation.h" />
-    <ClInclude Include="..\..\animations.h" />
+    <ClInclude Include="..\..\sge_animations.h" />
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />
     <ClInclude Include="..\..\assault_tank.h" />

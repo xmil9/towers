@@ -23,9 +23,6 @@
     <ClCompile Include="..\..\animation_factory.cpp">
       <Filter>Game\Resource Management</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\animations.cpp">
-      <Filter>Game\Resource Management</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\resources.cpp">
       <Filter>Game\Resource Management</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>Engine\Rendering\Text</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sge_textures.cpp">
+      <Filter>Engine\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sge_animations.cpp">
       <Filter>Engine\Resource Management</Filter>
     </ClCompile>
   </ItemGroup>
@@ -178,9 +178,6 @@
       <Filter>Game\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="..\..\animation_tags.h">
-      <Filter>Game\Resource Management</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\animations.h">
       <Filter>Game\Resource Management</Filter>
     </ClInclude>
     <ClInclude Include="..\..\resources.h">
@@ -346,6 +343,9 @@
       <Filter>Engine\Rendering\Text</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sge_textures.h">
+      <Filter>Engine\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_animations.h">
       <Filter>Engine\Resource Management</Filter>
     </ClInclude>
   </ItemGroup>

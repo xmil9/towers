@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "animations.h"
+#include "sge_animations.h"
 #include "sge_textures.h"
 #include <string>
 
@@ -32,7 +32,7 @@ class Resources
 
  private:
    sge::Textures m_texRepos;
-   Animations m_animationRepos;
+   sge::Animations m_animationRepos;
    std::filesystem::path m_mainPath;
 };
 
