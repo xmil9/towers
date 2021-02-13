@@ -17,7 +17,10 @@ namespace gll
 {
 class Program;
 }
+namespace sge
+{
 class Resources;
+}
 
 
 namespace sge

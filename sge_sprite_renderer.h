@@ -14,9 +14,9 @@ namespace gll
 {
 class Program;
 }
-class Resources;
 namespace sge
 {
+class Resources;
 class Sprite;
 }
 

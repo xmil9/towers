@@ -159,6 +159,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\paths.cpp" />
     <ClCompile Include="..\..\sge_animation.cpp" />
     <ClCompile Include="..\..\sge_animations.cpp" />
     <ClCompile Include="..\..\animation_factory.cpp" />
@@ -180,7 +181,6 @@
     <ClCompile Include="..\..\sge_png_texture.cpp" />
     <ClCompile Include="..\..\sge_renderer2.cpp" />
     <ClCompile Include="..\..\renderer3.cpp" />
-    <ClCompile Include="..\..\resources.cpp" />
     <ClCompile Include="..\..\sge_sprite_form.cpp" />
     <ClCompile Include="..\..\sge_sprite_renderer.cpp" />
     <ClCompile Include="..\..\map_data.cpp" />
@@ -189,6 +189,7 @@
     <ClCompile Include="..\..\towers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\paths.h" />
     <ClInclude Include="..\..\sge_animation.h" />
     <ClInclude Include="..\..\sge_animations.h" />
     <ClInclude Include="..\..\animation_factory.h" />
@@ -245,7 +246,7 @@
     <ClInclude Include="..\..\sge_png_texture.h" />
     <ClInclude Include="..\..\sge_point2.h" />
     <ClInclude Include="..\..\renderer3.h" />
-    <ClInclude Include="..\..\resources.h" />
+    <ClInclude Include="..\..\sge_resources.h" />
     <ClInclude Include="..\..\sge_renderer2.h" />
     <ClInclude Include="..\..\sge_sprite.h" />
     <ClInclude Include="..\..\sge_sprite_renderer.h" />

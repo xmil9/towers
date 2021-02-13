@@ -8,32 +8,26 @@
 #include <string>
 
 
+namespace sge
+{
+///////////////////
+
 class Resources
 {
  public:
-   Resources();
-
-   std::filesystem::path texturePath() const;
-   std::filesystem::path scenePath() const;
-   std::filesystem::path uiPath() const;
-   std::filesystem::path fontPath() const;
-   std::filesystem::path shaderPath() const;
-   std::filesystem::path mapPath() const;
-
    bool loadTexture(const std::string& tag, const std::filesystem::path& texFile,
                     bool flipVert = false);
    const gll::Texture2D& getTexture(const std::string& tag) const;
-   sge::PixDim getTextureSize(const std::string& tag) const;
+   PixDim getTextureSize(const std::string& tag) const;
    void clearTextures() { m_texRepos.clear(); }
 
-   void addAnimation(const std::string& tag, sge::Animation&& a);
-   const sge::Animation& getAnimation(const std::string& tag) const;
+   void addAnimation(const std::string& tag, Animation&& a);
+   const Animation& getAnimation(const std::string& tag) const;
    void clearAnimations() { m_animationRepos.clear(); }
 
  private:
-   sge::Textures m_texRepos;
-   sge::Animations m_animationRepos;
-   std::filesystem::path m_mainPath;
+   Textures m_texRepos;
+   Animations m_animationRepos;
 };
 
 
@@ -48,17 +42,19 @@ inline const gll::Texture2D& Resources::getTexture(const std::string& tag) const
    return m_texRepos[tag];
 }
 
-inline sge::PixDim Resources::getTextureSize(const std::string& tag) const
+inline PixDim Resources::getTextureSize(const std::string& tag) const
 {
    return m_texRepos.size(tag);
 }
 
-inline void Resources::addAnimation(const std::string& tag, sge::Animation&& a)
+inline void Resources::addAnimation(const std::string& tag, Animation&& a)
 {
    m_animationRepos.add(tag, std::move(a));
 }
 
-inline const sge::Animation& Resources::getAnimation(const std::string& tag) const
+inline const Animation& Resources::getAnimation(const std::string& tag) const
 {
    return m_animationRepos[tag];
 }
+
+} // namespace sge

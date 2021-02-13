@@ -2,7 +2,7 @@
 // Nov-2020, Michael Lindner
 // MIT license
 //
-#include "resources.h"
+#include "sge_animation.h"
 #include "sge_renderer2.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "opengl_util/gll_shader.h"
@@ -12,18 +12,19 @@ namespace sge
 {
 ///////////////////
 
-bool Renderer2::setup(Resources* resources, int viewWidth, int viewHeight)
+bool Renderer2::setup(Resources* resources, const std::filesystem::path& shaderDir,
+                      const std::filesystem::path& fontDir, int viewWidth,
+                      int viewHeight)
 {
    assert(resources);
 
-   m_resources = resources;
    m_spriteRenderer = std::make_unique<SpriteRenderer>(resources);
    m_textRenderer = std::make_unique<TextRenderer>(resources);
 
-   const std::filesystem::path fontPath = m_resources->fontPath() / "arial.ttf";
+   const std::filesystem::path fontPath = fontDir / "arial.ttf";
    constexpr unsigned int fontSize = 20;
 
-   return setupShaders(m_resources->shaderPath()) && m_spriteRenderer->setup() &&
+   return setupShaders(shaderDir) && m_spriteRenderer->setup() &&
           m_textRenderer->setup(fontPath, fontSize) &&
           setupSettings(viewWidth, viewHeight);
 }

@@ -3,7 +3,7 @@
 // MIT license
 //
 #include "sge_sprite_renderer.h"
-#include "resources.h"
+#include "sge_resources.h"
 #include "sge_sprite.h"
 #include "opengl_util/gll_binding.h"
 #include "opengl_util/gll_data_format.h"

@@ -3,8 +3,8 @@
 // MIT license
 //
 #include "sge_text_renderer.h"
-#include "resources.h"
 #include "sge_mesh2.h"
+#include "sge_resources.h"
 #include "ft2build.h"
 #include "freetype/freetype.h"
 #include "opengl_util/gll_binding.h"

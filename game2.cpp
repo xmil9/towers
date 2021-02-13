@@ -152,8 +152,8 @@ bool Game2::setupOutput()
 
 bool Game2::setupTextures()
 {
-   const std::filesystem::path scene = m_resources.scenePath();
-   const std::filesystem::path ui = m_resources.uiPath();
+   const std::filesystem::path scene = m_paths.scenePath();
+   const std::filesystem::path ui = m_paths.uiPath();
 
    struct TextureSpec
    {
@@ -196,7 +196,7 @@ bool Game2::setupTextures()
 
 bool Game2::setupTerrain()
 {
-   std::optional<MapData> mapData = loadMapData(m_resources.mapPath() / "map.json");
+   std::optional<MapData> mapData = loadMapData(m_paths.mapPath() / "map.json");
    if (!mapData)
       return false;
    m_map = std::make_unique<Map>(std::move(*mapData));
@@ -221,7 +221,8 @@ bool Game2::setupRenderer()
       sge::Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
 
-   return m_renderer.setup(&m_resources, WndWidth, WndHeight);
+   return m_renderer.setup(&m_resources, m_paths.shaderPath(), m_paths.fontPath(),
+                           WndWidth, WndHeight);
 }
 
 

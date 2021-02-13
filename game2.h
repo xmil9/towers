@@ -14,12 +14,13 @@
 #include "hp_renderer.h"
 #include "map.h"
 #include "map_coord_sys.h"
+#include "paths.h"
 #include "place_session.h"
-#include "resources.h"
 #include "state.h"
 #include "sge_input.h"
 #include "sge_main_window.h"
 #include "sge_renderer2.h"
+#include "sge_resources.h"
 #include "sge_sprite.h"
 #include "sge_types.h"
 #include "opengl_util/gfl_lib.h"
@@ -115,7 +116,8 @@ class Game2 : private Commands, private State
    static constexpr sge::PixCoordi WndWidth = MapWidth + DashboardWidth;
    static constexpr sge::PixCoordi WndHeight = MapHeight;
 
-   Resources m_resources;
+   sge::Resources m_resources;
+   Paths m_paths;
    sge::FrameClock m_frameClock;
    gfl::Lib m_glfw;
    sge::MainWindow m_mainWnd;

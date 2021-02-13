@@ -12,12 +12,13 @@
 #include "glm/vec3.hpp"
 #include "opengl_util/gll_program.h"
 #include "opengl_util/gll_uniform.h"
+#include <filesystem>
 
 namespace sge
 {
 class Animation;
-}
 class Resources;
+}
 
 
 namespace sge
@@ -27,7 +28,8 @@ namespace sge
 class Renderer2
 {
  public:
-   bool setup(Resources* resources, int viewWidth, int viewHeight);
+   bool setup(Resources* resources, const std::filesystem::path& shaderDir,
+              const std::filesystem::path& fontDir, int viewWidth, int viewHeight);
    void setFrustumSize(int width, int height) { m_frustum.setSize(width, height); }
 
    void clearScene() const;
@@ -46,7 +48,6 @@ class Renderer2
    bool setupSettings(int viewWidth, int viewHeight);
 
  private:
-   Resources* m_resources = nullptr;
    Camera2d m_cam;
    Frustum2 m_frustum;
    gll::Program m_shaders;
