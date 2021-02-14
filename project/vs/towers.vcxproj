@@ -174,7 +174,7 @@
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
     <ClCompile Include="..\..\deps\stb\stb_image.cpp" />
     <ClCompile Include="..\..\sge_frustum3.cpp" />
-    <ClCompile Include="..\..\game2.cpp" />
+    <ClCompile Include="..\..\sge_game2.cpp" />
     <ClCompile Include="..\..\game3.cpp" />
     <ClCompile Include="..\..\sge_input.cpp" />
     <ClCompile Include="..\..\path.cpp" />
@@ -225,7 +225,7 @@
     <ClInclude Include="..\..\sge_camera_fps.h" />
     <ClInclude Include="..\..\cube3_data.h" />
     <ClInclude Include="..\..\sge_frustum2.h" />
-    <ClInclude Include="..\..\game2.h" />
+    <ClInclude Include="..\..\sge_game2.h" />
     <ClInclude Include="..\..\game3.h" />
     <ClInclude Include="..\..\sge_input_controller.h" />
     <ClInclude Include="..\..\sge_lap_clock.h" />

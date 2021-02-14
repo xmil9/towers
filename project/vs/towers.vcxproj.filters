@@ -8,9 +8,6 @@
     <ClCompile Include="..\..\deps\stb\stb_image.cpp">
       <Filter>Engine\Stb</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\game2.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dashboard.cpp">
       <Filter>Game\Ui</Filter>
     </ClCompile>
@@ -86,6 +83,9 @@
     <ClCompile Include="..\..\towers_game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sge_game2.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">
@@ -157,9 +157,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\commands.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game2.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\place_session.h">
@@ -353,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="..\..\towers_game.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_game2.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

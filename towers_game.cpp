@@ -46,9 +46,8 @@ static sge::MapPos centerInField(sge::MapPos pos)
 ///////////////////
 
 Towers::Towers()
-: m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE}, m_dashboard{DashboardWidth,
-                                                               DashboardHeight, this,
-                                                               this}
+: Game2{WndWidth, WndHeight, "towsers"}, m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE},
+  m_dashboard{DashboardWidth, DashboardHeight, this, this}
 {
 }
 

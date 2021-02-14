@@ -10,7 +10,6 @@
 #include "dashboard.h"
 #include "defender.h"
 #include "defender_factory.h"
-#include "game2.h"
 #include "hp_renderer.h"
 #include "map.h"
 #include "map_coord_sys.h"
@@ -18,6 +17,7 @@
 #include "place_session.h"
 #include "state.h"
 #include "sge_coords.h"
+#include "sge_game2.h"
 #include "sge_input.h"
 #include "sge_main_window.h"
 #include "sge_renderer2.h"
@@ -32,7 +32,7 @@
 
 
 
-class Towers : public Game2, private Commands, private State
+class Towers : public sge::Game2, private Commands, private State
 {
 public:
    Towers();
