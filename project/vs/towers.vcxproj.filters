@@ -14,9 +14,6 @@
     <ClCompile Include="..\..\dashboard.cpp">
       <Filter>Game\Ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\label.cpp">
-      <Filter>Game\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\animation_factory.cpp">
       <Filter>Game\Resource Management</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>Game\Resource Management</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sge_button.cpp">
+      <Filter>Engine\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sge_label.cpp">
       <Filter>Engine\Ui</Filter>
     </ClCompile>
   </ItemGroup>
@@ -166,9 +166,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dashboard.h">
-      <Filter>Game\Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\label.h">
       <Filter>Game\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\animation_factory.h">
@@ -346,6 +343,9 @@
       <Filter>Engine\Coordinates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sge_button.h">
+      <Filter>Engine\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sge_label.h">
       <Filter>Engine\Ui</Filter>
     </ClInclude>
   </ItemGroup>

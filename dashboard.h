@@ -3,9 +3,9 @@
 // MIT license
 //
 #pragma once
-#include "label.h"
 #include "sge_button.h"
 #include "sge_coords.h"
+#include "sge_label.h"
 #include "sge_sprite.h"
 
 struct Commands;
@@ -45,11 +45,11 @@ class Dashboard
    State* m_state = nullptr;
    const MapCoordSys* m_mapCoordSys = nullptr;
    sge::Sprite m_background;
-   Label m_creditsLabel;
-   Label m_creditsValue;
+   sge::Label m_creditsLabel;
+   sge::Label m_creditsValue;
    sge::Button m_ltButton;
-   Label m_ltStats;
+   sge::Label m_ltStats;
    sge::Button m_smButton;
-   Label m_smStats;
+   sge::Label m_smStats;
    sge::Button m_startButton;
 };

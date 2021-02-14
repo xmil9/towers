@@ -2,13 +2,15 @@
 // Jan-2021, Michael Lindner
 // MIT license
 //
-#include "label.h"
+#include "sge_label.h"
 #include "sge_renderer2.h"
 
 
+namespace sge
+{
 ///////////////////
 
-void Label::setup(GetTextFn getTextFn, const sge::PixPos& leftTop, const sge::PixDim& dim)
+void Label::setup(GetTextFn getTextFn, const PixPos& leftTop, const PixDim& dim)
 {
    assert(getTextFn);
 
@@ -18,7 +20,9 @@ void Label::setup(GetTextFn getTextFn, const sge::PixPos& leftTop, const sge::Pi
 }
 
 
-void Label::render(sge::Renderer2& renderer, const sge::PixPos& offset)
+void Label::render(Renderer2& renderer, const PixPos& offset)
 {
    renderer.renderText(m_getTextFn(), offset + m_leftTop, m_textScale, m_textColor);
 }
+
+} // namespace sge

@@ -168,7 +168,7 @@
     <ClCompile Include="..\..\dashboard.cpp" />
     <ClCompile Include="..\..\defender_factory.cpp" />
     <ClCompile Include="..\..\hp_renderer.cpp" />
-    <ClCompile Include="..\..\label.cpp" />
+    <ClCompile Include="..\..\sge_label.cpp" />
     <ClCompile Include="..\..\sge_main_window.cpp" />
     <ClCompile Include="..\..\sge_camera_fps.cpp" />
     <ClCompile Include="..\..\deps\glad\src\glad.c" />
@@ -214,7 +214,7 @@
     <ClInclude Include="..\..\sge_coords.h" />
     <ClInclude Include="..\..\sge_direction.h" />
     <ClInclude Include="..\..\sge_int_coords.h" />
-    <ClInclude Include="..\..\label.h" />
+    <ClInclude Include="..\..\sge_label.h" />
     <ClInclude Include="..\..\laser_turret.h" />
     <ClInclude Include="..\..\sge_map_coords.h" />
     <ClInclude Include="..\..\map_coord_sys.h" />
