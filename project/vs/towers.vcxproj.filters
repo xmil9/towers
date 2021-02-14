@@ -83,6 +83,9 @@
     <ClCompile Include="..\..\sge_label.cpp">
       <Filter>Engine\Ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\towers_game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">
@@ -347,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_label.h">
       <Filter>Engine\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\towers_game.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

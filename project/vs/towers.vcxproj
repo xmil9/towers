@@ -187,6 +187,7 @@
     <ClCompile Include="..\..\sge_textures.cpp" />
     <ClCompile Include="..\..\sge_text_renderer.cpp" />
     <ClCompile Include="..\..\towers.cpp" />
+    <ClCompile Include="..\..\towers_game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\paths.h" />
@@ -256,6 +257,7 @@
     <ClInclude Include="..\..\sge_textures.h" />
     <ClInclude Include="..\..\texture_tags.h" />
     <ClInclude Include="..\..\sge_text_renderer.h" />
+    <ClInclude Include="..\..\towers_game.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json" />
