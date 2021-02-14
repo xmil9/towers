@@ -70,7 +70,8 @@ class Game2 : private Commands, private State
    bool hasDefenderOnField(sge::MapPos field) const;
    const Defender* defenderOnField(sge::MapPos field) const;
    void setDefenderOnField(sge::MapPos field, bool hasDefender);
-   bool canPlaceDefenderOnField(const std::string& defenderModel, sge::MapPos field) const;
+   bool canPlaceDefenderOnField(const std::string& defenderModel,
+                                sge::MapPos field) const;
    void addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos);
    void placeDefender(const sge::PixPos& mousePos);
 
@@ -108,6 +109,11 @@ class Game2 : private Commands, private State
    void startAttack() override;
    void pauseAttack() override;
 
+   // Convenience functions for coordinate system operations.
+   sge::PixPos toPix(sge::MapPos mpos) const;
+   sge::MapPos toMap(sge::PixPos ppos) const;
+   sge::MapDim scaleInto(sge::MapDim source, sge::MapDim dest) const;
+
  private:
    static constexpr sge::PixCoordi MapWidth = UiScale(1800);
    static constexpr sge::PixCoordi MapHeight = UiScale(1200);
@@ -139,3 +145,19 @@ class Game2 : private Commands, private State
    int m_credits = 150;
    bool m_isPaused = true;
 };
+
+
+inline sge::PixPos Game2::toPix(sge::MapPos mpos) const
+{
+   return m_coordSys->toPix(mpos);
+}
+
+inline sge::MapPos Game2::toMap(sge::PixPos ppos) const
+{
+   return m_coordSys->toMap(ppos);
+}
+
+inline sge::MapDim Game2::scaleInto(sge::MapDim source, sge::MapDim dest) const
+{
+   return m_coordSys->scaleInto(source, dest);
+}

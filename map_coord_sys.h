@@ -16,12 +16,11 @@ class MapCoordSys
  public:
    explicit MapCoordSys(sge::PixDim fieldSize);
 
-   sge::PixPos toRenderCoords(sge::MapPos mpos) const;
-   sge::MapPos toMapCoords(sge::PixPos ppos) const;
+   sge::PixPos toPix(sge::MapPos mpos) const;
+   sge::MapPos toMap(sge::PixPos ppos) const;
 
-   // Returns the map size whose larger side is set to a given value and whose smaller
-   // side is calculated to be at the same aspect ratio as a given source size.
-   sge::MapDim scaleToSize(sge::MapCoord largerSide, sge::PixDim source) const;
+   // Scales a source area into a destination area maintaining the source's aspect ratio.
+   sge::MapDim scaleInto(sge::MapDim source, sge::MapDim dest) const;
 
  private:
    // Size of each field in pixel coordinates.
@@ -35,22 +34,19 @@ inline MapCoordSys::MapCoordSys(sge::PixDim fieldSize) : m_fieldSize{fieldSize}
       throw std::runtime_error("Fields of zero size are illegal.");
 }
 
-inline sge::PixPos MapCoordSys::toRenderCoords(sge::MapPos mpos) const
+inline sge::PixPos MapCoordSys::toPix(sge::MapPos mpos) const
 {
    return mpos * m_fieldSize;
 }
 
-inline sge::MapPos MapCoordSys::toMapCoords(sge::PixPos ppos) const
+inline sge::MapPos MapCoordSys::toMap(sge::PixPos ppos) const
 {
    assert(m_fieldSize.x != 0.f && m_fieldSize.y != 0.f);
    return ppos / m_fieldSize;
 }
 
-inline sge::MapDim MapCoordSys::scaleToSize(sge::MapCoord largerSide,
-                                            sge::PixDim source) const
+inline sge::MapDim MapCoordSys::scaleInto(sge::MapDim source, sge::MapDim dest) const
 {
-   const auto aspects = source.x >= source.y
-                           ? std::make_pair<float, float>(1.f, source.y / source.x)
-                           : std::make_pair<float, float>(source.x / source.y, 1.f);
-   return sge::MapDim{largerSide * aspects.first, largerSide * aspects.second};
+   const auto ratio = std::min(dest.x / source.x, dest.y / source.y);
+   return sge::MapDim{source.x * ratio, source.y * ratio};
 }

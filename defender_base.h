@@ -31,7 +31,7 @@ template <typename Derived> class DefenderBase
    };
 
  public:
-   DefenderBase(EntityId id, DefenderLook look, sge::MapCoord size, sge::MapPos center,
+   DefenderBase(EntityId id, DefenderLook look, sge::MapDim size, sge::MapPos center,
                 const MapCoordSys* cs, AttackerMap* attackers);
 
    EntityId id() const { return m_id; }
@@ -72,7 +72,7 @@ template <typename Derived> class DefenderBase
 
 
 template <typename Derived>
-DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sge::MapCoord size,
+DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sge::MapDim size,
                                     sge::MapPos center, const MapCoordSys* cs,
                                     AttackerMap* attackers)
 : m_id{id}, m_look{std::move(look)}, m_center{center}, m_coordSys{cs},
@@ -81,7 +81,7 @@ DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sge::MapCoor
    assert(m_coordSys);
    assert(m_attackers);
 
-   setSize(m_coordSys->scaleToSize(size, m_look.size()));
+   setSize(m_coordSys->scaleInto(m_coordSys->toMap(m_look.size()), size));
    setPosition(center);
 }
 
@@ -89,7 +89,7 @@ DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sge::MapCoor
 template <typename Derived>
 void DefenderBase<Derived>::render(sge::Renderer2& renderer, bool isPaused)
 {
-   const sge::PixPos center = m_coordSys->toRenderCoords(m_center);
+   const sge::PixPos center = m_coordSys->toPix(m_center);
 
    if (m_target && target().isAlive())
    {
@@ -140,7 +140,7 @@ template <typename Derived> void DefenderBase<Derived>::setPosition(sge::MapPos 
 
 template <typename Derived> void DefenderBase<Derived>::setSize(sge::MapVec size)
 {
-   m_look.setSize(m_coordSys->toRenderCoords(size));
+   m_look.setSize(m_coordSys->toPix(size));
 }
 
 

@@ -30,8 +30,8 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
    };
 
  public:
-   AttackerBase(EntityId id, AttackerLook look, sge::MapCoord size,
-                const Attribs& attribs, const OffsetPath& path, const MapCoordSys* cs);
+   AttackerBase(EntityId id, AttackerLook look, sge::MapDim size, const Attribs& attribs,
+                const OffsetPath& path, const MapCoordSys* cs);
 
    EntityId id() const { return m_id; }
    void render(sge::Renderer2& renderer, bool isPaused);
@@ -75,7 +75,7 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
 // AttackerBase implementation.
 
 template <typename Derived>
-AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, sge::MapCoord size,
+AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, sge::MapDim size,
                                     const Attribs& attribs, const OffsetPath& path,
                                     const MapCoordSys* cs)
 : m_id{id}, m_look{std::move(look)}, m_initialAttribs{attribs}, m_currAttribs{attribs},
@@ -83,7 +83,7 @@ AttackerBase<Derived>::AttackerBase(EntityId id, AttackerLook look, sge::MapCoor
 {
    assert(m_coordSys);
 
-   setSize(m_coordSys->scaleToSize(size, m_look.size()));
+   setSize(m_coordSys->scaleInto(m_coordSys->toMap(m_look.size()), size));
    setPosition(path.start());
 }
 
@@ -94,7 +94,7 @@ void AttackerBase<Derived>::render(sge::Renderer2& renderer, bool isPaused)
    if (!hasStarted())
       return;
 
-   const sge::PixPos center = m_coordSys->toRenderCoords(*m_center);
+   const sge::PixPos center = m_coordSys->toPix(*m_center);
 
    if (isAlive())
    {
@@ -188,7 +188,7 @@ void AttackerBase<Derived>::setPosition(std::optional<sge::MapPos> center)
 
 template <typename Derived> void AttackerBase<Derived>::setSize(sge::MapVec size)
 {
-   m_look.setSize(m_coordSys->toRenderCoords(size));
+   m_look.setSize(m_coordSys->toPix(size));
 }
 
 

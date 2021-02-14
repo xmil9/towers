@@ -21,7 +21,7 @@ class SonicMortar : public DefenderBase<SonicMortar>
    };
 
  public:
-   SonicMortar(EntityId id, DefenderLook look, sge::MapCoord size, sge::MapPos center,
+   SonicMortar(EntityId id, DefenderLook look, sge::MapDim size, sge::MapPos center,
                const Attribs& attribs, const MapCoordSys* cs, AttackerMap* attackers);
 
    static Attribs defaultAttributes();
@@ -36,7 +36,7 @@ class SonicMortar : public DefenderBase<SonicMortar>
 };
 
 
-inline SonicMortar::SonicMortar(EntityId id, DefenderLook look, sge::MapCoord size,
+inline SonicMortar::SonicMortar(EntityId id, DefenderLook look, sge::MapDim size,
                                 sge::MapPos center, const Attribs& attribs,
                                 const MapCoordSys* cs, AttackerMap* attackers)
 : DefenderBase<SonicMortar>{id, look, size, center, cs, attackers}, m_attribs{attribs}

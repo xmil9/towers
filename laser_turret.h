@@ -17,7 +17,7 @@ class LaserTurret : public DefenderBase<LaserTurret>
    using Attribs = DefenderBase<LaserTurret>::Attribs;
 
  public:
-   LaserTurret(EntityId id, DefenderLook look, sge::MapCoord size, sge::MapPos center,
+   LaserTurret(EntityId id, DefenderLook look, sge::MapDim size, sge::MapPos center,
                const Attribs& attribs, const MapCoordSys* cs, AttackerMap* attackers);
 
    static Attribs defaultAttributes();
@@ -30,7 +30,7 @@ class LaserTurret : public DefenderBase<LaserTurret>
 };
 
 
-inline LaserTurret::LaserTurret(EntityId id, DefenderLook look, sge::MapCoord size,
+inline LaserTurret::LaserTurret(EntityId id, DefenderLook look, sge::MapDim size,
                                 sge::MapPos center, const Attribs& attribs,
                                 const MapCoordSys* cs, AttackerMap* attackers)
 : DefenderBase<LaserTurret>{id, look, size, center, cs, attackers}, m_attribs{attribs}

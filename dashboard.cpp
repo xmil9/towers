@@ -135,7 +135,7 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
 
    // Set size of indicator to size of one field on map.
    constexpr sge::MapDim indicatorDim{1.f, 1.f};
-   const sge::PixDim indicatorsPixDim = m_mapCoordSys->toRenderCoords(indicatorDim);
+   const sge::PixDim indicatorsPixDim = m_mapCoordSys->toPix(indicatorDim);
 
    if (m_ltButton.isHit(mousePosInDash) && m_ltButton.isEnabled())
    {

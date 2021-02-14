@@ -214,9 +214,9 @@ bool Game2::setupTerrain()
 bool Game2::setupRenderer()
 {
    constexpr sge::NormDim hpStatusDim{.5f, .05f};
-   const sge::PixDim hpStatusPixDim = m_coordSys->toRenderCoords(hpStatusDim);
+   const sge::PixDim hpStatusPixDim = toPix(hpStatusDim);
    constexpr sge::NormVec hpOffset{-.25f, -.4f};
-   const sge::PixVec hpPixOffset = m_coordSys->toRenderCoords(hpOffset);
+   const sge::PixVec hpPixOffset = toPix(hpOffset);
    m_hpRenderer = std::make_unique<HpRenderer>(
       sge::Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
@@ -232,17 +232,15 @@ bool Game2::setupAnimations()
 
    AnimationFactory factory;
 
-   m_resources.addAnimation(
-      ExplosionATag,
-      factory.make(ExplosionATag, m_coordSys->toRenderCoords(sge::MapDim{1.f, 1.f})));
+   m_resources.addAnimation(ExplosionATag,
+                            factory.make(ExplosionATag, toPix(sge::MapDim{1.f, 1.f})));
 
-   sge::PixDim firingSize = m_coordSys->toRenderCoords(
-      m_coordSys->scaleToSize(LtSize, m_resources.getTextureSize(LtTexture)));
+   sge::PixDim firingSize =
+      toPix(scaleInto(toMap(m_resources.getTextureSize(LtTexture)), LtSize));
    m_resources.addAnimation(LtFiringAnimation,
                             factory.make(LtFiringAnimation, firingSize));
 
-   firingSize = m_coordSys->toRenderCoords(
-      m_coordSys->scaleToSize(SmSize, m_resources.getTextureSize(SmTexture)));
+   firingSize = toPix(scaleInto(toMap(m_resources.getTextureSize(SmTexture)), SmSize));
    m_resources.addAnimation(SmFiringAnimation,
                             factory.make(SmFiringAnimation, firingSize));
 
@@ -323,7 +321,7 @@ bool Game2::setupBackground()
    m_background =
       sge::Sprite{sge::SpriteLook{Map1TTag}, sge::SpriteForm{{MapWidth, MapHeight}}};
 
-   const sge::PixDim fieldPixDim = m_coordSys->toRenderCoords(sge::MapDim{1.f, 1.f});
+   const sge::PixDim fieldPixDim = toPix(sge::MapDim{1.f, 1.f});
    m_invalidFieldOverlay =
       sge::Sprite{sge::SpriteLook{InvalidFieldTTag}, sge::SpriteForm{fieldPixDim}};
    m_rangeOverlay = sge::Sprite{sge::SpriteLook{RangeTTag}, sge::SpriteForm{fieldPixDim}};
@@ -385,7 +383,7 @@ void Game2::renderDefenderInfo()
       return;
 
    const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
-   const sge::MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
+   const sge::MapPos fieldPos = truncate(toMap(mousePixPos));
    if (!m_map->isOnMap(fieldPos))
       return;
 
@@ -393,10 +391,9 @@ void Game2::renderDefenderInfo()
    if (touchedDefender)
    {
       const sge::MapCoord range = touchedDefender->range();
-      const sge::PixDim rangeDim =
-         m_coordSys->toRenderCoords(2.0f * sge::MapDim{range, range});
+      const sge::PixDim rangeDim = toPix(2.0f * sge::MapDim{range, range});
       const sge::MapPos at = touchedDefender->center();
-      const sge::PixPos atPix = m_coordSys->toRenderCoords(at);
+      const sge::PixPos atPix = toPix(at);
       m_rangeOverlay.setSize(rangeDim);
       m_renderer.renderSpriteCentered(m_rangeOverlay, atPix);
    }
@@ -409,18 +406,17 @@ void Game2::renderPlaceSession()
    {
       const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
 
-      const sge::MapPos fieldPos = truncate(m_coordSys->toMapCoords(mousePixPos));
-      const sge::PixPos fieldPixPos = m_coordSys->toRenderCoords(fieldPos);
-      const sge::PixPos fieldCenterPixPos =
-         fieldPixPos + m_coordSys->toRenderCoords(sge::MapPos{.5f, .5f});
+      const sge::MapPos fieldPos = truncate(toMap(mousePixPos));
+      const sge::PixPos fieldPixPos = toPix(fieldPos);
+      const sge::PixPos fieldCenterPixPos = fieldPixPos + toPix(sge::MapPos{.5f, .5f});
 
       const bool isOnMap = m_map->isOnMap(fieldPos);
       if (isOnMap)
       {
          if (canPlaceDefenderOnField(m_placeSess->model, fieldPos))
          {
-            const sge::PixDim rangeDim = m_coordSys->toRenderCoords(
-               2.0f * sge::MapDim{m_placeSess->range, m_placeSess->range});
+            const sge::PixDim rangeDim =
+               toPix(2.0f * sge::MapDim{m_placeSess->range, m_placeSess->range});
             m_rangeOverlay.setSize(rangeDim);
             m_renderer.renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
          }
@@ -536,11 +532,9 @@ void Game2::addDefender(std::optional<Defender>&& defender, const sge::PixPos& p
 
 void Game2::placeDefender(const sge::PixPos& mousePos)
 {
-   const sge::MapPos pos = centerInField(m_coordSys->toMapCoords(mousePos));
+   const sge::MapPos pos = centerInField(toMap(mousePos));
    if (!m_map->isOnMap(pos) || !canPlaceDefenderOnField(m_placeSess->model, pos))
-   {
       return;
-   }
 
    addDefender(m_defenseFactory->makeDefender(m_placeSess->model, pos), pos);
 }
