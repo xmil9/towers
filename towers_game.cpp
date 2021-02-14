@@ -46,7 +46,7 @@ static sge::MapPos centerInField(sge::MapPos pos)
 ///////////////////
 
 Towers::Towers()
-: Game2{WndWidth, WndHeight, "towsers"}, m_glfw{OpenGLVersion, GLFW_OPENGL_CORE_PROFILE},
+: Game2{WndWidth, WndHeight, "towsers"},
   m_dashboard{DashboardWidth, DashboardHeight, this, this}
 {
 }
@@ -54,90 +54,15 @@ Towers::Towers()
 
 bool Towers::setup()
 {
-   return (setupUi() && setupInput() && setupOutput() && setupTextures() &&
+   return (Game2::setup() && setupOutput() && setupTextures() &&
            setupTerrain() && setupRenderer() && setupAnimations() && setupAttackers() &&
            setupDefenders() && setupBackground() &&
-           m_dashboard.setup(m_renderer, m_coordSys.get()));
+           m_dashboard.setup(renderer(), m_coordSys.get()));
 }
 
 
 void Towers::cleanup()
 {
-}
-
-
-void Towers::run()
-{
-   m_frameClock.nextLap();
-   float processLag = 0.f;
-
-   while (!m_mainWnd.shouldClose())
-   {
-      m_frameClock.nextLap();
-      if (!m_isPaused)
-         processLag += m_frameClock.lapLength();
-
-      processInput();
-
-      if (!m_isPaused)
-      {
-         // Catch up with the game state for the time that was used for rendering and
-         // processing input. This standardizes the game speed across machines with
-         // various processing speeds.
-         constexpr float UpdateGranularityMs = 25.f;
-         while (processLag >= UpdateGranularityMs)
-         {
-            updateState();
-            processLag -= UpdateGranularityMs;
-         }
-      }
-
-      render();
-   }
-}
-
-
-bool Towers::setupUi()
-{
-   if (m_glfw.init(gfl::Lib::DebugOuput::On) != GLFW_NO_ERROR)
-      return false;
-
-   if (!setupMainWindow())
-      return false;
-
-   glfwMakeContextCurrent(m_mainWnd.handle());
-
-   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-      return false;
-
-   return true;
-}
-
-
-bool Towers::setupMainWindow()
-{
-   m_mainWnd.setInputController(&m_input);
-   m_mainWnd.addObserver([this](sge::MainWindow& src, std::string_view event,
-                                const esl::ObservedEventData& data) {
-      onMainWindowChanged(src, event, data);
-   });
-
-   if (m_mainWnd.create(WndWidth, WndHeight, "towers") != GLFW_NO_ERROR)
-      return false;
-
-   // Hide mouse cursor and capture its events even outside the main window.
-   // m_mainWnd.setCursorMode(GLFW_CURSOR_DISABLED);
-   return true;
-}
-
-
-bool Towers::setupInput()
-{
-   m_input.addObserver([this](sge::Input& /*src*/, std::string_view event,
-                              const esl::ObservedEventData& data) {
-      onInputChanged(m_input, event, data);
-   });
-   return true;
 }
 
 
@@ -220,7 +145,7 @@ bool Towers::setupRenderer()
       sge::Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
 
-   return m_renderer.setup(&m_resources, m_paths.shaderPath(), m_paths.fontPath(),
+   return renderer().setup(&m_resources, m_paths.shaderPath(), m_paths.fontPath(),
                            WndWidth, WndHeight);
 }
 
@@ -329,15 +254,10 @@ bool Towers::setupBackground()
 }
 
 
-void Towers::processInput()
-{
-   m_input.process(m_mainWnd, m_frameClock.lapLength(sge::MsToSecs));
-}
-
 
 void Towers::updateState()
 {
-   if (m_isPaused)
+   if (isPaused())
       return;
 
    for (auto& entry : m_attackers)
@@ -349,30 +269,25 @@ void Towers::updateState()
 }
 
 
-void Towers::render()
+void Towers::renderItems()
 {
-   m_renderer.clearScene();
-
-   m_renderer.beginRendering();
    renderMap();
-   m_dashboard.render(m_renderer, sge::PixPos{MapWidth - 1, 0.f});
+   m_dashboard.render(renderer(), sge::PixPos{MapWidth - 1, 0.f});
 
    for (auto& entry : m_attackers)
-      entry.second.render(m_renderer, m_isPaused);
+      entry.second.render(renderer(), isPaused());
    for (auto& defender : m_defenders)
-      defender.render(m_renderer, m_isPaused);
+      defender.render(renderer(), isPaused());
 
    renderDefenderInfo();
    // Draw placed content on top of everything else.
    renderPlaceSession();
-
-   m_mainWnd.swapBuffers();
 }
 
 
 void Towers::renderMap()
 {
-   m_renderer.renderSprite(m_background, {0.f, 0.f});
+   renderer().renderSprite(m_background, {0.f, 0.f});
 }
 
 
@@ -381,7 +296,7 @@ void Towers::renderDefenderInfo()
    if (m_placeSess)
       return;
 
-   const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
+   const sge::PixPos mousePixPos{mousePosition()};
    const sge::MapPos fieldPos = truncate(toMap(mousePixPos));
    if (!m_map->isOnMap(fieldPos))
       return;
@@ -394,7 +309,7 @@ void Towers::renderDefenderInfo()
       const sge::MapPos at = touchedDefender->center();
       const sge::PixPos atPix = toPix(at);
       m_rangeOverlay.setSize(rangeDim);
-      m_renderer.renderSpriteCentered(m_rangeOverlay, atPix);
+      renderer().renderSpriteCentered(m_rangeOverlay, atPix);
    }
 }
 
@@ -403,7 +318,7 @@ void Towers::renderPlaceSession()
 {
    if (m_placeSess)
    {
-      const sge::PixPos mousePixPos{m_mainWnd.mousePosition()};
+      const sge::PixPos mousePixPos{mousePosition()};
 
       const sge::MapPos fieldPos = truncate(toMap(mousePixPos));
       const sge::PixPos fieldPixPos = toPix(fieldPos);
@@ -417,16 +332,16 @@ void Towers::renderPlaceSession()
             const sge::PixDim rangeDim =
                toPix(2.0f * sge::MapDim{m_placeSess->range, m_placeSess->range});
             m_rangeOverlay.setSize(rangeDim);
-            m_renderer.renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
+            renderer().renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
          }
          else
          {
-            m_renderer.renderSprite(m_invalidFieldOverlay, fieldPixPos);
+            renderer().renderSprite(m_invalidFieldOverlay, fieldPixPos);
          }
       }
 
       const sge::PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
-      m_renderer.renderSpriteCentered(m_placeSess->indicator, indicatorCenter);
+      renderer().renderSpriteCentered(m_placeSess->indicator, indicatorCenter);
    }
 }
 
@@ -539,80 +454,6 @@ void Towers::placeDefender(const sge::PixPos& mousePos)
 }
 
 
-void Towers::onMainWindowChanged(sge::MainWindow& /*src*/, std::string_view event,
-                                 const esl::ObservedEventData& data)
-{
-   if (event == sge::WindowResizedEvent)
-   {
-      const sge::WindowResizedData& resizeData =
-         static_cast<const sge::WindowResizedData&>(data);
-      onMainWindowResize(resizeData.newSize);
-   }
-}
-
-
-void Towers::onMainWindowResize(const glm::ivec2& newSize)
-{
-   m_renderer.setFrustumSize(newSize.x, newSize.y);
-}
-
-
-void Towers::onInputChanged(sge::Input& /*src*/, std::string_view event,
-                            const esl::ObservedEventData& data)
-{
-   if (event == sge::MouseMovedEvent)
-   {
-      const auto& movedData = static_cast<const sge::MouseMovedData&>(data);
-      onMouseMoved(movedData.delta);
-   }
-   else if (event == sge::MouseScrolledEvent)
-   {
-      const auto& scrolledData = static_cast<const sge::MouseScrolledData&>(data);
-      onMouseScrolled(scrolledData.delta);
-   }
-   else if (event == sge::MouseButtonChangedEvent)
-   {
-      const auto& buttonData = static_cast<const sge::MouseButtonChangedData&>(data);
-      onMouseButtonChanged(buttonData.button, buttonData.action, buttonData.pos);
-   }
-   else if (event == sge::KeyPolledEvent)
-   {
-      const auto& polledData = static_cast<const sge::KeyPolledData&>(data);
-      onKeyPolled(polledData.key, polledData.frameLengthSecs);
-   }
-}
-
-
-void Towers::onMouseMoved(const glm::vec2& /*delta*/)
-{
-}
-
-
-void Towers::onMouseScrolled(const glm::vec2& /*delta*/)
-{
-}
-
-
-void Towers::onMouseButtonChanged(gfl::MouseButton button, int action,
-                                  const glm::vec2& pos)
-{
-   if (button == GLFW_MOUSE_BUTTON_1)
-   {
-      if (action == GLFW_PRESS)
-         onLeftButtonPressed(pos);
-      else
-         onLeftButtonReleased(pos);
-   }
-   else
-   {
-      if (action == GLFW_PRESS)
-         onRightButtonPressed(pos);
-      else
-         onRightButtonReleased(pos);
-   }
-}
-
-
 void Towers::onLeftButtonPressed(const glm::vec2& pos)
 {
    if (mapOnLeftButtonPressed(pos))
@@ -626,21 +467,6 @@ void Towers::onLeftButtonReleased(const glm::vec2& pos)
    if (mapOnLeftButtonReleased(pos))
       return;
    dashboardOnLeftButtonReleased(pos);
-}
-
-
-void Towers::onRightButtonPressed(const glm::vec2& /*pos*/)
-{
-}
-
-
-void Towers::onRightButtonReleased(const glm::vec2& /*pos*/)
-{
-}
-
-
-void Towers::onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/)
-{
 }
 
 
@@ -709,7 +535,7 @@ bool Towers::canAffordDefender(const std::string& model) const
 
 bool Towers::isPaused() const
 {
-   return m_isPaused;
+   return Game2::isPaused();
 }
 
 
@@ -734,11 +560,11 @@ void Towers::endPlaceSession()
 
 void Towers::startAttack()
 {
-   m_isPaused = false;
+   setPaused(false);
 }
 
 
 void Towers::pauseAttack()
 {
-   m_isPaused = true;
+   setPaused(true);
 }

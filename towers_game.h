@@ -18,13 +18,9 @@
 #include "state.h"
 #include "sge_coords.h"
 #include "sge_game2.h"
-#include "sge_input.h"
-#include "sge_main_window.h"
-#include "sge_renderer2.h"
 #include "sge_resources.h"
 #include "sge_sprite.h"
 #include "sge_types.h"
-#include "opengl_util/gfl_lib.h"
 #include <memory>
 #include <optional>
 #include <unordered_map>
@@ -37,14 +33,10 @@ class Towers : public sge::Game2, private Commands, private State
 public:
    Towers();
 
-   bool setup();
+   bool setup() override;
    void cleanup();
-   void run();
 
  private:
-   bool setupUi();
-   bool setupMainWindow();
-   bool setupInput();
    bool setupOutput();
    bool setupTextures();
    bool setupTerrain();
@@ -54,9 +46,8 @@ public:
    bool setupDefenders();
    bool setupBackground();
 
-   void processInput();
    void updateState();
-   void render();
+   void renderItems() override;
    void renderMap();
    void renderDefenderInfo();
    void renderPlaceSession();
@@ -77,20 +68,8 @@ public:
    void addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos);
    void placeDefender(const sge::PixPos& mousePos);
 
-   void onMainWindowChanged(sge::MainWindow& src, std::string_view event,
-                            const esl::ObservedEventData& data);
-   void onMainWindowResize(const glm::ivec2& newSize);
-
-   void onInputChanged(sge::Input& src, std::string_view event,
-                       const esl::ObservedEventData& data);
-   void onMouseMoved(const glm::vec2& delta);
-   void onMouseScrolled(const glm::vec2& delta);
-   void onMouseButtonChanged(gfl::MouseButton button, int action, const glm::vec2& pos);
-   void onLeftButtonPressed(const glm::vec2& pos);
-   void onLeftButtonReleased(const glm::vec2& pos);
-   void onRightButtonPressed(const glm::vec2& pos);
-   void onRightButtonReleased(const glm::vec2& pos);
-   void onKeyPolled(gfl::Key key, float frameLengthSecs);
+   void onLeftButtonPressed(const glm::vec2& pos) override;
+   void onLeftButtonReleased(const glm::vec2& pos) override;
 
    bool isInMap(const sge::PixPos& pos) const;
    bool isInDashboard(const sge::PixPos& pos) const;
@@ -125,11 +104,6 @@ private:
    static constexpr sge::PixCoordi WndHeight = MapHeight;
 
    sge::Resources m_resources;
-   sge::FrameClock m_frameClock;
-   gfl::Lib m_glfw;
-   sge::MainWindow m_mainWnd;
-   sge::Input m_input;
-   sge::Renderer2 m_renderer;
 
    std::unique_ptr<MapCoordSys> m_coordSys;
    Paths m_paths;
@@ -146,7 +120,6 @@ private:
    sge::Sprite m_rangeOverlay;
    std::vector<bool> m_defenderMatrix;
    int m_credits = 150;
-   bool m_isPaused = true;
 };
 
 
