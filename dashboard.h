@@ -3,8 +3,8 @@
 // MIT license
 //
 #pragma once
-#include "button.h"
 #include "label.h"
+#include "sge_button.h"
 #include "sge_coords.h"
 #include "sge_sprite.h"
 
@@ -47,9 +47,9 @@ class Dashboard
    sge::Sprite m_background;
    Label m_creditsLabel;
    Label m_creditsValue;
-   Button m_ltButton;
+   sge::Button m_ltButton;
    Label m_ltStats;
-   Button m_smButton;
+   sge::Button m_smButton;
    Label m_smStats;
-   Button m_startButton;
+   sge::Button m_startButton;
 };

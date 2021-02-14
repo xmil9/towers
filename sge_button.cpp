@@ -2,7 +2,7 @@
 // Jan-2021, Michael Lindner
 // MIT license
 //
-#include "button.h"
+#include "sge_button.h"
 #include "sge_renderer2.h"
 
 
@@ -11,11 +11,13 @@
 static constexpr sge::Color DisabledTint{.8f, .8f, .8f};
 
 
+namespace sge
+{
 ///////////////////
 
-void Button::setup(const sge::Sprite& background, sge::Sprite&& content,
-                   IsEnabledFn isEnabledFn, const sge::PixPos& leftTop,
-                   const sge::PixDim& dim)
+void Button::setup(const Sprite& background, Sprite&& content,
+                   IsEnabledFn isEnabledFn, const PixPos& leftTop,
+                   const PixDim& dim)
 {
    assert(isEnabledFn);
 
@@ -27,10 +29,12 @@ void Button::setup(const sge::Sprite& background, sge::Sprite&& content,
 }
 
 
-void Button::render(sge::Renderer2& renderer, const sge::PixPos& offset)
+void Button::render(Renderer2& renderer, const PixPos& offset)
 {
-   sge::Color tint = m_isEnabledFn() ? sge::NoColor : DisabledTint;
+   Color tint = m_isEnabledFn() ? NoColor : DisabledTint;
 
    renderer.renderSprite(m_background, offset + m_leftTop);
    renderer.renderSprite(m_content, offset + m_leftTop, tint);
 }
+
+} // namespace sge
