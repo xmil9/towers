@@ -1,9 +1,8 @@
 //
-// Oct-2020, Michael Lindner
+// Feb-2021, Michael Lindner
 // MIT license
 //
 #pragma once
-#include <cstdint>
 
 
 template<typename T>
@@ -11,5 +10,3 @@ constexpr T UiScale(T val)
 {
    return val * T(1);//T(2) / T(3);
 }
-
-using EntityId = int64_t;

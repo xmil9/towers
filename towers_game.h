@@ -5,7 +5,6 @@
 #pragma once
 #include "attacker.h"
 #include "attacker_factory.h"
-#include "basic_types.h"
 #include "commands.h"
 #include "dashboard.h"
 #include "defender.h"
@@ -16,6 +15,8 @@
 #include "paths.h"
 #include "place_session.h"
 #include "state.h"
+#include "towers_types.h"
+#include "ui_scale.h"
 #include "sge_coords.h"
 #include "sge_game2.h"
 #include "sge_sprite.h"

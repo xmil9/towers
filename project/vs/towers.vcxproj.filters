@@ -153,9 +153,6 @@
     <ClInclude Include="..\..\deps\stb\stb_image.h">
       <Filter>Engine\Stb</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\basic_types.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\commands.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -353,6 +350,12 @@
     </ClInclude>
     <ClInclude Include="..\..\sge_game2.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ui_scale.h">
+      <Filter>Game\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\towers_types.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

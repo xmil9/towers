@@ -202,7 +202,7 @@
     <ClInclude Include="..\..\attacker_factory.h" />
     <ClInclude Include="..\..\attacker_look.h" />
     <ClInclude Include="..\..\attacker_models.h" />
-    <ClInclude Include="..\..\basic_types.h" />
+    <ClInclude Include="..\..\towers_types.h" />
     <ClInclude Include="..\..\sge_button.h" />
     <ClInclude Include="..\..\commands.h" />
     <ClInclude Include="..\..\dashboard.h" />
@@ -258,6 +258,7 @@
     <ClInclude Include="..\..\texture_tags.h" />
     <ClInclude Include="..\..\sge_text_renderer.h" />
     <ClInclude Include="..\..\towers_game.h" />
+    <ClInclude Include="..\..\ui_scale.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json" />

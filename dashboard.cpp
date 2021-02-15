@@ -3,7 +3,6 @@
 // MIT license
 //
 #include "dashboard.h"
-#include "basic_types.h"
 #include "commands.h"
 #include "defender_models.h"
 #include "laser_turret.h"
@@ -12,6 +11,7 @@
 #include "sonic_mortar.h"
 #include "state.h"
 #include "texture_tags.h"
+#include "ui_scale.h"
 #include "sge_renderer2.h"
 #include "sge_sprite.h"
 #include "essentutils/string_util.h"

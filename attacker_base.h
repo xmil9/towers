@@ -5,9 +5,9 @@
 #pragma once
 #include "attacker_events.h"
 #include "attacker_look.h"
-#include "basic_types.h"
 #include "map_coord_sys.h"
 #include "path.h"
+#include "towers_types.h"
 #include "essentutils/observed.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
