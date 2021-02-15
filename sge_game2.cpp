@@ -3,6 +3,7 @@
 // MIT license
 //
 #include "sge_game2.h"
+#include "opengl_util/gll_debug.h"
 
 
 namespace
@@ -27,7 +28,7 @@ Game2::Game2(PixCoordi wndWidth, PixCoordi wndHeight, const std::string& wndTitl
 
 bool Game2::setup()
 {
-   return setupUi() && setupInput();
+   return setupUi() && setupInput() && setupOutput();
 }
 
 
@@ -182,6 +183,14 @@ bool Game2::setupInput()
       [this](Input& /*src*/, std::string_view event, const esl::ObservedEventData& data) {
          onInputChanged(m_input, event, data);
       });
+   return true;
+}
+
+
+bool Game2::setupOutput()
+{
+   if (gll::haveDebugContext())
+      gll::setDebugOutputCallback();
    return true;
 }
 

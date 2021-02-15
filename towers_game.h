@@ -37,7 +37,6 @@ public:
    void cleanup();
 
  private:
-   bool setupOutput();
    bool setupTextures();
    bool setupTerrain();
    bool setupRenderer();

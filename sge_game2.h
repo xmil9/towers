@@ -59,6 +59,7 @@ class Game2
    bool setupUi();
    bool setupMainWindow();
    bool setupInput();
+   bool setupOutput();
 
  private:
    gfl::Lib m_glfw;

@@ -9,8 +9,6 @@
 #include "defender_models.h"
 #include "map_data.h"
 #include "texture_tags.h"
-// External
-#include "opengl_util/gll_debug.h"
 // Runtime
 #include <iostream>
 #include <thread>
@@ -54,7 +52,7 @@ Towers::Towers()
 
 bool Towers::setup()
 {
-   return (Game2::setup() && setupOutput() && setupTextures() &&
+   return (Game2::setup() && setupTextures() &&
            setupTerrain() && setupRenderer() && setupAnimations() && setupAttackers() &&
            setupDefenders() && setupBackground() &&
            m_dashboard.setup(renderer(), m_coordSys.get()));
@@ -63,14 +61,6 @@ bool Towers::setup()
 
 void Towers::cleanup()
 {
-}
-
-
-bool Towers::setupOutput()
-{
-   if (gll::haveDebugContext())
-      gll::setDebugOutputCallback();
-   return true;
 }
 
 
