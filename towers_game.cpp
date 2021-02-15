@@ -19,7 +19,6 @@ namespace
 
 ///////////////////
 
-constexpr gfl::Lib::ContextVersion OpenGLVersion{4, 6};
 constexpr float MouseSensitivity = 0.05f;
 constexpr float ScrollSensitivity = 2.0f;
 constexpr float MovementSpeed = 2.5f;
@@ -44,18 +43,17 @@ static sge::MapPos centerInField(sge::MapPos pos)
 ///////////////////
 
 Towers::Towers()
-: Game2{WndWidth, WndHeight, "towsers"},
-  m_dashboard{DashboardWidth, DashboardHeight, this, this}
+: Game2{WndWidth, WndHeight, "towers"}, m_dashboard{DashboardWidth, DashboardHeight, this,
+                                                    this}
 {
 }
 
 
 bool Towers::setup()
 {
-   return (Game2::setup() && setupTextures() &&
-           setupTerrain() && setupRenderer() && setupAnimations() && setupAttackers() &&
-           setupDefenders() && setupBackground() &&
-           m_dashboard.setup(renderer(), m_coordSys.get()));
+   return (Game2::setup() && setupTextures() && setupTerrain() && setupRenderer() &&
+           setupAnimations() && setupAttackers() && setupDefenders() &&
+           setupBackground() && m_dashboard.setup(renderer(), m_coordSys.get()));
 }
 
 
@@ -102,7 +100,7 @@ bool Towers::setupTextures()
    };
 
    for (const auto& spec : textures)
-      if (!m_resources.loadTexture(spec.tag, spec.path / spec.filename))
+      if (!resources().loadTexture(spec.tag, spec.path / spec.filename))
          return false;
    return true;
 }
@@ -135,7 +133,7 @@ bool Towers::setupRenderer()
       sge::Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
 
-   return renderer().setup(&m_resources, m_paths.shaderPath(), m_paths.fontPath(),
+   return renderer().setup(&resources(), m_paths.shaderPath(), m_paths.fontPath(),
                            WndWidth, WndHeight);
 }
 
@@ -146,16 +144,16 @@ bool Towers::setupAnimations()
 
    AnimationFactory factory;
 
-   m_resources.addAnimation(ExplosionATag,
+   resources().addAnimation(ExplosionATag,
                             factory.make(ExplosionATag, toPix(sge::MapDim{1.f, 1.f})));
 
    sge::PixDim firingSize =
-      toPix(scaleInto(toMap(m_resources.getTextureSize(LtTexture)), LtSize));
-   m_resources.addAnimation(LtFiringAnimation,
+      toPix(scaleInto(toMap(resources().getTextureSize(LtTexture)), LtSize));
+   resources().addAnimation(LtFiringAnimation,
                             factory.make(LtFiringAnimation, firingSize));
 
-   firingSize = toPix(scaleInto(toMap(m_resources.getTextureSize(SmTexture)), SmSize));
-   m_resources.addAnimation(SmFiringAnimation,
+   firingSize = toPix(scaleInto(toMap(resources().getTextureSize(SmTexture)), SmSize));
+   resources().addAnimation(SmFiringAnimation,
                             factory.make(SmFiringAnimation, firingSize));
 
    return true;
@@ -173,19 +171,19 @@ bool Towers::setupAttackers()
       AatModel,
       AttackerLook{
          sge::Sprite{sge::SpriteLook{AatTexture},
-                     sge::SpriteForm{m_resources.getTextureSize(AatTexture)}},
+                     sge::SpriteForm{resources().getTextureSize(AatTexture)}},
          sge::Sprite{sge::SpriteLook{AatHitTexture},
-                     sge::SpriteForm{m_resources.getTextureSize(AatHitTexture)}},
-         m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
+                     sge::SpriteForm{resources().getTextureSize(AatHitTexture)}},
+         resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
       AssaultTank::defaultAttributes());
    m_attackFactory->registerModel(
       MhcModel,
       AttackerLook{
          sge::Sprite{sge::SpriteLook{MhcTexture},
-                     sge::SpriteForm{m_resources.getTextureSize(MhcTexture)}},
+                     sge::SpriteForm{resources().getTextureSize(MhcTexture)}},
          sge::Sprite{sge::SpriteLook{MhcHitTexture},
-                     sge::SpriteForm{m_resources.getTextureSize(MhcHitTexture)}},
-         m_resources.getAnimation(ExplosionATag), m_hpRenderer.get()},
+                     sge::SpriteForm{resources().getTextureSize(MhcHitTexture)}},
+         resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
       MobileCannon::defaultAttributes());
 
    // Small initial delay to keep attackers from rendering before the attack has started.
@@ -214,15 +212,15 @@ bool Towers::setupDefenders()
    m_defenseFactory->registerModel(
       LtModel,
       DefenderLook{sge::Sprite{sge::SpriteLook{LtTexture},
-                               sge::SpriteForm{m_resources.getTextureSize(LtTexture)}},
-                   m_resources.getAnimation(LtFiringAnimation)},
+                               sge::SpriteForm{resources().getTextureSize(LtTexture)}},
+                   resources().getAnimation(LtFiringAnimation)},
       LaserTurret::defaultAttributes());
 
    m_defenseFactory->registerModel(
       SmModel,
       DefenderLook{sge::Sprite{sge::SpriteLook{SmTexture},
-                               sge::SpriteForm{m_resources.getTextureSize(SmTexture)}},
-                   m_resources.getAnimation(SmFiringAnimation)},
+                               sge::SpriteForm{resources().getTextureSize(SmTexture)}},
+                   resources().getAnimation(SmFiringAnimation)},
       SonicMortar::defaultAttributes());
 
    resetDefenderPlacements();
@@ -242,7 +240,6 @@ bool Towers::setupBackground()
 
    return true;
 }
-
 
 
 void Towers::updateState()

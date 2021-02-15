@@ -18,7 +18,6 @@
 #include "state.h"
 #include "sge_coords.h"
 #include "sge_game2.h"
-#include "sge_resources.h"
 #include "sge_sprite.h"
 #include "sge_types.h"
 #include <memory>
@@ -101,8 +100,6 @@ private:
    static constexpr sge::PixCoordi DashboardHeight = MapHeight;
    static constexpr sge::PixCoordi WndWidth = MapWidth + DashboardWidth;
    static constexpr sge::PixCoordi WndHeight = MapHeight;
-
-   sge::Resources m_resources;
 
    std::unique_ptr<MapCoordSys> m_coordSys;
    Paths m_paths;

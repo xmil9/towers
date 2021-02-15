@@ -7,6 +7,7 @@
 #include "sge_input.h"
 #include "sge_main_window.h"
 #include "sge_renderer2.h"
+#include "sge_resources.h"
 #include "sge_types.h"
 #include "opengl_util/gfl_lib.h"
 #include <string>
@@ -30,10 +31,12 @@ class Game2
    virtual void render();
    virtual void renderItems() {}
 
-   const MainWindow& MainWnd() const { return m_mainWnd; }
-   MainWindow& MainWnd() { return m_mainWnd; }
+   const MainWindow& mainWnd() const { return m_mainWnd; }
+   MainWindow& mainWnd() { return m_mainWnd; }
    Renderer2& renderer() { return m_renderer; }
    const Renderer2& renderer() const { return m_renderer; }
+   Resources& resources() { return m_resources; }
+   const Resources& resources() const { return m_resources; }
 
    bool isPaused() const { return m_isPaused; }
    void setPaused(bool pause) { m_isPaused = pause; }
@@ -68,6 +71,7 @@ class Game2
    std::string m_wndTitle;
    MainWindow m_mainWnd;
    Input m_input;
+   Resources m_resources;
    FrameClock m_frameClock;
    bool m_isPaused = true;
    Renderer2 m_renderer;
