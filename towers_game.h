@@ -32,7 +32,7 @@ class Towers : public sge::Game2, private Commands, private State
 public:
    Towers();
 
-   bool setup() override;
+   bool setup();
    void cleanup();
 
  private:

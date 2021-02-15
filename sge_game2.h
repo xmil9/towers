@@ -10,6 +10,7 @@
 #include "sge_resources.h"
 #include "sge_types.h"
 #include "opengl_util/gfl_lib.h"
+#include <filesystem>
 #include <string>
 
 
@@ -20,12 +21,21 @@ namespace sge
 class Game2
 {
  public:
+   struct FileSysConfig
+   {
+      std::filesystem::path shadersPath;
+      std::filesystem::path fontsPath;
+   };
+
+ public:
    Game2(PixCoordi wndWidth, PixCoordi wndHeight, const std::string& wndTitle);
 
-   virtual bool setup();
    virtual void run();
 
  protected:
+   bool setup(const FileSysConfig& fsConfig);
+   void cleanup();
+
    virtual void processInput();
    virtual void updateState() {}
    virtual void render();
@@ -63,6 +73,7 @@ class Game2
    bool setupMainWindow();
    bool setupInput();
    bool setupOutput();
+   bool setupRenderer(const FileSysConfig& fsConfig);
 
  private:
    gfl::Lib m_glfw;

@@ -51,14 +51,16 @@ Towers::Towers()
 
 bool Towers::setup()
 {
-   return (Game2::setup() && setupTextures() && setupTerrain() && setupRenderer() &&
-           setupAnimations() && setupAttackers() && setupDefenders() &&
+   const FileSysConfig fsConfig{m_paths.shaderPath(), m_paths.fontPath()};
+   return (Game2::setup(fsConfig) && setupTextures() && setupTerrain() &&
+           setupRenderer() && setupAnimations() && setupAttackers() && setupDefenders() &&
            setupBackground() && m_dashboard.setup(renderer(), m_coordSys.get()));
 }
 
 
 void Towers::cleanup()
 {
+   Game2::cleanup();
 }
 
 
@@ -133,8 +135,7 @@ bool Towers::setupRenderer()
       sge::Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
 
-   return renderer().setup(&resources(), m_paths.shaderPath(), m_paths.fontPath(),
-                           WndWidth, WndHeight);
+   return true;
 }
 
 

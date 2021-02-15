@@ -26,12 +26,6 @@ Game2::Game2(PixCoordi wndWidth, PixCoordi wndHeight, const std::string& wndTitl
 }
 
 
-bool Game2::setup()
-{
-   return setupUi() && setupInput() && setupOutput();
-}
-
-
 void Game2::run()
 {
    m_frameClock.nextLap();
@@ -60,6 +54,17 @@ void Game2::run()
 
       render();
    }
+}
+
+
+bool Game2::setup(const FileSysConfig& fsConfig)
+{
+   return setupUi() && setupInput() && setupOutput() && setupRenderer(fsConfig);
+}
+
+
+void Game2::cleanup()
+{
 }
 
 
@@ -192,6 +197,13 @@ bool Game2::setupOutput()
    if (gll::haveDebugContext())
       gll::setDebugOutputCallback();
    return true;
+}
+
+
+bool Game2::setupRenderer(const FileSysConfig& fsConfig)
+{
+   return m_renderer.setup(&m_resources, fsConfig.shadersPath, fsConfig.fontsPath,
+                           m_wndWidth, m_wndHeight);
 }
 
 } // namespace sge
