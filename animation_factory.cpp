@@ -7,52 +7,52 @@
 #include "defender_models.h"
 #include "map_coord_sys.h"
 #include "texture_tags.h"
-#include "sge_animation.h"
+#include "spiel/animation.h"
 
 
 ///////////////////
 
-static sge::Animation NullAnimation;
+static sp::Animation NullAnimation;
 
 
-static sge::Animation makeExplosion(sge::PixDim size)
+static sp::Animation makeExplosion(sp::PixDim size)
 {
-   const sge::SpriteForm form{size, sge::Angle{0.f}};
-   std::vector<sge::Sprite> sprites{
-      sge::Sprite{sge::SpriteLook{Explosion1TTag}, form},
-      sge::Sprite{sge::SpriteLook{Explosion2TTag}, form},
-      sge::Sprite{sge::SpriteLook{Explosion3TTag}, form},
-      sge::Sprite{sge::SpriteLook{Explosion4TTag}, form},
+   const sp::SpriteForm form{size, sp::Angle{0.f}};
+   std::vector<sp::Sprite> sprites{
+      sp::Sprite{sp::SpriteLook{Explosion1TTag}, form},
+      sp::Sprite{sp::SpriteLook{Explosion2TTag}, form},
+      sp::Sprite{sp::SpriteLook{Explosion3TTag}, form},
+      sp::Sprite{sp::SpriteLook{Explosion4TTag}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
 
-   return sge::Animation(sprites, frames, false);
+   return sp::Animation(sprites, frames, false);
 }
 
 
-static sge::Animation makeFiringLaserTurret(sge::PixDim size)
+static sp::Animation makeFiringLaserTurret(sp::PixDim size)
 {
-   const sge::SpriteForm form{size, sge::Angle{0.f}};
-   std::vector<sge::Sprite> sprites{
-      sge::Sprite{sge::SpriteLook{LtFiring1Texture}, form},
-      sge::Sprite{sge::SpriteLook{LtFiring2Texture}, form},
+   const sp::SpriteForm form{size, sp::Angle{0.f}};
+   std::vector<sp::Sprite> sprites{
+      sp::Sprite{sp::SpriteLook{LtFiring1Texture}, form},
+      sp::Sprite{sp::SpriteLook{LtFiring2Texture}, form},
    };
    std::vector<int> frames{10, 10};
 
-   return sge::Animation(sprites, frames, true);
+   return sp::Animation(sprites, frames, true);
 }
 
 
-static sge::Animation makeFiringSonicMortar(sge::PixDim size)
+static sp::Animation makeFiringSonicMortar(sp::PixDim size)
 {
-   const sge::SpriteForm form{size, sge::Angle{0.f}};
-   std::vector<sge::Sprite> sprites{
-      sge::Sprite{sge::SpriteLook{SmFiring1Texture}, form},
-      sge::Sprite{sge::SpriteLook{SmFiring2Texture}, form},
+   const sp::SpriteForm form{size, sp::Angle{0.f}};
+   std::vector<sp::Sprite> sprites{
+      sp::Sprite{sp::SpriteLook{SmFiring1Texture}, form},
+      sp::Sprite{sp::SpriteLook{SmFiring2Texture}, form},
    };
    std::vector<int> frames{10, 10};
 
-   return sge::Animation(sprites, frames, true);
+   return sp::Animation(sprites, frames, true);
 }
 
 
@@ -68,7 +68,7 @@ AnimationFactory::AnimationFactory()
 }
 
 
-sge::Animation AnimationFactory::make(const std::string& tag, sge::PixDim size)
+sp::Animation AnimationFactory::make(const std::string& tag, sp::PixDim size)
 {
    const auto pos = m_factories.find(tag);
    if (pos == m_factories.end())

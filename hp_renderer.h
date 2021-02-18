@@ -3,10 +3,10 @@
 // MIT license
 //
 #pragma once
-#include "sge_coords.h"
-#include "sge_sprite.h"
+#include "spiel/coords.h"
+#include "spiel/sprite.h"
 
-namespace sge
+namespace sp
 {
 class Renderer2;
 }
@@ -17,17 +17,17 @@ class Renderer2;
 class HpRenderer
 {
  public:
-   HpRenderer(sge::Sprite&& status, sge::PixVec offset);
+   HpRenderer(sp::Sprite&& status, sp::PixVec offset);
 
-   void render(sge::Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio);
+   void render(sp::Renderer2& renderer, sp::PixPos atSpriteCenter, float ratio);
 
  private:
-   sge::Sprite m_status;
-   sge::PixVec m_offset{0.f, 0.f};
+   sp::Sprite m_status;
+   sp::PixVec m_offset{0.f, 0.f};
 };
 
 
-inline HpRenderer::HpRenderer(sge::Sprite&& status, sge::PixVec offset)
+inline HpRenderer::HpRenderer(sp::Sprite&& status, sp::PixVec offset)
 : m_status{std::move(status)}, m_offset{offset}
 {
 }

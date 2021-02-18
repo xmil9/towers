@@ -5,7 +5,7 @@
 #pragma once
 #include "assault_tank.h"
 #include "mobile_cannon.h"
-#include "sge_coords.h"
+#include "spiel/coords.h"
 #include <optional>
 #include <unordered_map>
 #include <variant>
@@ -22,9 +22,9 @@ class Attacker
    template <typename SpecificAttacker> explicit Attacker(SpecificAttacker&& a);
 
    EntityId id() const;
-   void render(sge::Renderer2& renderer, bool isPaused);
+   void render(sp::Renderer2& renderer, bool isPaused);
    void update();
-   std::optional<sge::MapPos> position() const;
+   std::optional<sp::MapPos> position() const;
    void hit(int damage);
    bool isAlive() const;
    bool hasStarted() const;
@@ -49,7 +49,7 @@ inline EntityId Attacker::id() const
    return {};
 }
 
-inline void Attacker::render(sge::Renderer2& renderer, bool isPaused)
+inline void Attacker::render(sp::Renderer2& renderer, bool isPaused)
 {
    if (m_attacker)
       std::visit([&](auto& attacker) { attacker.render(renderer, isPaused); },
@@ -62,7 +62,7 @@ inline void Attacker::update()
       std::visit([](auto& attacker) { attacker.update(); }, *m_attacker);
 }
 
-inline std::optional<sge::MapPos> Attacker::position() const
+inline std::optional<sp::MapPos> Attacker::position() const
 {
    if (m_attacker)
       return std::visit([](const auto& attacker) { return attacker.position(); },

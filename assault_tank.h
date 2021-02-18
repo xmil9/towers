@@ -17,7 +17,7 @@ class AssaultTank : public AttackerBase<AssaultTank>
    using Attribs = AttackerBase<AssaultTank>::Attribs;
 
  public:
-   AssaultTank(EntityId id, AttackerLook look, sge::MapDim size, const Attribs& attribs,
+   AssaultTank(EntityId id, AttackerLook look, sp::MapDim size, const Attribs& attribs,
                const OffsetPath& path, const MapCoordSys* cs);
 
    static Attribs defaultAttributes();
@@ -27,7 +27,7 @@ class AssaultTank : public AttackerBase<AssaultTank>
 };
 
 
-inline AssaultTank::AssaultTank(EntityId id, AttackerLook look, sge::MapDim size,
+inline AssaultTank::AssaultTank(EntityId id, AttackerLook look, sp::MapDim size,
                                 const Attribs& attribs, const OffsetPath& path,
                                 const MapCoordSys* cs)
 : AttackerBase<AssaultTank>{id, look, size, attribs, path, cs}, m_attribs{attribs}

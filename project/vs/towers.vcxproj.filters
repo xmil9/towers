@@ -32,59 +32,14 @@
     <ClCompile Include="..\..\hp_renderer.cpp">
       <Filter>Game\Attackers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sge_png_texture.cpp">
-      <Filter>Engine\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_input.cpp">
-      <Filter>Engine\Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_main_window.cpp">
-      <Filter>Engine\Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_sprite_form.cpp">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_animation.cpp">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_sprite_renderer.cpp">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_renderer2.cpp">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_camera_fps.cpp">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_frustum3.cpp">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\renderer3.cpp">
       <Filter>3D Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_text_renderer.cpp">
-      <Filter>Engine\Rendering\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_textures.cpp">
-      <Filter>Engine\Resource Management</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_animations.cpp">
-      <Filter>Engine\Resource Management</Filter>
     </ClCompile>
     <ClCompile Include="..\..\paths.cpp">
       <Filter>Game\Resource Management</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sge_button.cpp">
-      <Filter>Engine\Ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_label.cpp">
-      <Filter>Engine\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\towers_game.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sge_game2.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,32 +76,8 @@
     <Filter Include="Engine\Glad">
       <UniqueIdentifier>{e3626774-826b-4350-8f5e-5eb4e04c0390}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Rendering">
-      <UniqueIdentifier>{4589b49b-6d2f-4cf1-bb21-0224ce69757b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Rendering\3d">
-      <UniqueIdentifier>{9b77bbb6-9618-4356-93dd-9e1df30e1f92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Rendering\2d">
-      <UniqueIdentifier>{90907dfb-daf6-4040-b3a8-0fd88a104460}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Rendering\Text">
-      <UniqueIdentifier>{2e5ea87d-f94c-4886-8bab-a2685ce4d3e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Stb">
       <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Ui">
-      <UniqueIdentifier>{130ef901-d481-4ccf-836d-83d29dd1dd08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Utilities">
-      <UniqueIdentifier>{6be38c80-5e3f-4c4b-98b5-bef3f5c98975}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Coordinates">
-      <UniqueIdentifier>{878b9ca0-f65f-45a3-9010-ee32851974bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Resource Management">
-      <UniqueIdentifier>{6a94fc27-0135-48c4-9783-159d73e31840}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -243,113 +174,17 @@
     <ClInclude Include="..\..\target_scan.h">
       <Filter>Game\Defenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sge_types.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_rect.h">
-      <Filter>Engine\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_point2.h">
-      <Filter>Engine\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_png_texture.h">
-      <Filter>Engine\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_lap_clock.h">
-      <Filter>Engine\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_int_coords.h">
-      <Filter>Engine\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_norm_coords.h">
-      <Filter>Engine\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_pixel_coords.h">
-      <Filter>Engine\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_coords.h">
-      <Filter>Engine\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_input.h">
-      <Filter>Engine\Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_input_controller.h">
-      <Filter>Engine\Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_main_window.h">
-      <Filter>Engine\Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_mesh2.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_frustum2.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_camera_2d.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_sprite_look.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_sprite_form.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_sprite.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_animation.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_sprite_renderer.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_renderer2.h">
-      <Filter>Engine\Rendering\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_camera_fps.h">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_direction.h">
-      <Filter>Engine\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_frustum3.h">
-      <Filter>Engine\Rendering\3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\cube3_data.h">
       <Filter>3D Sample</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer3.h">
       <Filter>3D Sample</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sge_text_renderer.h">
-      <Filter>Engine\Rendering\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_textures.h">
-      <Filter>Engine\Resource Management</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_animations.h">
-      <Filter>Engine\Resource Management</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_resources.h">
-      <Filter>Engine\Resource Management</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\paths.h">
       <Filter>Game\Resource Management</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sge_map_coords.h">
-      <Filter>Engine\Coordinates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_button.h">
-      <Filter>Engine\Ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_label.h">
-      <Filter>Engine\Ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\towers_game.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sge_game2.h">
-      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ui_scale.h">
       <Filter>Game\Ui</Filter>
@@ -361,12 +196,6 @@
   <ItemGroup>
     <None Include="..\..\resources\map.json">
       <Filter>Resources</Filter>
-    </None>
-    <None Include="..\..\shaders\sge_sprite_shader.vs">
-      <Filter>Engine\Rendering\2d</Filter>
-    </None>
-    <None Include="..\..\shaders\sge_sprite_shader.fs">
-      <Filter>Engine\Rendering\2d</Filter>
     </None>
     <None Include="..\..\shaders\cube3_shader.vs">
       <Filter>3D Sample</Filter>

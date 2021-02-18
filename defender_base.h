@@ -8,7 +8,7 @@
 #include "map_coord_sys.h"
 #include "path.h"
 #include "target_scan.h"
-#include "sge_renderer2.h"
+#include "spiel/renderer2.h"
 #include "essentutils/fputil.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
@@ -25,36 +25,36 @@ template <typename Derived> class DefenderBase
  public:
    struct Attribs
    {
-      sge::MapCoord range = 0.f;
+      sp::MapCoord range = 0.f;
       int damage = 0;
       int cost = 0;
    };
 
  public:
-   DefenderBase(EntityId id, DefenderLook look, sge::MapDim size, sge::MapPos center,
+   DefenderBase(EntityId id, DefenderLook look, sp::MapDim size, sp::MapPos center,
                 const MapCoordSys* cs, AttackerMap* attackers);
 
    EntityId id() const { return m_id; }
    int cost() const { return baseAttribs().cost; }
-   sge::MapCoord range() const { return baseAttribs().range; }
-   sge::MapPos center() const { return m_center; }
-   void render(sge::Renderer2& renderer, bool isPaused);
+   sp::MapCoord range() const { return baseAttribs().range; }
+   sp::MapPos center() const { return m_center; }
+   void render(sp::Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
    bool isInRange(const Attacker& attacker) const;
-   bool isInRange(sge::MapCoord dist) const;
+   bool isInRange(sp::MapCoord dist) const;
 
  protected:
    Attacker& target();
    const Attacker& target() const;
 
  private:
-   void setPosition(sge::MapPos center);
-   void setSize(sge::MapVec size);
+   void setPosition(sp::MapPos center);
+   void setSize(sp::MapVec size);
    bool findTarget();
    bool canHit(const Attacker& attacker) const;
    void calcRotation();
-   std::optional<sge::MapVec> targetDirection() const;
+   std::optional<sp::MapVec> targetDirection() const;
 
    Derived& derived() { return static_cast<Derived&>(*this); }
    const Derived& derived() const { return static_cast<const Derived&>(*this); }
@@ -63,7 +63,7 @@ template <typename Derived> class DefenderBase
  protected:
    EntityId m_id = 0;
    DefenderLook m_look;
-   sge::MapPos m_center;
+   sp::MapPos m_center;
    const MapCoordSys* m_coordSys;
    AttackerMap* m_attackers = nullptr;
    ClosestTargetScan<Derived> m_targetScan;
@@ -72,8 +72,8 @@ template <typename Derived> class DefenderBase
 
 
 template <typename Derived>
-DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sge::MapDim size,
-                                    sge::MapPos center, const MapCoordSys* cs,
+DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sp::MapDim size,
+                                    sp::MapPos center, const MapCoordSys* cs,
                                     AttackerMap* attackers)
 : m_id{id}, m_look{std::move(look)}, m_center{center}, m_coordSys{cs},
   m_attackers{attackers}, m_targetScan{attackers}
@@ -87,9 +87,9 @@ DefenderBase<Derived>::DefenderBase(EntityId id, DefenderLook look, sge::MapDim 
 
 
 template <typename Derived>
-void DefenderBase<Derived>::render(sge::Renderer2& renderer, bool isPaused)
+void DefenderBase<Derived>::render(sp::Renderer2& renderer, bool isPaused)
 {
-   const sge::PixPos center = m_coordSys->toPix(m_center);
+   const sp::PixPos center = m_coordSys->toPix(m_center);
 
    if (m_target && target().isAlive())
    {
@@ -132,13 +132,13 @@ void DefenderBase<Derived>::removeAsTarget(EntityId attackerId)
 }
 
 
-template <typename Derived> void DefenderBase<Derived>::setPosition(sge::MapPos center)
+template <typename Derived> void DefenderBase<Derived>::setPosition(sp::MapPos center)
 {
    m_center = center;
 }
 
 
-template <typename Derived> void DefenderBase<Derived>::setSize(sge::MapVec size)
+template <typename Derived> void DefenderBase<Derived>::setSize(sp::MapVec size)
 {
    m_look.setSize(m_coordSys->toPix(size));
 }
@@ -174,7 +174,7 @@ bool DefenderBase<Derived>::isInRange(const Attacker& attacker) const
 
 
 template <typename Derived>
-bool DefenderBase<Derived>::isInRange(sge::MapCoord dist) const
+bool DefenderBase<Derived>::isInRange(sp::MapCoord dist) const
 {
    return esl::lessEqual(dist, baseAttribs().range);
 }
@@ -186,13 +186,13 @@ template <typename Derived> void DefenderBase<Derived>::calcRotation()
    if (!targetDir)
       return;
 
-   const sge::Angle rot{-glm::orientedAngle(glm::normalize(*targetDir), sge::Up)};
+   const sp::Angle rot{-glm::orientedAngle(glm::normalize(*targetDir), sp::Up)};
    m_look.setRotation(rot);
 }
 
 
 template <typename Derived>
-std::optional<sge::MapVec> DefenderBase<Derived>::targetDirection() const
+std::optional<sp::MapVec> DefenderBase<Derived>::targetDirection() const
 {
    if (!m_target)
       return std::nullopt;

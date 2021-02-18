@@ -5,7 +5,7 @@
 #pragma once
 #include "field.h"
 #include "path.h"
-#include "sge_coords.h"
+#include "spiel/coords.h"
 #include <cstddef>
 #include <filesystem>
 #include <optional>
@@ -15,12 +15,12 @@
 struct MapData
 {
    // Number of rows and columns in the map.
-   sge::IntDim mapSize{0, 0};
+   sp::IntDim mapSize{0, 0};
    std::vector<Field> terrain;
    // Coordinates of start fields.
-   std::vector<sge::IntPos> starts;
+   std::vector<sp::IntPos> starts;
    // Coordinates of finish field.
-   sge::IntPos finish{0, 0};
+   sp::IntPos finish{0, 0};
    // Coordinates for paths through the map.
    std::vector<Path> paths;
 };

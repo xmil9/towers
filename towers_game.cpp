@@ -26,15 +26,15 @@ constexpr float MovementSpeed = 2.5f;
 
 ///////////////////
 
-static sge::MapPos truncate(sge::MapPos pos)
+static sp::MapPos truncate(sp::MapPos pos)
 {
-   return sge::MapPos(static_cast<int>(pos.x), static_cast<int>(pos.y));
+   return sp::MapPos(static_cast<int>(pos.x), static_cast<int>(pos.y));
 }
 
 
-static sge::MapPos centerInField(sge::MapPos pos)
+static sp::MapPos centerInField(sp::MapPos pos)
 {
-   return truncate(pos) + sge::MapVec{.5f, .5f};
+   return truncate(pos) + sp::MapVec{.5f, .5f};
 }
 
 } // namespace
@@ -115,9 +115,9 @@ bool Towers::setupTerrain()
       return false;
    m_map = std::make_unique<Map>(std::move(*mapData));
 
-   const sge::PixDim mapPixDim{MapWidth, MapHeight};
-   const sge::IntDim mapSizeInFields = m_map->sizeInFields();
-   const sge::PixDim fieldPixDim{mapPixDim.x / mapSizeInFields.x,
+   const sp::PixDim mapPixDim{MapWidth, MapHeight};
+   const sp::IntDim mapSizeInFields = m_map->sizeInFields();
+   const sp::PixDim fieldPixDim{mapPixDim.x / mapSizeInFields.x,
                                  mapPixDim.y / mapSizeInFields.y};
    m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
 
@@ -127,12 +127,12 @@ bool Towers::setupTerrain()
 
 bool Towers::setupRenderer()
 {
-   constexpr sge::NormDim hpStatusDim{.5f, .05f};
-   const sge::PixDim hpStatusPixDim = toPix(hpStatusDim);
-   constexpr sge::NormVec hpOffset{-.25f, -.4f};
-   const sge::PixVec hpPixOffset = toPix(hpOffset);
+   constexpr sp::NormDim hpStatusDim{.5f, .05f};
+   const sp::PixDim hpStatusPixDim = toPix(hpStatusDim);
+   constexpr sp::NormVec hpOffset{-.25f, -.4f};
+   const sp::PixVec hpPixOffset = toPix(hpOffset);
    m_hpRenderer = std::make_unique<HpRenderer>(
-      sge::Sprite{sge::SpriteLook{HpStatusTTag}, sge::SpriteForm{hpStatusPixDim}},
+      sp::Sprite{sp::SpriteLook{HpStatusTTag}, sp::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
 
    return true;
@@ -146,9 +146,9 @@ bool Towers::setupAnimations()
    AnimationFactory factory;
 
    resources().addAnimation(ExplosionATag,
-                            factory.make(ExplosionATag, toPix(sge::MapDim{1.f, 1.f})));
+                            factory.make(ExplosionATag, toPix(sp::MapDim{1.f, 1.f})));
 
-   sge::PixDim firingSize =
+   sp::PixDim firingSize =
       toPix(scaleInto(toMap(resources().getTextureSize(LtTexture)), LtSize));
    resources().addAnimation(LtFiringAnimation,
                             factory.make(LtFiringAnimation, firingSize));
@@ -171,19 +171,19 @@ bool Towers::setupAttackers()
    m_attackFactory->registerModel(
       AatModel,
       AttackerLook{
-         sge::Sprite{sge::SpriteLook{AatTexture},
-                     sge::SpriteForm{resources().getTextureSize(AatTexture)}},
-         sge::Sprite{sge::SpriteLook{AatHitTexture},
-                     sge::SpriteForm{resources().getTextureSize(AatHitTexture)}},
+         sp::Sprite{sp::SpriteLook{AatTexture},
+                     sp::SpriteForm{resources().getTextureSize(AatTexture)}},
+         sp::Sprite{sp::SpriteLook{AatHitTexture},
+                     sp::SpriteForm{resources().getTextureSize(AatHitTexture)}},
          resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
       AssaultTank::defaultAttributes());
    m_attackFactory->registerModel(
       MhcModel,
       AttackerLook{
-         sge::Sprite{sge::SpriteLook{MhcTexture},
-                     sge::SpriteForm{resources().getTextureSize(MhcTexture)}},
-         sge::Sprite{sge::SpriteLook{MhcHitTexture},
-                     sge::SpriteForm{resources().getTextureSize(MhcHitTexture)}},
+         sp::Sprite{sp::SpriteLook{MhcTexture},
+                     sp::SpriteForm{resources().getTextureSize(MhcTexture)}},
+         sp::Sprite{sp::SpriteLook{MhcHitTexture},
+                     sp::SpriteForm{resources().getTextureSize(MhcHitTexture)}},
          resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
       MobileCannon::defaultAttributes());
 
@@ -191,13 +191,13 @@ bool Towers::setupAttackers()
    constexpr int DefaultDelay = 1;
 
    addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), sge::MapVec{0.f, 0.f}}, DefaultDelay));
+      AatModel, OffsetPath{&m_map->path(), sp::MapVec{0.f, 0.f}}, DefaultDelay));
    addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), sge::MapVec{0.f, 0.f}}, 30));
+      AatModel, OffsetPath{&m_map->path(), sp::MapVec{0.f, 0.f}}, 30));
    addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), sge::MapVec{-.08f, .05f}}, DefaultDelay));
+      MhcModel, OffsetPath{&m_map->path(), sp::MapVec{-.08f, .05f}}, DefaultDelay));
    addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), sge::MapVec{0.f, -0.05}}, DefaultDelay));
+      MhcModel, OffsetPath{&m_map->path(), sp::MapVec{0.f, -0.05}}, DefaultDelay));
 
    return true;
 }
@@ -212,15 +212,15 @@ bool Towers::setupDefenders()
 
    m_defenseFactory->registerModel(
       LtModel,
-      DefenderLook{sge::Sprite{sge::SpriteLook{LtTexture},
-                               sge::SpriteForm{resources().getTextureSize(LtTexture)}},
+      DefenderLook{sp::Sprite{sp::SpriteLook{LtTexture},
+                               sp::SpriteForm{resources().getTextureSize(LtTexture)}},
                    resources().getAnimation(LtFiringAnimation)},
       LaserTurret::defaultAttributes());
 
    m_defenseFactory->registerModel(
       SmModel,
-      DefenderLook{sge::Sprite{sge::SpriteLook{SmTexture},
-                               sge::SpriteForm{resources().getTextureSize(SmTexture)}},
+      DefenderLook{sp::Sprite{sp::SpriteLook{SmTexture},
+                               sp::SpriteForm{resources().getTextureSize(SmTexture)}},
                    resources().getAnimation(SmFiringAnimation)},
       SonicMortar::defaultAttributes());
 
@@ -232,12 +232,12 @@ bool Towers::setupDefenders()
 bool Towers::setupBackground()
 {
    m_background =
-      sge::Sprite{sge::SpriteLook{Map1TTag}, sge::SpriteForm{{MapWidth, MapHeight}}};
+      sp::Sprite{sp::SpriteLook{Map1TTag}, sp::SpriteForm{{MapWidth, MapHeight}}};
 
-   const sge::PixDim fieldPixDim = toPix(sge::MapDim{1.f, 1.f});
+   const sp::PixDim fieldPixDim = toPix(sp::MapDim{1.f, 1.f});
    m_invalidFieldOverlay =
-      sge::Sprite{sge::SpriteLook{InvalidFieldTTag}, sge::SpriteForm{fieldPixDim}};
-   m_rangeOverlay = sge::Sprite{sge::SpriteLook{RangeTTag}, sge::SpriteForm{fieldPixDim}};
+      sp::Sprite{sp::SpriteLook{InvalidFieldTTag}, sp::SpriteForm{fieldPixDim}};
+   m_rangeOverlay = sp::Sprite{sp::SpriteLook{RangeTTag}, sp::SpriteForm{fieldPixDim}};
 
    return true;
 }
@@ -260,7 +260,7 @@ void Towers::updateState()
 void Towers::renderItems()
 {
    renderMap();
-   m_dashboard.render(renderer(), sge::PixPos{MapWidth - 1, 0.f});
+   m_dashboard.render(renderer(), sp::PixPos{MapWidth - 1, 0.f});
 
    for (auto& entry : m_attackers)
       entry.second.render(renderer(), isPaused());
@@ -284,18 +284,18 @@ void Towers::renderDefenderInfo()
    if (m_placeSess)
       return;
 
-   const sge::PixPos mousePixPos{mousePosition()};
-   const sge::MapPos fieldPos = truncate(toMap(mousePixPos));
+   const sp::PixPos mousePixPos{mousePosition()};
+   const sp::MapPos fieldPos = truncate(toMap(mousePixPos));
    if (!m_map->isOnMap(fieldPos))
       return;
 
    const Defender* touchedDefender = defenderOnField(fieldPos);
    if (touchedDefender)
    {
-      const sge::MapCoord range = touchedDefender->range();
-      const sge::PixDim rangeDim = toPix(2.0f * sge::MapDim{range, range});
-      const sge::MapPos at = touchedDefender->center();
-      const sge::PixPos atPix = toPix(at);
+      const sp::MapCoord range = touchedDefender->range();
+      const sp::PixDim rangeDim = toPix(2.0f * sp::MapDim{range, range});
+      const sp::MapPos at = touchedDefender->center();
+      const sp::PixPos atPix = toPix(at);
       m_rangeOverlay.setSize(rangeDim);
       renderer().renderSpriteCentered(m_rangeOverlay, atPix);
    }
@@ -306,19 +306,19 @@ void Towers::renderPlaceSession()
 {
    if (m_placeSess)
    {
-      const sge::PixPos mousePixPos{mousePosition()};
+      const sp::PixPos mousePixPos{mousePosition()};
 
-      const sge::MapPos fieldPos = truncate(toMap(mousePixPos));
-      const sge::PixPos fieldPixPos = toPix(fieldPos);
-      const sge::PixPos fieldCenterPixPos = fieldPixPos + toPix(sge::MapPos{.5f, .5f});
+      const sp::MapPos fieldPos = truncate(toMap(mousePixPos));
+      const sp::PixPos fieldPixPos = toPix(fieldPos);
+      const sp::PixPos fieldCenterPixPos = fieldPixPos + toPix(sp::MapPos{.5f, .5f});
 
       const bool isOnMap = m_map->isOnMap(fieldPos);
       if (isOnMap)
       {
          if (canPlaceDefenderOnField(m_placeSess->model, fieldPos))
          {
-            const sge::PixDim rangeDim =
-               toPix(2.0f * sge::MapDim{m_placeSess->range, m_placeSess->range});
+            const sp::PixDim rangeDim =
+               toPix(2.0f * sp::MapDim{m_placeSess->range, m_placeSess->range});
             m_rangeOverlay.setSize(rangeDim);
             renderer().renderSpriteCentered(m_rangeOverlay, fieldCenterPixPos);
          }
@@ -328,7 +328,7 @@ void Towers::renderPlaceSession()
          }
       }
 
-      const sge::PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
+      const sp::PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
       renderer().renderSpriteCentered(m_placeSess->indicator, indicatorCenter);
    }
 }
@@ -380,13 +380,13 @@ void Towers::removeAsTarget(EntityId attackerId)
 void Towers::resetDefenderPlacements()
 {
    assert(m_map);
-   const sge::IntDim mapDim = m_map->sizeInFields();
+   const sp::IntDim mapDim = m_map->sizeInFields();
    m_defenderMatrix.resize(mapDim.x * mapDim.y);
    std::fill(m_defenderMatrix.begin(), m_defenderMatrix.end(), false);
 }
 
 
-bool Towers::hasDefenderOnField(sge::MapPos field) const
+bool Towers::hasDefenderOnField(sp::MapPos field) const
 {
    const int idx =
       static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
@@ -395,7 +395,7 @@ bool Towers::hasDefenderOnField(sge::MapPos field) const
 }
 
 
-const Defender* Towers::defenderOnField(sge::MapPos field) const
+const Defender* Towers::defenderOnField(sp::MapPos field) const
 {
    if (hasDefenderOnField(field))
       for (const auto& defender : m_defenders)
@@ -405,7 +405,7 @@ const Defender* Towers::defenderOnField(sge::MapPos field) const
 }
 
 
-void Towers::setDefenderOnField(sge::MapPos field, bool hasDefender)
+void Towers::setDefenderOnField(sp::MapPos field, bool hasDefender)
 {
    const int idx =
       static_cast<int>(field.y) * m_map->sizeInFields().x + static_cast<int>(field.x);
@@ -415,13 +415,13 @@ void Towers::setDefenderOnField(sge::MapPos field, bool hasDefender)
 
 
 bool Towers::canPlaceDefenderOnField(const std::string& /*defenderModel*/,
-                                     sge::MapPos field) const
+                                     sp::MapPos field) const
 {
    return m_map->canBuildOnField(field) && !hasDefenderOnField(field);
 }
 
 
-void Towers::addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos)
+void Towers::addDefender(std::optional<Defender>&& defender, const sp::PixPos& pos)
 {
    if (defender)
    {
@@ -432,9 +432,9 @@ void Towers::addDefender(std::optional<Defender>&& defender, const sge::PixPos& 
 }
 
 
-void Towers::placeDefender(const sge::PixPos& mousePos)
+void Towers::placeDefender(const sp::PixPos& mousePos)
 {
-   const sge::MapPos pos = centerInField(toMap(mousePos));
+   const sp::MapPos pos = centerInField(toMap(mousePos));
    if (!m_map->isOnMap(pos) || !canPlaceDefenderOnField(m_placeSess->model, pos))
       return;
 
@@ -458,20 +458,20 @@ void Towers::onLeftButtonReleased(const glm::vec2& pos)
 }
 
 
-bool Towers::isInMap(const sge::PixPos& pos) const
+bool Towers::isInMap(const sp::PixPos& pos) const
 {
    return pos.x > 0 && pos.x <= MapWidth && pos.y > 0 && pos.y <= MapHeight;
 }
 
 
-bool Towers::isInDashboard(const sge::PixPos& pos) const
+bool Towers::isInDashboard(const sp::PixPos& pos) const
 {
    return pos.x > MapWidth && pos.x <= MapWidth + DashboardWidth && pos.y > 0 &&
           pos.y <= DashboardHeight;
 }
 
 
-bool Towers::mapOnLeftButtonPressed(const sge::PixPos& pos)
+bool Towers::mapOnLeftButtonPressed(const sp::PixPos& pos)
 {
    if (!isInMap(pos))
       return false;
@@ -486,7 +486,7 @@ bool Towers::mapOnLeftButtonPressed(const sge::PixPos& pos)
 }
 
 
-bool Towers::mapOnLeftButtonReleased(const sge::PixPos& pos)
+bool Towers::mapOnLeftButtonReleased(const sp::PixPos& pos)
 {
    if (!isInMap(pos))
       return false;
@@ -494,22 +494,22 @@ bool Towers::mapOnLeftButtonReleased(const sge::PixPos& pos)
 }
 
 
-bool Towers::dashboardOnLeftButtonPressed(const sge::PixPos& pos)
+bool Towers::dashboardOnLeftButtonPressed(const sp::PixPos& pos)
 {
    if (!isInDashboard(pos))
       return false;
 
-   const sge::PixPos posInDashboard = pos - sge::PixPos{MapWidth, 0.f};
+   const sp::PixPos posInDashboard = pos - sp::PixPos{MapWidth, 0.f};
    return m_dashboard.onLeftButtonPressed(posInDashboard);
 }
 
 
-bool Towers::dashboardOnLeftButtonReleased(const sge::PixPos& pos)
+bool Towers::dashboardOnLeftButtonReleased(const sp::PixPos& pos)
 {
    if (!isInDashboard(pos))
       return false;
 
-   const sge::PixPos posInDashboard = pos - sge::PixPos{MapWidth, 0.f};
+   const sp::PixPos posInDashboard = pos - sp::PixPos{MapWidth, 0.f};
    return m_dashboard.onLeftButtonReleased(posInDashboard);
 }
 
@@ -528,12 +528,12 @@ bool Towers::isPaused() const
 
 
 void Towers::startPlaceSession(std::string_view model, std::string_view indicatorTex,
-                               sge::PixDim indicatorDim)
+                               sp::PixDim indicatorDim)
 {
    PlaceSession sess;
    sess.model = model;
    sess.indicator =
-      sge::Sprite{sge::SpriteLook{indicatorTex}, sge::SpriteForm{indicatorDim}};
+      sp::Sprite{sp::SpriteLook{indicatorTex}, sp::SpriteForm{indicatorDim}};
    sess.range = m_defenseFactory->defaultAttributes(sess.model).range();
 
    m_placeSess = std::move(sess);

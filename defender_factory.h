@@ -28,7 +28,7 @@ class DefenderFactory
    template <typename Attribs>
    void registerModel(const std::string& name, DefenderLook look, Attribs&& attribs);
 
-   Defender makeDefender(const std::string& model, sge::MapPos center);
+   Defender makeDefender(const std::string& model, sp::MapPos center);
    DefenderAttribs defaultAttributes(const std::string& model) const;
 
  private:

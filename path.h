@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "sge_coords.h"
+#include "spiel/coords.h"
 #include <cassert>
 #include <vector>
 
@@ -17,26 +17,26 @@ class Path
 
  public:
    Path() = default;
-   explicit Path(const std::vector<sge::IntPos>& turns);
+   explicit Path(const std::vector<sp::IntPos>& turns);
 
    std::size_t size() const { return m_turns.size(); }
-   sge::MapPos operator[](Index idx) const;
-   sge::MapPos start() const { return m_turns[0]; }
-   sge::MapPos finish() const;
+   sp::MapPos operator[](Index idx) const;
+   sp::MapPos start() const { return m_turns[0]; }
+   sp::MapPos finish() const;
 
  private:
    // Map positions where the path takes a turn.
-   std::vector<sge::MapPos> m_turns;
+   std::vector<sp::MapPos> m_turns;
 };
 
 
-inline sge::MapPos Path::operator[](Index idx) const
+inline sp::MapPos Path::operator[](Index idx) const
 {
    assert(idx < size());
    return m_turns[idx];
 }
 
-inline sge::MapPos Path::finish() const
+inline sp::MapPos Path::finish() const
 {
    assert(size() > 0);
    return m_turns[size() - 1];
@@ -49,23 +49,23 @@ inline sge::MapPos Path::finish() const
 class OffsetPath
 {
  public:
-   OffsetPath(const Path* path, sge::MapVec offset);
+   OffsetPath(const Path* path, sp::MapVec offset);
 
    std::size_t size() const { return m_path->size(); }
-   sge::MapPos operator[](Path::Index idx) const { return transform((*m_path)[idx]); }
-   sge::MapPos start() const { return transform(m_path->start()); }
-   sge::MapPos finish() const { return transform(m_path->finish()); }
+   sp::MapPos operator[](Path::Index idx) const { return transform((*m_path)[idx]); }
+   sp::MapPos start() const { return transform(m_path->start()); }
+   sp::MapPos finish() const { return transform(m_path->finish()); }
 
  private:
-   sge::MapPos transform(const sge::MapPos& pos) const { return pos + m_offset; }
+   sp::MapPos transform(const sp::MapPos& pos) const { return pos + m_offset; }
 
  private:
    const Path* m_path = nullptr;
-   sge::MapVec m_offset{0.f, 0.f};
+   sp::MapVec m_offset{0.f, 0.f};
 };
 
 
-inline OffsetPath::OffsetPath(const Path* path, sge::MapVec offset)
+inline OffsetPath::OffsetPath(const Path* path, sp::MapVec offset)
 : m_path{path}, m_offset{offset}
 {
    assert(m_path);

@@ -3,12 +3,12 @@
 // MIT license
 //
 #pragma once
-#include "sge_coords.h"
+#include "spiel/coords.h"
 #include <functional>
 #include <string>
 #include <unordered_map>
 
-namespace sge
+namespace sp
 {
 class Animation;
 }
@@ -19,10 +19,10 @@ class AnimationFactory
  public:
    AnimationFactory();
 
-   sge::Animation make(const std::string& tag, sge::PixDim size);
+   sp::Animation make(const std::string& tag, sp::PixDim size);
 
  private:
-   using FactoryFunc = std::function<sge::Animation(sge::PixDim)>;
+   using FactoryFunc = std::function<sp::Animation(sp::PixDim)>;
 
  private:
    std::unordered_map<std::string, FactoryFunc> m_factories;

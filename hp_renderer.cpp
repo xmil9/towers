@@ -3,14 +3,14 @@
 // MIT license
 //
 #include "hp_renderer.h"
-#include "sge_renderer2.h"
+#include "spiel/renderer2.h"
 
 
-void HpRenderer::render(sge::Renderer2& renderer, sge::PixPos atSpriteCenter, float ratio)
+void HpRenderer::render(sp::Renderer2& renderer, sp::PixPos atSpriteCenter, float ratio)
 {
    // Adjust hp size to given ratio.
-   const sge::PixDim fullDim = m_status.size();
-   m_status.setSize(sge::PixDim{fullDim.x * ratio, fullDim.y});
+   const sp::PixDim fullDim = m_status.size();
+   m_status.setSize(sp::PixDim{fullDim.x * ratio, fullDim.y});
 
    renderer.renderSprite(m_status, atSpriteCenter + m_offset);
 

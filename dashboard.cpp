@@ -12,8 +12,8 @@
 #include "state.h"
 #include "texture_tags.h"
 #include "ui_scale.h"
-#include "sge_renderer2.h"
-#include "sge_sprite.h"
+#include "spiel/renderer2.h"
+#include "spiel/sprite.h"
 #include "essentutils/string_util.h"
 #include <memory>
 
@@ -23,24 +23,24 @@ namespace
 
 ///////////////////
 
-constexpr sge::Color TextColor{.3f, .3f, .3f};
+constexpr sp::Color TextColor{.3f, .3f, .3f};
 
-constexpr sge::NormDim CreditsPos{.075f, .025f};
-constexpr sge::NormDim CreditsValueGap{.03f, 0.f};
+constexpr sp::NormDim CreditsPos{.075f, .025f};
+constexpr sp::NormDim CreditsValueGap{.03f, 0.f};
 const std::string CreditsText{"Credits:"};
 constexpr float CreditsTextScale = .8f * UiScale(1.f);
-constexpr sge::Color CreditsTextColor = TextColor;
+constexpr sp::Color CreditsTextColor = TextColor;
 
-constexpr sge::NormDim LaserTurretPos{.075f, .05f};
-constexpr sge::NormDim SonarMortarPos{.535f, .05f};
-constexpr sge::NormDim DefenderButtonDim{.375f, .0625f};
-constexpr sge::NormCoord StatsVertGap = .014f;
+constexpr sp::NormDim LaserTurretPos{.075f, .05f};
+constexpr sp::NormDim SonarMortarPos{.535f, .05f};
+constexpr sp::NormDim DefenderButtonDim{.375f, .0625f};
+constexpr sp::NormCoord StatsVertGap = .014f;
 constexpr float TextScaleForCost = .7f * UiScale(1.f);
 constexpr float TextScaleForAllStats = .5f * UiScale(1.f);
-constexpr sge::Color StatsTextColor = TextColor;
+constexpr sp::Color StatsTextColor = TextColor;
 
-constexpr sge::NormDim StartPos{.075f, .145f};
-constexpr sge::NormDim FlowButtonDim = .5f * DefenderButtonDim;
+constexpr sp::NormDim StartPos{.075f, .145f};
+constexpr sp::NormDim FlowButtonDim = .5f * DefenderButtonDim;
 
 
 ///////////////////
@@ -89,10 +89,10 @@ template <typename Attribs> std::string FormatDefenderStats(const Attribs& attri
 
 ///////////////////
 
-Dashboard::Dashboard(sge::PixCoordi width, sge::PixCoordi height, Commands* commands,
+Dashboard::Dashboard(sp::PixCoordi width, sp::PixCoordi height, Commands* commands,
                      State* state)
 : m_dim{width, height}, m_commands{commands}, m_state{state},
-  m_background{sge::SpriteLook{DashboardTTag}, sge::SpriteForm{m_dim}},
+  m_background{sp::SpriteLook{DashboardTTag}, sp::SpriteForm{m_dim}},
   m_creditsLabel{CreditsTextScale, CreditsTextColor}, m_creditsValue{CreditsTextScale,
                                                                      CreditsTextColor},
   m_ltStats{TextScaleForCost, StatsTextColor}, m_smStats{TextScaleForCost, StatsTextColor}
@@ -102,7 +102,7 @@ Dashboard::Dashboard(sge::PixCoordi width, sge::PixCoordi height, Commands* comm
 }
 
 
-bool Dashboard::setup(const sge::Renderer2& renderer, const MapCoordSys* cs)
+bool Dashboard::setup(const sp::Renderer2& renderer, const MapCoordSys* cs)
 {
    assert(cs);
    m_mapCoordSys = cs;
@@ -115,7 +115,7 @@ bool Dashboard::setup(const sge::Renderer2& renderer, const MapCoordSys* cs)
 }
 
 
-void Dashboard::render(sge::Renderer2& renderer, const sge::PixPos& at)
+void Dashboard::render(sp::Renderer2& renderer, const sp::PixPos& at)
 {
    renderer.renderSprite(m_background, at);
    m_creditsLabel.render(renderer, at);
@@ -134,8 +134,8 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
    m_commands->endPlaceSession();
 
    // Set size of indicator to size of one field on map.
-   constexpr sge::MapDim indicatorDim{1.f, 1.f};
-   const sge::PixDim indicatorsPixDim = m_mapCoordSys->toPix(indicatorDim);
+   constexpr sp::MapDim indicatorDim{1.f, 1.f};
+   const sp::PixDim indicatorsPixDim = m_mapCoordSys->toPix(indicatorDim);
 
    if (m_ltButton.isHit(mousePosInDash) && m_ltButton.isEnabled())
    {
@@ -151,18 +151,18 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
 
    if (m_startButton.isHit(mousePosInDash) && m_startButton.isEnabled())
    {
-      const sge::PixDim buttonPixDim = toPix(FlowButtonDim);
-      sge::SpriteForm contentForm{buttonPixDim};
+      const sp::PixDim buttonPixDim = toPix(FlowButtonDim);
+      sp::SpriteForm contentForm{buttonPixDim};
 
       if (m_state->isPaused())
       {
          m_commands->startAttack();
-         m_startButton.setContent(sge::Sprite{sge::SpriteLook{PauseTTag}, contentForm});
+         m_startButton.setContent(sp::Sprite{sp::SpriteLook{PauseTTag}, contentForm});
       }
       else
       {
          m_commands->pauseAttack();
-         m_startButton.setContent(sge::Sprite{sge::SpriteLook{StartTTag}, contentForm});
+         m_startButton.setContent(sp::Sprite{sp::SpriteLook{StartTTag}, contentForm});
       }
       return true;
    }
@@ -177,15 +177,15 @@ bool Dashboard::onLeftButtonReleased(const glm::vec2& /*mousePosInDash*/)
 }
 
 
-void Dashboard::setupCreditsElements(const sge::Renderer2& renderer)
+void Dashboard::setupCreditsElements(const sp::Renderer2& renderer)
 {
-   const sge::PixDim ceditsLabelDim = renderer.measureText(CreditsText, CreditsTextScale);
+   const sp::PixDim ceditsLabelDim = renderer.measureText(CreditsText, CreditsTextScale);
    m_creditsLabel.setup([]() { return CreditsText; }, CreditsPos * m_dim, ceditsLabelDim);
 
-   const sge::PixDim gap = toPix(CreditsValueGap);
-   const sge::PixDim creditsValPos =
-      m_creditsLabel.position() + sge::PixDim{ceditsLabelDim.x, 0.f} + gap;
-   const sge::PixDim ceditsValDim{0.f, ceditsLabelDim.y};
+   const sp::PixDim gap = toPix(CreditsValueGap);
+   const sp::PixDim creditsValPos =
+      m_creditsLabel.position() + sp::PixDim{ceditsLabelDim.x, 0.f} + gap;
+   const sp::PixDim ceditsValDim{0.f, ceditsLabelDim.y};
    m_creditsValue.setup([this]() { return std::to_string(m_state->credits()); },
                         creditsValPos, ceditsValDim);
 }
@@ -193,27 +193,27 @@ void Dashboard::setupCreditsElements(const sge::Renderer2& renderer)
 
 void Dashboard::setupDefenderElements()
 {
-   const sge::PixDim buttonPixDim = toPix(DefenderButtonDim);
-   sge::Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag},
-                         sge::SpriteForm{buttonPixDim}};
-   sge::SpriteForm contentForm{buttonPixDim};
+   const sp::PixDim buttonPixDim = toPix(DefenderButtonDim);
+   sp::Sprite buttonBkg{sp::SpriteLook{ButtonBackgroundTTag},
+                         sp::SpriteForm{buttonPixDim}};
+   sp::SpriteForm contentForm{buttonPixDim};
 
-   const sge::PixPos ltPixPos = toPix(LaserTurretPos);
+   const sp::PixPos ltPixPos = toPix(LaserTurretPos);
    m_ltButton.setup(
-      buttonBkg, sge::Sprite{sge::SpriteLook{LtTexture}, contentForm},
+      buttonBkg, sp::Sprite{sp::SpriteLook{LtTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(LtModel); }, ltPixPos, buttonPixDim);
 
-   const sge::PixVec statsOffset{0.f, buttonPixDim.y + toVertPix(StatsVertGap)};
-   const sge::PixPos ltStatsPixPos = ltPixPos + statsOffset;
+   const sp::PixVec statsOffset{0.f, buttonPixDim.y + toVertPix(StatsVertGap)};
+   const sp::PixPos ltStatsPixPos = ltPixPos + statsOffset;
    m_ltStats.setup([]() { return FormatDefenderStats(LaserTurret::defaultAttributes()); },
                    ltStatsPixPos, {});
 
-   const sge::PixPos smPixPos = toPix(SonarMortarPos);
+   const sp::PixPos smPixPos = toPix(SonarMortarPos);
    m_smButton.setup(
-      buttonBkg, sge::Sprite{sge::SpriteLook{SmTexture}, contentForm},
+      buttonBkg, sp::Sprite{sp::SpriteLook{SmTexture}, contentForm},
       [this]() { return m_state->canAffordDefender(SmModel); }, smPixPos, buttonPixDim);
 
-   const sge::PixPos smStatsPixPos = smPixPos + statsOffset;
+   const sp::PixPos smStatsPixPos = smPixPos + statsOffset;
    m_smStats.setup([]() { return FormatDefenderStats(SonicMortar::defaultAttributes()); },
                    smStatsPixPos, {});
 }
@@ -221,13 +221,13 @@ void Dashboard::setupDefenderElements()
 
 void Dashboard::setupGameflowElements()
 {
-   const sge::PixDim buttonPixDim = toPix(FlowButtonDim);
-   sge::Sprite buttonBkg{sge::SpriteLook{ButtonBackgroundTTag},
-                         sge::SpriteForm{buttonPixDim}};
-   sge::SpriteForm contentForm{buttonPixDim};
+   const sp::PixDim buttonPixDim = toPix(FlowButtonDim);
+   sp::Sprite buttonBkg{sp::SpriteLook{ButtonBackgroundTTag},
+                         sp::SpriteForm{buttonPixDim}};
+   sp::SpriteForm contentForm{buttonPixDim};
 
-   const sge::PixPos startPixPos = toPix(StartPos);
+   const sp::PixPos startPixPos = toPix(StartPos);
    m_startButton.setup(
-      buttonBkg, sge::Sprite{sge::SpriteLook{StartTTag}, contentForm},
+      buttonBkg, sp::Sprite{sp::SpriteLook{StartTTag}, contentForm},
       [this]() { return true; }, startPixPos, buttonPixDim);
 }

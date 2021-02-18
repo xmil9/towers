@@ -4,10 +4,10 @@
 //
 #pragma once
 #include "renderer3.h"
-#include "sge_direction.h"
-#include "sge_input.h"
-#include "sge_main_window.h"
-#include "sge_types.h"
+#include "spiel/direction.h"
+#include "spiel/input.h"
+#include "spiel/lap_clock.h"
+#include "spiel/main_window.h"
 #include "glm/vec3.hpp"
 #include "opengl_util/gfl_lib.h"
 #include <optional>
@@ -28,23 +28,25 @@ class Game3
    bool setupInput();
    bool setupOutput();
 
-   void onMainWindowChanged(sge::MainWindow& src, std::string_view event,
+   void onMainWindowChanged(sp::MainWindow& src, std::string_view event,
                             const esl::ObservedEventData& data);
    void onMainWindowResize(const glm::ivec2& newSize);
 
-   void onInputChanged(sge::Input& src, std::string_view event,
+   void onInputChanged(sp::Input& src, std::string_view event,
                        const esl::ObservedEventData& data);
    void onMouseMoved(const glm::vec2& delta);
    void onMouseScrolled(const glm::vec2& delta);
    void onKeyPolled(gfl::Key key, float frameLengthSecs);
 
-   std::optional<sge::DirectionXZ> getCameraDirection(gfl::Key key) const;
+   std::optional<sp::DirectionXZ> getCameraDirection(gfl::Key key) const;
    void updateCameraPosition(gfl::Key key, float frameLengthSecs);
 
  private:
-   sge::FrameClock m_frameClock;
+   using FrameClock = sp::LapClock<float, std::chrono::milliseconds>;
+   
+   FrameClock m_frameClock;
    gfl::Lib m_glfw;
-   sge::MainWindow m_mainWnd;
-   sge::Input m_input;
+   sp::MainWindow m_mainWnd;
+   sp::Input m_input;
    Renderer3 m_renderer;
 };

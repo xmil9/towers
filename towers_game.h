@@ -17,10 +17,9 @@
 #include "state.h"
 #include "towers_types.h"
 #include "ui_scale.h"
-#include "sge_coords.h"
-#include "sge_game2.h"
-#include "sge_sprite.h"
-#include "sge_types.h"
+#include "spiel/coords.h"
+#include "spiel/game2.h"
+#include "spiel/sprite.h"
 #include <memory>
 #include <optional>
 #include <unordered_map>
@@ -28,7 +27,7 @@
 
 
 
-class Towers : public sge::Game2, private Commands, private State
+class Towers : public sp::Game2, private Commands, private State
 {
 public:
    Towers();
@@ -59,23 +58,23 @@ public:
    void removeAsTarget(EntityId attackerId);
 
    void resetDefenderPlacements();
-   bool hasDefenderOnField(sge::MapPos field) const;
-   const Defender* defenderOnField(sge::MapPos field) const;
-   void setDefenderOnField(sge::MapPos field, bool hasDefender);
+   bool hasDefenderOnField(sp::MapPos field) const;
+   const Defender* defenderOnField(sp::MapPos field) const;
+   void setDefenderOnField(sp::MapPos field, bool hasDefender);
    bool canPlaceDefenderOnField(const std::string& defenderModel,
-                                sge::MapPos field) const;
-   void addDefender(std::optional<Defender>&& defender, const sge::PixPos& pos);
-   void placeDefender(const sge::PixPos& mousePos);
+                                sp::MapPos field) const;
+   void addDefender(std::optional<Defender>&& defender, const sp::PixPos& pos);
+   void placeDefender(const sp::PixPos& mousePos);
 
    void onLeftButtonPressed(const glm::vec2& pos) override;
    void onLeftButtonReleased(const glm::vec2& pos) override;
 
-   bool isInMap(const sge::PixPos& pos) const;
-   bool isInDashboard(const sge::PixPos& pos) const;
-   bool mapOnLeftButtonPressed(const sge::PixPos& pos);
-   bool mapOnLeftButtonReleased(const sge::PixPos& pos);
-   bool dashboardOnLeftButtonPressed(const sge::PixPos& pos);
-   bool dashboardOnLeftButtonReleased(const sge::PixPos& pos);
+   bool isInMap(const sp::PixPos& pos) const;
+   bool isInDashboard(const sp::PixPos& pos) const;
+   bool mapOnLeftButtonPressed(const sp::PixPos& pos);
+   bool mapOnLeftButtonReleased(const sp::PixPos& pos);
+   bool dashboardOnLeftButtonPressed(const sp::PixPos& pos);
+   bool dashboardOnLeftButtonReleased(const sp::PixPos& pos);
    
    // State overrides.
    int credits() const override { return m_credits; }
@@ -84,23 +83,23 @@ public:
 
    // Commands overrides.
    void startPlaceSession(std::string_view model, std::string_view indicatorTex,
-                          sge::PixDim indicatorDim) override;
+                          sp::PixDim indicatorDim) override;
    void endPlaceSession() override;
    void startAttack() override;
    void pauseAttack() override;
    
    // Convenience functions for coordinate system operations.
-   sge::PixPos toPix(sge::MapPos mpos) const;
-   sge::MapPos toMap(sge::PixPos ppos) const;
-   sge::MapDim scaleInto(sge::MapDim source, sge::MapDim dest) const;
+   sp::PixPos toPix(sp::MapPos mpos) const;
+   sp::MapPos toMap(sp::PixPos ppos) const;
+   sp::MapDim scaleInto(sp::MapDim source, sp::MapDim dest) const;
 
 private:
-   static constexpr sge::PixCoordi MapWidth = UiScale(1800);
-   static constexpr sge::PixCoordi MapHeight = UiScale(1200);
-   static constexpr sge::PixCoordi DashboardWidth = UiScale(200);
-   static constexpr sge::PixCoordi DashboardHeight = MapHeight;
-   static constexpr sge::PixCoordi WndWidth = MapWidth + DashboardWidth;
-   static constexpr sge::PixCoordi WndHeight = MapHeight;
+   static constexpr sp::PixCoordi MapWidth = UiScale(1800);
+   static constexpr sp::PixCoordi MapHeight = UiScale(1200);
+   static constexpr sp::PixCoordi DashboardWidth = UiScale(200);
+   static constexpr sp::PixCoordi DashboardHeight = MapHeight;
+   static constexpr sp::PixCoordi WndWidth = MapWidth + DashboardWidth;
+   static constexpr sp::PixCoordi WndHeight = MapHeight;
 
    std::unique_ptr<MapCoordSys> m_coordSys;
    Paths m_paths;
@@ -110,27 +109,27 @@ private:
    std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
    std::unique_ptr<Map> m_map;
-   sge::Sprite m_background;
+   sp::Sprite m_background;
    Dashboard m_dashboard;
    std::optional<PlaceSession> m_placeSess;
-   sge::Sprite m_invalidFieldOverlay;
-   sge::Sprite m_rangeOverlay;
+   sp::Sprite m_invalidFieldOverlay;
+   sp::Sprite m_rangeOverlay;
    std::vector<bool> m_defenderMatrix;
    int m_credits = 150;
 };
 
 
-inline sge::PixPos Towers::toPix(sge::MapPos mpos) const
+inline sp::PixPos Towers::toPix(sp::MapPos mpos) const
 {
    return m_coordSys->toPix(mpos);
 }
 
-inline sge::MapPos Towers::toMap(sge::PixPos ppos) const
+inline sp::MapPos Towers::toMap(sp::PixPos ppos) const
 {
    return m_coordSys->toMap(ppos);
 }
 
-inline sge::MapDim Towers::scaleInto(sge::MapDim source, sge::MapDim dest) const
+inline sp::MapDim Towers::scaleInto(sp::MapDim source, sp::MapDim dest) const
 {
    return m_coordSys->scaleInto(source, dest);
 }

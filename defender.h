@@ -5,7 +5,7 @@
 #pragma once
 #include "laser_turret.h"
 #include "sonic_mortar.h"
-#include "sge_renderer2.h"
+#include "spiel/renderer2.h"
 #include <optional>
 #include <variant>
 
@@ -22,9 +22,9 @@ class Defender
 
    EntityId id() const;
    int cost() const;
-   sge::MapCoord range() const;
-   sge::MapPos center() const;
-   void render(sge::Renderer2& renderer, bool isPaused);
+   sp::MapCoord range() const;
+   sp::MapPos center() const;
+   void render(sp::Renderer2& renderer, bool isPaused);
    void update();
    void removeAsTarget(EntityId attackerId);
 
@@ -53,7 +53,7 @@ inline int Defender::cost() const
    return 0;
 }
 
-inline sge::MapCoord Defender::range() const
+inline sp::MapCoord Defender::range() const
 {
    if (m_defender)
       return std::visit([](const auto& defender) { return defender.range(); },
@@ -61,7 +61,7 @@ inline sge::MapCoord Defender::range() const
    return 0.f;
 }
 
-inline sge::MapPos Defender::center() const
+inline sp::MapPos Defender::center() const
 {
    if (m_defender)
       return std::visit([](const auto& defender) { return defender.center(); },
@@ -69,7 +69,7 @@ inline sge::MapPos Defender::center() const
    return {0.f, 0.f};
 }
 
-inline void Defender::render(sge::Renderer2& renderer, bool isPaused)
+inline void Defender::render(sp::Renderer2& renderer, bool isPaused)
 {
    if (m_defender)
       std::visit([&](auto& defender) { defender.render(renderer, isPaused); },
@@ -101,7 +101,7 @@ class DefenderAttribs
    template <typename SpecificAttribs> explicit DefenderAttribs(SpecificAttribs&& a);
 
    // Common attributes.
-   sge::MapCoord range() const;
+   sp::MapCoord range() const;
    int damage() const;
    int cost() const;
 
@@ -118,7 +118,7 @@ DefenderAttribs::DefenderAttribs(SpecificAttribs&& a) : m_attribs{std::move(a)}
 {
 }
 
-inline sge::MapCoord DefenderAttribs::range() const
+inline sp::MapCoord DefenderAttribs::range() const
 {
    if (m_attribs)
       return std::visit([](const auto& attribs) { return attribs.range; }, *m_attribs);

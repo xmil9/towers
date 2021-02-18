@@ -3,7 +3,7 @@
 // MIT license
 //
 #pragma once
-#include "sge_coords.h"
+#include "spiel/coords.h"
 #include <string>
 
 
@@ -12,7 +12,7 @@
 struct Commands
 {
    virtual void startPlaceSession(std::string_view model, std::string_view indicatorTex,
-                                  sge::PixDim indicatorDim) = 0;
+                                  sp::PixDim indicatorDim) = 0;
    virtual void endPlaceSession() = 0;
    virtual void startAttack() = 0;
    virtual void pauseAttack() = 0;

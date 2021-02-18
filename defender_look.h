@@ -3,9 +3,9 @@
 // MIT license
 //
 #pragma once
-#include "sge_animation.h"
-#include "sge_renderer2.h"
-#include "sge_sprite.h"
+#include "spiel/animation.h"
+#include "spiel/renderer2.h"
+#include "spiel/sprite.h"
 
 
 ///////////////////
@@ -13,53 +13,53 @@
 class DefenderLook
 {
  public:
-   DefenderLook(const sge::Sprite& shape, sge::Animation firing);
-   DefenderLook(sge::Sprite&& shape, sge::Animation firing);
+   DefenderLook(const sp::Sprite& shape, sp::Animation firing);
+   DefenderLook(sp::Sprite&& shape, sp::Animation firing);
 
-   sge::PixDim size() const { return m_shape.size(); }
+   sp::PixDim size() const { return m_shape.size(); }
 
-   DefenderLook& setSize(sge::PixDim size);
-   DefenderLook& setRotation(sge::Angle rot);
+   DefenderLook& setSize(sp::PixDim size);
+   DefenderLook& setRotation(sp::Angle rot);
 
-   void render(sge::Renderer2& renderer, sge::PixPos atCenter);
-   void renderFiring(sge::Renderer2& renderer, sge::PixPos atCenter, bool isPaused);
+   void render(sp::Renderer2& renderer, sp::PixPos atCenter);
+   void renderFiring(sp::Renderer2& renderer, sp::PixPos atCenter, bool isPaused);
 
  private:
-   sge::Sprite m_shape;
-   sge::Animation m_firing;
+   sp::Sprite m_shape;
+   sp::Animation m_firing;
 };
 
 
-inline DefenderLook::DefenderLook(const sge::Sprite& shape, sge::Animation firing)
+inline DefenderLook::DefenderLook(const sp::Sprite& shape, sp::Animation firing)
 : m_shape{shape}, m_firing{std::move(firing)}
 {
 }
 
-inline DefenderLook::DefenderLook(sge::Sprite&& shape, sge::Animation firing)
+inline DefenderLook::DefenderLook(sp::Sprite&& shape, sp::Animation firing)
 : m_shape{std::move(shape)}, m_firing{std::move(firing)}
 {
 }
 
-inline DefenderLook& DefenderLook::setSize(sge::PixDim size)
+inline DefenderLook& DefenderLook::setSize(sp::PixDim size)
 {
    m_shape.setSize(size);
    m_firing.setSize(size);
    return *this;
 }
 
-inline DefenderLook& DefenderLook::setRotation(sge::Angle rot)
+inline DefenderLook& DefenderLook::setRotation(sp::Angle rot)
 {
    m_shape.setRotation(rot);
    m_firing.setRotation(rot);
    return *this;
 }
 
-inline void DefenderLook::render(sge::Renderer2& renderer, sge::PixPos atCenter)
+inline void DefenderLook::render(sp::Renderer2& renderer, sp::PixPos atCenter)
 {
    renderer.renderSpriteCentered(m_shape, atCenter);
 }
 
-inline void DefenderLook::renderFiring(sge::Renderer2& renderer, sge::PixPos atCenter,
+inline void DefenderLook::renderFiring(sp::Renderer2& renderer, sp::PixPos atCenter,
                                        bool isPaused)
 {
    renderer.renderAnimationCentered(m_firing, atCenter, !isPaused);
