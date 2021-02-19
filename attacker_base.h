@@ -13,8 +13,6 @@
 #include "glm/gtx/vector_angle.hpp"
 #include <optional>
 
-class Renderer2;
-
 
 ///////////////////
 
