@@ -103,7 +103,11 @@ bool Towers::setupTextures()
 
    for (const auto& spec : textures)
       if (!resources().loadTexture(spec.tag, spec.path / spec.filename))
+      {
+         assert(false && "Unable to load texture.");
          return false;
+      }
+
    return true;
 }
 
@@ -112,7 +116,10 @@ bool Towers::setupTerrain()
 {
    std::optional<MapData> mapData = loadMapData(m_paths.mapPath() / "map.json");
    if (!mapData)
+   {
+      assert(false && "Unable to map.");
       return false;
+   }
    m_map = std::make_unique<Map>(std::move(*mapData));
 
    const sp::PixDim mapPixDim{MapWidth, MapHeight};
