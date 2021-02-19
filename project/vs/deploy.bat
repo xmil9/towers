@@ -18,10 +18,11 @@ set fontsDest=%resDest%\fonts
 mkdir "%fontsDest%"
 robocopy "%fontsSrc%" "%fontsDest%" *.ttf
 
-set shaderSrc=%thisDir%..\..\shaders
+set shaderSrcA=%thisDir%..\..\shaders
+set shaderSrcB=%thisDir%..\..\deps\spiel\shaders
 set shaderDest=%destDir%\shaders
 mkdir "%shaderDest%"
-robocopy "%shaderSrc%" "%shaderDest%" *.*
-robocopy "%shaderSrc%" "%shaderDest%" *.*
+robocopy "%shaderSrcA%" "%shaderDest%" *.*
+robocopy "%shaderSrcB%" "%shaderDest%" *.*
 
 exit 0
