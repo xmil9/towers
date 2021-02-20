@@ -9,7 +9,11 @@ int main()
 {
    Towers towers;
    //Game3 towers;
-   towers.setup();
+   if (!towers.setup())
+   {
+      assert(false && "Failed to set up game.");
+      return EXIT_FAILURE;
+   }
    towers.run();
    towers.cleanup();
    return EXIT_SUCCESS;
