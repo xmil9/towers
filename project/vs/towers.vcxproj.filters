@@ -2,12 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\towers.cpp" />
-    <ClCompile Include="..\..\deps\glad\src\glad.c">
-      <Filter>Engine\Glad</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\deps\stb\stb_image.cpp">
-      <Filter>Engine\Stb</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dashboard.cpp">
       <Filter>Game\Ui</Filter>
     </ClCompile>
@@ -41,6 +35,9 @@
     <ClCompile Include="..\..\towers_game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\deps\glad\src\glad.c">
+      <Filter>Glad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">
@@ -70,20 +67,11 @@
     <Filter Include="3D Sample">
       <UniqueIdentifier>{b7611137-2d86-4976-aa2f-2fa787fb2f5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{a131a271-bdda-4881-8d06-864af4b3c7e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Glad">
-      <UniqueIdentifier>{e3626774-826b-4350-8f5e-5eb4e04c0390}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Stb">
-      <UniqueIdentifier>{f8e15c90-d18f-4198-ba76-a218b07f6323}</UniqueIdentifier>
+    <Filter Include="Glad">
+      <UniqueIdentifier>{f86ec387-82b1-4164-b5f7-ccc265798af3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\deps\stb\stb_image.h">
-      <Filter>Engine\Stb</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\commands.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -191,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="..\..\towers_types.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\deps\glad\include\glad\glad.h">
+      <Filter>Glad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
