@@ -52,7 +52,13 @@ Towers::Towers()
 bool Towers::setup()
 {
    const FileSysConfig fsConfig{m_paths.shaderPath(), m_paths.fontPath()};
-   return (Game2::setup(fsConfig) && setupTextures() && setupLevels() && loadLevel(0));
+   if (!Game2::setup(fsConfig))
+      return false;
+   if (!setupTextures())
+      return false;
+   if (!setupLevels())
+      return false;
+   return loadLevel(0);
 }
 
 
@@ -108,6 +114,24 @@ bool Towers::setupTextures()
 
    return true;
 }
+
+bool Towers::setupGraphics()
+{
+   if (!setupRenderer())
+      return false;
+   if (!setupAnimations())
+      return false;
+   if (!setupAttackers())
+      return false;
+   if (!setupDefenders())
+      return false;
+   if (!setupSprites())
+      return false;
+   if (!m_dashboard.setup(renderer(), m_coordSys.get()))
+      return false;
+   return true;
+}
+
 
 
 bool Towers::setupRenderer()
@@ -234,18 +258,8 @@ bool Towers::loadLevel(std::size_t level)
    if (!loadMap(l.mapFileName, l.mapWidth, l.mapHeight))
       return false;
 
-   // Need to recalc all graphics in case the map has a different size.
-   if (!setupRenderer())
-      return false;
-   if (!setupAnimations())
-      return false;
-   if (!setupAttackers())
-      return false;
-   if (!setupDefenders())
-      return false;
-   if (!setupSprites())
-      return false;
-   if (!m_dashboard.setup(renderer(), m_coordSys.get()))
+   // Recalc all graphics that depend on the map size.
+   if (!setupGraphics())
       return false;
 
    for (const auto& spec : l.attackers)
