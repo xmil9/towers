@@ -10,13 +10,15 @@
 
 ///////////////////
 
+// Small initial default delay to keep attackers from rendering before the attack has
+// started.
+constexpr int DefaultDelay = 1;
+
 struct AttackerSpec
 {
    std::string model;
    sp::MapVec pathOffset{0.f, 0.f};
-   // Small initial default delay to keep attackers from rendering before the attack has
-   // started.
-   int launchDelay = 1;
+   int launchDelay = DefaultDelay;
 };
 
 
@@ -26,5 +28,5 @@ struct Level
    const sp::PixCoordi mapWidth;
    const sp::PixCoordi mapHeight;
    const std::string backgroundTex;
-   std::vector<AttackerSpec> attackers;
+   const std::vector<AttackerSpec> attackers;
 };

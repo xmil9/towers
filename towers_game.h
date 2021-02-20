@@ -27,10 +27,9 @@
 #include <vector>
 
 
-
 class Towers : public sp::Game2, private Commands, private State
 {
-public:
+ public:
    Towers();
 
    bool setup();
@@ -38,12 +37,15 @@ public:
 
  private:
    bool setupTextures();
-   bool setupTerrain();
    bool setupRenderer();
    bool setupAnimations();
    bool setupAttackers();
    bool setupDefenders();
-   bool setupBackground();
+   bool setupSprites();
+   bool setupLevels();
+
+   bool loadLevel(std::size_t level);
+   bool loadMap(const std::string& fileName, sp::PixCoordi width, sp::PixCoordi height);
 
    void updateState();
    void renderItems() override;
@@ -62,8 +64,7 @@ public:
    bool hasDefenderOnField(sp::MapPos field) const;
    const Defender* defenderOnField(sp::MapPos field) const;
    void setDefenderOnField(sp::MapPos field, bool hasDefender);
-   bool canPlaceDefenderOnField(const std::string& defenderModel,
-                                sp::MapPos field) const;
+   bool canPlaceDefenderOnField(const std::string& defenderModel, sp::MapPos field) const;
    void addDefender(std::optional<Defender>&& defender, const sp::PixPos& pos);
    void placeDefender(const sp::PixPos& mousePos);
 
@@ -76,7 +77,7 @@ public:
    bool mapOnLeftButtonReleased(const sp::PixPos& pos);
    bool dashboardOnLeftButtonPressed(const sp::PixPos& pos);
    bool dashboardOnLeftButtonReleased(const sp::PixPos& pos);
-   
+
    // State overrides.
    int credits() const override { return m_credits; }
    bool canAffordDefender(const std::string& model) const override;
@@ -88,13 +89,13 @@ public:
    void endPlaceSession() override;
    void startAttack() override;
    void pauseAttack() override;
-   
+
    // Convenience functions for coordinate system operations.
    sp::PixPos toPix(sp::MapPos mpos) const;
    sp::MapPos toMap(sp::PixPos ppos) const;
    sp::MapDim scaleInto(sp::MapDim source, sp::MapDim dest) const;
 
-private:
+ private:
    static constexpr sp::PixCoordi MapWidth = UiScale(1800);
    static constexpr sp::PixCoordi MapHeight = UiScale(1200);
    static constexpr sp::PixCoordi DashboardWidth = UiScale(200);

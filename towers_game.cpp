@@ -52,9 +52,7 @@ Towers::Towers()
 bool Towers::setup()
 {
    const FileSysConfig fsConfig{m_paths.shaderPath(), m_paths.fontPath()};
-   return (Game2::setup(fsConfig) && setupTextures() && setupTerrain() &&
-           setupRenderer() && setupAnimations() && setupAttackers() && setupDefenders() &&
-           setupBackground() && m_dashboard.setup(renderer(), m_coordSys.get()));
+   return (Game2::setup(fsConfig) && setupTextures() && setupLevels() && loadLevel(0));
 }
 
 
@@ -112,26 +110,6 @@ bool Towers::setupTextures()
 }
 
 
-bool Towers::setupTerrain()
-{
-   std::optional<MapData> mapData = loadMapData(m_paths.mapPath() / "map.json");
-   if (!mapData)
-   {
-      assert(false && "Unable to map.");
-      return false;
-   }
-   m_map = std::make_unique<Map>(std::move(*mapData));
-
-   const sp::PixDim mapPixDim{MapWidth, MapHeight};
-   const sp::IntDim mapSizeInFields = m_map->sizeInFields();
-   const sp::PixDim fieldPixDim{mapPixDim.x / mapSizeInFields.x,
-                                 mapPixDim.y / mapSizeInFields.y};
-   m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
-
-   return true;
-}
-
-
 bool Towers::setupRenderer()
 {
    constexpr sp::NormDim hpStatusDim{.5f, .05f};
@@ -177,34 +155,20 @@ bool Towers::setupAttackers()
 
    m_attackFactory->registerModel(
       AatModel,
-      AttackerLook{
-         sp::Sprite{sp::SpriteLook{AatTexture},
-                     sp::SpriteForm{resources().getTextureSize(AatTexture)}},
-         sp::Sprite{sp::SpriteLook{AatHitTexture},
-                     sp::SpriteForm{resources().getTextureSize(AatHitTexture)}},
-         resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
+      AttackerLook{sp::Sprite{sp::SpriteLook{AatTexture},
+                              sp::SpriteForm{resources().getTextureSize(AatTexture)}},
+                   sp::Sprite{sp::SpriteLook{AatHitTexture},
+                              sp::SpriteForm{resources().getTextureSize(AatHitTexture)}},
+                   resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
       AssaultTank::defaultAttributes());
    m_attackFactory->registerModel(
       MhcModel,
-      AttackerLook{
-         sp::Sprite{sp::SpriteLook{MhcTexture},
-                     sp::SpriteForm{resources().getTextureSize(MhcTexture)}},
-         sp::Sprite{sp::SpriteLook{MhcHitTexture},
-                     sp::SpriteForm{resources().getTextureSize(MhcHitTexture)}},
-         resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
+      AttackerLook{sp::Sprite{sp::SpriteLook{MhcTexture},
+                              sp::SpriteForm{resources().getTextureSize(MhcTexture)}},
+                   sp::Sprite{sp::SpriteLook{MhcHitTexture},
+                              sp::SpriteForm{resources().getTextureSize(MhcHitTexture)}},
+                   resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
       MobileCannon::defaultAttributes());
-
-   // Small initial delay to keep attackers from rendering before the attack has started.
-   constexpr int DefaultDelay = 1;
-
-   addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), sp::MapVec{0.f, 0.f}}, DefaultDelay));
-   addAttacker(m_attackFactory->makeAttacker(
-      AatModel, OffsetPath{&m_map->path(), sp::MapVec{0.f, 0.f}}, 30));
-   addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), sp::MapVec{-.08f, .05f}}, DefaultDelay));
-   addAttacker(m_attackFactory->makeAttacker(
-      MhcModel, OffsetPath{&m_map->path(), sp::MapVec{0.f, -0.05}}, DefaultDelay));
 
    return true;
 }
@@ -220,14 +184,14 @@ bool Towers::setupDefenders()
    m_defenseFactory->registerModel(
       LtModel,
       DefenderLook{sp::Sprite{sp::SpriteLook{LtTexture},
-                               sp::SpriteForm{resources().getTextureSize(LtTexture)}},
+                              sp::SpriteForm{resources().getTextureSize(LtTexture)}},
                    resources().getAnimation(LtFiringAnimation)},
       LaserTurret::defaultAttributes());
 
    m_defenseFactory->registerModel(
       SmModel,
       DefenderLook{sp::Sprite{sp::SpriteLook{SmTexture},
-                               sp::SpriteForm{resources().getTextureSize(SmTexture)}},
+                              sp::SpriteForm{resources().getTextureSize(SmTexture)}},
                    resources().getAnimation(SmFiringAnimation)},
       SonicMortar::defaultAttributes());
 
@@ -236,15 +200,76 @@ bool Towers::setupDefenders()
 }
 
 
-bool Towers::setupBackground()
+bool Towers::setupSprites()
 {
-   m_background =
-      sp::Sprite{sp::SpriteLook{Map1TTag}, sp::SpriteForm{{MapWidth, MapHeight}}};
-
    const sp::PixDim fieldPixDim = toPix(sp::MapDim{1.f, 1.f});
    m_invalidFieldOverlay =
       sp::Sprite{sp::SpriteLook{InvalidFieldTTag}, sp::SpriteForm{fieldPixDim}};
    m_rangeOverlay = sp::Sprite{sp::SpriteLook{RangeTTag}, sp::SpriteForm{fieldPixDim}};
+
+   return true;
+}
+
+
+bool Towers::setupLevels()
+{
+   m_levels.push_back({"map.json",
+                       1800,
+                       1200,
+                       Map1TTag,
+                       {AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, DefaultDelay},
+                        AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, 30},
+                        AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
+                        AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, DefaultDelay}}});
+   return true;
+}
+
+
+bool Towers::loadLevel(std::size_t level)
+{
+   const Level& l = m_levels[level];
+
+   m_background = sp::Sprite{sp::SpriteLook{l.backgroundTex},
+                             sp::SpriteForm{{l.mapWidth, l.mapHeight}}};
+   if (!loadMap(l.mapFileName, l.mapWidth, l.mapHeight))
+      return false;
+
+   // Need to recalc all graphics in case the map has a different size.
+   if (!setupRenderer())
+      return false;
+   if (!setupAnimations())
+      return false;
+   if (!setupAttackers())
+      return false;
+   if (!setupDefenders())
+      return false;
+   if (!setupSprites())
+      return false;
+   if (!m_dashboard.setup(renderer(), m_coordSys.get()))
+      return false;
+
+   for (const auto& spec : l.attackers)
+      addAttacker(m_attackFactory->makeAttacker(
+         spec.model, OffsetPath{&m_map->path(), spec.pathOffset}, spec.launchDelay));
+
+   return true;
+}
+
+
+bool Towers::loadMap(const std::string& fileName, sp::PixCoordi width,
+                     sp::PixCoordi height)
+{
+   std::optional<MapData> mapData = loadMapData(m_paths.mapPath() / fileName);
+   if (!mapData)
+   {
+      assert(false && "Unable to load map.");
+      return false;
+   }
+   m_map = std::make_unique<Map>(std::move(*mapData));
+
+   const sp::IntDim mapSizeInFields = m_map->sizeInFields();
+   const sp::PixDim fieldPixDim{width / mapSizeInFields.x, height / mapSizeInFields.y};
+   m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
 
    return true;
 }
