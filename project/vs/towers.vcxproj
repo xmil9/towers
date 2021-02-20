@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\deps\glad\include\glad\glad.h" />
+    <ClInclude Include="..\..\level.h" />
     <ClInclude Include="..\..\paths.h" />
     <ClInclude Include="..\..\animation_factory.h" />
     <ClInclude Include="..\..\animation_tags.h" />

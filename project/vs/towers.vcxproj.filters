@@ -183,6 +183,9 @@
     <ClInclude Include="..\..\deps\glad\include\glad\glad.h">
       <Filter>Glad</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\level.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\map.json">

@@ -10,6 +10,7 @@
 #include "defender.h"
 #include "defender_factory.h"
 #include "hp_renderer.h"
+#include "level.h"
 #include "map.h"
 #include "map_coord_sys.h"
 #include "paths.h"
@@ -108,6 +109,8 @@ private:
    AttackerMap m_attackers;
    std::unique_ptr<DefenderFactory> m_defenseFactory;
    std::vector<Defender> m_defenders;
+   std::vector<Level> m_levels;
+   std::size_t m_currLevel = 0;
    std::unique_ptr<Map> m_map;
    sp::Sprite m_background;
    Dashboard m_dashboard;
