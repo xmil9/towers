@@ -38,6 +38,7 @@ template <typename Derived> class AttackerBase : public esl::Observed<Derived>
    void hit(int damage);
    bool isAlive() const { return m_currAttribs.hp > 0; }
    bool hasStarted() const { return m_currAttribs.launchDelay == 0; }
+   bool hasFinished() const { return hasStarted() && !m_center; }
    bool canBeRemoved() const;
    int reward() const { return m_currAttribs.reward; }
 

@@ -28,6 +28,7 @@ class Attacker
    void hit(int damage);
    bool isAlive() const;
    bool hasStarted() const;
+   bool hasFinished() const;
    bool canBeRemoved() const;
    int reward() const;
    template <typename Callback> void addObserver(Callback cb);
@@ -87,6 +88,14 @@ inline bool Attacker::hasStarted() const
 {
    if (m_attacker)
       return std::visit([](auto& attacker) { return attacker.hasStarted(); },
+                        *m_attacker);
+   return false;
+}
+
+inline bool Attacker::hasFinished() const
+{
+   if (m_attacker)
+      return std::visit([](auto& attacker) { return attacker.hasFinished(); },
                         *m_attacker);
    return false;
 }

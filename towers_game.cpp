@@ -133,7 +133,6 @@ bool Towers::setupGraphics()
 }
 
 
-
 bool Towers::setupRenderer()
 {
    constexpr sp::NormDim hpStatusDim{.5f, .05f};
@@ -265,6 +264,7 @@ bool Towers::loadLevel(std::size_t level)
    for (const auto& spec : l.attackers)
       addAttacker(m_attackFactory->makeAttacker(
          spec.model, OffsetPath{&m_map->path(), spec.pathOffset}, spec.launchDelay));
+   m_defenders.clear();
 
    return true;
 }
@@ -299,7 +299,32 @@ void Towers::updateState()
    for (auto& defender : m_defenders)
       defender.update();
 
+   const bool lostLevel = hasLostLevel();
    removeDestroyedAttackers();
+
+   if (lostLevel)
+      loadLevel(m_currLevel);
+   else if (hasWonLevel())
+      if (m_currLevel < m_levels.size() - 1)
+         loadLevel(++m_currLevel);
+      else
+         ; // won
+}
+
+
+bool Towers::hasLostLevel() const
+{
+   return !m_attackers.empty() &&
+          std::all_of(begin(m_attackers), end(m_attackers),
+                      [](const auto& attackerEntry) {
+                         return attackerEntry.second.hasFinished();
+                      });
+}
+
+
+bool Towers::hasWonLevel() const
+{
+   return m_attackers.empty();
 }
 
 

@@ -49,6 +49,9 @@ class Towers : public sp::Game2, private Commands, private State
    bool setupSprites();
 
    void updateState();
+   bool hasLostLevel() const;
+   bool hasWonLevel() const;
+   
    void renderItems() override;
    void renderMap();
    void renderDefenderInfo();
