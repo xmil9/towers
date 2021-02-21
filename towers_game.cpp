@@ -238,14 +238,14 @@ bool Towers::setupSprites()
 
 bool Towers::setupLevels()
 {
-   m_levels.push_back({150,
+   m_levels.push_back({170,
                        "map1.json",
                        Map1Texture,
                        {AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, DefaultDelay},
                         AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, 30},
                         AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
                         AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, DefaultDelay}}});
-   m_levels.push_back({200,
+   m_levels.push_back({100,
                        "map2.json",
                        Map2Texture,
                        {AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
