@@ -273,6 +273,7 @@ bool Towers::loadLevel(std::size_t level)
          spec.model, OffsetPath{&m_map->path(), spec.pathOffset}, spec.launchDelay));
    m_defenders.clear();
 
+   setPaused(true);
    return true;
 }
 
