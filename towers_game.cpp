@@ -11,6 +11,7 @@
 #include "texture_tags.h"
 // Runtime
 #include <iostream>
+#include <numeric>
 #include <thread>
 
 
@@ -236,7 +237,8 @@ bool Towers::setupSprites()
 
 bool Towers::setupLevels()
 {
-   m_levels.push_back({"map.json",
+   m_levels.push_back({150,
+                       "map.json",
                        1800,
                        1200,
                        Map1TTag,
@@ -252,10 +254,15 @@ bool Towers::loadLevel(std::size_t level)
 {
    const Level& l = m_levels[level];
 
-   m_background = sp::Sprite{sp::SpriteLook{l.backgroundTex},
-                             sp::SpriteForm{{l.mapWidth, l.mapHeight}}};
+   m_hasLost = false;
+   m_hasWonLevel = false;
+   m_credits = l.credits;
+
    if (!loadMap(l.mapFileName, l.mapWidth, l.mapHeight))
       return false;
+
+   m_background = sp::Sprite{sp::SpriteLook{l.backgroundTex},
+                             sp::SpriteForm{{l.mapWidth, l.mapHeight}}};
 
    // Recalc all graphics that depend on the map size.
    if (!setupGraphics())
@@ -299,32 +306,21 @@ void Towers::updateState()
    for (auto& defender : m_defenders)
       defender.update();
 
-   const bool lostLevel = hasLostLevel();
-   removeDestroyedAttackers();
+   const bool haveFinishedAttacker =
+      std::any_of(begin(m_attackers), end(m_attackers), [](const auto& attackerEntry) {
+         return attackerEntry.second.hasFinished();
+      });
+   removeDestroyedOrFinishedAttackers();
 
-   if (lostLevel)
+   m_hasLost |= haveFinishedAttacker;
+   m_hasWonLevel = !m_hasLost && m_attackers.empty();
+   if (m_hasLost)
       loadLevel(m_currLevel);
-   else if (hasWonLevel())
+   else if (m_hasWonLevel)
       if (m_currLevel < m_levels.size() - 1)
          loadLevel(++m_currLevel);
       else
          ; // won
-}
-
-
-bool Towers::hasLostLevel() const
-{
-   return !m_attackers.empty() &&
-          std::all_of(begin(m_attackers), end(m_attackers),
-                      [](const auto& attackerEntry) {
-                         return attackerEntry.second.hasFinished();
-                      });
-}
-
-
-bool Towers::hasWonLevel() const
-{
-   return m_attackers.empty();
 }
 
 
@@ -429,7 +425,7 @@ void Towers::onAttackerDestroyed(SpecificAttacker& src, std::string_view /*event
 }
 
 
-void Towers::removeDestroyedAttackers()
+void Towers::removeDestroyedOrFinishedAttackers()
 {
    for (auto it = m_attackers.begin(); it != m_attackers.end();)
    {

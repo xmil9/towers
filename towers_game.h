@@ -49,9 +49,6 @@ class Towers : public sp::Game2, private Commands, private State
    bool setupSprites();
 
    void updateState();
-   bool hasLostLevel() const;
-   bool hasWonLevel() const;
-   
    void renderItems() override;
    void renderMap();
    void renderDefenderInfo();
@@ -61,7 +58,7 @@ class Towers : public sp::Game2, private Commands, private State
    template <typename SpecificAttacker>
    void onAttackerDestroyed(SpecificAttacker& src, std::string_view event,
                             const esl::ObservedEventData& data);
-   void removeDestroyedAttackers();
+   void removeDestroyedOrFinishedAttackers();
    void removeAsTarget(EntityId attackerId);
 
    void resetDefenderPlacements();
@@ -123,7 +120,9 @@ class Towers : public sp::Game2, private Commands, private State
    sp::Sprite m_invalidFieldOverlay;
    sp::Sprite m_rangeOverlay;
    std::vector<bool> m_defenderMatrix;
-   int m_credits = 150;
+   int m_credits = 0;
+   bool m_hasLost = false;
+   bool m_hasWonLevel = false;
 };
 
 

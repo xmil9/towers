@@ -24,6 +24,7 @@ struct AttackerSpec
 
 struct Level
 {
+   const int credits = 0;
    const std::string mapFileName;
    const sp::PixCoordi mapWidth;
    const sp::PixCoordi mapHeight;
