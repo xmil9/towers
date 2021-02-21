@@ -5,4 +5,4 @@
 #pragma once
 
 
-constexpr char ExplosionATag[] = "explosion";
+constexpr char ExplosionAnimation[] = "explosion";

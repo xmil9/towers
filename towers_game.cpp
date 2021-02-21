@@ -92,19 +92,19 @@ bool Towers::setupTextures()
       {SmTexture, scene, "sm.png"},
       {SmFiring1Texture, scene, "sm_firing1.png"},
       {SmFiring2Texture, scene, "sm_firing2.png"},
-      {Explosion1TTag, scene, "explosion1.png"},
-      {Explosion2TTag, scene, "explosion2.png"},
-      {Explosion3TTag, scene, "explosion3.png"},
-      {Explosion4TTag, scene, "explosion4.png"},
-      {Map1TTag, scene, "map1.png"},
-      {Map2TTag, scene, "map2.png"},
-      {InvalidFieldTTag, scene, "invalid_field.png"},
-      {RangeTTag, scene, "range.png"},
-      {HpStatusTTag, scene, "hp_status.png"},
-      {DashboardTTag, ui, "dashboard.png"},
-      {ButtonBackgroundTTag, ui, "defender_button_bgrd.png"},
-      {StartTTag, ui, "start.png"},
-      {PauseTTag, ui, "pause.png"},
+      {Explosion1Texture, scene, "explosion1.png"},
+      {Explosion2Texture, scene, "explosion2.png"},
+      {Explosion3Texture, scene, "explosion3.png"},
+      {Explosion4Texture, scene, "explosion4.png"},
+      {Map1Texture, scene, "map1.png"},
+      {Map2Texture, scene, "map2.png"},
+      {InvalidFieldTexture, scene, "invalid_field.png"},
+      {RangeTexture, scene, "range.png"},
+      {HpStatusTexture, scene, "hp_status.png"},
+      {DashboardTexture, ui, "dashboard.png"},
+      {ButtonBackgroundTexture, ui, "defender_button_bgrd.png"},
+      {StartTexture, ui, "start.png"},
+      {PauseTexture, ui, "pause.png"},
    };
 
    for (const auto& spec : textures)
@@ -142,7 +142,7 @@ bool Towers::setupRenderer()
    constexpr sp::NormVec hpOffset{-.25f, -.4f};
    const sp::PixVec hpPixOffset = toPix(hpOffset);
    m_hpRenderer = std::make_unique<HpRenderer>(
-      sp::Sprite{sp::SpriteLook{HpStatusTTag}, sp::SpriteForm{hpStatusPixDim}},
+      sp::Sprite{sp::SpriteLook{HpStatusTexture}, sp::SpriteForm{hpStatusPixDim}},
       hpPixOffset);
 
    return true;
@@ -155,8 +155,8 @@ bool Towers::setupAnimations()
 
    AnimationFactory factory;
 
-   resources().addAnimation(ExplosionATag,
-                            factory.make(ExplosionATag, toPix(sp::MapDim{1.f, 1.f})));
+   resources().addAnimation(
+      ExplosionAnimation, factory.make(ExplosionAnimation, toPix(sp::MapDim{1.f, 1.f})));
 
    sp::PixDim firingSize =
       toPix(scaleInto(toMap(resources().getTextureSize(LtTexture)), LtSize));
@@ -184,7 +184,7 @@ bool Towers::setupAttackers()
                               sp::SpriteForm{resources().getTextureSize(AatTexture)}},
                    sp::Sprite{sp::SpriteLook{AatHitTexture},
                               sp::SpriteForm{resources().getTextureSize(AatHitTexture)}},
-                   resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
+                   resources().getAnimation(ExplosionAnimation), m_hpRenderer.get()},
       AssaultTank::defaultAttributes());
    m_attackFactory->registerModel(
       MhcModel,
@@ -192,7 +192,7 @@ bool Towers::setupAttackers()
                               sp::SpriteForm{resources().getTextureSize(MhcTexture)}},
                    sp::Sprite{sp::SpriteLook{MhcHitTexture},
                               sp::SpriteForm{resources().getTextureSize(MhcHitTexture)}},
-                   resources().getAnimation(ExplosionATag), m_hpRenderer.get()},
+                   resources().getAnimation(ExplosionAnimation), m_hpRenderer.get()},
       MobileCannon::defaultAttributes());
 
    return true;
@@ -229,8 +229,8 @@ bool Towers::setupSprites()
 {
    const sp::PixDim fieldPixDim = toPix(sp::MapDim{1.f, 1.f});
    m_invalidFieldOverlay =
-      sp::Sprite{sp::SpriteLook{InvalidFieldTTag}, sp::SpriteForm{fieldPixDim}};
-   m_rangeOverlay = sp::Sprite{sp::SpriteLook{RangeTTag}, sp::SpriteForm{fieldPixDim}};
+      sp::Sprite{sp::SpriteLook{InvalidFieldTexture}, sp::SpriteForm{fieldPixDim}};
+   m_rangeOverlay = sp::Sprite{sp::SpriteLook{RangeTexture}, sp::SpriteForm{fieldPixDim}};
 
    return true;
 }
@@ -242,7 +242,7 @@ bool Towers::setupLevels()
                        "map1.json",
                        1800,
                        1200,
-                       Map1TTag,
+                       Map1Texture,
                        {AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, DefaultDelay},
                         AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, 30},
                         AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
@@ -251,7 +251,7 @@ bool Towers::setupLevels()
                        "map2.json",
                        1800,
                        1200,
-                       Map2TTag,
+                       Map2Texture,
                        {AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
                         AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, 20},
                         AttackerSpec{MhcModel, sp::MapVec{0.06f, -0.05}, 40},

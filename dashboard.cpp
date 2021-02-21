@@ -92,7 +92,7 @@ template <typename Attribs> std::string FormatDefenderStats(const Attribs& attri
 Dashboard::Dashboard(sp::PixCoordi width, sp::PixCoordi height, Commands* commands,
                      State* state)
 : m_dim{width, height}, m_commands{commands}, m_state{state},
-  m_background{sp::SpriteLook{DashboardTTag}, sp::SpriteForm{m_dim}},
+  m_background{sp::SpriteLook{DashboardTexture}, sp::SpriteForm{m_dim}},
   m_creditsLabel{CreditsTextScale, CreditsTextColor}, m_creditsValue{CreditsTextScale,
                                                                      CreditsTextColor},
   m_ltStats{TextScaleForCost, StatsTextColor}, m_smStats{TextScaleForCost, StatsTextColor}
@@ -157,12 +157,12 @@ bool Dashboard::onLeftButtonPressed(const glm::vec2& mousePosInDash)
       if (m_state->isPaused())
       {
          m_commands->startAttack();
-         m_startButton.setContent(sp::Sprite{sp::SpriteLook{PauseTTag}, contentForm});
+         m_startButton.setContent(sp::Sprite{sp::SpriteLook{PauseTexture}, contentForm});
       }
       else
       {
          m_commands->pauseAttack();
-         m_startButton.setContent(sp::Sprite{sp::SpriteLook{StartTTag}, contentForm});
+         m_startButton.setContent(sp::Sprite{sp::SpriteLook{StartTexture}, contentForm});
       }
       return true;
    }
@@ -194,8 +194,8 @@ void Dashboard::setupCreditsElements(const sp::Renderer2& renderer)
 void Dashboard::setupDefenderElements()
 {
    const sp::PixDim buttonPixDim = toPix(DefenderButtonDim);
-   sp::Sprite buttonBkg{sp::SpriteLook{ButtonBackgroundTTag},
-                         sp::SpriteForm{buttonPixDim}};
+   sp::Sprite buttonBkg{sp::SpriteLook{ButtonBackgroundTexture},
+                        sp::SpriteForm{buttonPixDim}};
    sp::SpriteForm contentForm{buttonPixDim};
 
    const sp::PixPos ltPixPos = toPix(LaserTurretPos);
@@ -222,12 +222,12 @@ void Dashboard::setupDefenderElements()
 void Dashboard::setupGameflowElements()
 {
    const sp::PixDim buttonPixDim = toPix(FlowButtonDim);
-   sp::Sprite buttonBkg{sp::SpriteLook{ButtonBackgroundTTag},
-                         sp::SpriteForm{buttonPixDim}};
+   sp::Sprite buttonBkg{sp::SpriteLook{ButtonBackgroundTexture},
+                        sp::SpriteForm{buttonPixDim}};
    sp::SpriteForm contentForm{buttonPixDim};
 
    const sp::PixPos startPixPos = toPix(StartPos);
    m_startButton.setup(
-      buttonBkg, sp::Sprite{sp::SpriteLook{StartTTag}, contentForm},
+      buttonBkg, sp::Sprite{sp::SpriteLook{StartTexture}, contentForm},
       [this]() { return true; }, startPixPos, buttonPixDim);
 }

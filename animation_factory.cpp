@@ -19,10 +19,10 @@ static sp::Animation makeExplosion(sp::PixDim size)
 {
    const sp::SpriteForm form{size, sp::Angle{0.f}};
    std::vector<sp::Sprite> sprites{
-      sp::Sprite{sp::SpriteLook{Explosion1TTag}, form},
-      sp::Sprite{sp::SpriteLook{Explosion2TTag}, form},
-      sp::Sprite{sp::SpriteLook{Explosion3TTag}, form},
-      sp::Sprite{sp::SpriteLook{Explosion4TTag}, form},
+      sp::Sprite{sp::SpriteLook{Explosion1Texture}, form},
+      sp::Sprite{sp::SpriteLook{Explosion2Texture}, form},
+      sp::Sprite{sp::SpriteLook{Explosion3Texture}, form},
+      sp::Sprite{sp::SpriteLook{Explosion4Texture}, form},
    };
    std::vector<int> frames{15, 15, 15, 15};
 
@@ -61,7 +61,7 @@ static sp::Animation makeFiringSonicMortar(sp::PixDim size)
 AnimationFactory::AnimationFactory()
 {
    m_factories = {
-      {ExplosionATag, makeExplosion},
+      {ExplosionAnimation, makeExplosion},
       {LtFiringAnimation, makeFiringLaserTurret},
       {SmFiringAnimation, makeFiringSonicMortar},
    };

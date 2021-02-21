@@ -5,16 +5,16 @@
 #pragma once
 
 
-constexpr char Explosion1TTag[] = "explosion1";
-constexpr char Explosion2TTag[] = "explosion2";
-constexpr char Explosion3TTag[] = "explosion3";
-constexpr char Explosion4TTag[] = "explosion4";
-constexpr char Map1TTag[] = "map1";
-constexpr char Map2TTag[] = "map2";
-constexpr char InvalidFieldTTag[] = "invalid_field";
-constexpr char RangeTTag[] = "range";
-constexpr char HpStatusTTag[] = "hp_status";
-constexpr char DashboardTTag[] = "dashboard";
-constexpr char ButtonBackgroundTTag[] = "button_bgrd";
-constexpr char StartTTag[] = "start";
-constexpr char PauseTTag[] = "pause";
+constexpr char Explosion1Texture[] = "explosion1";
+constexpr char Explosion2Texture[] = "explosion2";
+constexpr char Explosion3Texture[] = "explosion3";
+constexpr char Explosion4Texture[] = "explosion4";
+constexpr char Map1Texture[] = "map1";
+constexpr char Map2Texture[] = "map2";
+constexpr char InvalidFieldTexture[] = "invalid_field";
+constexpr char RangeTexture[] = "range";
+constexpr char HpStatusTexture[] = "hp_status";
+constexpr char DashboardTexture[] = "dashboard";
+constexpr char ButtonBackgroundTexture[] = "button_bgrd";
+constexpr char StartTexture[] = "start";
+constexpr char PauseTexture[] = "pause";
