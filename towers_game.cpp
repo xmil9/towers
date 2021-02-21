@@ -97,6 +97,7 @@ bool Towers::setupTextures()
       {Explosion3TTag, scene, "explosion3.png"},
       {Explosion4TTag, scene, "explosion4.png"},
       {Map1TTag, scene, "map1.png"},
+      {Map2TTag, scene, "map2.png"},
       {InvalidFieldTTag, scene, "invalid_field.png"},
       {RangeTTag, scene, "range.png"},
       {HpStatusTTag, scene, "hp_status.png"},
@@ -246,6 +247,23 @@ bool Towers::setupLevels()
                         AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, 30},
                         AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
                         AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, DefaultDelay}}});
+   m_levels.push_back({200,
+                       "map2.json",
+                       1800,
+                       1200,
+                       Map2TTag,
+                       {AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
+                        AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, 20},
+                        AttackerSpec{MhcModel, sp::MapVec{0.06f, -0.05}, 40},
+                        AttackerSpec{MhcModel, sp::MapVec{0.1f, 0.02}, 60},
+                        AttackerSpec{MhcModel, sp::MapVec{-0.1f, 0.1}, 80},
+                        AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, 200},
+                        AttackerSpec{AatModel, sp::MapVec{0.05f, 0.03f}, 205},
+                        AttackerSpec{AatModel, sp::MapVec{-0.07f, -0.1f}, 210},
+                        AttackerSpec{AatModel, sp::MapVec{0.03f, -0.05f}, 215},
+                        AttackerSpec{AatModel, sp::MapVec{0.07f, 0.06f}, 220},
+                        AttackerSpec{AatModel, sp::MapVec{-0.03f, 0.f}, 220},
+                        AttackerSpec{AatModel, sp::MapVec{0.f, -0.03f}, 220}}});
    return true;
 }
 
