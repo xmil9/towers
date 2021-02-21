@@ -240,8 +240,6 @@ bool Towers::setupLevels()
 {
    m_levels.push_back({150,
                        "map1.json",
-                       1800,
-                       1200,
                        Map1Texture,
                        {AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, DefaultDelay},
                         AttackerSpec{AatModel, sp::MapVec{0.f, 0.f}, 30},
@@ -249,8 +247,6 @@ bool Towers::setupLevels()
                         AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, DefaultDelay}}});
    m_levels.push_back({200,
                        "map2.json",
-                       1800,
-                       1200,
                        Map2Texture,
                        {AttackerSpec{MhcModel, sp::MapVec{-.08f, .05f}, DefaultDelay},
                         AttackerSpec{MhcModel, sp::MapVec{0.f, -0.05}, 20},
@@ -276,11 +272,11 @@ bool Towers::loadLevel(std::size_t level)
    m_hasWonLevel = false;
    m_credits = l.credits;
 
-   if (!loadMap(l.mapFileName, l.mapWidth, l.mapHeight))
+   if (!loadMap(l.mapFileName))
       return false;
 
-   m_background = sp::Sprite{sp::SpriteLook{l.backgroundTex},
-                             sp::SpriteForm{{l.mapWidth, l.mapHeight}}};
+   m_background =
+      sp::Sprite{sp::SpriteLook{l.backgroundTex}, sp::SpriteForm{{MapWidth, MapHeight}}};
 
    // Recalc all graphics that depend on the map size.
    if (!setupGraphics())
@@ -296,8 +292,7 @@ bool Towers::loadLevel(std::size_t level)
 }
 
 
-bool Towers::loadMap(const std::string& fileName, sp::PixCoordi width,
-                     sp::PixCoordi height)
+bool Towers::loadMap(const std::string& fileName)
 {
    std::optional<MapData> mapData = loadMapData(m_paths.mapPath() / fileName);
    if (!mapData)
@@ -308,7 +303,8 @@ bool Towers::loadMap(const std::string& fileName, sp::PixCoordi width,
    m_map = std::make_unique<Map>(std::move(*mapData));
 
    const sp::IntDim mapSizeInFields = m_map->sizeInFields();
-   const sp::PixDim fieldPixDim{width / mapSizeInFields.x, height / mapSizeInFields.y};
+   const sp::PixDim fieldPixDim{MapWidth / mapSizeInFields.x,
+                                MapHeight / mapSizeInFields.y};
    m_coordSys = std::make_unique<MapCoordSys>(fieldPixDim);
 
    return true;

@@ -40,7 +40,7 @@ class Towers : public sp::Game2, private Commands, private State
    bool setupLevels();
 
    bool loadLevel(std::size_t level);
-   bool loadMap(const std::string& fileName, sp::PixCoordi width, sp::PixCoordi height);
+   bool loadMap(const std::string& fileName);
    bool setupGraphics();
    bool setupRenderer();
    bool setupAnimations();

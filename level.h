@@ -26,8 +26,6 @@ struct Level
 {
    const int credits = 0;
    const std::string mapFileName;
-   const sp::PixCoordi mapWidth;
-   const sp::PixCoordi mapHeight;
    const std::string backgroundTex;
    const std::vector<AttackerSpec> attackers;
 };
