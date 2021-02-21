@@ -18,3 +18,5 @@ constexpr char DashboardTexture[] = "dashboard";
 constexpr char ButtonBackgroundTexture[] = "button_bgrd";
 constexpr char StartTexture[] = "start";
 constexpr char PauseTexture[] = "pause";
+constexpr char VictoryTexture[] = "victory";
+constexpr char DefeatTexture[] = "defeat";

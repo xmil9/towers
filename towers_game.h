@@ -53,6 +53,8 @@ class Towers : public sp::Game2, private Commands, private State
    void renderMap();
    void renderDefenderInfo();
    void renderPlaceSession();
+   void renderVictoryDisplay();
+   void renderDefeatDisplay();
 
    void addAttacker(std::optional<Attacker>&& attacker);
    template <typename SpecificAttacker>
@@ -119,10 +121,13 @@ class Towers : public sp::Game2, private Commands, private State
    std::optional<PlaceSession> m_placeSess;
    sp::Sprite m_invalidFieldOverlay;
    sp::Sprite m_rangeOverlay;
+   sp::Sprite m_victoryDisplay;
+   sp::Sprite m_defeatDisplay;
    std::vector<bool> m_defenderMatrix;
    int m_credits = 0;
    bool m_hasLost = false;
    bool m_hasWonLevel = false;
+   bool m_hasWonGame = false;
 };
 
 

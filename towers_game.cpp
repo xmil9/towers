@@ -105,6 +105,8 @@ bool Towers::setupTextures()
       {ButtonBackgroundTexture, ui, "defender_button_bgrd.png"},
       {StartTexture, ui, "start.png"},
       {PauseTexture, ui, "pause.png"},
+      {VictoryTexture, ui, "victory.png"},
+      {DefeatTexture, ui, "defeat.png"},
    };
 
    for (const auto& spec : textures)
@@ -232,6 +234,13 @@ bool Towers::setupSprites()
       sp::Sprite{sp::SpriteLook{InvalidFieldTexture}, sp::SpriteForm{fieldPixDim}};
    m_rangeOverlay = sp::Sprite{sp::SpriteLook{RangeTexture}, sp::SpriteForm{fieldPixDim}};
 
+   m_victoryDisplay =
+      sp::Sprite{sp::SpriteLook{VictoryTexture},
+                 sp::SpriteForm{resources().getTextureSize(VictoryTexture)}};
+   m_defeatDisplay =
+      sp::Sprite{sp::SpriteLook{DefeatTexture},
+                 sp::SpriteForm{resources().getTextureSize(DefeatTexture)}};
+
    return true;
 }
 
@@ -329,13 +338,13 @@ void Towers::updateState()
 
    m_hasLost |= haveFinishedAttacker;
    m_hasWonLevel = !m_hasLost && m_attackers.empty();
-   if (m_hasLost)
-      loadLevel(m_currLevel);
-   else if (m_hasWonLevel)
+   if (m_hasWonLevel)
+   {
       if (m_currLevel < m_levels.size() - 1)
          loadLevel(++m_currLevel);
       else
-         ; // won
+         m_hasWonGame = true;
+   }
 }
 
 
@@ -349,9 +358,20 @@ void Towers::renderItems()
    for (auto& defender : m_defenders)
       defender.render(renderer(), isPaused());
 
-   renderDefenderInfo();
-   // Draw placed content on top of everything else.
-   renderPlaceSession();
+   if (m_hasWonGame)
+   {
+      renderVictoryDisplay();
+   }
+   else if (m_hasLost)
+   {
+      renderDefeatDisplay();
+   }
+   else
+   {
+      renderDefenderInfo();
+      // Draw placed content on top of everything else.
+      renderPlaceSession();
+   }
 }
 
 
@@ -413,6 +433,22 @@ void Towers::renderPlaceSession()
       const sp::PixPos indicatorCenter = isOnMap ? fieldCenterPixPos : mousePixPos;
       renderer().renderSpriteCentered(m_placeSess->indicator, indicatorCenter);
    }
+}
+
+
+void Towers::renderVictoryDisplay()
+{
+   const sp::PixPos pos =
+      (sp::PixPos{MapWidth, MapHeight} - m_victoryDisplay.size()) / 2.f;
+   renderer().renderSprite(m_victoryDisplay, pos);
+}
+
+
+void Towers::renderDefeatDisplay()
+{
+   const sp::PixPos pos =
+      (sp::PixPos{MapWidth, MapHeight} - m_defeatDisplay.size()) / 2.f;
+   renderer().renderSprite(m_defeatDisplay, pos);
 }
 
 
