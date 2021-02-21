@@ -239,7 +239,7 @@ bool Towers::setupSprites()
 bool Towers::setupLevels()
 {
    m_levels.push_back({150,
-                       "map.json",
+                       "map1.json",
                        1800,
                        1200,
                        Map1TTag,
