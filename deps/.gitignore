@@ -1,0 +1,10 @@
+# Reset everything.
+!*
+
+*.log
+*.tlog
+*.recipe
+*.lastbuildstate
+*.obj
+*.idb
+*.FileListAbsolute.txt
