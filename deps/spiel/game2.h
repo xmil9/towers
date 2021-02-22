@@ -67,6 +67,9 @@ class Game2
    virtual void onRightButtonPressed(const glm::vec2& /*pos*/) {}
    virtual void onRightButtonReleased(const glm::vec2& /*pos*/) {}
    virtual void onKeyPolled(gfl::Key /*key*/, float /*frameLengthSecs*/) {}
+   virtual void onKeyChanged(gfl::Key key, int action, int mods);
+   virtual void onKeyPressed(gfl::Key /*key*/, int /*mods*/) {}
+   virtual void onKeyReleased(gfl::Key /*key*/, int /*mods*/) {}
 
  private:
    bool setupUi();

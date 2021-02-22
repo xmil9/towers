@@ -71,8 +71,11 @@ class Towers : public sp::Game2, private Commands, private State
    void addDefender(std::optional<Defender>&& defender, const sp::PixPos& pos);
    void placeDefender(const sp::PixPos& mousePos);
 
+   void playLevel(std::size_t level);
+
    void onLeftButtonPressed(const glm::vec2& pos) override;
    void onLeftButtonReleased(const glm::vec2& pos) override;
+   void onKeyPressed(gfl::Key key, int mods) override;
 
    bool isInMap(const sp::PixPos& pos) const;
    bool isInDashboard(const sp::PixPos& pos) const;
@@ -80,6 +83,8 @@ class Towers : public sp::Game2, private Commands, private State
    bool mapOnLeftButtonReleased(const sp::PixPos& pos);
    bool dashboardOnLeftButtonPressed(const sp::PixPos& pos);
    bool dashboardOnLeftButtonReleased(const sp::PixPos& pos);
+   bool victoryDisplayOnKeyPressed(gfl::Key key, int mods);
+   bool defeatDisplayOnKeyPressed(gfl::Key key, int mods);
 
    // State overrides.
    int credits() const override { return m_credits; }
@@ -92,6 +97,10 @@ class Towers : public sp::Game2, private Commands, private State
    void endPlaceSession() override;
    void startAttack() override;
    void pauseAttack() override;
+   void playAgain() override;
+   void advanceLevel() override;
+   void repeatLevel() override;
+   void quit() override;
 
    // Convenience functions for coordinate system operations.
    sp::PixPos toPix(sp::MapPos mpos) const;

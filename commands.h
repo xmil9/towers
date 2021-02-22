@@ -16,6 +16,10 @@ struct Commands
    virtual void endPlaceSession() = 0;
    virtual void startAttack() = 0;
    virtual void pauseAttack() = 0;
+   virtual void playAgain() = 0;
+   virtual void advanceLevel() = 0;
+   virtual void repeatLevel() = 0;
+   virtual void quit() = 0;
 
  protected:
    // No destruction through this interface.

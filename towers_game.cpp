@@ -322,7 +322,7 @@ bool Towers::loadMap(const std::string& fileName)
 
 void Towers::updateState()
 {
-   if (isPaused())
+   if (isPaused() || m_hasLost)
       return;
 
    for (auto& entry : m_attackers)
@@ -341,7 +341,7 @@ void Towers::updateState()
    if (m_hasWonLevel)
    {
       if (m_currLevel < m_levels.size() - 1)
-         loadLevel(++m_currLevel);
+         advanceLevel();
       else
          m_hasWonGame = true;
    }
@@ -560,6 +560,17 @@ void Towers::placeDefender(const sp::PixPos& mousePos)
 }
 
 
+void Towers::playLevel(std::size_t level)
+{
+   m_hasLost = false;
+   m_hasWonLevel = false;
+   m_hasWonGame = false;
+
+   m_currLevel = level;
+   loadLevel(level);
+}
+
+
 void Towers::onLeftButtonPressed(const glm::vec2& pos)
 {
    if (mapOnLeftButtonPressed(pos))
@@ -573,6 +584,15 @@ void Towers::onLeftButtonReleased(const glm::vec2& pos)
    if (mapOnLeftButtonReleased(pos))
       return;
    dashboardOnLeftButtonReleased(pos);
+}
+
+
+void Towers::onKeyPressed(gfl::Key key, int mods)
+{
+   if (victoryDisplayOnKeyPressed(key, mods))
+      return;
+   if (defeatDisplayOnKeyPressed(key, mods))
+      return;
 }
 
 
@@ -632,6 +652,44 @@ bool Towers::dashboardOnLeftButtonReleased(const sp::PixPos& pos)
 }
 
 
+bool Towers::victoryDisplayOnKeyPressed(gfl::Key key, int /*mods*/)
+{
+   if (m_hasWonGame)
+   {
+      switch (key)
+      {
+      case GLFW_KEY_Y:
+         playAgain();
+         return true;
+      case GLFW_KEY_N:
+         quit();
+         return true;
+      }
+   }
+
+   return false;
+}
+
+
+bool Towers::defeatDisplayOnKeyPressed(gfl::Key key, int /*mods*/)
+{
+   if (m_hasLost)
+   {
+      switch (key)
+      {
+      case GLFW_KEY_Y:
+         repeatLevel();
+         return true;
+      case GLFW_KEY_N:
+         quit();
+         return true;
+      }
+   }
+
+   return false;
+}
+
+
 bool Towers::canAffordDefender(const std::string& model) const
 {
    const DefenderAttribs attribs = m_defenseFactory->defaultAttributes(model);
@@ -673,4 +731,28 @@ void Towers::startAttack()
 void Towers::pauseAttack()
 {
    setPaused(true);
+}
+
+
+void Towers::playAgain()
+{
+   playLevel(0);
+}
+
+
+void Towers::advanceLevel()
+{
+   playLevel(m_currLevel + 1);
+}
+
+
+void Towers::repeatLevel()
+{
+   playLevel(m_currLevel);
+}
+
+
+void Towers::quit()
+{
+   mainWnd().setShouldClose(true);
 }
