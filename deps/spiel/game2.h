@@ -51,6 +51,7 @@ class Game2
    bool isPaused() const { return m_isPaused; }
    void setPaused(bool pause) { m_isPaused = pause; }
    PixPos mousePosition() const { return m_mainWnd.mousePosition(); }
+   void setPolledKeys(const std::vector<int>& keys) { m_input.setPolledKeys(keys); }
 
    // Event handling.
    virtual void onMainWindowChanged(MainWindow& src, std::string_view event,

@@ -21,6 +21,7 @@ class Input : public InputController, public esl::Observed<Input>
 {
  public:
    glm::vec2 mousePosition() const { return m_mousePos; }
+   void setPolledKeys(const std::vector<int>& keys);
    void process(gfl::Window& wnd, float frameLengthSecs);
 
  private:
@@ -37,6 +38,8 @@ class Input : public InputController, public esl::Observed<Input>
  private:
    bool m_isFirstMouseMove = true;
    glm::vec2 m_mousePos{0.f, 0.f};
+   // Keys to poll, e.g. GLFW_KEY_W, GLFW_KEY_S, etc.
+   std::vector<int> m_polledKeys;
 };
 
 
